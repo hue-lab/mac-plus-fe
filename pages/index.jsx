@@ -1,11 +1,8 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 
-import { useQuery } from "@apollo/react-hooks";
-
 // Import Apollo Server and Query
 import withApollo from '../server/apollo';
-import { GET_HOME_DATA } from '../server/queries';
 
 // import Home Components
 import NewsletterModal from '~/components/features/modals/newsletter-modal';
@@ -17,8 +14,7 @@ import ServiceBox from '~/components/partials/home/service-section';
 import BlogSection from '~/components/partials/home/blog-section';
 
 function HomePage() {
-    const { data, loading, error } = useQuery( GET_HOME_DATA );
-    const posts = data && data.posts.data;
+    const posts = [];
 
     return (
         <div className="main home mt-lg-4 homepage">

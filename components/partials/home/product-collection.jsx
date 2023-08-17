@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
 import Reveal from 'react-awesome-reveal';
-import { useLazyQuery } from '@apollo/react-hooks';
 
 import ALink from '~/components/features/custom-link';
 
 import ProductTwo from '~/components/features/product/product-two';
 
 import withApollo from '~/server/apollo';
-import { GET_PRODUCTS } from '~/server/queries';
 
 import { fadeIn, fadeInUpShorter } from '~/utils/data/keyframes';
 import { categoryList } from '~/utils/data/menu';
@@ -15,16 +13,17 @@ import { categoryList } from '~/utils/data/menu';
 function ProductCollection ( props ) {
     const { id = 0, subTitle = "Featured", title = "Fashion Design", titleAdClass = 'ls-s', url = "./images/home/banner/3.jpg", adClass = '', wrapperAdClass = '' } = props;
 
-    const [ getProducts, { data, loading, error } ] = useLazyQuery( GET_PRODUCTS );
+    const data = null;
+    const loading = false;
     const products = data && data.products.data;
 
-    useEffect( () => {
-        getProducts( {
-            variables: {
-                category: categoryList[ id ].slug
-            }
-        } );
-    }, [] )
+    // useEffect( () => {
+    //     getProducts( {
+    //         variables: {
+    //             category: categoryList[ id ].slug
+    //         }
+    //     } );
+    // }, [] )
 
     function activeHandler ( e ) {
         console.log( e.currentTarget.closest( '.category-list' ) )
