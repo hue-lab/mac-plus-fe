@@ -19,74 +19,74 @@ import { modalActions } from '~/store/modal';
 
 import { showScrollTopHandler, scrollTopHandler, stickyHeaderHandler, stickyFooterHandler } from '~/utils';
 
-function Layout ( { children, closeQuickview } ) {
-    const router = useRouter();
+function Layout({ children, closeQuickview }) {
+  const router = useRouter();
 
-    useLayoutEffect( () => {
-        document.querySelector( 'body' ).classList.remove( 'loaded' );
-    }, [ router.pathname ] )
+  useLayoutEffect(() => {
+    document.querySelector('body').classList.remove('loaded');
+  }, [router.pathname])
 
-    useEffect( () => {
-        window.addEventListener( 'scroll', showScrollTopHandler, true );
-        window.addEventListener( 'scroll', stickyHeaderHandler, true );
-        window.addEventListener( 'scroll', stickyFooterHandler, true );
-        window.addEventListener( 'resize', stickyHeaderHandler, true );
-        window.addEventListener( 'resize', stickyFooterHandler, true );
+  useEffect(() => {
+    window.addEventListener('scroll', showScrollTopHandler, true);
+    window.addEventListener('scroll', stickyHeaderHandler, true);
+    window.addEventListener('scroll', stickyFooterHandler, true);
+    window.addEventListener('resize', stickyHeaderHandler, true);
+    window.addEventListener('resize', stickyFooterHandler, true);
 
-        return () => {
-            window.removeEventListener( 'scroll', showScrollTopHandler, true );
-            window.removeEventListener( 'scroll', stickyHeaderHandler, true );
-            window.removeEventListener( 'scroll', stickyFooterHandler, true );
-            window.removeEventListener( 'resize', stickyHeaderHandler, true );
-            window.removeEventListener( 'resize', stickyFooterHandler, true );
-        }
-    }, [] )
+    return () => {
+      window.removeEventListener('scroll', showScrollTopHandler, true);
+      window.removeEventListener('scroll', stickyHeaderHandler, true);
+      window.removeEventListener('scroll', stickyFooterHandler, true);
+      window.removeEventListener('resize', stickyHeaderHandler, true);
+      window.removeEventListener('resize', stickyFooterHandler, true);
+    }
+  }, [])
 
-    useEffect( () => {
-        closeQuickview();
+  useEffect(() => {
+    closeQuickview();
 
-        let bodyClasses = document.querySelector( "body" ).classList;
-        for ( let i = 0; i < bodyClasses.length; i++ ) {
-            document.querySelector( 'body' ).classList.remove( bodyClasses[ i ] );
-        }
+    let bodyClasses = document.querySelector("body").classList;
+    for (let i = 0; i < bodyClasses.length; i++) {
+      document.querySelector('body').classList.remove(bodyClasses[i]);
+    }
 
-        setTimeout( () => {
-            document.querySelector( 'body' ).classList.add( 'loaded' );
-        }, 50 );
-    }, [ router.pathname ] )
+    setTimeout(() => {
+      document.querySelector('body').classList.add('loaded');
+    }, 50);
+  }, [router.pathname])
 
-    return (
-        <>
-            <div className="page-wrapper">
-                <Header />
+  return (
+    <>
+      <div className="page-wrapper">
+        <Header />
 
-                { children }
+        {children}
 
-                <Footer />
+        <Footer />
 
-                <StickyFooter />
-            </div>
+        <StickyFooter />
+      </div>
 
-            <ALink id="scroll-top" href="#" title="Top" role="button" className="scroll-top" onClick={ () => scrollTopHandler( false ) }><i className="d-icon-arrow-up"></i></ALink>
+      <ALink id="scroll-top" href="#" title="Top" role="button" className="scroll-top" onClick={() => scrollTopHandler(false)}><i className="d-icon-arrow-up"></i></ALink>
 
-            <MobileMenu />
+      <MobileMenu />
 
-            <ToastContainer
-                autoClose={ 3000 }
-                duration={ 300 }
-                newestOnTo={ true }
-                className="toast-container"
-                position="bottom-left"
-                closeButton={ false }
-                hideProgressBar={ true }
-                newestOnTop={ true }
-            />
+      <ToastContainer
+        autoClose={3000}
+        duration={300}
+        newestOnTo={true}
+        className="toast-container"
+        position="bottom-left"
+        closeButton={false}
+        hideProgressBar={true}
+        newestOnTop={true}
+      />
 
-            <Quickview />
+      <Quickview />
 
-            <VideoModal />
-        </>
-    )
+      <VideoModal />
+    </>
+  )
 }
 
-export default connect( null, { closeQuickview: modalActions.closeQuickview } )( Layout );
+export default connect(null, { closeQuickview: modalActions.closeQuickview })(Layout);

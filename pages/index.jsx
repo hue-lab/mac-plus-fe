@@ -1,80 +1,121 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 
-import { useQuery } from "@apollo/react-hooks";
-
 // Import Apollo Server and Query
 import withApollo from '../server/apollo';
-import { GET_HOME_DATA } from '../server/queries';
 
 // import Home Components
-import NewsletterModal from '~/components/features/modals/newsletter-modal';
 import IntroSection from '~/components/partials/home/intro-section';
 import CategorySection from '~/components/partials/home/category-section';
 import BannerSection from '~/components/partials/home/banner-section';
-import ProductCollection from '~/components/partials/home/product-collection';
 import ServiceBox from '~/components/partials/home/service-section';
 import BlogSection from '~/components/partials/home/blog-section';
 
 function HomePage() {
-    const { data, loading, error } = useQuery( GET_HOME_DATA );
-    const posts = data && data.posts.data;
+  const posts = [
+    {
+      type: '',
+      slug: '',
+      large_picture: [
+        {
+          url: '',
+          height: 0,
+        },
+      ],
+      picture: [
+        {
+          url: '',
+          height: 0,
+        },
+      ],
+    },
+    {
+      type: '',
+      slug: '',
+      large_picture: [
+        {
+          url: '',
+          height: 0,
+        },
+      ],
+      picture: [
+        {
+          url: '',
+          height: 0,
+        },
+      ],
+    },
+    {
+      type: '',
+      slug: '',
+      large_picture: [
+        {
+          url: '',
+          height: 0,
+        },
+      ],
+      picture: [
+        {
+          url: '',
+          height: 0,
+        },
+      ],
+    },
+    {
+      type: '',
+      slug: '',
+      large_picture: [
+        {
+          url: '',
+          height: 0,
+        },
+      ],
+      picture: [
+        {
+          url: '',
+          height: 0,
+        },
+      ],
+    },
+    {
+      type: '',
+      slug: '',
+      large_picture: [
+        {
+          url: '',
+          height: 0,
+        },
+      ],
+      picture: [
+        {
+          url: '',
+          height: 0,
+        },
+      ],
+    },
+  ];
 
-    return (
-        <div className="main home mt-lg-4 homepage">
-            <Helmet>
-                <title>Riode React eCommerce Template - Home</title>
-            </Helmet>
+  return (
+    <div className="main home mt-lg-4 homepage">
+      <Helmet>
+        <title>Mac Plus - Главная</title>
+      </Helmet>
 
-            <h1 className="d-none">Riode React eCommerce Template - Home</h1>
+      <h1 className="d-none">Mac Plus - Главная</h1>
 
-            <div className="page-content">
-                <IntroSection />
+      <div className="page-content">
+        <IntroSection />
 
-                <CategorySection />
+        <CategorySection />
 
-                <BannerSection />
+        <BannerSection />
 
-                <div className="grey-section pt-10 pb-8">
-                    <div className="container pt-4 pb-4">
-                        <ProductCollection />
+        <ServiceBox />
 
-                        <ProductCollection
-                            id={ 1 }
-                            wrapperAdClass="mt-10 pt-4"
-                            adClass="pl-lg-2 pr-lg-2 text-lg-center pt-4"
-                            url="./images/home/banner/4.jpg"
-                            subTitle="Recommended for you"
-                            title="Cosmetics Trends"
-                            titleAdClass=""
-                        />
-
-                        <ProductCollection
-                            id={ 2 }
-                            wrapperAdClass="mt-10 pt-4"
-                            url="./images/home/banner/5.jpg"
-                            title="Top Electronics"
-                        />
-
-                        <ProductCollection
-                            id={ 3 }
-                            wrapperAdClass="mt-10 pt-4"
-                            adClass="text-lg-center"
-                            url="./images/home/banner/6.jpg"
-                            subTitle="Recommeded for you"
-                            title="Kitchen Tools"
-                        />
-                    </div>
-                </div>
-
-                <ServiceBox />
-
-                <BlogSection posts={ posts } />
-            </div>
-
-            <NewsletterModal />
-        </div>
-    )
+        <BlogSection posts={posts} />
+      </div>
+    </div>
+  )
 }
 
-export default withApollo( { ssr: typeof window === 'undefined' } )( HomePage );
+export default withApollo({ ssr: typeof window === 'undefined' })(HomePage);

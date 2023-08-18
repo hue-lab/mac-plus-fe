@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { useQuery } from '@apollo/react-hooks';
 import { useRouter } from 'next/router';
 import { Magnifier } from 'react-image-magnifiers';
 import Modal from 'react-modal';
 import imagesLoaded from 'imagesloaded';
 
-import { GET_PRODUCT } from '~/server/queries';
 import withApollo from '~/server/apollo';
 
 import OwlCarousel from '~/components/features/owl-carousel';
@@ -35,7 +33,8 @@ function Quickview ( props ) {
     const { slug, closeQuickview, isOpen } = props;
     const [ loaded, setLoadingState ] = useState( false );
 
-    const { data, loading } = useQuery( GET_PRODUCT, { variables: { slug, onlyData: true } } );
+    const data = null;
+    const loading = false;
     const router = useRouter();
     const product = data && data.product;
 

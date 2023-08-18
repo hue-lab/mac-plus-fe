@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useLazyQuery } from '@apollo/react-hooks';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 import ALink from '~/components/features/custom-link';
 
-import { GET_PRODUCTS } from '~/server/queries';
 import withApollo from '~/server/apollo';
 
 import { toDecimal } from '~/utils';
@@ -13,7 +11,7 @@ import { toDecimal } from '~/utils';
 function SearchForm () {
     const router = useRouter();
     const [ search, setSearch ] = useState( "" );
-    const [ searchProducts, { data } ] = useLazyQuery( GET_PRODUCTS );
+    const data = [];
     const [ timer, setTimer ] = useState( null );
 
     useEffect( () => {
@@ -32,7 +30,7 @@ function SearchForm () {
         if ( search.length > 2 ) {
             if ( timer ) clearTimeout( timer );
             let timerId = setTimeout( () => {
-                searchProducts( { variables: { search: search } } );
+                // searchProducts( { variables: { search: search } } );
                 setTimer( null );
             }, 500 );
 
@@ -110,7 +108,7 @@ function SearchForm () {
                 </button>
 
                 <div className="live-search-list bg-white">
-                    { search.length > 2 && data && data.products.data.map( ( product, index ) => (
+                    { search.length > 2 && data && data.map( ( product, index ) => (
                         <ALink href={ `/product/default/${ product.slug }` } className="autocomplete-suggestion" key={ `search-result-${ index }` }>
                             <LazyLoadImage src={ process.env.NEXT_PUBLIC_ASSET_URI + product.pictures[ 0 ].url } width={ 40 } height={ 40 } alt="product" />
                             <div className="search-name" dangerouslySetInnerHTML={ removeXSSAttacks( matchEmphasize( product.name ) ) }></div>
