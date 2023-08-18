@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useRouter } from 'next/router';
-import Collapse from 'react-bootstrap/collapse';
+import { Collapse } from 'react-bootstrap';
 
 import ALink from '~/components/features/custom-link';
 import Countdown from '~/components/features/countdown';
