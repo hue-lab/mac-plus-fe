@@ -15,7 +15,7 @@ function MainMenu({ router }) {
         </li>
 
         <li className={`submenu  ${pathname.includes('/shop') ? 'active' : ''}`}>
-          <ALink href='/shop'>Mac</ALink>
+          <ALink href='/mac'>Mac</ALink>
 
           <div className="megamenu" style={{ marginLeft: "-19px" }}>
             <div className="row">
@@ -68,7 +68,7 @@ function MainMenu({ router }) {
         </li>
 
         <li className={`submenu  ${pathname.includes('/iphone') && !pathname.includes('/elements') ? 'active' : ''}`}>
-          <ALink href="/iphone">iPhone</ALink>        {/* /product/default/woman-dress */}
+          <ALink href="/iphone/default">iPhone</ALink>        {/* /product/default/woman-dress */}
 
           <div className="megamenu" style={{ marginLeft: "-142px" }}>
             <div className="row">
@@ -118,7 +118,7 @@ function MainMenu({ router }) {
         </li>
 
         <li className={`submenu  ${pathname.includes('/ipad') ? 'active' : ''}`}>
-          <ALink href={`/ipad`}>iPad</ALink>
+          <ALink href="#">iPad</ALink>
 
           <ul>
             {

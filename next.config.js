@@ -1,4 +1,5 @@
 module.exports = {
-    distDir: 'build',
-    trailingSlash: true
+  basePath: '/',
+  distDir: 'build',
+  trailingSlash: true
 }
