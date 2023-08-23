@@ -98,7 +98,7 @@ function HomePage() {
   return (
     <div className="main home mt-lg-4 homepage">
       <Helmet>
-        <title>Mac Plus - Главная</title>
+        <title>Mac Plus | Главная</title>
       </Helmet>
 
       <h1 className="d-none">Mac Plus - Главная</h1>

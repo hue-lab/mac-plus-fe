@@ -1,6 +1,30 @@
 import ALink from '~/components/features/custom-link';
 
 export default function Footer() {
+  const categories = [
+    {
+      name: 'Mac',
+      href: '/shop',
+    },
+    {
+      name: 'iPhone',
+      href: '/shop',
+    },
+    {
+      name: 'iPad',
+      href: '/shop',
+    },
+    {
+      name: 'Watch',
+      href: '/shop',
+    },
+    {
+      name: 'AirPods',
+      href: '/shop',
+    },
+  ];
+  const YEAR = new Date().getFullYear();
+
   return (
     <footer className="footer">
       <div className="container">
@@ -15,13 +39,13 @@ export default function Footer() {
             <div className="col-lg-9">
               <div className="widget widget-newsletter form-wrapper form-wrapper-inline">
                 <div className="newsletter-info mx-auto mr-lg-2 ml-lg-4">
-                  <h4 className="widget-title">Subscribe to our Newsletter</h4>
-                  <p>Get all the latest information, Sales and Offers.</p>
+                  <h4 className="widget-title">Подписывайтесь на нашу новостную рассылку</h4>
+                  <p>Получайте актуальную информацию о скидках и специальных предложениях.</p>
                 </div>
 
                 <form action="#" className="input-wrapper input-wrapper-inline">
                   <input type="email" className="form-control" name="email" id="email" placeholder="Email address here..." required />
-                  <button className="btn btn-primary btn-rounded btn-md ml-2" type="submit">subscribe<i className="d-icon-arrow-right"></i></button>
+                  <button className="btn btn-primary btn-rounded btn-md ml-2" type="submit">подписаться<i className="d-icon-arrow-right"></i></button>
                 </form>
               </div>
             </div>
@@ -32,11 +56,11 @@ export default function Footer() {
           <div className="row justify-content-between">
             <div className="col-lg-3 col-md-6">
               <div className="widget widget-info">
-                <h4 className="widget-title">Contact Info</h4>
+                <h4 className="widget-title">Контакты</h4>
 
                 <ul className="widget-body">
                   <li>
-                    <label>Phone: </label>
+                    <label>Телефон: </label>
                     <ALink href="tel:#">Toll Free (123) 456-7890</ALink>
                   </li>
                   <li>
@@ -44,14 +68,14 @@ export default function Footer() {
                     <ALink href="mailto:mail@riode.com">riode@mail.com</ALink>
                   </li>
                   <li>
-                    <label>Address: </label>
+                    <label>Адрес: </label>
                     <ALink href="#">123 Street, City, Country</ALink>
                   </li>
                   <li>
-                    <label>WORKING DAYS / HOURS: </label>
+                    <label>Рабочее время: </label>
                   </li>
                   <li>
-                    <ALink href="#">Mon - Sun / 9:00 AM - 8:00 PM</ALink>
+                    <ALink href="#">Пн - Вс / 9:00 - 20:00</ALink>
                   </li>
                 </ul>
               </div>
@@ -59,22 +83,22 @@ export default function Footer() {
 
             <div className="col-lg-2 col-md-6">
               <div className="widget ml-lg-4">
-                <h4 className="widget-title">About Us</h4>
+                <h4 className="widget-title">Навигация</h4>
                 <ul className="widget-body">
                   <li>
-                    <ALink href="/pages/about-us">About Us</ALink>
+                    <ALink href="/">Главная</ALink>
                   </li>
                   <li>
-                    <ALink href="#">Order History</ALink>
+                    <ALink href="/shop">Каталог</ALink>
                   </li>
                   <li>
-                    <ALink href="#">Returns</ALink>
+                    <ALink href="/pages/cart">Корзина</ALink>
                   </li>
                   <li>
-                    <ALink href="#">Custom Service</ALink>
+                    <ALink href="/blog/classic">Блог</ALink>
                   </li>
                   <li>
-                    <ALink href="#">Terms &amp; Condition</ALink>
+                    <ALink href="/pages/contact-us">Контакты</ALink>
                   </li>
                 </ul>
               </div>
@@ -82,23 +106,16 @@ export default function Footer() {
 
             <div className="col-lg-2 col-md-6">
               <div className="widget ml-lg-4">
-                <h4 className="widget-title">My Account</h4>
-                <ul className="widget-body">
-                  <li>
-                    <ALink href="#">Sign in</ALink>
-                  </li>
-                  <li>
-                    <ALink href="/pages/cart=">View Cart</ALink>
-                  </li>
-                  <li>
-                    <ALink href="/pages/wishlist">My Wishlist</ALink>
-                  </li>
-                  <li>
-                    <ALink href="#">Track My Order</ALink>
-                  </li>
-                  <li>
-                    <ALink href="#">Help</ALink>
-                  </li>
+                <h4 className="widget-title">Категории</h4>
+                <ul className="widget-body">{
+                  categories.map((item, index) => {
+                    return (
+                      <li key={item.name + index}>
+                        <ALink href={item.href}>{item.name}</ALink>
+                      </li>
+                    )
+                  })
+                }
                 </ul>
               </div>
             </div>
@@ -112,7 +129,7 @@ export default function Footer() {
             </figure>
           </div>
           <div className="footer-center">
-            <p className="copyright">Riode eCommerce &copy; 2021. All Rights Reserved</p>
+            <p className="copyright">Mac Plus &copy; 2023{YEAR > 2023 ? ` - ${YEAR}` : ''}. Все права защищены.</p>
           </div>
           <div className="footer-right">
             <div className="social-links">

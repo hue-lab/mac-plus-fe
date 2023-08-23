@@ -43,7 +43,7 @@ export default function Header() {
                 <i className="d-icon-phone"></i>
               </div>
               <div className="icon-box-content d-lg-show">
-                <h4 className="icon-box-title">Call Us Now:</h4>
+                <h4 className="icon-box-title">Телефон:</h4>
                 <p>0(800) 123-456</p>
               </div>
             </ALink>
