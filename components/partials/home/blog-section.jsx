@@ -14,7 +14,7 @@ function BlogSection(props) {
   return (
     <section className="blog container mt-10 pt-3 mb-10">
       <Reveal keyframes={fadeIn} duration={1000} triggerOnce>
-        <h2 className="title title-underline title-line mb-4">From our Blog</h2>
+        <h2 className="title title-underline title-line mb-4">Наш блог</h2>
 
         <OwlCarousel adClass="owl-theme" options={mainSlider5}>
           {
