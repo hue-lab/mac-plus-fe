@@ -11,7 +11,7 @@ function MainMenu({ router }) {
     },
     {
       name: 'Mac',
-      href: '/shop/all/',
+      href: '/shop/mac/',
       children: [
         {
           name: 'MacBook',
@@ -22,10 +22,26 @@ function MainMenu({ router }) {
     {
       name: 'iPhone',
       href: '/shop/iphone/',
+      children: [
+        {
+          name: 'iPhony 18',
+          href: '/shop/iphony-18/',
+        },
+      ]
     },
     {
       name: 'iPad',
       href: '/shop/ipad/',
+      children: [
+        {
+          name: 'iPaddle',
+          href: '/shop/ipaddle/',
+        },
+        {
+          name: 'iPug',
+          href: '/shop/ipug/',
+        },
+      ]
     },
     {
       name: 'Watch',
@@ -34,6 +50,12 @@ function MainMenu({ router }) {
     {
       name: 'AirPods',
       href: '/shop/airpods/',
+      children: [
+        {
+          name: 'Pods',
+          href: '/shop/pods',
+        },
+      ]
     },
   ];
 
@@ -45,14 +67,14 @@ function MainMenu({ router }) {
           <li className={`${route.children?.length ? 'submenu' : ''} ${asPath === route.href ? 'active' : ''}`} key={route.name + index}>
             <ALink href={route.href}>{route.name}</ALink>
 
-            { route.children?.length && <div className="megamenu" style={{ marginLeft: "-19px" }}>
+            {route.children?.length && <div className="megamenu" style={{ marginLeft: "-19px" }}>
               <div className="row">
                 <div className="col-5">
                   <ul>
                     {
                       route.children.map((item, index) => (
                         <li key={`shop-${item.name + index}`}>
-                          <ALink href={'/' + item.href}>
+                          <ALink href={item.href}>
                             {item.name}
                             {item.hot ? <span className="tip tip-hot">Hot</span> : ""}
                           </ALink>
@@ -76,7 +98,7 @@ function MainMenu({ router }) {
                   </div>
                 </div>
               </div>
-            </div> }
+            </div>}
           </li>
         )
       })}
