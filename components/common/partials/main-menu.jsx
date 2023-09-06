@@ -62,7 +62,6 @@ function MainMenu({ router }) {
   return (
     <nav className="main-nav ml-4">
       <ul className="menu">{navBar.map((route, index) => {
-        console.log(asPath);
         return (
           <li className={`${route.children?.length ? 'submenu' : ''} ${asPath === route.href ? 'active' : ''}`} key={route.name + index}>
             <ALink href={route.href}>{route.name}</ALink>
