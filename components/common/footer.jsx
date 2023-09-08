@@ -35,20 +35,6 @@ export default function Footer() {
                 <img src="./images/home/logo-footer.png" alt="logo-footer" width="154" height="43" />
               </ALink>
             </div>
-
-            <div className="col-lg-9">
-              <div className="widget widget-newsletter form-wrapper form-wrapper-inline">
-                <div className="newsletter-info mx-auto mr-lg-2 ml-lg-4">
-                  <h4 className="widget-title">Подписывайтесь на нашу новостную рассылку</h4>
-                  <p>Получайте актуальную информацию о скидках и специальных предложениях.</p>
-                </div>
-
-                <form action="#" className="input-wrapper input-wrapper-inline">
-                  <input type="email" className="form-control" name="email" id="email" placeholder="Email address here..." required />
-                  <button className="btn btn-primary btn-rounded btn-md ml-2" type="submit">подписаться<i className="d-icon-arrow-right"></i></button>
-                </form>
-              </div>
-            </div>
           </div>
         </div>
 
