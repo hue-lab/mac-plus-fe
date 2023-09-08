@@ -19,7 +19,7 @@ function Shop() {
         <div className="container">
           <ul className="breadcrumb breadcrumb-sm">
             <li><ALink href="/"><i className="d-icon-home"></i></ALink></li>
-            <li>Shop</li>
+            <li>Каталог</li>
           </ul>
 
           <div className="row gutter-lg main-content-wrap">

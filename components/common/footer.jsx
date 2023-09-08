@@ -4,23 +4,23 @@ export default function Footer() {
   const categories = [
     {
       name: 'Mac',
-      href: '/shop',
+      href: '/shop/mac/',
     },
     {
       name: 'iPhone',
-      href: '/shop',
+      href: '/shop/iphone/',
     },
     {
       name: 'iPad',
-      href: '/shop',
+      href: '/shop/ipad/',
     },
     {
       name: 'Watch',
-      href: '/shop',
+      href: '/shop/watch/',
     },
     {
       name: 'AirPods',
-      href: '/shop',
+      href: '/shop/airpods/',
     },
   ];
   const YEAR = new Date().getFullYear();
