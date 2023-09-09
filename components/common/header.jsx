@@ -64,7 +64,7 @@ export default function Header() {
       <div className="header-bottom has-dropdown pb-0">
         <div className="container d-flex align-items-center">
           <div className="dropdown category-dropdown has-border fixed">
-            <ALink href="#" className="text-white font-weight-semi-bold category-toggle"><i className="d-icon-bars2"></i><span>Shop By Categories</span></ALink>
+            <ALink href="#" className="text-white font-weight-semi-bold category-toggle"><i className="d-icon-bars2"></i><span>Каталог</span></ALink>
 
             <div className="dropdown-box">
               <ul className="menu vertical-menu category-menu">
