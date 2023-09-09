@@ -8,7 +8,7 @@ import { videoHandler } from '~/utils';
 import { mainSlider20 } from '~/utils/data/carousel';
 
 function PostSix(props) {
-  const { post, adClass = 'post-sm', isLazy = false, isOriginal = false, btnText = "Read more", btnAdClass = 'btn-dark btn-md', isAuthor = true } = props;
+  const { post, adClass = 'post-sm', isLazy = false, isOriginal = false, btnText = "Подробнее", btnAdClass = 'btn-dark btn-md', isAuthor = true } = props;
 
   return (
     <div className={`post ${post.type === 'gallery' ? '' : 'overlay-zoom'} ${post.type === 'video' ? 'post-video' : ''} ${adClass}`}>
@@ -116,6 +116,7 @@ function PostSix(props) {
       </div>
     </div >
   )
+
 }
 
 export default PostSix;
