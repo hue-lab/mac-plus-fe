@@ -107,7 +107,7 @@ function PostSix(props) {
           {
             isAuthor ? <>by <ALink href="#" className="post-author">{post.author}</ALink> on </> : ''
           }
-          <ALink href="#" className="post-date">{getPostDate(post)}</ALink> | <ALink href="#" className="post-comment"><span>{post.comments}</span> Comments</ALink>
+          <ALink href="#" className="post-date">{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: "numeric", timeZone: "UTC" })}</ALink>
         </div>
         <h4 className="post-title">
           <ALink href={`/blog/single/${post.slug}`}>{post.title}</ALink>
@@ -116,12 +116,7 @@ function PostSix(props) {
       </div>
     </div >
   )
-}
 
-function getPostDate(post) {
-  const postDate = new Date(post.date).toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: "numeric", timeZone: "UTC" });
-  // console.log(Date.parse('08-09-2022'));  may be useful when connecting to back
-  return postDate === 'Invalid Date' ? 'Неизвестно' : postDate;
 }
 
 export default PostSix;
