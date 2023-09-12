@@ -81,7 +81,7 @@ export default function Footer() {
                     <ALink href="/pages/cart">Корзина</ALink>
                   </li>
                   <li>
-                    <ALink href="/blog/classic">Блог</ALink>
+                    <ALink href="/blog">Блог</ALink>
                   </li>
                   <li>
                     <ALink href="/pages/contact-us">Контакты</ALink>

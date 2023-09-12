@@ -104,7 +104,7 @@ function PostOne(props) {
 
       <div className="post-details">
         <div className="post-meta">
-          by <ALink href="#" className="post-author">{post.author}</ALink> on <ALink href="#" className="post-date">{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: "2-digit", timeZone: "UTC" })}</ALink> | <ALink href="#" className="post-comment"><span>{post.comments}</span> Comments</ALink>
+          <ALink href="#" className="post-date">{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: "2-digit", timeZone: "UTC" })}</ALink>
         </div>
         <h4 className="post-title">
           <ALink href={`/blog/single/${post.slug}`}>{post.title}</ALink>

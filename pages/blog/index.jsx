@@ -77,8 +77,7 @@ function Classic() {
         <div className="container">
           <ul className="breadcrumb">
             <li><ALink href="/"><i className="d-icon-home"></i></ALink></li>
-            <li><ALink href="#" className="active">Blog</ALink></li>
-            <li>Classic</li>
+            <li><ALink href="#" className="active">Блог</ALink></li>
           </ul>
         </div>
       </nav>
