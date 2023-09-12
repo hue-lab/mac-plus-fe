@@ -6,10 +6,10 @@ import OwlCarousel from '~/components/features/owl-carousel';
 
 import { videoHandler } from '~/utils';
 import { mainSlider20 } from '~/utils/data/carousel';
+import { getPostDate } from '~/utils';
 
 function PostOne(props) {
-  const { post, adClass = 'mb-7', isLazy = false, isOriginal = false, btnText = "Читать далее", btnAdClass = '', isButton = true } = props;
-
+  const { post, adClass = 'mb-7', isLazy = false, isOriginal = false, btnText = "Подробнее", btnAdClass = '', isButton = true } = props;
   return (
     <div className={`post post-classic ${post.type === 'video' ? 'post-video' : ''} ${adClass}`}>
       {
@@ -104,7 +104,7 @@ function PostOne(props) {
 
       <div className="post-details">
         <div className="post-meta">
-          <ALink href="#" className="post-date">{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: "2-digit", timeZone: "UTC" })}</ALink>
+          <ALink href='#' className="post-date">{getPostDate(post)}</ALink>
         </div>
         <h4 className="post-title">
           <ALink href={`/blog/single/${post.slug}`}>{post.title}</ALink>

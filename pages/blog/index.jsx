@@ -30,6 +30,7 @@ function Classic() {
           content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt euismod interdum. Maecenas interdum dictum purus sit amet lacinia. Ut orci felis, facilisis vitae risus ac, pharetra molestie ligula. Aliquam tincidunt venenatis purus quis eleifend. Nam eget ullamcorper libero. Curabitur lacinia auctor arcu, a dictum lectus. Etiam eget condimentum urna.',
           picture: [],
           slug: 'lorem-ipsum',
+          date: '07-31-2021',
         },
         {
           author: 'Jane Doe',
@@ -37,6 +38,7 @@ function Classic() {
           content: 'Fusce in euismod massa. Integer blandit porttitor dictum. Quisque et tincidunt nunc. Donec pellentesque interdum velit nec volutpat. Fusce a ullamcorper neque, eu convallis risus. Vestibulum molestie mauris tellus. Duis sollicitudin lobortis nisi, sed iaculis massa posuere ut. Sed tortor ante, dignissim eget mi sit amet, luctus pulvinar arcu.',
           picture: [],
           slug: 'fusce-in',
+          date: '04-16-2022',
         },
       ],
     }
