@@ -22,7 +22,7 @@ function BlogSection(props) {
               posts.slice(0, 4).map((post, index) => (
                 <React.Fragment key={"post-six" + index}>
                   <Reveal keyframes={fadeInUpShorter} duration={1000} delay={index * 200 + 300} triggerOnce>
-                    <PostSix post={post} adClass="overlay-zoom" isCalender={true} isAuthor={false} btnAdClass="btn-sm" btnText="Read More" isOriginal={true} />
+                    <PostSix post={post} adClass="overlay-zoom" isCalender={true} isAuthor={false} btnAdClass="btn-sm" btnText="Подробнее" isOriginal={true} />
                   </Reveal>
                 </React.Fragment>
               )) : ''
