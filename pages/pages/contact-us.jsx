@@ -30,13 +30,13 @@ function ContactUs() {
         <div className="container">
           <ul className="breadcrumb">
             <li><ALink href="/"><i className="d-icon-home"></i></ALink></li>
-            <li>Contact Us</li>
+            <li>Контакты</li>
           </ul>
         </div>
       </nav>
 
-      <div className="page-header" style={{ backgroundImage: 'url(./images/page-header/contact-us.jpg)', backgroundColor: "#92918f" }}>
-        <h1 className="page-title font-weight-bold text-capitalize ls-l">Contact Us</h1>
+      <div className="page-header" style={{ backgroundImage: 'url(./images/page-header/contact-us.png)', backgroundColor: "#92918f" }}>
+        <h1 className="page-title font-weight-bold text-capitalize ls-l">Контакты</h1>
       </div>
 
       <div className="page-content mt-10 pt-7">
@@ -47,16 +47,16 @@ function ContactUs() {
                 <div className="col-lg-3 col-md-4 col-sm-6 ls-m mb-4">
                   <div className="grey-section d-flex align-items-center h-100">
                     <div>
-                      <h4 className="mb-2 text-capitalize">Headquarters</h4>
+                      <h4 className="mb-2 text-capitalize">Адрес</h4>
                       <p>1600 Amphitheatre Parkway<br />New York WC1 1BA</p>
 
-                      <h4 className="mb-2 text-capitalize">Phone Number</h4>
+                      <h4 className="mb-2 text-capitalize">Телефон</h4>
                       <p>
                         <ALink href="#">1.800.458.56</ALink><br />
                         <ALink href="#">1.800.458.56</ALink>
                       </p>
 
-                      <h4 className="mb-2 text-capitalize">Support</h4>
+                      <h4 className="mb-2 text-capitalize">Почта</h4>
                       <p className="mb-4">
                         <ALink href="#">support@your-domain.com</ALink><br />
                         <ALink href="#">help@your-domain.com</ALink><br />
@@ -68,21 +68,21 @@ function ContactUs() {
                 <div className="col-lg-9 col-md-8 col-sm-6 d-flex align-items-center mb-4">
                   <div className="w-100">
                     <form className="pl-lg-2" action="#">
-                      <h4 className="ls-m font-weight-bold">Let’s Connect</h4>
-                      <p>Your email address will not be published. Required fields are marked *</p>
+                      <h4 className="ls-m font-weight-bold">Напишите нам</h4>
+                      <p>Ваш электронный адрес не будет передан третьим лицам. Обязательные поля помечены *</p>
                       <div className="row mb-2">
                         <div className="col-12 mb-4">
                           <textarea className="form-control" required
-                            placeholder="Comment*"></textarea>
+                            placeholder="Комментарий *"></textarea>
                         </div>
                         <div className="col-md-6 mb-4">
-                          <input className="form-control" type="text" placeholder="Name *" required />
+                          <input className="form-control" type="text" placeholder="Имя *" required />
                         </div>
                         <div className="col-md-6 mb-4">
                           <input className="form-control" type="email" placeholder="Email *" required />
                         </div>
                       </div>
-                      <button className="btn btn-dark btn-rounded">Post Comment<i className="d-icon-arrow-right"></i></button>
+                      <button className="btn btn-dark btn-rounded">Отправить<i className="d-icon-arrow-right"></i></button>
                     </form>
                   </div>
                 </div>
