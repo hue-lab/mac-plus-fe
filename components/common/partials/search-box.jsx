@@ -11,7 +11,56 @@ import { toDecimal } from '~/utils';
 function SearchForm() {
   const router = useRouter();
   const [search, setSearch] = useState("");
-  const data = [];
+  const data = [
+    {
+      name: 'Apple iPhone 14 Pro 128 GB Чёрный космос',
+      slug: '',
+    },
+    {
+      name: 'Apple iPhone 14 Pro 128 GB Золотой',
+      slug: '',
+    },
+    {
+      name: 'Apple iPhone 14 Pro 256 GB Чёрный космос',
+      slug: '',
+    },
+    {
+      name: 'Apple iPhone 14 Pro 128 GB Чёрный космос',
+      slug: '',
+    },
+    {
+      name: 'Apple iPhone 14 Pro 128 GB Золотой',
+      slug: '',
+    },
+    {
+      name: 'Apple iPhone 14 Pro 256 GB Чёрный космос',
+      slug: '',
+    },
+    {
+      name: 'Apple iPhone 14 Pro 128 GB Чёрный космос',
+      slug: '',
+    },
+    {
+      name: 'Apple iPhone 14 Pro 128 GB Золотой',
+      slug: '',
+    },
+    {
+      name: 'Apple iPhone 14 Pro 256 GB Чёрный космос',
+      slug: '',
+    },
+    {
+      name: 'Apple iPhone 14 Pro 128 GB Чёрный космос',
+      slug: '',
+    },
+    {
+      name: 'Apple iPhone 14 Pro 128 GB Золотой',
+      slug: '',
+    },
+    {
+      name: 'Apple iPhone 14 Pro 256 GB Чёрный космос',
+      slug: '',
+    },
+  ];
 
   const [timer, setTimer] = useState(null);
 
@@ -105,23 +154,9 @@ function SearchForm() {
         </button>
 
         <div className="live-search-list scrollable bg-white">
-          {search.length > 2 && data && data.map((product, index) => (
+          {data && data.map((product, index) => (
             <ALink href={`/product/default/${product.slug}`} className="autocomplete-suggestion" key={`search-result-${index}`}>
-              <LazyLoadImage src={process.env.NEXT_PUBLIC_ASSET_URI + product.pictures[0].url} width={40} height={40} alt="product" />
               <div className="search-name" dangerouslySetInnerHTML={removeXSSAttacks(matchEmphasize(product.name))}></div>
-              <span className="search-price">
-                {
-                  product.price[0] !== product.price[1] ?
-                    product.variants.length === 0 ?
-                      <>
-                        <span className="new-price mr-1">${toDecimal(product.price[0])}</span>
-                        <span className="old-price">${toDecimal(product.price[1])}</span>
-                      </>
-                      :
-                      < span className="new-price">${toDecimal(product.price[0])} – ${toDecimal(product.price[1])}</span>
-                    : <span className="new-price">${toDecimal(product.price[0])}</span>
-                }
-              </span>
             </ALink>
           ))
           }
