@@ -6,6 +6,7 @@ import OwlCarousel from '~/components/features/owl-carousel';
 
 import { videoHandler } from '~/utils';
 import { mainSlider20 } from '~/utils/data/carousel';
+import { getPostDate } from '~/utils';
 
 function PostSix(props) {
   const { post, adClass = 'post-sm', isLazy = false, isOriginal = false, btnText = "Подробнее", btnAdClass = 'btn-dark btn-md', isAuthor = true } = props;
@@ -107,7 +108,7 @@ function PostSix(props) {
           {
             isAuthor ? <>by <ALink href="#" className="post-author">{post.author}</ALink> on </> : ''
           }
-          <ALink href="#" className="post-date">{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: "numeric", timeZone: "UTC" })}</ALink>
+          <ALink href="#" className="post-date">{getPostDate(post)}</ALink>
         </div>
         <h4 className="post-title">
           <ALink href={`/blog/single/${post.slug}`}>{post.title}</ALink>
