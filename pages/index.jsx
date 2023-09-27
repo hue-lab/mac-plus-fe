@@ -7,14 +7,16 @@ import CategorySection from '~/components/partials/home/category-section';
 import BannerSection from '~/components/partials/home/banner-section';
 import ServiceBox from '~/components/partials/home/service-section';
 import BlogSection from '~/components/partials/home/blog-section';
-import {getCategoryTree} from "~/utils/endpoints/categoryTree";
+import { getCategoryTree } from "~/utils/endpoints/categoryTree";
+import { getArticles } from '~/utils/endpoints/articless';
 
 HomePage.getInitialProps = async (context) => {
   const categoryTree = await getCategoryTree();
-  return { categoryTree: categoryTree.children };
+  const articles = await getArticles();
+  return { categoryTree: categoryTree.children, articles: articles.data };
 }
 
-export default function HomePage({ categoryTree }) {
+export default function HomePage({ categoryTree, articles }) {
   const posts = [
     {
       type: '',
@@ -97,6 +99,8 @@ export default function HomePage({ categoryTree }) {
       ],
     },
   ];
+
+  console.log(articles)
 
   return (
     <div className="main home mt-lg-4 homepage">
