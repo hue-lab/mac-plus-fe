@@ -5,6 +5,12 @@ import Helmet from 'react-helmet';
 import ShopBanner from '~/components/partials/shop/shop-banner';
 import SidebarFilterOne from '~/components/partials/shop/sidebar/sidebar-filter-one'
 import ProductListOne from '~/components/partials/shop/product-list/product-list-one';
+import {getCategoryTree} from "~/utils/endpoints/categoryTree";
+
+Shop.getInitialProps = async (context) => {
+  const categoryTree = await getCategoryTree();
+  return { categoryTree: categoryTree.children };
+}
 
 function Shop() {
     const router = useRouter();

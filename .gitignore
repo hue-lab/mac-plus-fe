@@ -4,6 +4,9 @@ build
 # Packages
 node_modules
 
+#environments
+.env
+
 # IDEs and editors
 .idea/
 .project

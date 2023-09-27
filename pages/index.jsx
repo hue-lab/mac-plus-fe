@@ -1,17 +1,20 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 
-// Import Apollo Server and Query
-import withApollo from '../server/apollo';
-
 // import Home Components
 import IntroSection from '~/components/partials/home/intro-section';
 import CategorySection from '~/components/partials/home/category-section';
 import BannerSection from '~/components/partials/home/banner-section';
 import ServiceBox from '~/components/partials/home/service-section';
 import BlogSection from '~/components/partials/home/blog-section';
+import {getCategoryTree} from "~/utils/endpoints/categoryTree";
 
-function HomePage() {
+HomePage.getInitialProps = async (context) => {
+  const categoryTree = await getCategoryTree();
+  return { categoryTree: categoryTree.children };
+}
+
+export default function HomePage({ categoryTree }) {
   const posts = [
     {
       type: '',
@@ -106,7 +109,7 @@ function HomePage() {
       <div className="page-content">
         <IntroSection />
 
-        <CategorySection />
+        <CategorySection categoryTree={categoryTree} />
 
         <BannerSection />
 
@@ -117,5 +120,3 @@ function HomePage() {
     </div>
   )
 }
-
-export default withApollo({ ssr: typeof window === 'undefined' })(HomePage);
