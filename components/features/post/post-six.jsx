@@ -18,10 +18,10 @@ function PostSix(props) {
           <figure className="post-media">
             {
               isLazy ?
-                <ALink href={`/blog/single/${post.slug}`}>
+                <ALink href={`/blog/single/${post._id}`}>
                   {
                     isOriginal ? <LazyLoadImage
-                      src={process.env.NEXT_PUBLIC_ASSET_URI + post.large_picture[0].url}
+                      src={process.env.NEXT_PUBLIC_ASSET_URI + post.media}
                       alt="post image"
                       width={380}
                       height={230}
@@ -30,7 +30,7 @@ function PostSix(props) {
                     />
                       :
                       <LazyLoadImage
-                        src={process.env.NEXT_PUBLIC_ASSET_URI + post.picture[0].url}
+                        src={process.env.NEXT_PUBLIC_ASSET_URI + post.media}
                         alt="post image"
                         width={380}
                         height={230}
@@ -40,17 +40,17 @@ function PostSix(props) {
                   }
                 </ALink>
                 :
-                <ALink href={`/blog/single/${post.slug}`}>
+                <ALink href={`/blog/single/${post._id}`}>
                   {
                     isOriginal ? <img
-                      src={process.env.NEXT_PUBLIC_ASSET_URI + post.large_picture[0].url}
+                      src={process.env.NEXT_PUBLIC_ASSET_URI + post.media}
                       alt="post image"
                       width={300}
                       height={post.large_picture[0].height}
                     /> :
 
                       <img
-                        src={process.env.NEXT_PUBLIC_ASSET_URI + post.picture[0].url}
+                        src={process.env.NEXT_PUBLIC_ASSET_URI + post.media}
                         alt="post image"
                         width={300}
                         height={post.picture[0].height}
@@ -72,33 +72,45 @@ function PostSix(props) {
           <figure className="post-media">
             {
               isLazy ?
-                <OwlCarousel adClass="owl-theme owl-dot-inner owl-dot-white gutter-no" options={mainSlider20}>
-                  {
-                    post.picture.map((item, index) =>
-                      <LazyLoadImage
-                        src={process.env.NEXT_PUBLIC_ASSET_URI + item.url}
-                        alt="post gallery"
-                        key={item.title + '-' + index}
-                        width={380}
-                        height={230}
-                        effect="opacity; transform"
-                        style={{ backgroundColor: "#DEE6E8" }}
-                      />
-                    )}
-                </OwlCarousel>
+                // <OwlCarousel adClass="owl-theme owl-dot-inner owl-dot-white gutter-no" options={mainSlider20}>
+                //   {
+                //     post.media.map((item, index) =>
+                //       <LazyLoadImage
+                //         src={process.env.NEXT_PUBLIC_ASSET_URI + item}
+                //         alt="post gallery"
+                //         key={item.title + '-' + index}
+                //         width={380}
+                //         height={230}
+                //         effect="opacity; transform"
+                //         style={{ backgroundColor: "#DEE6E8" }}
+                //       />
+                //     )}
+                // </OwlCarousel>
+                <LazyLoadImage
+                  src={post.media}
+                  alt="post gallery"
+                  width={380}
+                  height={230}
+                  effect="opacity; transform"
+                  style={{ backgroundColor: "#DEE6E8" }}
+                />
                 :
-                <OwlCarousel adClass="owl-theme owl-dot-inner owl-dot-white gutter-no" options={mainSlider20}>
-                  {
-                    post.picture.map((item, index) =>
-                      <img
-                        src={process.env.NEXT_PUBLIC_ASSET_URI + item.url}
-                        alt="post gallery"
-                        key={item.title + '-' + index}
-                        width={item.width}
-                        height={item.height}
-                      />
-                    )}
-                </OwlCarousel>
+                // <OwlCarousel adClass="owl-theme owl-dot-inner owl-dot-white gutter-no" options={mainSlider20}>
+                //   {
+                //     post.media.map((item, index) =>
+                //       <img
+                //         src={process.env.NEXT_PUBLIC_ASSET_URI + item}
+                //         alt="post gallery"
+                //         key={item.title + '-' + index}
+                //         width={item.width}
+                //         height={item.height}
+                //       />
+                //     )}
+                // </OwlCarousel>
+                <img
+                  src={post.media}
+                  alt="post gallery"
+                />
             }
           </figure>
       }
@@ -108,12 +120,12 @@ function PostSix(props) {
           {
             isAuthor ? <>by <ALink href="#" className="post-author">{post.author}</ALink> on </> : ''
           }
-          <ALink href="#" className="post-date">{getPostDate(post)}</ALink>
+          <ALink href="#" className="post-date">{getPostDate(post.createdAt)}</ALink>
         </div>
         <h4 className="post-title">
-          <ALink href={`/blog/single/${post.slug}`}>{post.title}</ALink>
+          <ALink href={`/blog/single/${post._id}`}>{post.title}</ALink>
         </h4>
-        <ALink href={`/blog/single/${post.slug}`} className={`btn btn-link btn-underline ${btnAdClass}`}>{btnText}<i className="d-icon-arrow-right"></i></ALink>
+        <ALink href={`/blog/single/${post._id}`} className={`btn btn-link btn-underline ${btnAdClass}`}>{btnText}<i className="d-icon-arrow-right"></i></ALink>
       </div>
     </div >
   )
