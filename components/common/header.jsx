@@ -71,13 +71,14 @@ export default function Header({ categoryTree }) {
                 <li><ALink href="#" className="menu-title">Разделы каталога</ALink></li>
 
                 {(categoryTree || []).map((item, index) => (
-                  <li key={index} className="submenu">
+                  <li key={index} className={ item.children?.length ? 'submenu' : '' }>
                     <ALink href={{ pathname: `/shop`, query: { category: item.handle }}}><i className="d-icon-camera1"></i>{ item.name }</ALink>
-                    <ul>
+                    { item.children?.length > 0 && <ul>
                       {item.children.map((item, index) => (
                         <li key={index}><ALink href={{ pathname: `/shop`, query: { category: item.handle }}}>{ item.name }</ALink></li>
                       ))}
                     </ul>
+                    }
                   </li>
                 ))}
               </ul>
