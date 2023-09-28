@@ -10,6 +10,10 @@ export const parseOptions = function (options) {
   return {};
 }
 
+export const getImgPath = (img) => {
+  return `${process.env.API_HOST }/storage/images/${img}`;
+}
+
 /**
  * utils to dectect IE browser
  * @return {bool}

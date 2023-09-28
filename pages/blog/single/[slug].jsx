@@ -14,7 +14,7 @@ import BlogSidebar from '~/components/partials/post/blog-sidebar';
 import RelatedPosts from '~/components/partials/post/related-posts';
 
 import { mainSlider20 } from '~/utils/data/carousel';
-import { videoHandler } from '~/utils';
+import {getImgPath, videoHandler} from '~/utils';
 import { getArticleById } from '~/utils/endpoints/articles';
 import { getPostDate } from '~/utils';
 
@@ -61,9 +61,9 @@ export default function PostSingle({ post }) {
                   <div className={`post post-single`}>
                     <figure className="post-media">
                       <img
-                        src={post.media}
+                        src={getImgPath(post.media)}
                         alt="post gallery"
-                        style={{ backgroundColor: "#DEE6E8" }}
+                        style={{ backgroundColor: "#DEE6E8", width: 900, height: 500, objectFit: "cover" }}
                       />
                     </figure>
                     <div className="post-details">

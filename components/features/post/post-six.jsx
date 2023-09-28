@@ -2,10 +2,7 @@ import React from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 import ALink from '~/components/features/custom-link';
-import OwlCarousel from '~/components/features/owl-carousel';
-
-import { videoHandler } from '~/utils';
-import { mainSlider20 } from '~/utils/data/carousel';
+import { getImgPath } from '~/utils';
 import { getPostDate } from '~/utils';
 
 function PostSix(props) {
@@ -21,7 +18,7 @@ function PostSix(props) {
                 <ALink href={`/blog/single/${post._id}`}>
                   {
                     isOriginal ? <LazyLoadImage
-                      src={process.env.NEXT_PUBLIC_ASSET_URI + post.media}
+                      src={getImgPath(post.media)}
                       alt="post image"
                       width={380}
                       height={230}
@@ -30,7 +27,7 @@ function PostSix(props) {
                     />
                       :
                       <LazyLoadImage
-                        src={process.env.NEXT_PUBLIC_ASSET_URI + post.media}
+                        src={getImgPath(post.media)}
                         alt="post image"
                         width={380}
                         height={230}
@@ -43,14 +40,14 @@ function PostSix(props) {
                 <ALink href={`/blog/single/${post._id}`}>
                   {
                     isOriginal ? <img
-                      src={process.env.NEXT_PUBLIC_ASSET_URI + post.media}
+                      src={getImgPath(post.media)}
                       alt="post image"
                       width={300}
                       height={post.large_picture[0].height}
                     /> :
 
                       <img
-                        src={process.env.NEXT_PUBLIC_ASSET_URI + post.media}
+                        src={getImgPath(post.media)}
                         alt="post image"
                         width={300}
                         height={post.picture[0].height}
@@ -58,36 +55,12 @@ function PostSix(props) {
                   }
                 </ALink>
             }
-            {
-              post.type === 'video' ?
-                <>
-                  <span className="video-play" onClick={videoHandler}></span>
-                  <video width="380">
-                    <source src={process.env.NEXT_PUBLIC_ASSET_URI + post.video.url} type="video/mp4" />
-                  </video>
-                </>
-                : ''
-            }
           </figure> :
           <figure className="post-media">
             {
               isLazy ?
-                // <OwlCarousel adClass="owl-theme owl-dot-inner owl-dot-white gutter-no" options={mainSlider20}>
-                //   {
-                //     post.media.map((item, index) =>
-                //       <LazyLoadImage
-                //         src={process.env.NEXT_PUBLIC_ASSET_URI + item}
-                //         alt="post gallery"
-                //         key={item.title + '-' + index}
-                //         width={380}
-                //         height={230}
-                //         effect="opacity; transform"
-                //         style={{ backgroundColor: "#DEE6E8" }}
-                //       />
-                //     )}
-                // </OwlCarousel>
                 <LazyLoadImage
-                  src={post.media}
+                  src={getImgPath(post.media)}
                   alt="post gallery"
                   width={380}
                   height={230}
@@ -95,21 +68,11 @@ function PostSix(props) {
                   style={{ backgroundColor: "#DEE6E8" }}
                 />
                 :
-                // <OwlCarousel adClass="owl-theme owl-dot-inner owl-dot-white gutter-no" options={mainSlider20}>
-                //   {
-                //     post.media.map((item, index) =>
-                //       <img
-                //         src={process.env.NEXT_PUBLIC_ASSET_URI + item}
-                //         alt="post gallery"
-                //         key={item.title + '-' + index}
-                //         width={item.width}
-                //         height={item.height}
-                //       />
-                //     )}
-                // </OwlCarousel>
                 <img
-                  src={post.media}
+                  src={getImgPath(post.media)}
                   alt="post gallery"
+                  width={380}
+                  height={230}
                 />
             }
           </figure>
