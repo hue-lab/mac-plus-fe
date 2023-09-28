@@ -19,7 +19,7 @@ function BlogSection(props) {
         <OwlCarousel adClass="owl-theme" options={mainSlider5}>
           {
             posts && posts.length ?
-              posts.slice(-4).map((post, index) => (
+              posts.map((post, index) => (
                 <React.Fragment key={"post-six" + index}>
                   <Reveal keyframes={fadeInUpShorter} duration={1000} delay={index * 200 + 300} triggerOnce>
                     <PostSix post={post} adClass="overlay-zoom" isCalender={true} isAuthor={false} btnAdClass="btn-sm" btnText="Подробнее" isOriginal={true} />

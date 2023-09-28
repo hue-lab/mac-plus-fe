@@ -8,11 +8,11 @@ import BannerSection from '~/components/partials/home/banner-section';
 import ServiceBox from '~/components/partials/home/service-section';
 import BlogSection from '~/components/partials/home/blog-section';
 import { getCategoryTree } from "~/utils/endpoints/categoryTree";
-import { getArticles, getArticleById } from '~/utils/endpoints/articles';
+import { getLatestArticles } from '~/utils/endpoints/articles';
 
 HomePage.getInitialProps = async (context) => {
   const categoryTree = await getCategoryTree();
-  const articles = await getArticles();
+  const articles = await getLatestArticles();
   return { categoryTree: categoryTree.children, articles: articles.data };
 }
 

@@ -1,5 +1,5 @@
-export async function getArticles() {
-  const res = await fetch(process.env.API_HOST + '/article?preview=true');
+export async function getLatestArticles(limit = 4) {
+  const res = await fetch(process.env.API_HOST + `/article?limit=${limit}`);
   return await res.json() || [];
 }
 
