@@ -1,24 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import {debounceTime, Subject} from "rxjs";
 
 import ALink from '~/components/features/custom-link';
-
-import withApollo from '~/server/apollo';
-
-import { toDecimal } from '~/utils';
 import { autocomplete } from '~/utils/endpoints/autocomplete';
 
-function SearchForm() {
+export default function SearchForm() {
   const router = useRouter();
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
-  //const [timer, setTimer] = useState(null);
+  const onSearch = new Subject();
 
-  let searchProducts = async () => {
-    let res = await autocomplete(search);
-    console.log(res);
-    if (Array.isArray(res)) setSearchResult(res);
+  onSearch.pipe(debounceTime(400)).subscribe((res) => {
+    searchProducts(res).then((searchRes) => {
+      setSearchResult(searchRes);
+      setSearch(res);
+    });
+  });
+
+  async function searchProducts(text) {
+    if (!text?.length) {
+      return;
+    }
+    return  await autocomplete(text);
   }
 
 
@@ -29,22 +33,6 @@ function SearchForm() {
       document.querySelector("body").removeEventListener("click", onBodyClick);
     })
   }, [])
-
-  useEffect(() => {
-    searchProducts();
-  }, [search])
-
-  // useEffect(() => {
-  //   if (search.length > 2) {
-  //     if (timer) clearTimeout(timer);
-  //     let timerId = setTimeout(() => {
-  //       // searchProducts( { variables: { search: search } } );
-  //       setTimer(null);
-  //     }, 500);
-
-  //     setTimer(timerId);
-  //   }
-  // }, [search])
 
   useEffect(() => {
     document.querySelector('.header-search.show-results') && document.querySelector('.header-search.show-results').classList.remove('show-results');
@@ -88,7 +76,7 @@ function SearchForm() {
   }
 
   function onSearchChange(e) {
-    setSearch(e.target.value);
+    onSearch.next(e.target.value);
   }
 
   function onSubmitSearchForm(e) {
@@ -111,17 +99,17 @@ function SearchForm() {
           <i className="d-icon-search"></i>
         </button>
 
-        <div className="live-search-list scrollable bg-white">
-          {searchResult && searchResult.map((product, index) => (
-            <ALink href={`/product/default/${product._id}`} className="autocomplete-suggestion" key={`search-result-${index}`}>
-              <div className="search-name" dangerouslySetInnerHTML={removeXSSAttacks(matchEmphasize(product.name))}></div>
-            </ALink>
-          ))
-          }
-        </div>
+        {
+          !!searchResult?.length && <div className="live-search-list scrollable bg-white">
+            {searchResult && searchResult.map((product, index) => (
+              <ALink href={`/product/default/${product._id}`} className="autocomplete-suggestion" key={`search-result-${index}`}>
+                <div className="search-name" dangerouslySetInnerHTML={removeXSSAttacks(matchEmphasize(product.name))}></div>
+              </ALink>
+            ))
+            }
+          </div>
+        }
       </form>
     </div>
   );
 }
-
-export default withApollo({ ssr: typeof window === 'undefined' })(SearchForm);
