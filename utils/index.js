@@ -10,6 +10,10 @@ export const parseOptions = function (options) {
   return {};
 }
 
+export const getImgPath = (img) => {
+  return `${process.env.API_HOST}/storage/images/${img}`;
+}
+
 /**
  * utils to dectect IE browser
  * @return {bool}
@@ -316,8 +320,12 @@ export const toDecimal = (price, fixedCount = 2) => {
   return price.toLocaleString(undefined, { minimumFractionDigits: fixedCount, maximumFractionDigits: fixedCount });
 }
 
-export function getPostDate(post) {
-  const postDate = new Date(post.date).toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: "numeric", timeZone: "Europe/Minsk" });
+/**
+ * utils to convert date string into human readable
+ */
+
+export function getPostDate(date) {
+  const postDate = new Date(date).toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: "numeric", timeZone: "Europe/Minsk" });
   // console.log(Date.parse('08-09-2022'));  may be useful when connecting to back
   return postDate === 'Invalid Date' ? 'Неизвестно' : postDate;
 }

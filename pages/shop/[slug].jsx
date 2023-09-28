@@ -5,8 +5,14 @@ import ALink from '~/components/features/custom-link';
 
 import SidebarFilterOne from '~/components/partials/shop/sidebar/sidebar-filter-one'
 import ProductListOne from '~/components/partials/shop/product-list/product-list-one';
+import {getCategoryTree} from "~/utils/endpoints/categoryTree";
 
-function Shop() {
+Shop.getInitialProps = async (context) => {
+  const categoryTree = await getCategoryTree();
+  return { categoryTree: categoryTree.children };
+}
+
+export default function Shop() {
   return (
     <main className="main bt-lg-none shop">
       <Helmet>
@@ -42,5 +48,3 @@ function Shop() {
     </main >
   )
 }
-
-export default React.memo(Shop);

@@ -45,7 +45,7 @@ const App = ({ Component, pageProps }) => {
           <meta name="author" content="D-THEMES" />
         </Helmet>
 
-        <Layout>
+        <Layout categoryTree={pageProps.categoryTree}>
           <Component {...pageProps} />
         </Layout>
       </PersistGate>
