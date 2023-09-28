@@ -1,99 +1,23 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 
-// Import Apollo Server and Query
-import withApollo from '../server/apollo';
-
 // import Home Components
 import IntroSection from '~/components/partials/home/intro-section';
 import CategorySection from '~/components/partials/home/category-section';
 import BannerSection from '~/components/partials/home/banner-section';
 import ServiceBox from '~/components/partials/home/service-section';
 import BlogSection from '~/components/partials/home/blog-section';
+import { getCategoryTree } from "~/utils/endpoints/categoryTree";
+import { getLatestArticles } from '~/utils/endpoints/articles';
 
-function HomePage() {
-  const posts = [
-    {
-      type: '',
-      slug: '',
-      large_picture: [
-        {
-          url: '',
-          height: 0,
-        },
-      ],
-      picture: [
-        {
-          url: '',
-          height: 0,
-        },
-      ],
-    },
-    {
-      type: '',
-      slug: '',
-      large_picture: [
-        {
-          url: '',
-          height: 0,
-        },
-      ],
-      picture: [
-        {
-          url: '',
-          height: 0,
-        },
-      ],
-    },
-    {
-      type: '',
-      slug: '',
-      large_picture: [
-        {
-          url: '',
-          height: 0,
-        },
-      ],
-      picture: [
-        {
-          url: '',
-          height: 0,
-        },
-      ],
-    },
-    {
-      type: '',
-      slug: '',
-      large_picture: [
-        {
-          url: '',
-          height: 0,
-        },
-      ],
-      picture: [
-        {
-          url: '',
-          height: 0,
-        },
-      ],
-    },
-    {
-      type: '',
-      slug: '',
-      large_picture: [
-        {
-          url: '',
-          height: 0,
-        },
-      ],
-      picture: [
-        {
-          url: '',
-          height: 0,
-        },
-      ],
-    },
-  ];
+HomePage.getInitialProps = async (context) => {
+  const categoryTree = await getCategoryTree();
+  const articles = await getLatestArticles();
+  return { categoryTree: categoryTree.children, articles: articles.data };
+}
+
+export default function HomePage({ categoryTree, articles }) {
+
 
   return (
     <div className="main home mt-lg-4 homepage">
@@ -106,16 +30,14 @@ function HomePage() {
       <div className="page-content">
         <IntroSection />
 
-        <CategorySection />
+        <CategorySection categoryTree={categoryTree} />
 
         <BannerSection />
 
         <ServiceBox />
 
-        <BlogSection posts={posts} />
+        <BlogSection posts={articles} />
       </div>
     </div>
   )
 }
-
-export default withApollo({ ssr: typeof window === 'undefined' })(HomePage);

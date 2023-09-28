@@ -19,9 +19,8 @@ import { modalActions } from '~/store/modal';
 
 import { showScrollTopHandler, scrollTopHandler, stickyHeaderHandler, stickyFooterHandler } from '~/utils';
 
-function Layout({ children, closeQuickview }) {
+function Layout({ children, closeQuickview, categoryTree }) {
   const router = useRouter();
-
   useLayoutEffect(() => {
     document.querySelector('body').classList.remove('loaded');
   }, [router.pathname])
@@ -58,7 +57,7 @@ function Layout({ children, closeQuickview }) {
   return (
     <>
       <div className="page-wrapper">
-        <Header />
+        <Header categoryTree={categoryTree} />
 
         {children}
 
