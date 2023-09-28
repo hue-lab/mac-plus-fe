@@ -314,10 +314,10 @@
 
 // Group Category
 
-.category-group-image,
 .category-group-icon {
     display: flex;
     align-items: center;
+    gap: 2rem;
     border: 1px solid $border-color;
     border-radius: .3rem;
     > * {
@@ -325,6 +325,30 @@
     }
     li:not(:last-child) {
         margin-bottom: .9rem;
+    }
+}
+
+.category-group-image {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: 2rem;
+    border: 1px solid $border-color;
+    border-radius: .3rem;
+    > * {
+        flex: 1;
+    }
+    li:not(:last-child) {
+        margin-bottom: .9rem;
+    }
+    .category-media {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .lazy-load-image-background {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+        }
     }
 }
 
