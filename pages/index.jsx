@@ -9,14 +9,20 @@ import ServiceBox from '~/components/partials/home/service-section';
 import BlogSection from '~/components/partials/home/blog-section';
 import { getCategoryTree } from "~/utils/endpoints/categoryTree";
 import { getLatestArticles } from '~/utils/endpoints/articles';
+import {getRecProducts} from "~/utils/endpoints/products";
 
 HomePage.getInitialProps = async (context) => {
   const categoryTree = await getCategoryTree();
   const articles = await getLatestArticles();
-  return { categoryTree: categoryTree.children, articles: articles.data };
+  const recProducts = await getRecProducts();
+  return {
+    categoryTree: categoryTree.children,
+    articles: articles.data,
+    recProducts : recProducts.data,
+  };
 }
 
-export default function HomePage({ categoryTree, articles }) {
+export default function HomePage({ categoryTree, articles, recProducts }) {
 
 
   return (
@@ -30,7 +36,7 @@ export default function HomePage({ categoryTree, articles }) {
       <div className="page-content">
         <IntroSection />
 
-        <CategorySection categoryTree={categoryTree} />
+        <CategorySection recProducts={recProducts} />
 
         <BannerSection />
 
