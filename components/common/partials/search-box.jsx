@@ -12,29 +12,15 @@ import { autocomplete } from '~/utils/endpoints/autocomplete';
 function SearchForm() {
   const router = useRouter();
   const [search, setSearch] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
+  //const [timer, setTimer] = useState(null);
 
   let searchProducts = async () => {
     let res = await autocomplete(search);
     console.log(res);
-    return res;
+    if (Array.isArray(res)) setSearchResult(res);
   }
 
-  const data = [
-    {
-      name: 'Apple iPhone 14 Pro 128 GB Чёрный космос',
-      slug: '',
-    },
-    {
-      name: 'Apple iPhone 14 Pro 128 GB Золотой',
-      slug: '',
-    },
-    {
-      name: 'Apple iPhone 14 Pro 256 GB Чёрный космос',
-      slug: '',
-    },
-  ];
-
-  const [timer, setTimer] = useState(null);
 
   useEffect(() => {
     document.querySelector("body").addEventListener("click", onBodyClick);
@@ -126,8 +112,8 @@ function SearchForm() {
         </button>
 
         <div className="live-search-list scrollable bg-white">
-          {data && data.map((product, index) => (
-            <ALink href={`/product/default/${product.slug}`} className="autocomplete-suggestion" key={`search-result-${index}`}>
+          {searchResult && searchResult.map((product, index) => (
+            <ALink href={`/product/default/${product._id}`} className="autocomplete-suggestion" key={`search-result-${index}`}>
               <div className="search-name" dangerouslySetInnerHTML={removeXSSAttacks(matchEmphasize(product.name))}></div>
             </ALink>
           ))
