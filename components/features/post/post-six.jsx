@@ -80,9 +80,6 @@ function PostSix(props) {
 
       <div className="post-details">
         <div className="post-meta">
-          {
-            isAuthor ? <>by <ALink href="#" className="post-author">{post.author}</ALink> on </> : ''
-          }
           <ALink href="#" className="post-date">{getPostDate(post.createdAt)}</ALink>
         </div>
         <h4 className="post-title">

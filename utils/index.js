@@ -11,7 +11,7 @@ export const parseOptions = function (options) {
 }
 
 export const getImgPath = (img) => {
-  return `${process.env.API_HOST }/storage/images/${img}`;
+  return `${process.env.API_HOST}/storage/images/${img}`;
 }
 
 /**
@@ -319,6 +319,10 @@ export const getCartCount = cartItems => {
 export const toDecimal = (price, fixedCount = 2) => {
   return price.toLocaleString(undefined, { minimumFractionDigits: fixedCount, maximumFractionDigits: fixedCount });
 }
+
+/**
+ * utils to convert date string into human readable
+ */
 
 export function getPostDate(date) {
   const postDate = new Date(date).toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: "numeric", timeZone: "Europe/Minsk" });
