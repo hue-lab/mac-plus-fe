@@ -7,47 +7,19 @@ import ALink from '~/components/features/custom-link';
 import withApollo from '~/server/apollo';
 
 import { toDecimal } from '~/utils';
+import { autocomplete } from '~/utils/endpoints/autocomplete';
 
 function SearchForm() {
   const router = useRouter();
   const [search, setSearch] = useState("");
+
+  let searchProducts = async () => {
+    let res = await autocomplete(search);
+    console.log(res);
+    return res;
+  }
+
   const data = [
-    {
-      name: 'Apple iPhone 14 Pro 128 GB Чёрный космос',
-      slug: '',
-    },
-    {
-      name: 'Apple iPhone 14 Pro 128 GB Золотой',
-      slug: '',
-    },
-    {
-      name: 'Apple iPhone 14 Pro 256 GB Чёрный космос',
-      slug: '',
-    },
-    {
-      name: 'Apple iPhone 14 Pro 128 GB Чёрный космос',
-      slug: '',
-    },
-    {
-      name: 'Apple iPhone 14 Pro 128 GB Золотой',
-      slug: '',
-    },
-    {
-      name: 'Apple iPhone 14 Pro 256 GB Чёрный космос',
-      slug: '',
-    },
-    {
-      name: 'Apple iPhone 14 Pro 128 GB Чёрный космос',
-      slug: '',
-    },
-    {
-      name: 'Apple iPhone 14 Pro 128 GB Золотой',
-      slug: '',
-    },
-    {
-      name: 'Apple iPhone 14 Pro 256 GB Чёрный космос',
-      slug: '',
-    },
     {
       name: 'Apple iPhone 14 Pro 128 GB Чёрный космос',
       slug: '',
@@ -73,20 +45,20 @@ function SearchForm() {
   }, [])
 
   useEffect(() => {
-    setSearch("");
-  }, [router.query.slug])
-
-  useEffect(() => {
-    if (search.length > 2) {
-      if (timer) clearTimeout(timer);
-      let timerId = setTimeout(() => {
-        // searchProducts( { variables: { search: search } } );
-        setTimer(null);
-      }, 500);
-
-      setTimer(timerId);
-    }
+    searchProducts();
   }, [search])
+
+  // useEffect(() => {
+  //   if (search.length > 2) {
+  //     if (timer) clearTimeout(timer);
+  //     let timerId = setTimeout(() => {
+  //       // searchProducts( { variables: { search: search } } );
+  //       setTimer(null);
+  //     }, 500);
+
+  //     setTimer(timerId);
+  //   }
+  // }, [search])
 
   useEffect(() => {
     document.querySelector('.header-search.show-results') && document.querySelector('.header-search.show-results').classList.remove('show-results');
@@ -146,7 +118,7 @@ function SearchForm() {
   return (
     <div className="header-search hs-simple">
       <form action="#" method="get" onSubmit={onSubmitSearchForm} className="input-wrapper">
-        <input type="text" className="form-control" name="search" autoComplete="off" value={search} onChange={onSearchChange}
+        <input type="text" className="form-control" name="search" autoComplete="off" onChange={e => onSearchChange(e)}
           placeholder="Поиск..." required onClick={showSearchBox} />
 
         <button className="btn btn-search" type="submit">
