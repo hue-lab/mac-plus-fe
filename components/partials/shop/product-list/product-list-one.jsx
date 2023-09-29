@@ -10,14 +10,11 @@ import Pagination from '~/components/features/pagination';
 import withApollo from '~/server/apollo';
 import { GET_PRODUCTS } from '~/server/queries';
 
-function ProductListOne(props) {
-  const { itemsPerRow = 3, type = "left", isToolbox = true } = props;
+export  default function ProductListOne({ itemsPerRow = 3, type = "left", isToolbox = true, products }) {
   const router = useRouter();
   const query = router.query;
   //const [ getProducts, { data, loading, error } ] = useLazyQuery( GET_PRODUCTS );
-  const data = null;
   const loading = false;
-  const products = data && data.products.data;
   const gridClasses = {
     3: "cols-2 cols-sm-3",
     4: "cols-2 cols-sm-3 cols-md-4",
@@ -27,27 +24,11 @@ function ProductListOne(props) {
     8: "cols-2 cols-sm-3 cols-md-4 cols-lg-5 cols-xl-8"
   }
   const perPage = query.per_page ? parseInt(query.per_page) : 12;
-  const totalPage = data ? parseInt(data.products.total / perPage) + (data.products.total % perPage ? 1 : 0) : 1;
+  const totalPage = products?.data ? parseInt(products.metadata.lastPage) : 1;
+  const productsData = products?.data;
+  console.log(productsData);
   const page = query.page ? query.page : 1;
   const gridType = query.type ? query.type : 'grid';
-
-  // useEffect( () => {
-  //     getProducts( {
-  //         variables: {
-  //             search: query.search,
-  //             colors: query.colors ? query.colors.split( ',' ) : [],
-  //             sizes: query.sizes ? query.sizes.split( ',' ) : [],
-  //             brands: query.brands ? query.brands.split( ',' ) : [],
-  //             min_price: parseInt( query.min_price ),
-  //             max_price: parseInt( query.max_price ),
-  //             category: query.category,
-  //             tag: query.tag,
-  //             sortBy: query.sortby,
-  //             from: perPage * ( page - 1 ),
-  //             to: perPage * page
-  //         }
-  //     } );
-  // }, [ query ] )
 
   return (
     <>
@@ -76,37 +57,35 @@ function ProductListOne(props) {
       {
         gridType === 'grid' ?
           <div className={`row product-wrapper gutter-no split-line ${gridClasses[itemsPerRow]}`}>
-            {products && products.map(item =>
-              <div className="product-wrap" key={'shop-' + item.slug}>
+            {products && productsData.map((item, index) =>
+              <div className="product-wrap" key={index}>
                 <ProductTwo product={item} isCat={false} />
               </div>
             )}
           </div>
           :
           <div className="product-lists product-wrapper">
-            {products && products.map(item =>
-              <ProductEight product={item} key={'shop-list-' + item.slug} />
+            {products && products.map((item, index) =>
+              <ProductEight product={item} key={index} />
             )}
           </div>
       }
 
       {
-        products && products.length === 0 ?
+        productsData && products?.metadata?.total === 0 ?
           <p className="ml-1">No products were found matching your selection.</p> : ''
       }
 
-      {
-        data && data.products.total > 0 ?
-          <div className="toolbox toolbox-pagination">
-            {
-              data && <p className="show-info">Showing <span>{perPage * (page - 1) + 1} - {Math.min(perPage * page, data.products.total)} of {data.products.total}</span>Products</p>
-            }
+      {/*{*/}
+      {/*  productsData && products?.metadata.total > 0 ?*/}
+      {/*    <div className="toolbox toolbox-pagination">*/}
+      {/*      {*/}
+      {/*        data && <p className="show-info">Showing <span>{perPage * (page - 1) + 1} - {Math.min(perPage * page, data.products.total)} of {data.products.total}</span>Products</p>*/}
+      {/*      }*/}
 
-            <Pagination totalPage={totalPage} />
-          </div> : ''
-      }
+      {/*      <Pagination totalPage={totalPage} />*/}
+      {/*    </div> : ''*/}
+      {/*}*/}
     </>
   )
 }
-
-export default withApollo({ ssr: typeof window === 'undefined' })(ProductListOne);
