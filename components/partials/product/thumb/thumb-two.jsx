@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react';
 import OwlCarousel from '~/components/features/owl-carousel';
 
 import { mainSlider15 } from '~/utils/data/carousel';
+import {getImgPath} from "~/utils";
 
 function ThumbTwo( props ) {
     const { product, index = 0 } = props;
-    let thumbs = product.pictures;
+    let thumbs = product.media;
     const [ thumbRef, setThumbRef ] = useState( null );
 
     useEffect( () => {
@@ -39,7 +40,7 @@ function ThumbTwo( props ) {
                 {
                     thumbs.map( ( thumb, index ) => (
                         <div className={ `product-thumb ${ index === 0 ? 'active' : '' }` } onClick={ ( e ) => { thumbActiveHandler( e, index ) } } key={ thumb + '-2-' + index }>
-                            <img src={ process.env.NEXT_PUBLIC_ASSET_URI + thumb.url } alt="product thumbnail" width="137" height="137" />
+                            <img src={ getImgPath(thumb) } alt="product thumbnail" width="137" height="137" />
                         </div>
                     ) )
                 }

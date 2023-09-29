@@ -26,7 +26,6 @@ export  default function ProductListOne({ itemsPerRow = 3, type = "left", isTool
   const perPage = query.per_page ? parseInt(query.per_page) : 12;
   const totalPage = products?.data ? parseInt(products.metadata.lastPage) : 1;
   const productsData = products?.data;
-  console.log(productsData);
   const page = query.page ? query.page : 1;
   const gridType = query.type ? query.type : 'grid';
 
@@ -65,7 +64,7 @@ export  default function ProductListOne({ itemsPerRow = 3, type = "left", isTool
           </div>
           :
           <div className="product-lists product-wrapper">
-            {products && products.map((item, index) =>
+            {products && productsData.map((item, index) =>
               <ProductEight product={item} key={index} />
             )}
           </div>
@@ -76,16 +75,16 @@ export  default function ProductListOne({ itemsPerRow = 3, type = "left", isTool
           <p className="ml-1">No products were found matching your selection.</p> : ''
       }
 
-      {/*{*/}
-      {/*  productsData && products?.metadata.total > 0 ?*/}
-      {/*    <div className="toolbox toolbox-pagination">*/}
-      {/*      {*/}
-      {/*        data && <p className="show-info">Showing <span>{perPage * (page - 1) + 1} - {Math.min(perPage * page, data.products.total)} of {data.products.total}</span>Products</p>*/}
-      {/*      }*/}
+      {
+        productsData && products?.metadata.total > 0 ?
+          <div className="toolbox toolbox-pagination">
+            {
+              productsData && <p className="show-info">Показано<span>{ productsData.length || 0 } из { products.metadata.total }</span>продуктов</p>
+            }
 
-      {/*      <Pagination totalPage={totalPage} />*/}
-      {/*    </div> : ''*/}
-      {/*}*/}
+            <Pagination totalPage={totalPage} />
+          </div> : ''
+      }
     </>
   )
 }

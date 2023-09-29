@@ -28,3 +28,8 @@ export async function getProducts() {
   });
   return await res.json();
 }
+
+export async function getProductById(id) {
+  const res = await fetch(process.env.API_HOST + `/store/product/${id}`);
+  return await res.json();
+}

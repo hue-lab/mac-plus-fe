@@ -74,6 +74,13 @@
 .product-image {
     position: relative;
     width: 100%;
+    & > div {
+        height: 100%;
+        img {
+            height: 400px !important;
+            object-fit: contain;
+        }
+    }
 }
 
 // Product Thumbs Dots
@@ -150,6 +157,11 @@
     position: relative;
     margin: 0 .5rem;
     cursor: pointer;
+
+    img {
+        height: 100px !important;
+        object-fit: contain;
+    }
 
     &::before {
         content: '';

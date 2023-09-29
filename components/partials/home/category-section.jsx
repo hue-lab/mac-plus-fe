@@ -15,10 +15,10 @@ export default function CategorySection({ recProducts }) {
 
         <div className="row">
           {recProducts.map((item, index) => (
-            <div key={index} className="col-xl-4 col-md-6 mb-4">
-              <Reveal keyframes={fadeIn} delay={200} duration={1200} triggerOnce>
-                <div className="category category-group-image">
-                  <ALink href="#">
+            <ALink key={index} className="col-xl-4 col-md-6 mb-4" href={ `/product/${item._id}` }>
+              <div>
+                <Reveal keyframes={fadeIn} delay={200} duration={1200} triggerOnce>
+                  <div style={{ cursor: 'pointer' }} className="category category-group-image">
                     <figure className="category-media">
                       <LazyLoadImage
                         src={getImgPath(item.media[0])}
@@ -29,32 +29,32 @@ export default function CategorySection({ recProducts }) {
                         height={169}
                       />
                     </figure>
-                  </ALink>
-                  <div className="category-content">
-                    <h4 className="category-name">{ item.name }</h4>
-                    <ul className="category-list">
-                      <li>Бренд: { item.brand.name }</li>
-                      { item.isStock
-                        ? <li style={{ color: 'var(--toastify-color-success)' }}>В наличии</li>
-                        : <li style={{ color: 'var(--toastify-color-error)' }}>Отсутствует</li>
-                      }
-                      <li>
-                        { item.discount > 0
-                          ? <span>
-                              <s>{ item.price } BYN</s><br/>
-                              <span style={{ fontSize: '1.6rem', color: 'black', fontWeight: '500' }}> { item.totalPrice } BYN</span>
-                            </span>
-                          : <span>
-                              <span style={{ fontSize: '1.6rem', color: 'black', fontWeight: '500' }}> { item.totalPrice } BYN</span><br/>
-                              <br/>
-                            </span>
+                    <div className="category-content">
+                      <h4 className="category-name">{ item.name }</h4>
+                      <ul className="category-list">
+                        <li>Бренд: { item.brand.name }</li>
+                        { item.isStock
+                          ? <li style={{ color: 'var(--toastify-color-success)' }}>В наличии</li>
+                          : <li style={{ color: 'var(--toastify-color-error)' }}>Отсутствует</li>
                         }
-                      </li>
-                    </ul>
+                        <li>
+                          { item.discount > 0
+                            ? <span>
+                                <s>{ item.price } BYN</s><br/>
+                                <span style={{ fontSize: '1.6rem', color: 'black', fontWeight: '500' }}> { item.totalPrice } BYN</span>
+                              </span>
+                            : <span>
+                                <span style={{ fontSize: '1.6rem', color: 'black', fontWeight: '500' }}> { item.totalPrice } BYN</span><br/>
+                                <br/>
+                              </span>
+                          }
+                        </li>
+                      </ul>
+                    </div>
                   </div>
-                </div>
-              </Reveal>
-            </div>
+                </Reveal>
+              </div>
+            </ALink>
           ))}
         </div>
       </section>

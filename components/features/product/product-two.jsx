@@ -43,7 +43,7 @@ function ProductTwo ( props ) {
     return (
         <div className={ `product ${ adClass }` }>
             <figure className="product-media">
-                <ALink href={ `/product/default/${ product._id }` }>
+                <ALink href={ `/product/${ product._id }` }>
                     <LazyLoadImage
                         alt="product"
                         src={getImgPath(product.media[0])}
@@ -82,7 +82,7 @@ function ProductTwo ( props ) {
                 </div>
 
                 <div className="product-action">
-                    <ALink href="#" className="btn-product btn-quickview" title="Quick View" onClick={ showQuickviewHandler }>Подробнее</ALink>
+                    <ALink href={ `/product/${ product._id }` } className="btn-product btn-quickview" title="Quick View">Подробнее</ALink>
                 </div>
             </figure>
 
