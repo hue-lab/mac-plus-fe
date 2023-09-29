@@ -100,7 +100,7 @@ function MobileMenu({ categoryTree }) {
                           <ul>
                             {
                               mainMenu.shop.variation1.map((item, index) => (
-                                <li key={`shop-${item.title}`}>
+                                <li key={index}>
                                   <ALink href={'/' + item.url}>
                                     {item.title}
                                     {item.hot ? <span className="tip tip-hot">Hot</span> : ""}
@@ -116,7 +116,7 @@ function MobileMenu({ categoryTree }) {
                           <ul>
                             {
                               mainMenu.shop.variation2.map((item, index) => (
-                                <li key={`shop-${item.title}`}>
+                                <li key={index}>
                                   <ALink href={'/' + item.url}>
                                     {item.title}
                                     {item.new ? <span className="tip tip-new">New</span> : ""}
@@ -138,7 +138,7 @@ function MobileMenu({ categoryTree }) {
                         <Card title="Product Pages" type="mobile">
                           {
                             mainMenu.product.pages.map((item, index) => (
-                              <ALink href={'/' + item.url} key={`product-${item.title}`}>
+                              <ALink href={'/' + item.url} key={index}>
                                 {item.title}
                                 {item.hot ? <span className="tip tip-hot">Hot</span> : ""}
                               </ALink>
@@ -152,7 +152,7 @@ function MobileMenu({ categoryTree }) {
                           <ul>
                             {
                               mainMenu.product.layout.map((item, index) => (
-                                <li key={`product-${item.title}`}>
+                                <li key={index}>
                                   <ALink href={'/' + item.url}>
                                     {item.title}
                                     {item.new ? <span className="tip tip-new">New</span> : ""}
@@ -172,7 +172,7 @@ function MobileMenu({ categoryTree }) {
                     <ul>
                       {
                         mainMenu.other.map((item, index) => (
-                          <li key={`other-${item.title}`}>
+                          <li key={index}>
                             <ALink href={'/' + item.url}>
                               {item.title}
                               {item.new ? <span className="tip tip-new">New</span> : ""}
@@ -190,12 +190,12 @@ function MobileMenu({ categoryTree }) {
                       {
                         mainMenu.blog.map((item, index) => (
                           item.subPages ?
-                            <li key={"blog" + item.title}>
+                            <li key={index}>
                               <Card title={item.title} url={'/' + item.url} type="mobile">
                                 <ul>
                                   {
                                     item.subPages.map((item, index) => (
-                                      <li key={`blog-${item.title}`}>
+                                      <li key={index}>
                                         <ALink href={'/' + item.url}>
                                           {item.title}
                                         </ALink>
@@ -206,7 +206,7 @@ function MobileMenu({ categoryTree }) {
                               </Card>
                             </li> :
 
-                            <li key={"blog" + item.title} className={item.subPages ? "submenu" : ""}>
+                            <li key={index} className={item.subPages ? "submenu" : ""}>
                               <ALink href={'/' + item.url}>
                                 {item.title}
                               </ALink>
@@ -222,7 +222,7 @@ function MobileMenu({ categoryTree }) {
                     <ul>
                       {
                         mainMenu.element.map((item, index) => (
-                          <li key={`elements-${item.title}`}>
+                          <li key={index}>
                             <ALink href={'/' + item.url}>
                               {item.title}
                             </ALink>
@@ -240,9 +240,9 @@ function MobileMenu({ categoryTree }) {
             <TabPanel>
               <ul className="mobile-menu">
                 <li><ALink href="/shop" class="menu-title">Все товары</ALink></li>
-                {categoryTree.map((category) => (
+                {categoryTree.map((category, index) => (
                   category.children.length ?
-                    <SlideToggle duration={300} collapsed key={category._id} >
+                    <SlideToggle duration={300} collapsed key={index} >
                       {({ onToggle, setCollapsibleElement, toggleState }) => (
                         <li className={`submenu ${toggleState === 'EXPANDED' ? 'show' : ''}`}>
                           <ALink href={{ pathname: `/shop`, query: { category: category.handle, grid: query.grid } }} scroll={false}>
@@ -252,8 +252,8 @@ function MobileMenu({ categoryTree }) {
 
                           <div ref={setCollapsibleElement} style={{ overflow: 'hidden' }}>
                             <ul style={{ display: "block", background: "#232323" }}>
-                              {category.children.map((item) => (
-                                <li key={item._id}><ALink href={{ pathname: '/shop', query: { category: item.handle } }} scroll={false}>{item.name}</ALink></li>
+                              {category.children.map((item, index) => (
+                                <li key={index}><ALink href={{ pathname: '/shop', query: { category: item.handle } }} scroll={false}>{item.name}</ALink></li>
                               ))}
                             </ul>
                           </div>
@@ -261,7 +261,7 @@ function MobileMenu({ categoryTree }) {
                       )}
                     </SlideToggle>
                     :
-                    <li>
+                    <li key={index}>
                       <ALink href={{ pathname: '/shop', query: { category: category.handle } }}>
                         <i className="d-icon-camera1"></i>{category.name}
                       </ALink>
