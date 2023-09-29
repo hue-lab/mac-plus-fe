@@ -68,7 +68,7 @@ function Layout({ children, closeQuickview, categoryTree }) {
 
       <ALink id="scroll-top" href="#" title="Top" role="button" className="scroll-top" onClick={() => scrollTopHandler(false)}><i className="d-icon-arrow-up"></i></ALink>
 
-      <MobileMenu />
+      <MobileMenu categoryTree={categoryTree} />
 
       <ToastContainer
         autoClose={3000}
