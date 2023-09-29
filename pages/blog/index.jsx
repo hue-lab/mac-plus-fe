@@ -1,26 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Helmet from 'react-helmet';
-import { useLazyQuery } from '@apollo/react-hooks';
 import { useRouter } from 'next/router';
-
-// Import Apollo Server and Query
-import withApollo from '~/server/apollo';
-import { GET_POSTS } from '~/server/queries';
 
 import ALink from '~/components/features/custom-link';
 import Pagination from '~/components/features/pagination';
 
 import PostOne from '~/components/features/post/post-one';
-import BlogSidebar from '~/components/partials/post/blog-sidebar';
 
-import { scrollTopHandler } from '~/utils';
-
-function Classic() {
+export default function Classic() {
   const router = useRouter();
-  const [isFirst, setFirst] = useState(true);
   const query = router.query;
   const showingCount = 8;
-  //const [ getPosts, { data, loading, error } ] = useLazyQuery( GET_POSTS );
   const data = {
     posts: {
       data: [
@@ -47,25 +37,6 @@ function Classic() {
   const [perPage, setPerPage] = useState(showingCount);
   const posts = data && data.posts.data;
   const totalPage = data ? parseInt(data.posts.total / perPage) + (data.posts.total % perPage ? 1 : 0) : 1;
-  let page = query.page ? query.page : 1;
-
-  // useEffect( () => {
-  //     getPosts( {
-  //         variables: {
-  //             category: query.category,
-  //             from: perPage * ( page - 1 ),
-  //             to: perPage * page
-  //         }
-  //     } );
-
-  //     setTimeout( () => {
-  //         if ( isFirst ) {
-  //             setFirst( false );
-  //         } else {
-  //             scrollTopHandler();
-  //         }
-  //     }, 100 );
-  // }, [ query ] )
 
   return (
     <main className="main skeleton-body">
@@ -118,5 +89,3 @@ function Classic() {
     </main >
   )
 }
-
-export default withApollo({ ssr: typeof window === "undefined" })(Classic);
