@@ -8,14 +8,17 @@ import ProductListOne from '~/components/partials/shop/product-list/product-list
 import {getBannerSlide} from "~/utils/endpoints/slides";
 import {getImgPath} from "~/utils";
 import {getProducts} from "~/utils/endpoints/products";
+import {getFilters} from "~/utils/endpoints/filters";
 
-Shop.getInitialProps = async (context) => {
+Shop.getInitialProps = async ({ query }) => {
+  const filters = await getFilters(query.category);
   const banner = await getBannerSlide();
   const products = await getProducts();
-  return { banner: banner.data[0], products };
+  return { banner: banner.data[0], products, filters };
 }
 
-export default function Shop({ banner, products }) {
+export default function Shop({ banner, products, filters }) {
+  console.log(filters);
   return (
     <main className="main bt-lg-none shop">
       <Helmet>
@@ -32,7 +35,7 @@ export default function Shop({ banner, products }) {
           </ul>
 
           <div className="row gutter-lg main-content-wrap">
-            <SidebarFilterOne type="banner" />
+            <SidebarFilterOne filters={filters} type="banner" />
 
             <div className="col-lg-9 main-content">
               { banner && <div className="shop-banner banner" style={{ backgroundImage: `url('${getImgPath(banner.media)}')`, backgroundColor: "#f2f2f3" }}>
@@ -42,7 +45,7 @@ export default function Shop({ banner, products }) {
                     style={{ color: 'white', padding: '.5rem 1rem' }}
                   >{ banner.description }</h4>
                   <h1 className="banner-title font-weight-bold ls-normal text-uppercase">{ banner.title }</h1>
-                  <ALink href="/shop" className="btn btn-outline btn-dark btn-rounded">Подробнее</ALink>
+                  <ALink href={`/blog/single/${banner._id}`} className="btn btn-outline btn-dark btn-rounded">Подробнее</ALink>
                 </div>
               </div> }
 
