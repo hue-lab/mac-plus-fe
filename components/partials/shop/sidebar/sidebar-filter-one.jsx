@@ -208,6 +208,21 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                         )
                       }
                     </ul> }
+
+                    { item.type === 'STRING_SELECT' && <ul className="widget-body filter-items">
+                      {
+                        (item.options || []).map((option, index) => (
+                            <li
+                              className={containsAttrInUrl(item._id, option) ? 'active' : ''}
+                              key={index}
+                            >
+                              <ALink scroll={false} href={{ pathname: router.pathname, query: { ...query, page: 1, [item._id]: getUrlForAttrs(item._id, option) } }}>{option}</ALink>
+                            </li>
+                          )
+
+                        )
+                      }
+                    </ul> }
                   </Card>
                 </div>
               ))}
