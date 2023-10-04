@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Helmet from 'react-helmet';
 
 import ALink from '~/components/features/custom-link';
@@ -9,16 +9,35 @@ import {getBannerSlide} from "~/utils/endpoints/slides";
 import {getImgPath} from "~/utils";
 import {getProducts} from "~/utils/endpoints/products";
 import {getFilters} from "~/utils/endpoints/filters";
+import {useRouter} from "next/router";
 
 Shop.getInitialProps = async ({ query }) => {
   const filters = await getFilters(query.category);
   const banner = await getBannerSlide();
-  const products = await getProducts();
+  const { category, page, price, ...customProperties } = query;
+  const requestFilters = {
+    baseProperties: {},
+    customProperties: {},
+    preview: true,
+  };
+  if (customProperties && Object.keys(customProperties).length) {
+    requestFilters.customProperties = Object.keys(customProperties).reduce((acc, key) => {
+      acc[key] = {
+        $in: customProperties[key]?.split(',') || [],
+      };
+      return acc;
+    }, {});
+  }
+  if (category) {
+    requestFilters.baseProperties.categoryId = {
+      $eq: category
+    }
+  }
+  const products = await getProducts(requestFilters);
   return { banner: banner.data[0], products, filters };
 }
 
 export default function Shop({ banner, products, filters }) {
-  console.log(filters);
   return (
     <main className="main bt-lg-none shop">
       <Helmet>
