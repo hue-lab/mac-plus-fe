@@ -38,6 +38,22 @@ Shop.getInitialProps = async ({ query }) => {
       $eq: category
     }
   }
+  if (sortby) {
+    switch (sortby) {
+      case 'price-low':
+        requestFilters.sort = {
+          direction: 1,
+          property: 'totalPrice',
+        };
+        break;
+      case 'price-high':
+        requestFilters.sort = {
+          direction: -1,
+          property: 'totalPrice',
+        };
+        break;
+    }
+  }
   const products = await getProducts(requestFilters);
   return { banner: banner.data[0], products, filters };
 }
