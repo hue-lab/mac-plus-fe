@@ -72,7 +72,7 @@ export  default function ProductListOne({ itemsPerRow = 3, type = "left", isTool
 
       {
         productsData && products?.metadata?.total === 0 ?
-          <p className="ml-1">No products were found matching your selection.</p> : ''
+          <p className="ml-1">По вашему запросу результатов не найдено.</p> : ''
       }
 
       {

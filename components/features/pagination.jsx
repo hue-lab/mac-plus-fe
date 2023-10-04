@@ -25,7 +25,7 @@ function Pagination(props) {
                 <ul className="pagination">
                     <li className={`page-item ${page < 2 ? 'disabled' : ''}`}>
                         <ALink className="page-link page-link-prev" href={page > 1 ? {pathname: router.pathname, query: { ...query, page: page - 1 } } : '#'} scroll={false}>
-                            <i className="d-icon-arrow-left"></i>Prev
+                            <i className="d-icon-arrow-left"></i>Назад
                         </ALink>
                     </li>
 
@@ -61,7 +61,7 @@ function Pagination(props) {
 
                     <li className={`page-item ${page > totalPage - 1 ? 'disabled' : ''}`}>
                         <ALink className="page-link page-link-next" href={page < totalPage ? {pathname: router.pathname, query: { ...query, page: page + 1 } } : '#'} scroll={false}>
-                            Next<i className="d-icon-arrow-right"></i>
+                            Далее<i className="d-icon-arrow-right"></i>
                         </ALink>
                     </li>
                 </ul>

@@ -14,12 +14,17 @@ import {useRouter} from "next/router";
 Shop.getInitialProps = async ({ query }) => {
   const filters = await getFilters(query.category);
   const banner = await getBannerSlide();
-  const { category, page, price, ...customProperties } = query;
+  const { category, page, per_page, price, sortby, type, ...customProperties } = query;
   const requestFilters = {
     baseProperties: {},
     customProperties: {},
     preview: true,
+    pagination: {
+      page: Number(page) || 1,
+      limit: Number(per_page) || 12,
+    }
   };
+  console.log(requestFilters);
   if (customProperties && Object.keys(customProperties).length) {
     requestFilters.customProperties = Object.keys(customProperties).reduce((acc, key) => {
       acc[key] = {
