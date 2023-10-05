@@ -11,6 +11,7 @@ import { demoActions } from '~/store/demo';
 import { currentDemo } from '~/server/queries';
 
 import "~/public/sass/style.scss";
+import {getCategoryTree} from "~/utils/endpoints/categoryTree";
 
 const App = ({ Component, pageProps }) => {
   const store = useStore();
@@ -54,11 +55,12 @@ const App = ({ Component, pageProps }) => {
 }
 
 App.getInitialProps = async ({ Component, ctx }) => {
+  const categoryTree = await getCategoryTree();
   let pageProps = {};
   if (Component.getInitialProps) {
     pageProps = await Component.getInitialProps(ctx);
   }
-  return { pageProps };
+  return { pageProps: Object.assign(pageProps, { categoryTree: categoryTree.children }) };
 };
 
 export default wrapper.withRedux(App);

@@ -8,6 +8,7 @@ import ThumbTwo from '~/components/partials/product/thumb/thumb-two';
 import MediaLightBox from '~/components/partials/product/light-box';
 
 import { mainSlider3 } from '~/utils/data/carousel';
+import {getImgPath} from "~/utils";
 
 export default function MediaFive ( props ) {
     const { product, adClass = '' } = props;
@@ -16,7 +17,7 @@ export default function MediaFive ( props ) {
     const [ isOpen, setOpenState ] = useState( false );
     const [ mediaRef, setMediaRef ] = useState( null );
 
-    let lgImages = product.large_pictures ? product.large_pictures : product.pictures;
+    let lgImages = product.media;
 
     useEffect( () => {
         setIndex( 0 );
@@ -45,6 +46,7 @@ export default function MediaFive ( props ) {
     }
 
     const openLightBox = () => {
+        console.log('test');
         setOpenState( true );
     }
 
@@ -62,23 +64,18 @@ export default function MediaFive ( props ) {
         <div className={ `product-gallery product-gallery-vertical product-gallery-sticky ${ adClass }` }>
             <div className="product-label-group">
                 {
-                    product.stock === 0 ?
-                        <label className="product-label label-out">out</label> : ""
+                    product.isRec ?
+                        <label className="product-label label-top">Хит</label> : ""
                 }
 
                 {
-                    product.is_top ?
-                        <label className="product-label label-top">top</label> : ""
-                }
-
-                {
-                    product.is_new ?
-                        <label className="product-label label-new">new</label> : ""
+                    product.isNew ?
+                        <label className="product-label label-new">Новинка</label> : ""
                 }
 
                 {
                     product.discount ?
-                        <label className="product-label label-sale">sale</label> : ""
+                        <label className="product-label label-sale">-{ product.discount }%</label> : ""
                 }
             </div>
 
@@ -92,12 +89,8 @@ export default function MediaFive ( props ) {
                     lgImages.map( ( image, index ) =>
                         <div key={ image + '-' + index }>
                             <Magnifier
-                                imageSrc={ process.env.NEXT_PUBLIC_ASSET_URI + image.url }
+                                imageSrc={ getImgPath(image) }
                                 imageAlt="magnifier"
-                                largeImageSrc={ process.env.NEXT_PUBLIC_ASSET_URI + image.url }
-                                dragToMove={ false }
-                                mouseActivation="hover"
-                                cursorStyleActive="crosshair"
                                 className="product-image large-image"
 
                             />

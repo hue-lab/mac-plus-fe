@@ -12,12 +12,10 @@ import {getRecProducts} from "~/utils/endpoints/products";
 import {getSlides} from "~/utils/endpoints/slides";
 
 HomePage.getInitialProps = async (context) => {
-  const categoryTree = await getCategoryTree();
   const articles = await getLatestArticles();
   const recProducts = await getRecProducts();
   const slides = await getSlides();
   return {
-    categoryTree: categoryTree.children,
     articles: articles.data,
     recProducts: recProducts.data,
     slides: slides.data,

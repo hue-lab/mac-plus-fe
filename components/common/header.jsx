@@ -64,7 +64,7 @@ export default function Header({ categoryTree }) {
       <div className="header-bottom has-dropdown pb-0">
         <div className="container d-flex align-items-center">
           <div className="dropdown category-dropdown has-border fixed">
-            <ALink href="#" className="text-white font-weight-semi-bold category-toggle"><i className="d-icon-bars2"></i><span>Каталог</span></ALink>
+            <ALink href="/shop" className="text-white font-weight-semi-bold category-toggle"><i className="d-icon-bars2"></i><span>Каталог</span></ALink>
 
             <div className="dropdown-box">
               <ul className="menu vertical-menu category-menu">
@@ -72,10 +72,10 @@ export default function Header({ categoryTree }) {
 
                 {(categoryTree || []).map((item, index) => (
                   <li key={index} className={ item.children?.length ? 'submenu' : '' }>
-                    <ALink href={{ pathname: `/shop`, query: { category: item.handle }}}><i className="d-icon-camera1"></i>{ item.name }</ALink>
+                    <ALink href={{ pathname: `/shop`, query: { category: item._id }}}><i className="d-icon-camera1"></i>{ item.name }</ALink>
                     { item.children?.length > 0 && <ul>
                       {item.children.map((item, index) => (
-                        <li key={index}><ALink href={{ pathname: `/shop`, query: { category: item.handle }}}>{ item.name }</ALink></li>
+                        <li key={index}><ALink href={{ pathname: `/shop`, query: { category: item._id }}}>{ item.name }</ALink></li>
                       ))}
                     </ul>
                     }

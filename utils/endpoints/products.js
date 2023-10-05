@@ -17,3 +17,17 @@ export async function getRecProducts(limit = 4) {
   });
   return await res.json();
 }
+
+export async function getProducts(body) {
+  const res = await fetch(process.env.API_HOST + '/store/products', {
+    method: "POST",
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(body),
+  });
+  return await res.json();
+}
+
+export async function getProductById(id) {
+  const res = await fetch(process.env.API_HOST + `/store/product/${id}`);
+  return await res.json();
+}

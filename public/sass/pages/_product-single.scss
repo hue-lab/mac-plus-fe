@@ -518,6 +518,13 @@
     .product-image {
         margin-right: 1rem;
         max-width: 9rem;
+        & > div {
+            height: 100%;
+            img {
+                height: 100% !important;
+                object-fit: contain;
+            }
+        }
     }
     .product-title { 
         margin-bottom: .5rem;

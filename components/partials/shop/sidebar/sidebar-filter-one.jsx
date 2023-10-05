@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useQuery } from '@apollo/react-hooks';
 import InputRange from 'react-input-range';
 import SlideToggle from 'react-slide-toggle';
 
@@ -10,23 +9,21 @@ import OwlCarousel from '~/components/features/owl-carousel';
 
 import SmallProduct from '~/components/features/product/product-sm';
 
-import withApollo from '../../../../server/apollo';
-import { GET_SHOP_SIDEBAR_DATA } from '../../../../server/queries';
-
 
 
 import filterData from '~/utils/data/shop';
 import { scrollTopHandler } from '~/utils';
 
-function SidebarFilterOne(props) {
-  const { type = "left", isFeatured = false } = props;
+export default function SidebarFilterOne({ type = "left", isFeatured = false, filters = [] }) {
   const router = useRouter();
   const query = router.query;
-  //const { data, loading, error } = useQuery( GET_SHOP_SIDEBAR_DATA, { variables: { demo: 22, featured: true } } );
   const data = null;
   const loading = false;
-  let tmpPrice = { max: query.max_price ? parseInt(query.max_price) : 1000, min: query.min_price ? parseInt(query.min_price) : 0 };
-  const [filterPrice, setPrice] = useState(tmpPrice);
+  let tmpPrice = 50000;
+  const [filterPrice, setPrice] = useState({
+    min: 0,
+    max: 0,
+  });
   const [isFirst, setFirst] = useState(true);
   let sidebarData = data && data.shopSidebarData;
   let timerId;
@@ -38,15 +35,6 @@ function SidebarFilterOne(props) {
       window.removeEventListener('resize', hideSidebar);
     }
   }, [])
-
-  useEffect(() => {
-    setPrice({ max: query.max_price ? parseInt(query.max_price) : 1000, min: query.min_price ? parseInt(query.min_price) : 0 });
-    if (isFirst) {
-      setFirst(false);
-    } else {
-      scrollTopHandler();
-    }
-  }, [query])
 
   const filterByPrice = (e) => {
     e.preventDefault();
@@ -117,7 +105,7 @@ function SidebarFilterOne(props) {
 
       <div className="sidebar-content">
         {
-          !loading && sidebarData ?
+          !loading && filters ?
             <div className="sticky-sidebar">
               {
                 type === "boxed" || type === "banner" ? '' :
@@ -133,59 +121,59 @@ function SidebarFilterOne(props) {
                   </div>
               }
 
-              <div className="widget widget-collapsible">
-                <Card title="<h3 class='widget-title'>All Categories<span class='toggle-btn p-0 parse-content'></span></h3>" type="parse" expanded={true}>
-                  <ul className="widget-body filter-items search-ul">
-                    {
-                      data && sidebarData.categories.map((item, index) => (
-                        item.children ?
-                          <li
-                            key={item.name + ' - ' + index}
-                            className={`with-ul overflow-hidden ${item.slug === query.category || item.children.findIndex(subCat => subCat.slug === query.category) > -1 ? 'show' : ''} `}
-                          >
-                            <SlideToggle collapsed={true} >
-                              {({ onToggle, setCollapsibleElement, toggleState }) => (
-                                <>
-                                  <ALink href={{ pathname: router.pathname, query: { category: item.slug, grid: query.grid, type: router.query.type ? router.query.type : null } }} scroll={false}>{item.name}
-                                    <i className={`fas fa-chevron-down ${toggleState.toLowerCase()}`} onClick={e => { e.preventDefault(); e.stopPropagation(); onToggle() }}></i>
-                                  </ALink>
+              {/*<div className="widget widget-collapsible">*/}
+              {/*  <Card title="<h3 class='widget-title'>All Categories<span class='toggle-btn p-0 parse-content'></span></h3>" type="parse" expanded={true}>*/}
+              {/*    <ul className="widget-body filter-items search-ul">*/}
+              {/*      {*/}
+              {/*        data && sidebarData.categories.map((item, index) => (*/}
+              {/*          item.children ?*/}
+              {/*            <li*/}
+              {/*              key={item.name + ' - ' + index}*/}
+              {/*              className={`with-ul overflow-hidden ${item.slug === query.category || item.children.findIndex(subCat => subCat.slug === query.category) > -1 ? 'show' : ''} `}*/}
+              {/*            >*/}
+              {/*              <SlideToggle collapsed={true} >*/}
+              {/*                {({ onToggle, setCollapsibleElement, toggleState }) => (*/}
+              {/*                  <>*/}
+              {/*                    <ALink href={{ pathname: router.pathname, query: { category: item.slug, grid: query.grid, type: router.query.type ? router.query.type : null } }} scroll={false}>{item.name}*/}
+              {/*                      <i className={`fas fa-chevron-down ${toggleState.toLowerCase()}`} onClick={e => { e.preventDefault(); e.stopPropagation(); onToggle() }}></i>*/}
+              {/*                    </ALink>*/}
 
-                                  <div ref={setCollapsibleElement}>
-                                    <ul style={{ display: "block" }}>
-                                      {
-                                        item.children.map((subItem, index) =>
-                                          <li key={subItem.name + ' - ' + index}
-                                            className={`with-ul overflow-hidden ${subItem.slug === query.category ? 'show' : ''} `}>
-                                            <ALink scroll={false} href={{ pathname: router.pathname, query: { category: subItem.slug, grid: query.grid, type: router.query.type ? router.query.type : null } }}>{subItem.name}</ALink>
-                                          </li>
-                                        )}
-                                    </ul>
-                                  </div>
-                                </>
-                              )}
-                            </SlideToggle >
-                          </li> :
-                          <li
-                            className={query.category === item.slug ? 'show' : ''}
-                            key={item.name + ' - ' + index}
-                          >
-                            <ALink href={{ pathname: router.pathname, query: { category: item.slug, grid: query.grid, type: router.query.type ? router.query.type : null } }} scroll={false}>{item.name}
-                            </ALink>
-                          </li>
-                      ))
-                    }
-                  </ul>
-                </Card>
-              </div>
+              {/*                    <div ref={setCollapsibleElement}>*/}
+              {/*                      <ul style={{ display: "block" }}>*/}
+              {/*                        {*/}
+              {/*                          item.children.map((subItem, index) =>*/}
+              {/*                            <li key={subItem.name + ' - ' + index}*/}
+              {/*                              className={`with-ul overflow-hidden ${subItem.slug === query.category ? 'show' : ''} `}>*/}
+              {/*                              <ALink scroll={false} href={{ pathname: router.pathname, query: { category: subItem.slug, grid: query.grid, type: router.query.type ? router.query.type : null } }}>{subItem.name}</ALink>*/}
+              {/*                            </li>*/}
+              {/*                          )}*/}
+              {/*                      </ul>*/}
+              {/*                    </div>*/}
+              {/*                  </>*/}
+              {/*                )}*/}
+              {/*              </SlideToggle >*/}
+              {/*            </li> :*/}
+              {/*            <li*/}
+              {/*              className={query.category === item.slug ? 'show' : ''}*/}
+              {/*              key={item.name + ' - ' + index}*/}
+              {/*            >*/}
+              {/*              <ALink href={{ pathname: router.pathname, query: { category: item.slug, grid: query.grid, type: router.query.type ? router.query.type : null } }} scroll={false}>{item.name}*/}
+              {/*              </ALink>*/}
+              {/*            </li>*/}
+              {/*        ))*/}
+              {/*      }*/}
+              {/*    </ul>*/}
+              {/*  </Card>*/}
+              {/*</div>*/}
 
               <div className="widget widget-collapsible">
-                <Card title="<h3 class='widget-title'>Filter by Price<span class='toggle-btn p-0 parse-content'></span></h3>" type="parse" expanded={true}>
+                <Card title="<h3 class='widget-title'>Цена<span class='toggle-btn p-0 parse-content'></span></h3>" type="parse" expanded={true}>
                   <div className="widget-body">
                     <form action="#">
                       <div className="filter-price-slider noUi-target noUi-ltr noUi-horizontal shop-input-range">
                         <InputRange
                           formatLabel={value => `$${value}`}
-                          maxValue={1000}
+                          maxValue={5000}
                           minValue={0}
                           step={50}
                           value={filterPrice}
@@ -194,52 +182,68 @@ function SidebarFilterOne(props) {
                       </div>
 
                       <div className="filter-actions">
-                        <div className="filter-price-text mb-4">Price: ${filterPrice.min} - ${filterPrice.max}
+                        <div className="filter-price-text">{filterPrice.min} BYN - {filterPrice.max} BYN
                           <span className="filter-price-range"></span>
                         </div>
-
-                        <button className="btn btn-dark btn-filter btn-rounded" onClick={filterByPrice}>Filter</button>
                       </div>
                     </form>
                   </div>
                 </Card>
               </div>
 
-              <div className="widget widget-collapsible">
-                <Card title="<h3 class='widget-title'>Size<span class='toggle-btn p-0 parse-content'></span></h3>" type="parse" expanded={true}>
-                  <ul className="widget-body filter-items">
-                    {
-                      filterData.sizes.map((item, index) =>
-                        <li
-                          className={containsAttrInUrl('sizes', item.slug) ? 'active' : ''}
-                          key={item + ' - ' + index}
-                        >
-                          <ALink scroll={false} href={{ pathname: router.pathname, query: { ...query, page: 1, sizes: getUrlForAttrs('sizes', item.slug), type: router.query.type ? router.query.type : null } }}>{item.name}
-                          </ALink>
-                        </li>
-                      )
-                    }
-                  </ul>
-                </Card>
-              </div>
+              {(filters || []).map((item, index) => (
+                <div key={index} className="widget widget-collapsible">
+                  <Card title={`<h3 class='widget-title'>${item.name}<span class='toggle-btn p-0 parse-content'></span></h3>`} type="parse" expanded={false}>
+                    { item.type === 'NUMBER_SELECT' && <ul className="widget-body filter-items">
+                      {
+                        (item.options || []).map((option, index) => (
+                          <li
+                            className={containsAttrInUrl(item._id, option) ? 'active' : ''}
+                            key={index}
+                          >
+                            <ALink scroll={false} href={{ pathname: router.pathname, query: { ...query, page: 1, [item._id]: getUrlForAttrs(item._id, option) } }}>{option} {item.units}</ALink>
+                          </li>
+                          )
 
-              <div className="widget widget-collapsible">
-                <Card title="<h3 class='widget-title'>Color<span class='toggle-btn p-0 parse-content'></span></h3>" type="parse" expanded={true}>
-                  <ul className="widget-body filter-items">
-                    {
-                      filterData.colors.map((item, index) =>
-                        <li
-                          className={containsAttrInUrl('colors', item.slug) ? 'active' : ''}
-                          key={item + ' - ' + index}
-                        >
-                          <ALink scroll={false} href={{ pathname: router.pathname, query: { ...query, page: 1, colors: getUrlForAttrs('colors', item.slug), type: router.query.type ? router.query.type : null } }}>{item.name}
-                          </ALink>
-                        </li>
-                      )
-                    }
-                  </ul>
-                </Card>
-              </div>
+                        )
+                      }
+                    </ul> }
+
+                    { item.type === 'STRING_SELECT' && <ul className="widget-body filter-items">
+                      {
+                        (item.options || []).map((option, index) => (
+                            <li
+                              className={containsAttrInUrl(item._id, option) ? 'active' : ''}
+                              key={index}
+                            >
+                              <ALink scroll={false} href={{ pathname: router.pathname, query: { ...query, page: 1, [item._id]: getUrlForAttrs(item._id, option) } }}>{option}</ALink>
+                            </li>
+                          )
+
+                        )
+                      }
+                    </ul> }
+                  </Card>
+                </div>
+              ))}
+
+              {/*<div className="widget widget-collapsible">*/}
+              {/*  <Card title="<h3 class='widget-title'>Color<span class='toggle-btn p-0 parse-content'></span></h3>" type="parse" expanded={false}>*/}
+              {/*    <ul className="widget-body filter-items">*/}
+              {/*      {*/}
+              {/*        filterData.colors.map((item, index) =>*/}
+              {/*          <li*/}
+              {/*            className={containsAttrInUrl('colors', item.slug) ? 'active' : ''}*/}
+              {/*            key={item + ' - ' + index}*/}
+              {/*          >*/}
+              {/*            <ALink scroll={false} href={{ pathname: router.pathname, query: { ...query, page: 1, colors: getUrlForAttrs('colors', item.slug), type: router.query.type ? router.query.type : null } }}>{item.name}*/}
+              {/*            </ALink>*/}
+              {/*          </li>*/}
+              {/*        )*/}
+              {/*      }*/}
+              {/*    </ul>*/}
+              {/*  </Card>*/}
+              {/*</div>*/}
 
               {/* <div className="widget widget-collapsible">
                                 <Card title="<h3 class='widget-title'>Brand<span class='toggle-btn p-0 parse-content'></span></h3>" type="parse" expanded={ true }>
@@ -296,5 +300,3 @@ function SidebarFilterOne(props) {
     </aside >
   )
 }
-
-export default withApollo({ ssr: typeof window === 'undefined' })(SidebarFilterOne);
