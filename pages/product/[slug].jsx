@@ -60,7 +60,7 @@ export default function ProductDefault({ product, featured, deliveryMethods }) {
                 <ProductSidebar featured={featured.data} deliveryMethods={deliveryMethods} />
 
                 <div className="col-lg-9">
-                  <div className="product product-single row mb-10">
+                  <div className="product product-single row">
                     <div className="col-md-6">
                       <MediaFive product={product} adClass='pb-0' />
                     </div>
@@ -70,7 +70,7 @@ export default function ProductDefault({ product, featured, deliveryMethods }) {
                     </div>
                   </div>
 
-                  {/* <DescOne product={product} isDivider={false} className="mt-2 m-4" isGuide={false} /> */}
+                  <DescOne product={product} isDivider={false} className="mt-2 m-4" isGuide={false} />
                 </div>
               </div>
             </div>

@@ -15,10 +15,11 @@ function SmallProduct(props) {
           <LazyLoadImage
             alt="product"
             src={getImgPath(product.media[0])}
-            threshold={50}
+            threshold={500}
+            width="100"
+            height="100"
             effect="opacity"
-            width="50"
-            height="50"
+            style={{ objectFit: 'contain', padding: '0.75rem 1.25rem 1.25rem' }}
           />
 
           {
@@ -26,11 +27,12 @@ function SmallProduct(props) {
               <LazyLoadImage
                 alt="product"
                 src={getImgPath(product.media[1])}
-                threshold={50}
-                width="50"
-                height="50"
+                threshold={500}
+                width="100"
+                height="100"
                 effect="opacity"
                 wrapperClassName="product-image-hover"
+                style={{ objectFit: 'contain', padding: '0.75rem 1.25rem 1.25rem' }}
               />
               : ""
           }
@@ -46,10 +48,10 @@ function SmallProduct(props) {
           {
             product.price !== product.totalPrice ?
               <>
-                <ins className="new-price">{product.totalPrice} BYN</ins>
-                <del className="old-price">{product.price} BYN</del>
+                <ins className="new-price">{toDecimal(product.totalPrice)} BYN</ins>
+                <del className="old-price">{toDecimal(product.price)} BYN</del>
               </>
-              : <ins className="new-price">{product.price} BYN</ins>
+              : <ins className="new-price">{toDecimal(product.price)} BYN</ins>
           }
         </div>
 
