@@ -70,7 +70,7 @@ function CartMenu(props) {
               </div>
 
               <div className="cart-total">
-                <label>Итого:</label>
+                <label>Сумма:</label>
                 <span className="price">{toDecimal(getTotalPrice(cartList))} BYN</span>
               </div>
 
