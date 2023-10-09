@@ -59,7 +59,7 @@ function CartMenu(props) {
                         </button>
                       </figure>
                       <div className="product-detail">
-                        <ALink href={'/product/default/' + item.handle} className="product-name" onClick={hideCartMenu}>{item.name}</ALink>
+                        <ALink href={'/product/' + item._id} className="product-name" onClick={hideCartMenu}>{item.name}</ALink>
                         <div className="price-box">
                           <span className="product-quantity">{item.qty}</span>
                           <span className="product-price">{toDecimal(item.price)} BYN</span>
