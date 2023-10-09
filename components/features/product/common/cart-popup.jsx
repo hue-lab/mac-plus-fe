@@ -10,7 +10,7 @@ export default function CartPopup(props) {
   return (
     <div className="minipopup-area">
       <div className="minipopup-box show" style={{ top: "0" }}>
-        <p className="minipopup-title">Successfully added.</p>
+        <p className="minipopup-title">Добавлено в корзину:</p>
 
         <div className="product product-purchased  product-cart mb-0">
           <figure className="product-media pure-media">
@@ -34,7 +34,7 @@ export default function CartPopup(props) {
 
         <div className="action-group d-flex">
           <ALink href="/pages/cart" className="btn btn-sm btn-outline btn-primary btn-rounded">Корзина</ALink>
-          <ALink href="/pages/checkout" className="btn btn-sm btn-primary btn-rounded">Check Out</ALink>
+          <ALink href="/pages/checkout" className="btn btn-sm btn-primary btn-rounded">Оформить</ALink>
         </div>
       </div>
     </div>

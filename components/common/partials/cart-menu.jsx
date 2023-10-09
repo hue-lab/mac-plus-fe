@@ -76,7 +76,7 @@ function CartMenu(props) {
 
               <div className="cart-action">
                 <ALink href="/pages/cart" className="btn btn-dark btn-link" onClick={hideCartMenu}>Корзина</ALink>
-                <ALink href="/pages/checkout" className="btn btn-dark" onClick={hideCartMenu}><span>Go To Checkout</span></ALink>
+                <ALink href="/pages/checkout" className="btn btn-dark" onClick={hideCartMenu}><span>Оформить заказ</span></ALink>
               </div>
             </> :
             <p className="mt-4 text-center font-weight-semi-bold ls-normal text-body">Корзина пуста.</p>
