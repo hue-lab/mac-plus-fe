@@ -79,25 +79,30 @@ function DetailThree(props) {
   }
 
   const addToCartHandler = () => {
-    // if ( product.data.stock > 0 && cartActive ) {
-    //     if ( product.data.variants.length > 0 ) {
-    //         let tmpName = product.data.name, tmpPrice;
-    //         tmpName += curColor !== 'null' ? '-' + curColor : '';
-    //         tmpName += curSize !== 'null' ? '-' + curSize : '';
-    //
-    //         if ( product.data.price[ 0 ] === product.data.price[ 1 ] ) {
-    //             tmpPrice = product.data.price[ 0 ];
-    //         } else if ( !product.data.variants[ 0 ].price && product.data.discount > 0 ) {
-    //             tmpPrice = product.data.price[ 0 ];
-    //         } else {
-    //             tmpPrice = product.data.variants[ curIndex ].sale_price ? product.data.variants[ curIndex ].sale_price : product.data.variants[ curIndex ].price;
-    //         }
-    //
-    //         addToCart( { ...product.data, name: tmpName, qty: quantity, price: tmpPrice } );
-    //     } else {
-    //         addToCart( { ...product.data, qty: quantity, price: product.data.price[ 0 ] } );
-    //     }
-    // }
+    if (cartActive) {
+      // if (product.data.variants.length > 0) {
+      //   let tmpName = product.data.name, tmpPrice;
+      //   tmpName += curColor !== 'null' ? '-' + curColor : '';
+      //   tmpName += curSize !== 'null' ? '-' + curSize : '';
+
+      //   if (product.data.price[0] === product.data.price[1]) {
+      //     tmpPrice = product.data.price[0];
+      //   } else if (!product.data.variants[0].price && product.data.discount > 0) {
+      //     tmpPrice = product.data.price[0];
+      //   } else {
+      //     tmpPrice = product.data.variants[curIndex].sale_price ? product.data.variants[curIndex].sale_price : product.data.variants[curIndex].price;
+      //   }
+
+      //   addToCart({ ...product.data, name: tmpName, qty: quantity, price: tmpPrice });
+      // } else {
+      //   addToCart({ ...product.data, qty: quantity, price: product.data.price[0] });
+      // }
+      let tmpName = product.name;
+      let tmpPrice = product.totalPrice ? product.totalPrice : product.price;
+      tmpName += curColor !== 'null' ? '-' + curColor : '';
+      tmpName += curSize !== 'null' ? '-' + curSize : '';
+      addToCart({ ...product, name: tmpName, qty: quantity, price: tmpPrice });
+    }
   }
 
   const resetValueHandler = (e) => {
@@ -155,11 +160,6 @@ function DetailThree(props) {
         }
       </div>
 
-      {/*{*/}
-      {/*    product.data.price[ 0 ] !== product.data.price[ 1 ] && product.data.variants.length === 0 ?*/}
-      {/*        <Countdown type={ 2 } /> : ''*/}
-      {/*}*/}
-
       <p className="product-short-desc">{product.description}</p>
 
       <hr className="product-divider"></hr>
@@ -167,8 +167,13 @@ function DetailThree(props) {
       <div className="product-form product-qty pb-0">
         <label className="d-none">QTY:</label>
         <div className="product-form-group">
-          <Quantity max={product.isStock} product={product} onChangeQty={changeQty} />
-          <button className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold ${cartActive ? '' : 'disabled'}`} onClick={addToCartHandler}><i className='d-icon-bag'></i>В корзину</button>
+          {product.isStock ? <>
+            <Quantity max={1000} product={product} onChangeQty={changeQty} isStock={product.isStock} />
+            <button className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold ${cartActive ? '' : 'disabled'}`} onClick={addToCartHandler}><i className='d-icon-bag'></i>В корзину</button>
+          </>
+            :
+            <h5>Товара нет в наличии</h5>
+          }
         </div>
       </div>
 
