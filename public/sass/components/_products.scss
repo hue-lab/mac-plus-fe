@@ -1243,6 +1243,24 @@
   .product-variation-price {
     padding-bottom: 7px;
   }
+
+  .related {
+
+    &-name {
+      word-break: normal;
+    }
+
+    &-price {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      .old-price {
+        margin: 0;
+      }
+    }
+
+  }
 }
 
 .products-table {

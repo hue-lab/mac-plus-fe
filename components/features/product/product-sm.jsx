@@ -40,16 +40,16 @@ function SmallProduct(props) {
       </figure>
 
       <div className="product-details">
-        <h3 className="product-name">
+        <h3 className="product-name related-name">
           <ALink href={`/product/${product._id}`}>{product.name}</ALink>
         </h3>
 
-        <div className="product-price">
+        <div className="product-price related-price">
           {
             product.price !== product.totalPrice ?
               <>
-                <ins className="new-price">{toDecimal(product.totalPrice)} BYN</ins>
                 <del className="old-price">{toDecimal(product.price)} BYN</del>
+                <ins className="new-price">{toDecimal(product.totalPrice)} BYN</ins>
               </>
               : <ins className="new-price">{toDecimal(product.price)} BYN</ins>
           }
