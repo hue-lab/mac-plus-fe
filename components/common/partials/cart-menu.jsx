@@ -4,7 +4,7 @@ import ALink from '~/components/features/custom-link';
 
 import { cartActions } from '~/store/cart';
 
-import { getTotalPrice, getCartCount, toDecimal } from '~/utils';
+import { getTotalPrice, getCartCount, toDecimal, getImgPath } from '~/utils';
 
 function CartMenu(props) {
   const { cartList, removeFromCart } = props;
@@ -51,7 +51,7 @@ function CartMenu(props) {
                     <div className="product product-cart" key={'cart-menu-product-' + index}>
                       <figure className="product-media pure-media">
                         <ALink href={'/product/' + item._id} onClick={hideCartMenu}>
-                          <img src={process.env.API_HOST + '/storage/images/' + item.media[0]} alt="product" width="70"
+                          <img src={getImgPath(item.media[0])} alt="product" width="70"
                             height="70" />
                         </ALink>
                         <button className="btn btn-link btn-close" onClick={() => { removeCart(item) }}>
@@ -59,7 +59,7 @@ function CartMenu(props) {
                         </button>
                       </figure>
                       <div className="product-detail">
-                        <ALink href={'/product/default/' + item.handle} className="product-name" onClick={hideCartMenu}>{item.name}</ALink>
+                        <ALink href={'/product/' + item._id} className="product-name" onClick={hideCartMenu}>{item.name}</ALink>
                         <div className="price-box">
                           <span className="product-quantity">{item.qty}</span>
                           <span className="product-price">{toDecimal(item.price)} BYN</span>
@@ -70,7 +70,7 @@ function CartMenu(props) {
               </div>
 
               <div className="cart-total">
-                <label>Итого:</label>
+                <label>Сумма:</label>
                 <span className="price">{toDecimal(getTotalPrice(cartList))} BYN</span>
               </div>
 
