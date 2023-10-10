@@ -6,7 +6,7 @@ import Quantity from '~/components/features/quantity';
 
 import { cartActions } from '~/store/cart';
 
-import { toDecimal, getTotalPrice } from '~/utils';
+import { toDecimal, getTotalPrice, getImgPath } from '~/utils';
 import { getDeliveryMethods } from '~/utils/endpoints/orders';
 import { Helmet } from 'react-helmet';
 
@@ -92,7 +92,7 @@ function Cart(props) {
                               <td className="product-thumbnail">
                                 <figure>
                                   <ALink href={'/product/' + item._id}>
-                                    <img src={process.env.API_HOST + '/storage/images/' + item.media[0]} width="100" height="100"
+                                    <img src={getImgPath(item.media[0])} width="100" height="100"
                                       alt="product" />
                                   </ALink>
                                 </figure>

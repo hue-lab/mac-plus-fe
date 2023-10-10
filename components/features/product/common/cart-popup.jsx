@@ -2,7 +2,7 @@ import React from 'react';
 
 import ALink from '~/components/features/custom-link';
 
-import { toDecimal } from '~/utils';
+import { toDecimal, getImgPath } from '~/utils';
 
 export default function CartPopup(props) {
   const { product } = props;
@@ -16,7 +16,7 @@ export default function CartPopup(props) {
           <figure className="product-media pure-media">
             <ALink href={`/product/${product._id}`}>
               <img
-                src={process.env.API_HOST + '/storage/images/' + product.media[0]}
+                src={getImgPath(product.media[0])}
                 alt="product"
                 width="90"
                 height="90"
