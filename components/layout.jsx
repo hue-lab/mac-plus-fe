@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { useRouter } from 'next/router';
@@ -18,9 +18,12 @@ import MobileMenu from '~/components/common/partials/mobile-menu';
 import { modalActions } from '~/store/modal';
 
 import { showScrollTopHandler, scrollTopHandler, stickyHeaderHandler, stickyFooterHandler } from '~/utils';
+import { getFieldsObject } from '~/utils/endpoints/fields';
 
 function Layout({ children, closeQuickview, categoryTree }) {
   const router = useRouter();
+  const [fields, setFields] = useState({});
+
   useLayoutEffect(() => {
     document.querySelector('body').classList.remove('loaded');
   }, [router.pathname])
@@ -54,14 +57,23 @@ function Layout({ children, closeQuickview, categoryTree }) {
     }, 50);
   }, [router.pathname])
 
+  useEffect(() => {
+    getLayoutFields();
+  }, [])
+
+  async function getLayoutFields() {
+    const res = await getFieldsObject('phone', 'email', 'address', 'work_time', 'copyright');
+    setFields(res);
+  }
+
   return (
     <>
       <div className="page-wrapper">
-        <Header categoryTree={categoryTree} />
+        <Header categoryTree={categoryTree} fields={fields} />
 
         {children}
 
-        <Footer />
+        <Footer fields={fields} />
 
         <StickyFooter />
       </div>

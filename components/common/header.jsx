@@ -6,7 +6,7 @@ import CartMenu from '~/components/common/partials/cart-menu';
 import MainMenu from '~/components/common/partials/main-menu';
 import SearchBox from '~/components/common/partials/search-box';
 
-export default function Header({ categoryTree }) {
+export default function Header({ categoryTree, fields }) {
   const router = useRouter();
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export default function Header({ categoryTree }) {
               </div>
               <div className="icon-box-content d-lg-show">
                 <h4 className="icon-box-title">Телефон:</h4>
-                <p>0(800) 123-456</p>
+                <p>{fields.phone}</p>
               </div>
             </ALink>
 
