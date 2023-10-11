@@ -18,8 +18,7 @@ function Cart(props) {
   const [isDelivery, setIsDelivery] = useState(false);
 
   async function getDelivery() {
-    const deliveryRes = await getDeliveryMethods();
-    const res = await deliveryRes
+    const res = await getDeliveryMethods();
     setDelivery(res);
     setIsDelivery(true);
   }
