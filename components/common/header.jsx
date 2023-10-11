@@ -71,11 +71,11 @@ export default function Header({ categoryTree }) {
                 <li><ALink href="#" className="menu-title">Разделы каталога</ALink></li>
 
                 {(categoryTree || []).map((item, index) => (
-                  <li key={index} className={ item.children?.length ? 'submenu' : '' }>
-                    <ALink href={{ pathname: `/shop`, query: { category: item._id }}}><i className="d-icon-camera1"></i>{ item.name }</ALink>
-                    { item.children?.length > 0 && <ul>
+                  <li key={index} className={item.children?.length ? 'submenu' : ''}>
+                    <ALink href={{ pathname: `/shop`, query: { category: item._id } }}><i className="d-icon-camera1"></i>{item.name}</ALink>
+                    {item.children?.length > 0 && <ul>
                       {item.children.map((item, index) => (
-                        <li key={index}><ALink href={{ pathname: `/shop`, query: { category: item._id }}}>{ item.name }</ALink></li>
+                        <li key={index}><ALink href={{ pathname: `/shop`, query: { category: item._id } }}>{item.name}</ALink></li>
                       ))}
                     </ul>
                     }
@@ -85,7 +85,7 @@ export default function Header({ categoryTree }) {
             </div>
           </div>
 
-          <MainMenu />
+          <MainMenu categoryTree={categoryTree} />
         </div>
       </div>
     </header >
