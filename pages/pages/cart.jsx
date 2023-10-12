@@ -13,19 +13,10 @@ import { Helmet } from 'react-helmet';
 function Cart(props) {
   const { cartList, removeFromCart, updateCart } = props;
   const [cartItems, setCartItems] = useState([]);
-  const [delivery, setDelivery] = useState([]);
-  const [currentRadio, setCurrentRadio] = useState(0);
-  const [isDelivery, setIsDelivery] = useState(false);
-
-  async function getDelivery() {
-    const res = await getDeliveryMethods();
-    setDelivery(res);
-    setIsDelivery(true);
-  }
+  const [discount, setDiscount] = useState(0);
 
   useEffect(() => {
     setCartItems([...cartList]);
-    getDelivery();
   }, [cartList])
 
 
@@ -47,10 +38,6 @@ function Cart(props) {
 
   const update = () => {
     updateCart(cartItems);
-  }
-
-  const radioHandler = (index) => {
-    setCurrentRadio(index);
   }
 
   return (
@@ -142,7 +129,7 @@ function Cart(props) {
                       <div className="summary mb-4">
                         <table className="shipping">
                           <tbody>
-                            <tr className="summary-subtotal">
+                            <tr>
                               <td>
                                 <h4 className="summary-subtitle">Сумма</h4>
                               </td>
@@ -150,34 +137,16 @@ function Cart(props) {
                                 <p className="summary-subtotal-price">{toDecimal(getTotalPrice(cartItems))} BYN</p>
                               </td>
                             </tr>
-                            <tr className="sumnary-shipping shipping-row-last">
-                              <td colSpan="2">
-                                <h4 className="summary-subtitle">Способ доставки:</h4>
-                                <ul>
-                                  {delivery.map((item, index) => (
-                                    <li key={item._id}>
-                                      <div className="custom-radio">
-                                        <input type="radio" id={item._id} name="shipping" className="custom-control-input" onChange={() => radioHandler(index)} defaultChecked={index === 0 ? true : false} />
-                                        <label className="custom-control-label" htmlFor={item._id}>{item.name}</label>
-                                      </div>
-                                    </li>
-                                  ))}
-                                </ul>
+                            <tr className="summary-subtotal">
+                              <td>
+                                <h4 className="summary-subtitle">Скидка</h4>
+                              </td>
+                              <td>
+                                <p className="summary-subtotal-price">{toDecimal(getTotalPrice(discount))} BYN</p>
                               </td>
                             </tr>
                           </tbody>
                         </table>
-                        <div className="shipping-address">
-                          {isDelivery ?
-                            (
-                              delivery[currentRadio].fields.length ? (
-                                delivery[currentRadio].fields.map((item, index) => (
-                                  <input type="text" className="form-control" name={item} placeholder={item} key={item + index} />
-                                ))
-                              ) : ''
-                            )
-                            : ''}
-                        </div>
                         <table className="total">
                           <tbody>
                             <tr className="summary-subtotal">
