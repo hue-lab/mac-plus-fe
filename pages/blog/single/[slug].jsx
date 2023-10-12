@@ -30,7 +30,7 @@ export default function PostSingle({ post }) {
         <div className="container">
           <ul className="breadcrumb">
             <li><ALink href="/"><i className="d-icon-home"></i></ALink></li>
-            <li><ALink href="/blog/classic" className="active">Блог</ALink></li>
+            <li><ALink href="/blog" className="active">Блог</ALink></li>
             <li>{post.title}</li>
           </ul>
         </div>

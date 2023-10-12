@@ -7,36 +7,24 @@ import Pagination from '~/components/features/pagination';
 
 import PostOne from '~/components/features/post/post-one';
 
-export default function Classic() {
+import { getArticles } from '~/utils/endpoints/articles';
+
+Classic.getInitialProps = async (context) => {
+  const posts = await getArticles();
+  return {
+    posts: posts,
+  }
+}
+
+export default function Classic(posts) {
   const router = useRouter();
   const query = router.query;
   const showingCount = 8;
-  const data = {
-    posts: {
-      data: [
-        {
-          author: 'John Doe',
-          title: 'Lorem ipsum',
-          content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt euismod interdum. Maecenas interdum dictum purus sit amet lacinia. Ut orci felis, facilisis vitae risus ac, pharetra molestie ligula. Aliquam tincidunt venenatis purus quis eleifend. Nam eget ullamcorper libero. Curabitur lacinia auctor arcu, a dictum lectus. Etiam eget condimentum urna.',
-          picture: [],
-          slug: 'lorem-ipsum',
-          date: '07-31-2021',
-        },
-        {
-          author: 'Jane Doe',
-          title: 'Fusce in euismod massa',
-          content: 'Fusce in euismod massa. Integer blandit porttitor dictum. Quisque et tincidunt nunc. Donec pellentesque interdum velit nec volutpat. Fusce a ullamcorper neque, eu convallis risus. Vestibulum molestie mauris tellus. Duis sollicitudin lobortis nisi, sed iaculis massa posuere ut. Sed tortor ante, dignissim eget mi sit amet, luctus pulvinar arcu.',
-          picture: [],
-          slug: 'fusce-in',
-          date: '04-16-2022',
-        },
-      ],
-    }
-  };
   const loading = false;
   const [perPage, setPerPage] = useState(showingCount);
-  const posts = data && data.posts.data;
-  const totalPage = data ? parseInt(data.posts.total / perPage) + (data.posts.total % perPage ? 1 : 0) : 1;
+  const totalPage = posts.posts.metadata.lastPage;
+
+  console.log(query);
 
   return (
     <main className="main skeleton-body">
@@ -68,14 +56,12 @@ export default function Classic() {
                       </div>
                     )) :
                     posts ?
-                      posts.length ?
-                        posts.slice(0, posts.length).map((post, index) => (
-                          <React.Fragment key={"post-one" + index}>
-                            <PostOne post={post} />
-                          </React.Fragment>
-                        )) :
-                        <div className="info-box with-icon"><p className="mt-4">No blogs were found matching your selection.</p></div>
-                      : ''
+                      posts.posts.data.slice(0, posts.length).map((post, index) => (
+                        <React.Fragment key={"post-one" + index}>
+                          <PostOne post={post} />
+                        </React.Fragment>
+                      )) :
+                      <div className="info-box with-icon"><p className="mt-4">No blogs were found matching your selection.</p></div>
                 }
               </div>
 

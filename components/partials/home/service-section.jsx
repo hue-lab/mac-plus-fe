@@ -7,7 +7,6 @@ import { serviceSlider } from '~/utils/data/carousel';
 import { zoomInLeft } from '~/utils/data/keyframes';
 
 function ServiceBox({ fields }) {
-  console.log(fields);
   return (
     <section className="container">
       <div className="service-list">
