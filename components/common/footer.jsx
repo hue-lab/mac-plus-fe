@@ -1,6 +1,6 @@
 import ALink from '~/components/features/custom-link';
 
-export default function Footer() {
+export default function Footer({ fields }) {
   const categories = [
     {
       name: 'Mac',
@@ -47,21 +47,21 @@ export default function Footer() {
                 <ul className="widget-body">
                   <li>
                     <label>Телефон: </label>
-                    <ALink href="tel:#">Toll Free (123) 456-7890</ALink>
+                    <ALink href={`tel:${fields.phone}`}>{fields.phone}</ALink>
                   </li>
                   <li>
                     <label>Email: </label>
-                    <ALink href="mailto:mail@riode.com">riode@mail.com</ALink>
+                    <ALink href={`mailto:${fields.email}`}>{fields.email}</ALink>
                   </li>
                   <li>
                     <label>Адрес: </label>
-                    <ALink href="#">123 Street, City, Country</ALink>
+                    <a href={`http://maps.google.com/?q=${fields.address}`} target="_blank">{fields.address}</a>
                   </li>
                   <li>
                     <label>Рабочее время: </label>
                   </li>
                   <li>
-                    <ALink href="#">Пн - Вс / 9:00 - 20:00</ALink>
+                    <ALink href="#">{fields.work_time}</ALink>
                   </li>
                 </ul>
               </div>
