@@ -9,20 +9,25 @@ import PostOne from '~/components/features/post/post-one';
 
 import { getArticles } from '~/utils/endpoints/articles';
 
-Classic.getInitialProps = async (context) => {
-  const posts = await getArticles();
+Classic.getInitialProps = async ({query}) => {
+  const { page, per_page } = query;
+  const pagination = {
+    page: Number(page) || 1,
+    limit: Number(per_page) || 8,
+  };
+  const posts = await getArticles(pagination.page, pagination.limit);
   return {
     posts: posts,
   }
 }
 
-export default function Classic(posts) {
+export default function Classic({posts}) {
   const router = useRouter();
   const query = router.query;
   const showingCount = 8;
   const loading = false;
   const [perPage, setPerPage] = useState(showingCount);
-  const totalPage = posts.posts.metadata.lastPage;
+  const totalPage = posts?.data ? parseInt(posts.metadata.lastPage) : 1;
 
   console.log(query);
 
@@ -56,7 +61,7 @@ export default function Classic(posts) {
                       </div>
                     )) :
                     posts ?
-                      posts.posts.data.slice(0, posts.length).map((post, index) => (
+                      posts.data.slice(0, posts.length).map((post, index) => (
                         <React.Fragment key={"post-one" + index}>
                           <PostOne post={post} />
                         </React.Fragment>
@@ -67,8 +72,6 @@ export default function Classic(posts) {
 
               <Pagination totalPage={totalPage} />
             </div>
-
-            {/* <BlogSidebar /> */}
           </div>
         </div>
       </div >

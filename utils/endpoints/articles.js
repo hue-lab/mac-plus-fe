@@ -1,5 +1,9 @@
-export async function getArticles(page = 1) {
-  const res = await fetch(process.env.API_HOST + `/article?page=${page}`);
+export async function getArticles(page = 1, limit = 8) {
+  const queryParams = new URLSearchParams({
+    page,
+    limit,
+  }).toString();
+  const res = await fetch(process.env.API_HOST + `/article?${queryParams}`);
   return await res.json() || [];
 }
 
