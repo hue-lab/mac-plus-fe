@@ -153,15 +153,15 @@ function Checkout(props) {
                             <div className="checkbox-group">
                               {isDelivery ?
                                 (delivery[currentRadio].paymentMethods.map((item, index) => (
-                                  <div key={item}>
+                                  <div key={item._id}>
                                     <div className="card-header">
-                                      <ALink href="#" className={`text-body text-normal ls-m ${index === payment ? 'collapse' : ''}`} onClick={() => { setPayment(index) }}>{item}</ALink>
+                                      <ALink href="#" className={`text-body text-normal ls-m ${index === payment ? 'collapse' : ''}`} onClick={() => { setPayment(index) }}>{item.name}</ALink>
                                     </div>
 
                                     <Collapse in={index === payment}>
                                       <div className="card-wrapper">
                                         <div className="card-body ls-m overflow-hidden">
-                                          {item}
+                                          {item.description}
                                         </div>
                                       </div>
                                     </Collapse>
