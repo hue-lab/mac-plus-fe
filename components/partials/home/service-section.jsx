@@ -15,7 +15,7 @@ function ServiceBox({ fields }) {
           {Object.values(fields).map((feature) => (
             <Reveal keyframes={zoomInLeft} delay={200} duration={1200} triggerOnce key={feature}>
               <div className="icon-box text-center">
-                <i className={`icon-box-icon ${feature.split('||')[1]}`} style={{ fontSize: `${feature.split('||')[2]}rem` }}></i>
+                <i className={`icon-box-icon ${feature.split('||')[1]}`} style={{ fontSize: `${feature.split('||')[2] || '3.5'}rem` }}></i>
                 <div className="icon-box-content">
                   <h4 className="icon-box-title">{feature.split('||')[0]}</h4>
                 </div>
