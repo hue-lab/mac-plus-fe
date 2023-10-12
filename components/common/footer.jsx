@@ -1,6 +1,6 @@
 import ALink from '~/components/features/custom-link';
 
-export default function Footer({ fields }) {
+export default function Footer({ fields, categoryTree }) {
   const categories = [
     {
       name: 'Mac',
@@ -24,6 +24,8 @@ export default function Footer({ fields }) {
     },
   ];
   const YEAR = new Date().getFullYear();
+
+  console.log(categoryTree);
 
   return (
     <footer className="footer">
@@ -94,10 +96,10 @@ export default function Footer({ fields }) {
               <div className="widget ml-lg-4">
                 <h4 className="widget-title">Категории</h4>
                 <ul className="widget-body">{
-                  categories.map((item, index) => {
+                  categoryTree.map((item, index) => {
                     return (
-                      <li key={item.name + index}>
-                        <ALink href={item.href}>{item.name}</ALink>
+                      <li key={item._id}>
+                        <ALink href={`/shop/?category=${item._id}`}>{item.name}</ALink>
                       </li>
                     )
                   })

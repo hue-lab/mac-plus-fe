@@ -73,7 +73,7 @@ function Layout({ children, closeQuickview, categoryTree }) {
 
         {children}
 
-        <Footer fields={fields} />
+        <Footer categoryTree={categoryTree} fields={fields} />
 
         <StickyFooter />
       </div>
