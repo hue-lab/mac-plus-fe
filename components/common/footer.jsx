@@ -1,31 +1,7 @@
 import ALink from '~/components/features/custom-link';
 
-export default function Footer({ fields, categoryTree }) {
-  const categories = [
-    {
-      name: 'Mac',
-      href: '/shop/mac/',
-    },
-    {
-      name: 'iPhone',
-      href: '/shop/iphone/',
-    },
-    {
-      name: 'iPad',
-      href: '/shop/ipad/',
-    },
-    {
-      name: 'Watch',
-      href: '/shop/watch/',
-    },
-    {
-      name: 'AirPods',
-      href: '/shop/airpods/',
-    },
-  ];
+export default function Footer({ fields, categoryTree, footerNav }) {
   const YEAR = new Date().getFullYear();
-
-  console.log(categoryTree);
 
   return (
     <footer className="footer">
@@ -73,21 +49,15 @@ export default function Footer({ fields, categoryTree }) {
               <div className="widget ml-lg-4">
                 <h4 className="widget-title">Навигация</h4>
                 <ul className="widget-body">
-                  <li>
-                    <ALink href="/">Главная</ALink>
-                  </li>
-                  <li>
-                    <ALink href="/shop">Каталог</ALink>
-                  </li>
-                  <li>
-                    <ALink href="/pages/cart">Корзина</ALink>
-                  </li>
-                  <li>
-                    <ALink href="/blog">Блог</ALink>
-                  </li>
-                  <li>
-                    <ALink href="/pages/contact-us">Контакты</ALink>
-                  </li>
+                  {footerNav.children.length ?
+                    (footerNav.children.map(item => (
+                      <li key={item._id}>
+                        <ALink href={item.handle}>{item.name}</ALink>
+                      </li>
+                    ))
+                    )
+                    : ''
+                  }
                 </ul>
               </div>
             </div>

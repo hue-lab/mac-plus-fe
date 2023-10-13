@@ -19,10 +19,12 @@ import { modalActions } from '~/store/modal';
 
 import { showScrollTopHandler, scrollTopHandler, stickyHeaderHandler, stickyFooterHandler } from '~/utils';
 import { getFieldsObject } from '~/utils/endpoints/fields';
+import { getMenuByCode } from '~/utils/endpoints/menu';;
 
 function Layout({ children, closeQuickview, categoryTree }) {
   const router = useRouter();
   const [fields, setFields] = useState({});
+  const [footerNav, setFooterNav] = useState({ children: [] });
 
   useLayoutEffect(() => {
     document.querySelector('body').classList.remove('loaded');
@@ -59,11 +61,17 @@ function Layout({ children, closeQuickview, categoryTree }) {
 
   useEffect(() => {
     getLayoutFields();
+    getFooterMenu();
   }, [])
 
   async function getLayoutFields() {
     const res = await getFieldsObject('phone', 'email', 'address', 'work_time', 'copyright');
     setFields(res);
+  }
+
+  async function getFooterMenu() {
+    const res = await getMenuByCode('footer_nav');
+    setFooterNav(res);
   }
 
   return (
@@ -73,7 +81,7 @@ function Layout({ children, closeQuickview, categoryTree }) {
 
         {children}
 
-        <Footer categoryTree={categoryTree} fields={fields} />
+        <Footer categoryTree={categoryTree} fields={fields} footerNav={footerNav} />
 
         <StickyFooter />
       </div>
