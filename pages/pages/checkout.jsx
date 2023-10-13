@@ -1,18 +1,13 @@
 import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
-import SlideToggle from 'react-slide-toggle';
 import { Collapse } from 'react-bootstrap';
-
 import ALink from '~/components/features/custom-link';
-import Card from '~/components/features/accordion/card'
-
 import { toDecimal, getTotalPrice } from '~/utils';
 import { getDeliveryMethods } from '~/utils/endpoints/orders';
 
 function Checkout(props) {
   const { cartList } = props;
-  const [isFirst, setFirst] = useState(false);
   const [delivery, setDelivery] = useState([]);
   const [currentRadio, setCurrentRadio] = useState(0);
   const [isDelivery, setIsDelivery] = useState(false);

@@ -18,13 +18,9 @@ import MobileMenu from '~/components/common/partials/mobile-menu';
 import { modalActions } from '~/store/modal';
 
 import { showScrollTopHandler, scrollTopHandler, stickyHeaderHandler, stickyFooterHandler } from '~/utils';
-import { getFieldsObject } from '~/utils/endpoints/fields';
-import { getMenuByCode } from '~/utils/endpoints/menu';;
 
-function Layout({ children, closeQuickview, categoryTree }) {
+function Layout({ children, closeQuickview, categoryTree, layoutFields, footerNav }) {
   const router = useRouter();
-  const [fields, setFields] = useState({});
-  const [footerNav, setFooterNav] = useState({ children: [] });
 
   useLayoutEffect(() => {
     document.querySelector('body').classList.remove('loaded');
@@ -59,29 +55,14 @@ function Layout({ children, closeQuickview, categoryTree }) {
     }, 50);
   }, [router.pathname])
 
-  useEffect(() => {
-    getLayoutFields();
-    getFooterMenu();
-  }, [])
-
-  async function getLayoutFields() {
-    const res = await getFieldsObject('phone', 'email', 'address', 'work_time', 'copyright');
-    setFields(res);
-  }
-
-  async function getFooterMenu() {
-    const res = await getMenuByCode('footer_nav');
-    setFooterNav(res);
-  }
-
   return (
     <>
       <div className="page-wrapper">
-        <Header categoryTree={categoryTree} fields={fields} />
+        <Header categoryTree={categoryTree} fields={layoutFields} />
 
         {children}
 
-        <Footer categoryTree={categoryTree} fields={fields} footerNav={footerNav} />
+        <Footer categoryTree={categoryTree} fields={layoutFields} footerNav={footerNav} />
 
         <StickyFooter />
       </div>

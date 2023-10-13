@@ -188,6 +188,15 @@
   }
 }
 
+.social-link-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include mq(lg, 'max') {
+    display: none !important;
+  }
+}
+
 .header-left {
   flex: 1;
 }
