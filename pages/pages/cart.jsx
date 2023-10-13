@@ -7,7 +7,6 @@ import Quantity from '~/components/features/quantity';
 import { cartActions } from '~/store/cart';
 
 import { toDecimal, getTotalPrice, getImgPath } from '~/utils';
-import { getDeliveryMethods } from '~/utils/endpoints/orders';
 import { Helmet } from 'react-helmet';
 
 function Cart(props) {
@@ -24,20 +23,6 @@ function Cart(props) {
     setCartItems(cartItems.map(item => {
       return item.name === name ? { ...item, qty: qty } : item
     }));
-  }
-
-  const compareItems = () => {
-    if (cartItems.length !== cartList.length) return false;
-
-    for (let index = 0; index < cartItems.length; index++) {
-      if (cartItems[index].qty !== cartList[index].qty) return false;
-    }
-
-    return true;
-  }
-
-  const update = () => {
-    updateCart(cartItems);
   }
 
   return (

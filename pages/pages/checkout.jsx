@@ -6,28 +6,22 @@ import ALink from '~/components/features/custom-link';
 import { toDecimal, getTotalPrice } from '~/utils';
 import { getDeliveryMethods } from '~/utils/endpoints/orders';
 
+Checkout.getInitialProps = async (context) => {
+  const delivery = await getDeliveryMethods();
+  return { delivery };
+}
+
 function Checkout(props) {
-  const { cartList } = props;
-  const [delivery, setDelivery] = useState([]);
+  const { cartList, delivery } = props;
   const [currentRadio, setCurrentRadio] = useState(0);
-  const [isDelivery, setIsDelivery] = useState(false);
   const [payment, setPayment] = useState(0);
-
-  async function getDelivery() {
-    const res = await getDeliveryMethods();
-    setDelivery(res);
-    setIsDelivery(true);
-  }
-
-  useEffect(() => {
-    getDelivery();
-  }, [cartList])
 
   const radioHandler = (index) => {
     setCurrentRadio(index);
   }
 
   return (
+
     <main className="main checkout border-no">
       <Helmet>
         <title>Mac Plus | Оформление</title>
@@ -59,18 +53,16 @@ function Checkout(props) {
                           <input type="text" className="form-control" name="last-name" required />
                         </div>
                       </div>
-                      {isDelivery ?
-                        (
-                          delivery[currentRadio].fields.length ? (
-                            delivery[currentRadio].fields.map((item, index) => (
-                              <div key={item + index}>
-                                <label>{item} *</label>
-                                <input type="text" className="form-control" name={item} />
-                              </div>
-                            ))
-                          ) : ''
-                        )
-                        : ''}
+                      {
+                        delivery[currentRadio].fields.length ? (
+                          delivery[currentRadio].fields.map((item, index) => (
+                            <div key={item + index}>
+                              <label>{item} *</label>
+                              <input type="text" className="form-control" name={item} />
+                            </div>
+                          ))
+                        ) : ''
+                      }
                       <div className="row">
                         <div className="col-xs-6">
                           <label>Телефон *</label>
@@ -146,22 +138,22 @@ function Checkout(props) {
                             <h4 className="summary-subtitle ls-m pb-3">Метод оплаты</h4>
 
                             <div className="checkbox-group">
-                              {isDelivery ?
-                                (delivery[currentRadio].paymentMethods.map((item, index) => (
-                                  <div key={item._id}>
-                                    <div className="card-header">
-                                      <ALink href="#" className={`text-body text-normal ls-m ${index === payment ? 'collapse' : ''}`} onClick={() => { setPayment(index) }}>{item.name}</ALink>
-                                    </div>
 
-                                    <Collapse in={index === payment}>
-                                      <div className="card-wrapper">
-                                        <div className="card-body ls-m overflow-hidden">
-                                          {item.description}
-                                        </div>
-                                      </div>
-                                    </Collapse>
+                              {delivery[currentRadio].paymentMethods.map((item, index) => (
+                                <div key={item._id}>
+                                  <div className="card-header">
+                                    <ALink href="#" className={`text-body text-normal ls-m ${index === payment ? 'collapse' : ''}`} onClick={() => { setPayment(index) }}>{item.name}</ALink>
                                   </div>
-                                ))) : ''}
+
+                                  <Collapse in={index === payment}>
+                                    <div className="card-wrapper">
+                                      <div className="card-body ls-m overflow-hidden">
+                                        {item.description}
+                                      </div>
+                                    </div>
+                                  </Collapse>
+                                </div>
+                              ))}
                             </div>
                           </div>
                           <div className="form-checkbox mt-4 mb-5">
