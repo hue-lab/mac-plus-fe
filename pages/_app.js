@@ -12,6 +12,8 @@ import { currentDemo } from '~/server/queries';
 
 import "~/public/sass/style.scss";
 import {getCategoryTree} from "~/utils/endpoints/categoryTree";
+import {getFieldsObject} from "~/utils/endpoints/fields";
+import {getMenuByCode} from "~/utils/endpoints/menu";
 
 const App = ({ Component, pageProps }) => {
   const store = useStore();
@@ -46,7 +48,7 @@ const App = ({ Component, pageProps }) => {
           <meta name="author" content="D-THEMES" />
         </Helmet>
 
-        <Layout categoryTree={pageProps.categoryTree}>
+        <Layout categoryTree={pageProps.categoryTree} layoutFields={pageProps.layoutFields} footerNav={pageProps.footerNav}>
           <Component {...pageProps} />
         </Layout>
       </PersistGate>
@@ -56,11 +58,13 @@ const App = ({ Component, pageProps }) => {
 
 App.getInitialProps = async ({ Component, ctx }) => {
   const categoryTree = await getCategoryTree();
+  const footerNav = await getMenuByCode('footer_nav');
+  const layoutFields = await getFieldsObject('telegram', 'viber', 'instagram', 'phone', 'email', 'address', 'work_time', 'copyright');
   let pageProps = {};
   if (Component.getInitialProps) {
     pageProps = await Component.getInitialProps(ctx);
   }
-  return { pageProps: Object.assign(pageProps, { categoryTree: categoryTree.children }) };
+  return { pageProps: Object.assign(pageProps, { categoryTree: categoryTree.children, footerNav, layoutFields }) };
 };
 
 export default wrapper.withRedux(App);

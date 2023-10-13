@@ -50,9 +50,9 @@ export default function Header({ categoryTree, fields }) {
 
             <span className="divider"></span>
 
-            <ALink href="/pages/wishlist" className="wishlist">
-              <i className="d-icon-heart"></i>
-            </ALink>
+            { fields.telegram && <ALink href={fields.telegram} className="social-link social-link-header social-telegram fab fa-telegram-plane"></ALink> }
+            { fields.viber && <ALink href={`viber://chat?number=${fields.viber}`} className="social-link social-link-header social-viber fab fa-viber"></ALink> }
+            { fields.instagram && <ALink href={fields.instagram} className="social-link social-link-header social-instagram fab fa-instagram"></ALink> }
 
             <span className="divider"></span>
 

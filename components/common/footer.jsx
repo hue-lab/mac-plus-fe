@@ -91,9 +91,9 @@ export default function Footer({ fields, categoryTree, footerNav }) {
           </div>
           <div className="footer-right">
             <div className="social-links">
-              <ALink href="#" className="social-link social-facebook fab fa-facebook-f"></ALink>
-              <ALink href="#" className="social-link social-twitter fab fa-twitter"></ALink>
-              <ALink href="#" className="social-link social-linkedin fab fa-linkedin-in"></ALink>
+              { fields.telegram && <ALink href={fields.telegram} className="social-link social-telegram fab fa-telegram-plane"></ALink> }
+              { fields.viber && <ALink href={`viber://chat?number=${fields.viber}`} className="social-link social-viber fab fa-viber"></ALink> }
+              { fields.instagram && <ALink href={fields.instagram} className="social-link social-instagram fab fa-instagram"></ALink> }
             </div>
           </div>
         </div>
