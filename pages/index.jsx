@@ -7,7 +7,6 @@ import BannerSection from '~/components/partials/home/banner-section';
 import ServiceBox from '~/components/partials/home/service-section';
 import BlogSection from '~/components/partials/home/blog-section';
 
-import { getCategoryTree } from "~/utils/endpoints/categoryTree";
 import { getLatestArticles } from '~/utils/endpoints/articles';
 import { getRecProducts } from "~/utils/endpoints/products";
 import { getSlides } from "~/utils/endpoints/slides";
