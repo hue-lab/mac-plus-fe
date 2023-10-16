@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { debounceTime, Subject } from "rxjs";
 
 import ALink from '~/components/features/custom-link';
 import Quantity from '~/components/features/quantity';
@@ -13,16 +14,28 @@ function Cart(props) {
   const { cartList, removeFromCart, updateCart } = props;
   const [cartItems, setCartItems] = useState([]);
   const [discount, setDiscount] = useState(0);
+  const [needUpdate, setNeedUpdate] = useState(false);
+  const itemsAmount = new Subject();
 
   useEffect(() => {
     setCartItems([...cartList]);
-  }, [cartList])
+  }, [cartList]);
 
+  useEffect(() => {
+    if (cartItems.length) {
+      update();
+    }
+  }, [needUpdate]);
 
   const onChangeQty = (name, qty) => {
     setCartItems(cartItems.map(item => {
       return item.name === name ? { ...item, qty: qty } : item
     }));
+    setNeedUpdate(!needUpdate);
+  }
+
+  const update = () => {
+    updateCart(cartItems);
   }
 
   return (
@@ -76,7 +89,6 @@ function Cart(props) {
                               <td className="product-subtotal">
                                 <span className="amount">{toDecimal(item.totalPrice)} BYN</span>
                               </td>
-
                               <td className="product-quantity">
                                 <Quantity qty={item.qty} max={1000} onChangeQty={qty => onChangeQty(item.name, qty)} />
                               </td>
@@ -96,7 +108,7 @@ function Cart(props) {
                       <ALink href="/shop" className="btn btn-dark btn-md btn-rounded btn-icon-left mr-4 mb-4"><i className="d-icon-arrow-left"></i>Вернуться в каталог</ALink>
                       {/* <button
                         type="submit"
-                        className={`btn btn-outline btn-dark btn-md btn-rounded ${compareItems() ? ' btn-disabled' : ''}`}
+                        className={`btn btn-outline btn-dark btn-md btn-rounded`}
                         onClick={update}
                       >
                         Update Cart
