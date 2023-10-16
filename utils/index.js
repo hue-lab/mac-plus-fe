@@ -1,3 +1,5 @@
+import {useEffect, useState} from "react";
+
 /**
  * utils to parse options string to object
  * @param {string} options 
@@ -8,6 +10,22 @@ export const parseOptions = function (options) {
     return JSON.parse(options.replace(/'/g, '"').replace(';', ''));
   }
   return {};
+}
+
+export const useDebounce = (value, delay) => {
+  const [debouncedValue, setDebouncedValue] = useState(value)
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value)
+    }, delay)
+
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [value, delay])
+
+  return debouncedValue
 }
 
 export const getImgPath = (img) => {
