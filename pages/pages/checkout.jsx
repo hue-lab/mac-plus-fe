@@ -5,6 +5,7 @@ import { Collapse } from 'react-bootstrap';
 import ALink from '~/components/features/custom-link';
 import { toDecimal, getTotalPrice } from '~/utils';
 import { getDeliveryMethods } from '~/utils/endpoints/orders';
+import { getCalculation } from "~/utils/endpoints/calculate";
 
 Checkout.getInitialProps = async (context) => {
   const delivery = await getDeliveryMethods();
@@ -15,6 +16,20 @@ function Checkout(props) {
   const { cartList, delivery } = props;
   const [currentRadio, setCurrentRadio] = useState(0);
   const [payment, setPayment] = useState(0);
+  const [discount, setDiscount] = useState(0);
+  const [subTotalPrice, setSubtotalPrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [deliveryPrice, setDeliveryPrice] = useState(0);
+
+  useEffect(() => {
+    const products = cartList.map(item => ({ productId: item._id, count: item.qty }));
+    getCalculation(products, delivery[currentRadio]._id).then(res => {
+      setDiscount(res?.totalDiscount || 0);
+      setSubtotalPrice(res?.orderPrice || 0);
+      setTotalPrice(res?.totalPrice || 0);
+      setDeliveryPrice(res?.deliveryPrice || 0);
+    });
+  }, [currentRadio]);
 
   const radioHandler = (index) => {
     setCurrentRadio(index);
@@ -106,7 +121,14 @@ function Checkout(props) {
                                 <td>
                                   <h4 className="summary-subtitle">Стоимость</h4>
                                 </td>
-                                <td className="summary-subtotal-price pb-0 pt-0">{toDecimal(getTotalPrice(cartList))} BYN
+                                <td className="summary-subtotal-price pb-0 pt-0">{toDecimal(subTotalPrice)} BYN
+                                </td>
+                              </tr>
+                              <tr className="summary-subtotal">
+                                <td>
+                                  <h4 className="summary-subtitle">Скидка</h4>
+                                </td>
+                                <td className="summary-subtotal-price pb-0 pt-0">{toDecimal(discount)} BYN
                                 </td>
                               </tr>
                               <tr className="sumnary-shipping shipping-row-last">
@@ -124,12 +146,20 @@ function Checkout(props) {
                                   </ul>
                                 </td>
                               </tr>
+                              {deliveryPrice ? (<tr className="summary-total">
+                                <td className="pb-0">
+                                  <h4 className="summary-subtitle">Стоимость доставки</h4>
+                                </td>
+                                <td className=" pt-0 pb-0">
+                                  <p className="summary-subtotal-price pb-0 pt-0">{toDecimal(deliveryPrice)} BYN</p>
+                                </td>
+                              </tr>) : (<></>)}
                               <tr className="summary-total">
                                 <td className="pb-0">
                                   <h4 className="summary-subtitle">Всего</h4>
                                 </td>
                                 <td className=" pt-0 pb-0">
-                                  <p className="summary-total-price ls-s text-primary">{toDecimal(getTotalPrice(cartList))} BYN</p>
+                                  <p className="summary-total-price ls-s text-primary">{toDecimal(totalPrice)} BYN</p>
                                 </td>
                               </tr>
                             </tbody>
