@@ -5,8 +5,8 @@ import { Helmet } from 'react-helmet';
 import ALink from '~/components/features/custom-link';
 import Quantity from '~/components/features/quantity';
 import { cartActions } from '~/store/cart';
-import {toDecimal, getImgPath, useDebounce} from '~/utils';
-import {getCalculation} from "~/utils/endpoints/calculate";
+import { toDecimal, getImgPath, useDebounce } from '~/utils';
+import { getCalculation } from "~/utils/endpoints/calculate";
 
 function Cart(props) {
   const { cartList, removeFromCart, updateCart } = props;
@@ -104,20 +104,7 @@ function Cart(props) {
                     </table>
                     <div className="cart-actions mb-6 pt-4">
                       <ALink href="/shop" className="btn btn-dark btn-md btn-rounded btn-icon-left mr-4 mb-4"><i className="d-icon-arrow-left"></i>Вернуться в каталог</ALink>
-                      {/* <button
-                        type="submit"
-                        className={`btn btn-outline btn-dark btn-md btn-rounded`}
-                        onClick={update}
-                      >
-                        Update Cart
-                      </button> */}
                     </div>
-                    {/* <div className="cart-coupon-box mb-8">
-                      <h4 className="title coupon-title text-uppercase ls-m">Coupon Discount</h4>
-                      <input type="text" name="coupon_code" className="input-text form-control text-grey ls-m mb-4"
-                        id="coupon_code" placeholder="Enter coupon code here..." />
-                      <button type="submit" className="btn btn-md btn-dark btn-rounded btn-outline">Apply Coupon</button>
-                    </div> */}
                   </div>
                   <aside className="col-lg-4 sticky-sidebar-wrapper">
                     <div className="sticky-sidebar" data-sticky-options="{'bottom': 20}">
