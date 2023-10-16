@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { Collapse } from 'react-bootstrap';
 import ALink from '~/components/features/custom-link';
-import { toDecimal, getTotalPrice } from '~/utils';
+import { toDecimal } from '~/utils';
 import { getDeliveryMethods } from '~/utils/endpoints/orders';
 import { getCalculation } from "~/utils/endpoints/calculate";
 
