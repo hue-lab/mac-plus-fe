@@ -1,28 +1,39 @@
 import { connect } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 
 import ALink from '~/components/features/custom-link';
 import Quantity from '~/components/features/quantity';
-
 import { cartActions } from '~/store/cart';
-
-import { toDecimal, getTotalPrice, getImgPath } from '~/utils';
-import { Helmet } from 'react-helmet';
+import { toDecimal, getImgPath, useDebounce } from '~/utils';
+import { getCalculation } from "~/utils/endpoints/calculate";
 
 function Cart(props) {
   const { cartList, removeFromCart, updateCart } = props;
   const [cartItems, setCartItems] = useState([]);
+  const debouncedCartItems = useDebounce(cartList, 400);
   const [discount, setDiscount] = useState(0);
+  const [subTotalPrice, setSubtotalPrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
     setCartItems([...cartList]);
-  }, [cartList])
-
+    if (cartItems.length) {
+      const products = cartItems.map(item => ({ productId: item._id, count: item.qty }));
+      getCalculation(products).then(res => {
+        setDiscount(res?.totalDiscount || 0);
+        setSubtotalPrice(res?.orderPrice || 0);
+        setTotalPrice(res?.totalPrice || 0);
+      });
+    }
+  }, [debouncedCartItems]);
 
   const onChangeQty = (name, qty) => {
-    setCartItems(cartItems.map(item => {
+    const newCartItems = cartItems.map(item => {
       return item.name === name ? { ...item, qty: qty } : item
-    }));
+    });
+    updateCart(newCartItems);
+    setCartItems(newCartItems);
   }
 
   return (
@@ -76,7 +87,6 @@ function Cart(props) {
                               <td className="product-subtotal">
                                 <span className="amount">{toDecimal(item.totalPrice)} BYN</span>
                               </td>
-
                               <td className="product-quantity">
                                 <Quantity qty={item.qty} max={1000} onChangeQty={qty => onChangeQty(item.name, qty)} />
                               </td>
@@ -94,20 +104,7 @@ function Cart(props) {
                     </table>
                     <div className="cart-actions mb-6 pt-4">
                       <ALink href="/shop" className="btn btn-dark btn-md btn-rounded btn-icon-left mr-4 mb-4"><i className="d-icon-arrow-left"></i>Вернуться в каталог</ALink>
-                      {/* <button
-                        type="submit"
-                        className={`btn btn-outline btn-dark btn-md btn-rounded ${compareItems() ? ' btn-disabled' : ''}`}
-                        onClick={update}
-                      >
-                        Update Cart
-                      </button> */}
                     </div>
-                    {/* <div className="cart-coupon-box mb-8">
-                      <h4 className="title coupon-title text-uppercase ls-m">Coupon Discount</h4>
-                      <input type="text" name="coupon_code" className="input-text form-control text-grey ls-m mb-4"
-                        id="coupon_code" placeholder="Enter coupon code here..." />
-                      <button type="submit" className="btn btn-md btn-dark btn-rounded btn-outline">Apply Coupon</button>
-                    </div> */}
                   </div>
                   <aside className="col-lg-4 sticky-sidebar-wrapper">
                     <div className="sticky-sidebar" data-sticky-options="{'bottom': 20}">
@@ -119,7 +116,7 @@ function Cart(props) {
                                 <h4 className="summary-subtitle">Сумма</h4>
                               </td>
                               <td>
-                                <p className="summary-subtotal-price">{toDecimal(getTotalPrice(cartItems))} BYN</p>
+                                <p className="summary-subtotal-price">{toDecimal(subTotalPrice)} BYN</p>
                               </td>
                             </tr>
                             <tr className="summary-subtotal">
@@ -127,7 +124,7 @@ function Cart(props) {
                                 <h4 className="summary-subtitle">Скидка</h4>
                               </td>
                               <td>
-                                <p className="summary-subtotal-price">{toDecimal(getTotalPrice(discount))} BYN</p>
+                                <p className="summary-subtotal-price">{toDecimal(discount)} BYN</p>
                               </td>
                             </tr>
                           </tbody>
@@ -139,7 +136,7 @@ function Cart(props) {
                                 <h4 className="summary-subtitle">Всего</h4>
                               </td>
                               <td>
-                                <p className="summary-total-price ls-s">{toDecimal(getTotalPrice(cartItems))} BYN</p>
+                                <p className="summary-total-price ls-s">{toDecimal(totalPrice)} BYN</p>
                               </td>
                             </tr>
                           </tbody>
