@@ -62,7 +62,6 @@ function Checkout(props) {
     const form = e.target;
     const formData = Object.values(form).reduce((obj, field) => { obj[field.name] = field.value; return obj }, {});
     fillOrderObj(formData);
-    console.log(orderObj);
     sendOrderObj();
   }
 
@@ -85,7 +84,6 @@ function Checkout(props) {
 
   const sendOrderObj = async () => {
     const res = await addOrder(orderObj);
-    console.log(res);
   }
 
   return (
