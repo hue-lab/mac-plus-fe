@@ -27,9 +27,12 @@ Shop.getInitialProps = async ({ query }) => {
   console.log(requestFilters);
   if (customProperties && Object.keys(customProperties).length) {
     requestFilters.customProperties = Object.keys(customProperties).reduce((acc, key) => {
-      acc[key] = {
-        $in: customProperties[key]?.split(',') || [],
-      };
+      const values = customProperties[key]?.split(',');
+      if(values?.length && values[0].length) {
+        acc[key] = {
+          $in: values,
+        };
+      }
       return acc;
     }, {});
   }

@@ -76,9 +76,6 @@ function ProductTwo(props) {
                 <i className="d-icon-bag"></i>
               </a>
           }
-          <a href="#" className="btn-product-icon btn-wishlist" title={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'} onClick={wishlistHandler}>
-            <i className={isWishlisted ? "d-icon-heart-full" : "d-icon-heart"}></i>
-          </a>
         </div>
 
         <div className="product-action">
@@ -87,23 +84,6 @@ function ProductTwo(props) {
       </figure>
 
       <div className="product-details" style={{ paddingBottom: '1rem' }}>
-        {/*{*/}
-        {/*    isCat ?*/}
-        {/*        <div className="product-cat">*/}
-        {/*            {*/}
-        {/*                product.categories ?*/}
-        {/*                    product.categories.map( ( item, index ) => (*/}
-        {/*                        <React.Fragment key={ item.name + '-' + index }>*/}
-        {/*                            <ALink href={ { pathname: '/shop', query: { category: item.slug } } }>*/}
-        {/*                                { item.name }*/}
-        {/*                                { index < product.categories.length - 1 ? ', ' : "" }*/}
-        {/*                            </ALink>*/}
-        {/*                        </React.Fragment>*/}
-        {/*                    ) ) : ""*/}
-        {/*            }*/}
-        {/*        </div> : ''*/}
-        {/*}*/}
-
         <h3 className="product-name">
           <ALink href={`/product/${product._id}`}>{product.name}</ALink>
         </h3>

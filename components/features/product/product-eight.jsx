@@ -105,9 +105,6 @@ function ProductEight ( props ) {
                     <ALink href={ `/product/${ product._id }` } className="btn-product btn-cart" title="Go to product">
                         <span>Подробнее</span>
                     </ALink>
-                    <a href="#" className="btn-product-icon btn-wishlist" title={ isWishlisted ? 'Remove from wishlist' : 'Add to wishlist' } onClick={ wishlistHandler }>
-                        <i className={ isWishlisted ? "d-icon-heart-full" : "d-icon-heart" }></i>
-                    </a>
                 </div>
             </div>
         </div >
