@@ -125,20 +125,16 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                 <Card title="<h3 class='widget-title'>Цена<span class='toggle-btn p-0 parse-content'></span></h3>" type="parse" expanded={true}>
                   <div className="widget-body">
                     <form action="#">
-                      <div className="filter-price-slider noUi-target noUi-ltr noUi-horizontal shop-input-range">
-                        <InputRange
-                          formatLabel={value => `$${value}`}
-                          maxValue={5000}
-                          minValue={0}
-                          step={50}
-                          value={filterPrice}
-                          onChange={onChangePrice}
-                        />
-                      </div>
-
-                      <div className="filter-actions">
-                        <div className="filter-price-text">{filterPrice.min} BYN - {filterPrice.max} BYN
-                          <span className="filter-price-range"></span>
+                      <div className="widget-body filter-items">
+                        <div className="row">
+                          <div className="col-xs-6">
+                            <label>От</label>
+                            <div datapostfix="BYN" className="widget-input-number"><input className="form-control" type="number" /></div>
+                          </div>
+                          <div className="col-xs-6">
+                            <label>До</label>
+                            <div datapostfix="BYN" className="widget-input-number"><input className="form-control" type="number" /></div>
+                          </div>
                         </div>
                       </div>
                     </form>
@@ -195,6 +191,19 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                         )
                       }
                     </ul> }
+
+                    {  ['NUMBER_INPUT'].includes(item.type) && <div className="widget-body filter-items">
+                      <div className="row">
+                        <div className="col-xs-6">
+                          <label>От</label>
+                          <div datapostfix={item.units} className="widget-input-number"><input className="form-control" type="number" /></div>
+                        </div>
+                        <div className="col-xs-6">
+                          <label>До</label>
+                          <div datapostfix={item.units} className="widget-input-number"><input className="form-control" type="number" /></div>
+                        </div>
+                      </div>
+                    </div> }
                   </Card>
                 </div>
               ))}
