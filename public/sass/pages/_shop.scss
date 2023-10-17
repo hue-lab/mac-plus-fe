@@ -897,6 +897,11 @@
   }
 }
 
+.widget-box-checkbox {
+  border-top: 3px solid $border-color-light;
+  padding: 1rem 0;
+}
+
 @include mq(xl) {
   .select-menu:not(:last-child):not(.toolbox-show) {
     margin-right: 2rem;

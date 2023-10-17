@@ -9,7 +9,6 @@ import {getBannerSlide} from "~/utils/endpoints/slides";
 import {getImgPath} from "~/utils";
 import {getProducts} from "~/utils/endpoints/products";
 import {getFilters} from "~/utils/endpoints/filters";
-import {useRouter} from "next/router";
 
 Shop.getInitialProps = async ({ query }) => {
   const filters = await getFilters(query.category);
@@ -24,14 +23,19 @@ Shop.getInitialProps = async ({ query }) => {
       limit: Number(per_page) || 12,
     }
   };
-  console.log(requestFilters);
   if (customProperties && Object.keys(customProperties).length) {
     requestFilters.customProperties = Object.keys(customProperties).reduce((acc, key) => {
       const values = customProperties[key]?.split(',');
-      if(values?.length && values[0].length) {
-        acc[key] = {
-          $in: values,
-        };
+      if (values?.length && values[0].length) {
+        if (values.length === 1) {
+          acc[key] = {
+            $eq: values[0] === 'true' ? true : values[0]
+          }
+        } else {
+          acc[key] = {
+            $in: values,
+          };
+        }
       }
       return acc;
     }, {});
