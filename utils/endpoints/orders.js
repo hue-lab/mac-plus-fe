@@ -18,3 +18,8 @@ export async function addOrder(obj) {
   })
   return await res.json();
 }
+
+export async function getOrderByCode(code) {
+  const res = await fetch(process.env.API_HOST + '/store/order/tracking/' + code);
+  return res.json() || {};
+}
