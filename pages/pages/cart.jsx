@@ -48,7 +48,7 @@ function Cart(props) {
         <div className="step-by pr-4 pl-4">
           <h3 className="title title-simple title-step active"><ALink href="#">1. Корзина</ALink></h3>
           <h3 className="title title-simple title-step"><ALink href="/pages/checkout">2. Оформление</ALink></h3>
-          <h3 className="title title-simple title-step"><ALink href="/pages/order">3. Подтверждение</ALink></h3>
+          <h3 className="title title-simple title-step">3. Подтверждение</h3>
         </div>
 
         <div className="container mt-7 mb-2">

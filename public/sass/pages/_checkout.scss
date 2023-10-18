@@ -309,6 +309,11 @@
     left: .5rem;
     background: #666;
   }
+
+  &-error-message {
+    color: red;
+    line-height: 1.5rem;
+  }
 }
 
 .summary .title {

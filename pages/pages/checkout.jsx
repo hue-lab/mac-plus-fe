@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { Collapse } from 'react-bootstrap';
@@ -13,6 +14,20 @@ Checkout.getInitialProps = async (context) => {
   return { delivery };
 }
 
+function CheckoutButton({ pending, error, terms, removeError }) {
+  if (!terms && !error) {
+    return <button type="submit" className="btn btn-dark btn-rounded btn-order checkout-button" disabled>Оформить заказ</button>
+  } else if (!terms && error) {
+    return <button type="submit" className="btn btn-dark btn-rounded btn-order checkout-button" disabled>Попробовать снова</button>
+  } else if (terms && !error && !pending) {
+    return <button type="submit" className="btn btn-dark btn-rounded btn-order checkout-button">Оформить заказ</button>
+  } else if (pending) {
+    return <button type="submit" className="btn btn-dark btn-rounded btn-order checkout-button" disabled>Ожидайте</button>
+  } else if (error && terms && !pending) {
+    return <button type="submit" className="btn btn-dark btn-rounded btn-order checkout-button" onClick={() => removeError(false)}>Попробовать снова</button>
+  }
+}
+
 function Checkout(props) {
   const { cartList, delivery } = props;
   const [currentRadio, setCurrentRadio] = useState(0);
@@ -22,8 +37,10 @@ function Checkout(props) {
   const [totalPrice, setTotalPrice] = useState(0);
   const [deliveryPrice, setDeliveryPrice] = useState(0);
   const [isTerms, setIsTerms] = useState(false);
+  const [isPending, setIsPending] = useState(false);
+  const [orderError, setOrderError] = useState('');
 
-  const additionalFields = new Array(delivery[currentRadio].fields.length).fill(null);
+  const router = useRouter();
 
   const orderObj = {
     customer: {
@@ -83,7 +100,19 @@ function Checkout(props) {
   }
 
   const sendOrderObj = async () => {
-    const res = await addOrder(orderObj);
+    setIsPending(true);
+    try {
+      const res = await addOrder(orderObj);
+      if (res.error) {
+        throw new Error(res.error)
+      }
+      router.push(`/pages/order/${res.orderCode}`);
+    } catch (e) {
+      console.log(`${e}`);
+      setOrderError(true);
+    } finally {
+      setIsPending(false)
+    }
   }
 
   return (
@@ -99,7 +128,7 @@ function Checkout(props) {
         <div className="step-by pr-4 pl-4">
           <h3 className="title title-simple title-step"><ALink href="/pages/cart">1. Корзина</ALink></h3>
           <h3 className="title title-simple title-step active"><ALink href="#">2. Оформление</ALink></h3>
-          <h3 className="title title-simple title-step"><ALink href="/pages/order">3. Подтверждение</ALink></h3>
+          <h3 className="title title-simple title-step">3. Подтверждение</h3>
         </div>
         <div className="container mt-7">
           {
@@ -245,7 +274,12 @@ function Checkout(props) {
                               Я прочитал(а) <ALink href="#"><u>правила обработки персональных данных</u></ALink> и соглашаюсь на обработку персональных данных *
                             </label>
                           </div>
-                          <button type="submit" className="btn btn-dark btn-rounded btn-order checkout-button" disabled={isTerms ? false : true}>Оформить заказ</button>
+                          {orderError && !isPending ? (
+                            <p className='checkout-error-message'>
+                              Произошла ошибка при отправке данных на сервер. Пожалуйста, перепроверьте введённые данные и попробуйте ещё раз.
+                            </p>
+                          ) : ''}
+                          <CheckoutButton pending={isPending} error={orderError} terms={isTerms} removeError={setOrderError} />
                         </div>
                       </div>
                     </aside>
