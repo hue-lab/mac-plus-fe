@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { Collapse } from 'react-bootstrap';
@@ -6,10 +7,25 @@ import ALink from '~/components/features/custom-link';
 import { toDecimal } from '~/utils';
 import { getDeliveryMethods } from '~/utils/endpoints/orders';
 import { getCalculation } from "~/utils/endpoints/calculate";
+import { addOrder } from '~/utils/endpoints/orders';
 
 Checkout.getInitialProps = async (context) => {
   const delivery = await getDeliveryMethods();
   return { delivery };
+}
+
+function CheckoutButton({ pending, error, terms, removeError }) {
+  if (!terms && !error) {
+    return <button type="submit" className="btn btn-dark btn-rounded btn-order checkout-button" disabled>Оформить заказ</button>
+  } else if (!terms && error) {
+    return <button type="submit" className="btn btn-dark btn-rounded btn-order checkout-button" disabled>Попробовать снова</button>
+  } else if (terms && !error && !pending) {
+    return <button type="submit" className="btn btn-dark btn-rounded btn-order checkout-button">Оформить заказ</button>
+  } else if (pending) {
+    return <button type="submit" className="btn btn-dark btn-rounded btn-order checkout-button" disabled>Ожидайте</button>
+  } else if (error && terms && !pending) {
+    return <button type="submit" className="btn btn-dark btn-rounded btn-order checkout-button" onClick={() => removeError(false)}>Попробовать снова</button>
+  }
 }
 
 function Checkout(props) {
@@ -20,6 +36,26 @@ function Checkout(props) {
   const [subTotalPrice, setSubtotalPrice] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [deliveryPrice, setDeliveryPrice] = useState(0);
+  const [isTerms, setIsTerms] = useState(false);
+  const [isPending, setIsPending] = useState(false);
+  const [orderError, setOrderError] = useState('');
+
+  const router = useRouter();
+
+  const orderObj = {
+    customer: {
+
+    },
+    state: {
+      label: 'Ожидание',
+      color: 'neutral',
+      description: 'Ожидайте звонка оператора',
+    },
+    delivery: {
+      deliveryData: [],
+    },
+    historyList: []
+  }
 
   useEffect(() => {
     const products = cartList.map(item => ({ productId: item._id, count: item.qty }));
@@ -32,7 +68,51 @@ function Checkout(props) {
   }, [currentRadio]);
 
   const radioHandler = (index) => {
+    if (delivery[currentRadio].paymentMethods[1] && payment !== 0) {
+      setPayment(0);
+    }
     setCurrentRadio(index);
+  }
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = Object.values(form).reduce((obj, field) => { obj[field.name] = field.value; return obj }, {});
+    fillOrderObj(formData);
+    sendOrderObj();
+  }
+
+  const fillOrderObj = (obj) => {
+    orderObj.customer.phone = obj.phone.trim();
+    orderObj.customer.name = obj.name.trim();
+    orderObj.customer.surname = obj.surname.trim();
+    orderObj.delivery.deliveryMethod = { ...delivery[currentRadio] };
+    orderObj.delivery.deliveryMethod.paymentMethods = delivery[currentRadio].paymentMethods.map(method => method._id);
+    orderObj.delivery.deliveryData = [...delivery[currentRadio].fields.map(field => ({ name: field, value: obj[field] }))]
+    orderObj.paymentMethod = delivery[currentRadio].paymentMethods[payment];
+    orderObj.cartItems = cartList.map(el => ({ productId: el._id, count: el.qty }));
+    if (obj.comment) {
+      orderObj.delivery.comment = obj.comment.trim();
+    }
+    if (obj.email) {
+      orderObj.customer.email = obj.email.trim();
+    }
+  }
+
+  const sendOrderObj = async () => {
+    setIsPending(true);
+    try {
+      const res = await addOrder(orderObj);
+      if (res.error) {
+        throw new Error(res.error)
+      }
+      router.push(`/pages/order/${res.orderCode}`);
+    } catch (e) {
+      console.log(`${e}`);
+      setOrderError(true);
+    } finally {
+      setIsPending(false)
+    }
   }
 
   return (
@@ -48,24 +128,24 @@ function Checkout(props) {
         <div className="step-by pr-4 pl-4">
           <h3 className="title title-simple title-step"><ALink href="/pages/cart">1. Корзина</ALink></h3>
           <h3 className="title title-simple title-step active"><ALink href="#">2. Оформление</ALink></h3>
-          <h3 className="title title-simple title-step"><ALink href="/pages/order">3. Подтверждение</ALink></h3>
+          <h3 className="title title-simple title-step">3. Подтверждение</h3>
         </div>
         <div className="container mt-7">
           {
             cartList.length > 0 ?
               <>
-                <form action="#" className="form">
+                <form onSubmit={submitHandler} className="form">
                   <div className="row">
                     <div className="col-lg-7 mb-6 mb-lg-0 pr-lg-4">
                       <h3 className="title title-simple text-left text-uppercase">Детали заказа</h3>
                       <div className="row">
                         <div className="col-xs-6">
                           <label>Имя *</label>
-                          <input type="text" className="form-control" name="first-name" required />
+                          <input type="text" className="form-control" name="name" required />
                         </div>
                         <div className="col-xs-6">
                           <label>Фамилия *</label>
-                          <input type="text" className="form-control" name="last-name" required />
+                          <input type="text" className="form-control" name="surname" required />
                         </div>
                       </div>
                       {
@@ -73,7 +153,7 @@ function Checkout(props) {
                           delivery[currentRadio].fields.map((item, index) => (
                             <div key={item + index}>
                               <label>{item} *</label>
-                              <input type="text" className="form-control" name={item} />
+                              <input type="text" className="form-control" name={item} required />
                             </div>
                           ))
                         ) : ''
@@ -85,14 +165,14 @@ function Checkout(props) {
                         </div>
                         <div className="col-xs-6">
                           <label>Email</label>
-                          <input type="text" className="form-control" name="email-address" />
+                          <input type="text" className="form-control" name="email" />
                         </div>
                       </div>
                       <p>Поля, помеченные *, являются обязательными для заполнения.</p>
 
                       <h2 className="title title-simple text-uppercase text-left mt-6">Комментарий к заказу</h2>
                       <textarea className="form-control pb-2 pt-2 mb-0" cols="30" rows="5"
-                        placeholder="Дополнительная информация"></textarea>
+                        name="comment" placeholder="Дополнительная информация"></textarea>
                     </div>
 
                     <aside className="col-lg-5 sticky-sidebar-wrapper">
@@ -168,32 +248,38 @@ function Checkout(props) {
                             <h4 className="summary-subtitle ls-m pb-3">Метод оплаты</h4>
 
                             <div className="checkbox-group">
-
-                              {delivery[currentRadio].paymentMethods.map((item, index) => (
-                                <div key={item._id}>
-                                  <div className="card-header">
-                                    <ALink href="#" className={`text-body text-normal ls-m ${index === payment ? 'collapse' : ''}`} onClick={() => { setPayment(index) }}>{item.name}</ALink>
-                                  </div>
-
-                                  <Collapse in={index === payment}>
-                                    <div className="card-wrapper">
-                                      <div className="card-body ls-m overflow-hidden">
-                                        {item.description}
-                                      </div>
+                              {delivery[currentRadio].paymentMethods.map((item, index) => {
+                                return (
+                                  <div key={item._id}>
+                                    <div className="card-header">
+                                      <ALink href="#" className={`text-body text-normal ls-m ${index === payment ? 'collapse' : ''}`} onClick={() => { setPayment(index) }}>{item.name}</ALink>
                                     </div>
-                                  </Collapse>
-                                </div>
-                              ))}
+
+                                    <Collapse in={index === payment}>
+                                      <div className="card-wrapper">
+                                        <div className="card-body ls-m overflow-hidden">
+                                          {item.description}
+                                        </div>
+                                      </div>
+                                    </Collapse>
+                                  </div>
+                                )
+                              })}
                             </div>
                           </div>
                           <div className="form-checkbox mt-4 mb-5">
                             <input type="checkbox" className="custom-checkbox" id="terms-condition"
-                              name="terms-condition" />
+                              name="terms-condition" onChange={e => setIsTerms(!isTerms)} required />
                             <label className="form-control-label" htmlFor="terms-condition">
-                              Я прочитал(а) <ALink href="#">правила обработки персональных данных</ALink> и соглашаюсь на обработку персональных данных *
+                              Я прочитал(а) <ALink href="#"><u>правила обработки персональных данных</u></ALink> и соглашаюсь на обработку персональных данных *
                             </label>
                           </div>
-                          <button type="submit" className="btn btn-dark btn-rounded btn-order">Оформить заказ</button>
+                          {orderError && !isPending ? (
+                            <p className='checkout-error-message'>
+                              Произошла ошибка при отправке данных на сервер. Пожалуйста, перепроверьте введённые данные и попробуйте ещё раз.
+                            </p>
+                          ) : ''}
+                          <CheckoutButton pending={isPending} error={orderError} terms={isTerms} removeError={setOrderError} />
                         </div>
                       </div>
                     </aside>
