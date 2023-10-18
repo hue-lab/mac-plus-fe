@@ -3,24 +3,32 @@ import Helmet from 'react-helmet';
 
 import ALink from '~/components/features/custom-link';
 
-import { toDecimal, getTotalPrice } from '~/utils';
+import { toDecimal, getPostDate } from '~/utils';
+import { getOrderByCode } from '~/utils/endpoints/orders';
+
+Order.getInitialProps = async (context) => {
+  const code = context.asPath.split('/').filter(item => !!item).pop();
+  const res = await getOrderByCode(code);
+  return {
+    order: res,
+  }
+}
 
 function Order(props) {
-  const { cartList } = props;
-
+  const { order } = props;
   return (
     <main className="main order">
       <Helmet>
-        <title>Riode React eCommerce Template | Order</title>
+        <title>Mac Plus | Заказ {'plug'}</title>
       </Helmet>
 
-      <h1 className="d-none">Riode React eCommerce Template - Order</h1>
+      <h1 className="d-none">Mac Plus - Заказ</h1>
 
       <div className="page-content pt-7 pb-10 mb-10">
         <div className="step-by pr-4 pl-4">
-          <h3 className="title title-simple title-step"><ALink href="/pages/cart">1. Shopping Cart</ALink></h3>
-          <h3 className="title title-simple title-step"><ALink href="/pages/checkout">2. Checkout</ALink></h3>
-          <h3 className="title title-simple title-step active"><ALink href="#">3. Order Complete</ALink></h3>
+          <h3 className="title title-simple title-step"><ALink href="/pages/cart">1. Корзина</ALink></h3>
+          <h3 className="title title-simple title-step"><ALink href="/pages/checkout">2. Оформление</ALink></h3>
+          <h3 className="title title-simple title-step active"><ALink href="#">3. Подтверждение</ALink></h3>
         </div>
         <div className="container mt-8">
           <div className="order-message mr-auto ml-auto">
@@ -37,8 +45,8 @@ function Order(props) {
                 </svg>
               </div>
               <div className="icon-box-content text-left">
-                <h5 className="icon-box-title font-weight-bold lh-1 mb-1">Thank You!</h5>
-                <p className="lh-1 ls-m">Your order has been received</p>
+                <h5 className="icon-box-title font-weight-bold lh-1 mb-1">Успешно оформлено!</h5>
+                <p className="lh-1 ls-m">Ожидайте обработки оператором</p>
               </div>
             </div>
           </div>
@@ -46,92 +54,100 @@ function Order(props) {
 
           <div className="order-results">
             <div className="overview-item">
-              <span>Order number:</span>
-              <strong>4935</strong>
+              <span>Код заказа:</span>
+              <strong>{order.orderCode}</strong>
             </div>
             <div className="overview-item">
-              <span>Status:</span>
-              <strong>Processing</strong>
+              <span>Статус:</span>
+              <strong>{order.state.label}</strong>
             </div>
             <div className="overview-item">
-              <span>Date:</span>
-              <strong>November 20, 2020</strong>
+              <span>Дата:</span>
+              <strong>{getPostDate(order.createdAt)}</strong>
             </div>
             <div className="overview-item">
-              <span>Email:</span>
-              <strong>12345@gmail.com</strong>
+              <span>Имя:</span>
+              <strong>{order.customer.name}</strong>
             </div>
             <div className="overview-item">
-              <span>Total:</span>
-              <strong>${toDecimal(getTotalPrice(cartList))}</strong>
-            </div>
-            <div className="overview-item">
-              <span>Payment method:</span>
-              <strong>Cash on delivery</strong>
+              <span>Телефон:</span>
+              <strong>{order.customer.phone}</strong>
             </div>
           </div>
 
-          <h2 className="title title-simple text-left pt-4 font-weight-bold text-uppercase">Order Details</h2>
+          <h2 className="title title-simple text-left pt-4 font-weight-bold text-uppercase">Детали заказа</h2>
           <div className="order-details">
             <table className="order-details-table">
               <thead>
                 <tr className="summary-subtotal">
                   <td>
-                    <h3 className="summary-subtitle">Product</h3>
+                    <h3 className="summary-subtitle">Товары</h3>
                   </td>
                   <td></td>
                 </tr>
               </thead>
               <tbody>
                 {
-                  cartList.map(item =>
-                    <tr key={'order-' + item.name}>
-                      <td className="product-name">{item.name} <span> <i className="fas fa-times"></i> {item.qty}</span></td>
-                      <td className="product-price">${toDecimal(item.qty * item.price)}</td>
+                  order.cartItems.map(item =>
+                    <tr key={'order-' + item.product._id}>
+                      <td className="product-name">{item.product.name} <span> <i className="fas fa-times"></i> {item.count}</span></td>
+                      <td className="product-price">{toDecimal(item.count * item.product.totalPrice)} BYN</td>
                     </tr>
                   )}
                 <tr className="summary-subtotal">
                   <td>
-                    <h4 className="summary-subtitle">Subtotal:</h4>
+                    <h4 className="summary-subtitle">Стоимость:</h4>
                   </td>
-                  <td className="summary-subtotal-price">${toDecimal(getTotalPrice(cartList))}</td>
+                  <td className="summary-subtotal-price">{toDecimal(order.subTotalPrice)} BYN</td>
                 </tr>
                 <tr className="summary-subtotal">
                   <td>
-                    <h4 className="summary-subtitle">Shipping:</h4>
+                    <h4 className="summary-subtitle">Скидка:</h4>
                   </td>
-                  <td className="summary-subtotal-price">Free shipping</td>
+                  <td className="summary-subtotal-price">{toDecimal(order.totalDiscount)} BYN</td>
                 </tr>
                 <tr className="summary-subtotal">
                   <td>
-                    <h4 className="summary-subtitle">Payment method:</h4>
+                    <h4 className="summary-subtitle">Метод доставки:</h4>
                   </td>
-                  <td className="summary-subtotal-price">Cash on delivery</td>
+                  <td className="summary-subtotal-price">{order.delivery.deliveryMethod.name}</td>
                 </tr>
                 <tr className="summary-subtotal">
                   <td>
-                    <h4 className="summary-subtitle">Total:</h4>
+                    <h4 className="summary-subtitle">Доставка:</h4>
+                  </td>
+                  <td className="summary-subtotal-price">{order.delivery.deliveryMethod.deliveryPrice ? `${order.delivery.deliveryMethod.deliveryPrice} BYN` : "Бесплатно"}</td>
+                </tr>
+                <tr className="summary-subtotal">
+                  <td>
+                    <h4 className="summary-subtitle">Метод оплаты:</h4>
+                  </td>
+                  <td className="summary-subtotal-price">{order.paymentMethod.name}</td>
+                </tr>
+                <tr className="summary-subtotal">
+                  <td>
+                    <h4 className="summary-subtitle">Итого:</h4>
                   </td>
                   <td>
-                    <p className="summary-total-price">${toDecimal(getTotalPrice(cartList))}</p>
+                    <p className="summary-total-price">{toDecimal(order.totalPrice)} BYN</p>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <h2 className="title title-simple text-left pt-10 mb-2">Billing Address</h2>
-          <div className="address-info pb-8 mb-6">
-            <p className="address-detail pb-2">
-              John Doe<br />
-              Riode Company<br />
-              Steven street<br />
-              El Carjon, CA 92020<br />
-              123456789
-            </p>
-            <p className="email">mail@riode.com</p>
-          </div>
-
-          <ALink href="/shop" className="btn btn-icon-left btn-dark btn-back btn-rounded btn-md mb-4"><i className="d-icon-arrow-left"></i> Back to List</ALink>
+          {order.delivery.deliveryData.length ? (
+            <div>
+              <h2 className="title title-simple text-left pt-10 mb-2">Данные</h2>
+              <div className="address-info pb-8 mb-6">
+                <p className="address-detail pb-2">
+                  {order.delivery.deliveryData.map(item => (
+                    <span key={item.value}>{`${item.name}: ${item.value}`}<br /></span>
+                  ))}
+                </p>
+              </div>
+            </div>
+          ) : (<br />)}
+          <ALink href="/shop" className="btn btn-icon-left btn-dark btn-back btn-rounded btn-md mb-4"><i className="d-icon-arrow-left"></i> В каталог</ALink>
         </div>
       </div>
     </main>
