@@ -19,7 +19,7 @@ function Order(props) {
   return (
     <main className="main order">
       <Helmet>
-        <title>Mac Plus | Заказ {'plug'}</title>
+        <title>Mac Plus | Заказ {order.orderCode}</title>
       </Helmet>
 
       <h1 className="d-none">Mac Plus - Заказ</h1>
