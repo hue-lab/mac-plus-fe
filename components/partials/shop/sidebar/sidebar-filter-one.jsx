@@ -13,6 +13,7 @@ import SmallProduct from '~/components/features/product/product-sm';
 
 import filterData from '~/utils/data/shop';
 import { scrollTopHandler } from '~/utils';
+import CustomNumberInput from "~/components/partials/shop/sidebar/custom-number-input";
 
 export default function SidebarFilterOne({ type = "left", isFeatured = false, filters = [] }) {
   const router = useRouter();
@@ -129,11 +130,11 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                         <div className="row">
                           <div className="col-xs-6">
                             <label>От</label>
-                            <div datapostfix="BYN" className="widget-input-number"><input className="form-control" type="number" /></div>
+                            <CustomNumberInput postfix="BYN" onChange={(v) => console.log(v)} />
                           </div>
                           <div className="col-xs-6">
                             <label>До</label>
-                            <div datapostfix="BYN" className="widget-input-number"><input className="form-control" type="number" /></div>
+                            <CustomNumberInput postfix="BYN" onChange={(v) => console.log(v)} />
                           </div>
                         </div>
                       </div>
@@ -196,11 +197,11 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                       <div className="row">
                         <div className="col-xs-6">
                           <label>От</label>
-                          <div datapostfix={item.units} className="widget-input-number"><input className="form-control" type="number" /></div>
+                          <CustomNumberInput postfix={item.units} onChange={(v) => console.log(v)} />
                         </div>
                         <div className="col-xs-6">
                           <label>До</label>
-                          <div datapostfix={item.units} className="widget-input-number"><input className="form-control" type="number" /></div>
+                          <CustomNumberInput postfix={item.units} onChange={(v) => console.log(v)} />
                         </div>
                       </div>
                     </div> }
