@@ -13,7 +13,7 @@ import {getFilters} from "~/utils/endpoints/filters";
 Shop.getInitialProps = async ({ query }) => {
   const filters = await getFilters(query.category);
   const banner = await getBannerSlide();
-  const { category, page, per_page, price, sortby, type, ...customProperties } = query;
+  const { category, page, per_page, price, sortby, type, min_price, max_price, ...customProperties } = query;
   const requestFilters = {
     baseProperties: {},
     customProperties: {},
@@ -39,6 +39,15 @@ Shop.getInitialProps = async ({ query }) => {
       }
       return acc;
     }, {});
+  }
+  if (min_price || max_price) {
+    requestFilters.baseProperties.totalPrice = {};
+    if (min_price) {
+      requestFilters.baseProperties.totalPrice.$gte = Number(min_price);
+    }
+    if (max_price) {
+      requestFilters.baseProperties.totalPrice.$lte = Number(max_price);
+    }
   }
   if (category) {
     requestFilters.baseProperties.categoryId = {

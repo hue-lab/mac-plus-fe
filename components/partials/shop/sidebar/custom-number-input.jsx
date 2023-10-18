@@ -1,19 +1,45 @@
-import {debounceTime, Subject} from "rxjs";
+import {useEffect, useState} from "react";
+import {useDebounce} from "~/utils";
 
-export default function CustomNumberInput({ value, postfix, onChange }) {
-  const onInput = new Subject();
+export default function CustomPriceInput({ min, max, postfix, onChange }) {
+  const [priceRange, setPriceRange] = useState({
+    min: min || '',
+    max: max || '',
+  });
+  const debouncedPriceRange = useDebounce(priceRange, 400);
 
-  onInput.pipe(debounceTime(400)).subscribe((res) => {
-    onChange(res);
-  })
+  useEffect(() => {
+    if (onChange) onChange(debouncedPriceRange);
+  }, [debouncedPriceRange]);
 
-  function onInputChange(e) {
-    onInput.next(e.target.value);
+  function onInputChangeFrom(e) {
+    setPriceRange({
+      min: e.target.value || '',
+      max: priceRange.max || '',
+    });
+  }
+
+  function onInputChangeTo(e) {
+    setPriceRange({
+      min: priceRange.min || '',
+      max: e.target.value || '',
+    });
   }
 
   return (
-    <div datapostfix={postfix} className="widget-input-number">
-      <input onChange={onInputChange} value={value} className="form-control" type="number" />
+    <div className="row">
+      <div className="col-xs-6">
+        <label>От</label>
+        <div datapostfix={postfix} className="widget-input-number">
+          <input onChange={onInputChangeFrom} value={priceRange.min || ''} className="form-control" type="number" />
+        </div>
+      </div>
+      <div className="col-xs-6">
+        <label>До</label>
+        <div datapostfix={postfix} className="widget-input-number">
+          <input onChange={onInputChangeTo} value={priceRange.max || ''} className="form-control" type="number" />
+        </div>
+      </div>
     </div>
   )
 }

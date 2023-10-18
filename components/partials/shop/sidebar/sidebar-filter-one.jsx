@@ -14,19 +14,13 @@ import SmallProduct from '~/components/features/product/product-sm';
 import filterData from '~/utils/data/shop';
 import { scrollTopHandler } from '~/utils';
 import CustomNumberInput from "~/components/partials/shop/sidebar/custom-number-input";
+import CustomPriceInput from "~/components/partials/shop/sidebar/custom-number-input";
 
 export default function SidebarFilterOne({ type = "left", isFeatured = false, filters = [] }) {
   const router = useRouter();
   const query = router.query;
   const data = null;
   const loading = false;
-  let tmpPrice = 50000;
-  const [filterPrice, setPrice] = useState({
-    min: 0,
-    max: 0,
-  });
-  const [isFirst, setFirst] = useState(true);
-  let sidebarData = data && data.shopSidebarData;
   let timerId;
 
   useEffect(() => {
@@ -37,8 +31,7 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
     }
   }, [])
 
-  const filterByPrice = (e) => {
-    e.preventDefault();
+  const filterByPrice = (filterPrice) => {
     let url = router.pathname.replace('[grid]', query.grid);
     let arr = [`min_price=${filterPrice.min}`, `max_price=${filterPrice.max}`, 'page=1'];
     for (let key in query) {
@@ -57,10 +50,6 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
     let currentQueries = query[type] ? query[type].split(',') : [];
     currentQueries = containsAttrInUrl(type, value) ? currentQueries.filter(item => item !== value) : [...currentQueries, value];
     return currentQueries.join(',');
-  }
-
-  const onChangePrice = value => {
-    setPrice(value);
   }
 
   const toggleSidebar = e => {
@@ -127,16 +116,7 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                   <div className="widget-body">
                     <form action="#">
                       <div className="widget-body filter-items">
-                        <div className="row">
-                          <div className="col-xs-6">
-                            <label>От</label>
-                            <CustomNumberInput postfix="BYN" onChange={(v) => console.log(v)} />
-                          </div>
-                          <div className="col-xs-6">
-                            <label>До</label>
-                            <CustomNumberInput postfix="BYN" onChange={(v) => console.log(v)} />
-                          </div>
-                        </div>
+                        <CustomPriceInput postfix="BYN" min={query.min_price} max={query.max_price} onChange={filterByPrice}></CustomPriceInput>
                       </div>
                     </form>
                   </div>
@@ -192,19 +172,6 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                         )
                       }
                     </ul> }
-
-                    {  ['NUMBER_INPUT'].includes(item.type) && <div className="widget-body filter-items">
-                      <div className="row">
-                        <div className="col-xs-6">
-                          <label>От</label>
-                          <CustomNumberInput postfix={item.units} onChange={(v) => console.log(v)} />
-                        </div>
-                        <div className="col-xs-6">
-                          <label>До</label>
-                          <CustomNumberInput postfix={item.units} onChange={(v) => console.log(v)} />
-                        </div>
-                      </div>
-                    </div> }
                   </Card>
                 </div>
               ))}
