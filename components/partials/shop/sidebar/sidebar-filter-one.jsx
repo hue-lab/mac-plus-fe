@@ -13,19 +13,14 @@ import SmallProduct from '~/components/features/product/product-sm';
 
 import filterData from '~/utils/data/shop';
 import { scrollTopHandler } from '~/utils';
+import CustomNumberInput from "~/components/partials/shop/sidebar/custom-number-input";
+import CustomPriceInput from "~/components/partials/shop/sidebar/custom-number-input";
 
 export default function SidebarFilterOne({ type = "left", isFeatured = false, filters = [] }) {
   const router = useRouter();
   const query = router.query;
   const data = null;
   const loading = false;
-  let tmpPrice = 50000;
-  const [filterPrice, setPrice] = useState({
-    min: 0,
-    max: 0,
-  });
-  const [isFirst, setFirst] = useState(true);
-  let sidebarData = data && data.shopSidebarData;
   let timerId;
 
   useEffect(() => {
@@ -36,8 +31,7 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
     }
   }, [])
 
-  const filterByPrice = (e) => {
-    e.preventDefault();
+  const filterByPrice = (filterPrice) => {
     let url = router.pathname.replace('[grid]', query.grid);
     let arr = [`min_price=${filterPrice.min}`, `max_price=${filterPrice.max}`, 'page=1'];
     for (let key in query) {
@@ -56,10 +50,6 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
     let currentQueries = query[type] ? query[type].split(',') : [];
     currentQueries = containsAttrInUrl(type, value) ? currentQueries.filter(item => item !== value) : [...currentQueries, value];
     return currentQueries.join(',');
-  }
-
-  const onChangePrice = value => {
-    setPrice(value);
   }
 
   const toggleSidebar = e => {
@@ -121,70 +111,12 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                   </div>
               }
 
-              {/*<div className="widget widget-collapsible">*/}
-              {/*  <Card title="<h3 class='widget-title'>All Categories<span class='toggle-btn p-0 parse-content'></span></h3>" type="parse" expanded={true}>*/}
-              {/*    <ul className="widget-body filter-items search-ul">*/}
-              {/*      {*/}
-              {/*        data && sidebarData.categories.map((item, index) => (*/}
-              {/*          item.children ?*/}
-              {/*            <li*/}
-              {/*              key={item.name + ' - ' + index}*/}
-              {/*              className={`with-ul overflow-hidden ${item.slug === query.category || item.children.findIndex(subCat => subCat.slug === query.category) > -1 ? 'show' : ''} `}*/}
-              {/*            >*/}
-              {/*              <SlideToggle collapsed={true} >*/}
-              {/*                {({ onToggle, setCollapsibleElement, toggleState }) => (*/}
-              {/*                  <>*/}
-              {/*                    <ALink href={{ pathname: router.pathname, query: { category: item.slug, grid: query.grid, type: router.query.type ? router.query.type : null } }} scroll={false}>{item.name}*/}
-              {/*                      <i className={`fas fa-chevron-down ${toggleState.toLowerCase()}`} onClick={e => { e.preventDefault(); e.stopPropagation(); onToggle() }}></i>*/}
-              {/*                    </ALink>*/}
-
-              {/*                    <div ref={setCollapsibleElement}>*/}
-              {/*                      <ul style={{ display: "block" }}>*/}
-              {/*                        {*/}
-              {/*                          item.children.map((subItem, index) =>*/}
-              {/*                            <li key={subItem.name + ' - ' + index}*/}
-              {/*                              className={`with-ul overflow-hidden ${subItem.slug === query.category ? 'show' : ''} `}>*/}
-              {/*                              <ALink scroll={false} href={{ pathname: router.pathname, query: { category: subItem.slug, grid: query.grid, type: router.query.type ? router.query.type : null } }}>{subItem.name}</ALink>*/}
-              {/*                            </li>*/}
-              {/*                          )}*/}
-              {/*                      </ul>*/}
-              {/*                    </div>*/}
-              {/*                  </>*/}
-              {/*                )}*/}
-              {/*              </SlideToggle >*/}
-              {/*            </li> :*/}
-              {/*            <li*/}
-              {/*              className={query.category === item.slug ? 'show' : ''}*/}
-              {/*              key={item.name + ' - ' + index}*/}
-              {/*            >*/}
-              {/*              <ALink href={{ pathname: router.pathname, query: { category: item.slug, grid: query.grid, type: router.query.type ? router.query.type : null } }} scroll={false}>{item.name}*/}
-              {/*              </ALink>*/}
-              {/*            </li>*/}
-              {/*        ))*/}
-              {/*      }*/}
-              {/*    </ul>*/}
-              {/*  </Card>*/}
-              {/*</div>*/}
-
               <div className="widget widget-collapsible">
                 <Card title="<h3 class='widget-title'>Цена<span class='toggle-btn p-0 parse-content'></span></h3>" type="parse" expanded={true}>
                   <div className="widget-body">
                     <form action="#">
-                      <div className="filter-price-slider noUi-target noUi-ltr noUi-horizontal shop-input-range">
-                        <InputRange
-                          formatLabel={value => `$${value}`}
-                          maxValue={5000}
-                          minValue={0}
-                          step={50}
-                          value={filterPrice}
-                          onChange={onChangePrice}
-                        />
-                      </div>
-
-                      <div className="filter-actions">
-                        <div className="filter-price-text">{filterPrice.min} BYN - {filterPrice.max} BYN
-                          <span className="filter-price-range"></span>
-                        </div>
+                      <div className="widget-body filter-items">
+                        <CustomPriceInput postfix="BYN" min={query.min_price} max={query.max_price} onChange={filterByPrice}></CustomPriceInput>
                       </div>
                     </form>
                   </div>
@@ -192,24 +124,41 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
               </div>
 
               {(filters || []).map((item, index) => (
-                <div key={index} className="widget widget-collapsible">
+                ['CHECKBOX'].includes(item.type) ?
+
+                  <div key={index} className="widget widget-box-checkbox widget-collapsible">
+                    <Card type="parse" expanded={true}>
+                      <ul className="filter-items">
+                        <li
+                          className={containsAttrInUrl(item._id, 'true') ? 'active' : ''}
+                          key={index}
+                        >
+                          <ALink className="font-weight-bold" scroll={false} href={{ pathname: router.pathname, query: { ...query, page: 1, [item._id]: !containsAttrInUrl(item._id, 'true') ? true : undefined } }}>{item.name}</ALink>
+                        </li>
+                      </ul>
+                    </Card>
+                  </div>
+
+                  :
+
+                  <div key={index} className="widget widget-collapsible">
                   <Card title={`<h3 class='widget-title'>${item.name}<span class='toggle-btn p-0 parse-content'></span></h3>`} type="parse" expanded={false}>
                     { item.type === 'NUMBER_SELECT' && <ul className="widget-body filter-items">
                       {
                         (item.options || []).map((option, index) => (
-                          <li
-                            className={containsAttrInUrl(item._id, option) ? 'active' : ''}
-                            key={index}
-                          >
-                            <ALink scroll={false} href={{ pathname: router.pathname, query: { ...query, page: 1, [item._id]: getUrlForAttrs(item._id, option) } }}>{option} {item.units}</ALink>
-                          </li>
+                            <li
+                              className={containsAttrInUrl(item._id, option) ? 'active' : ''}
+                              key={index}
+                            >
+                              <ALink scroll={false} href={{ pathname: router.pathname, query: { ...query, page: 1, [item._id]: getUrlForAttrs(item._id, option) } }}>{option} {item.units}</ALink>
+                            </li>
                           )
 
                         )
                       }
                     </ul> }
 
-                    { item.type === 'STRING_SELECT' && <ul className="widget-body filter-items">
+                    {  ['STRING_SELECT', 'STRING_MULTI_SELECT'].includes(item.type) && <ul className="widget-body filter-items">
                       {
                         (item.options || []).map((option, index) => (
                             <li
@@ -226,73 +175,6 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                   </Card>
                 </div>
               ))}
-
-              {/*<div className="widget widget-collapsible">*/}
-              {/*  <Card title="<h3 class='widget-title'>Color<span class='toggle-btn p-0 parse-content'></span></h3>" type="parse" expanded={false}>*/}
-              {/*    <ul className="widget-body filter-items">*/}
-              {/*      {*/}
-              {/*        filterData.colors.map((item, index) =>*/}
-              {/*          <li*/}
-              {/*            className={containsAttrInUrl('colors', item.slug) ? 'active' : ''}*/}
-              {/*            key={item + ' - ' + index}*/}
-              {/*          >*/}
-              {/*            <ALink scroll={false} href={{ pathname: router.pathname, query: { ...query, page: 1, colors: getUrlForAttrs('colors', item.slug), type: router.query.type ? router.query.type : null } }}>{item.name}*/}
-              {/*            </ALink>*/}
-              {/*          </li>*/}
-              {/*        )*/}
-              {/*      }*/}
-              {/*    </ul>*/}
-              {/*  </Card>*/}
-              {/*</div>*/}
-
-              {/* <div className="widget widget-collapsible">
-                                <Card title="<h3 class='widget-title'>Brand<span class='toggle-btn p-0 parse-content'></span></h3>" type="parse" expanded={ true }>
-                                    <ul className="widget-body filter-items">
-                                        {
-                                            filterData.brands.map( ( item, index ) =>
-                                                <li
-                                                    className={ containsAttrInUrl( 'brands', item.slug ) ? 'active' : '' }
-                                                    key={ item + ' - ' + index }
-                                                >
-                                                    <ALink scroll={ false } href={ { pathname: router.pathname, query: { ...query, page: 1, brands: getUrlForAttrs( 'brands', item.slug ), type: router.query.type ? {type: router.query.type } : null } } }>{ item.name }
-                                                    </ALink>
-                                                </li>
-                                            )
-                                        }
-                                    </ul>
-                                </Card>
-                            </div> */}
-
-              {
-                isFeatured ?
-                  <div className="widget widget-products widget-collapsible">
-                    <h4 className='widget-title'>Our Featured</h4>
-
-                    <div className="widget-body">
-                      <OwlCarousel adClass="owl-nav-top">
-                        <div className="products-col">
-                          {
-                            sidebarData.featured.slice(0, 3).map((item, index) =>
-                              <SmallProduct
-                                product={item}
-                                key={item.name + ' - ' + index}
-                              />
-                            )}
-                        </div>
-                        <div className="products-col">
-                          {
-                            sidebarData.featured.slice(3, 6).map((item, index) =>
-                              <SmallProduct
-                                product={item}
-                                key={item.name + ' - ' + index}
-                              />
-                            )}
-                        </div>
-                      </OwlCarousel>
-                    </div>
-                  </div>
-                  : ''
-              }
             </div>
             : <div className="widget-2 mt-10 pt-5"></div>
         }

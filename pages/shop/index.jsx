@@ -9,12 +9,11 @@ import {getBannerSlide} from "~/utils/endpoints/slides";
 import {getImgPath} from "~/utils";
 import {getProducts} from "~/utils/endpoints/products";
 import {getFilters} from "~/utils/endpoints/filters";
-import {useRouter} from "next/router";
 
 Shop.getInitialProps = async ({ query }) => {
   const filters = await getFilters(query.category);
   const banner = await getBannerSlide();
-  const { category, page, per_page, price, sortby, type, ...customProperties } = query;
+  const { category, page, per_page, price, sortby, type, min_price, max_price, ...customProperties } = query;
   const requestFilters = {
     baseProperties: {},
     customProperties: {},
@@ -24,14 +23,31 @@ Shop.getInitialProps = async ({ query }) => {
       limit: Number(per_page) || 12,
     }
   };
-  console.log(requestFilters);
   if (customProperties && Object.keys(customProperties).length) {
     requestFilters.customProperties = Object.keys(customProperties).reduce((acc, key) => {
-      acc[key] = {
-        $in: customProperties[key]?.split(',') || [],
-      };
+      const values = customProperties[key]?.split(',');
+      if (values?.length && values[0].length) {
+        if (values.length === 1) {
+          acc[key] = {
+            $eq: values[0] === 'true' ? true : values[0]
+          }
+        } else {
+          acc[key] = {
+            $in: values,
+          };
+        }
+      }
       return acc;
     }, {});
+  }
+  if (min_price || max_price) {
+    requestFilters.baseProperties.totalPrice = {};
+    if (min_price) {
+      requestFilters.baseProperties.totalPrice.$gte = Number(min_price);
+    }
+    if (max_price) {
+      requestFilters.baseProperties.totalPrice.$lte = Number(max_price);
+    }
   }
   if (category) {
     requestFilters.baseProperties.categoryId = {

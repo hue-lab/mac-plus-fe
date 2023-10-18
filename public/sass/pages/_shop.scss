@@ -897,6 +897,30 @@
   }
 }
 
+.widget-box-checkbox {
+  border-top: 3px solid $border-color-light;
+  padding: 1rem 0;
+}
+
+.widget-input-number {
+  position: relative;
+  input {
+    min-height: 3rem;
+    height: 3rem;
+    padding: .85rem 4rem .85rem 1rem;
+  }
+  &::before {
+    position: absolute;
+    right: .5rem;
+    content: attr(datapostfix);
+    color: black;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    opacity: 50%;
+  }
+}
+
 @include mq(xl) {
   .select-menu:not(:last-child):not(.toolbox-show) {
     margin-right: 2rem;
