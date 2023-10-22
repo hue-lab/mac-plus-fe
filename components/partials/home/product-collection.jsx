@@ -17,14 +17,6 @@ function ProductCollection ( props ) {
     const loading = false;
     const products = data && data.products.data;
 
-    // useEffect( () => {
-    //     getProducts( {
-    //         variables: {
-    //             category: categoryList[ id ].slug
-    //         }
-    //     } );
-    // }, [] )
-
     function activeHandler ( e ) {
         console.log( e.currentTarget.closest( '.category-list' ) )
         e.currentTarget.closest( '.category-list' ).querySelector( '.show' ) && e.currentTarget.closest( '.category-list' ).querySelector( '.show' ).classList.remove( 'show' );

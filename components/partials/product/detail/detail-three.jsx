@@ -80,23 +80,6 @@ function DetailThree(props) {
 
   const addToCartHandler = () => {
     if (cartActive) {
-      // if (product.data.variants.length > 0) {
-      //   let tmpName = product.data.name, tmpPrice;
-      //   tmpName += curColor !== 'null' ? '-' + curColor : '';
-      //   tmpName += curSize !== 'null' ? '-' + curSize : '';
-
-      //   if (product.data.price[0] === product.data.price[1]) {
-      //     tmpPrice = product.data.price[0];
-      //   } else if (!product.data.variants[0].price && product.data.discount > 0) {
-      //     tmpPrice = product.data.price[0];
-      //   } else {
-      //     tmpPrice = product.data.variants[curIndex].sale_price ? product.data.variants[curIndex].sale_price : product.data.variants[curIndex].price;
-      //   }
-
-      //   addToCart({ ...product.data, name: tmpName, qty: quantity, price: tmpPrice });
-      // } else {
-      //   addToCart({ ...product.data, qty: quantity, price: product.data.price[0] });
-      // }
       let tmpName = product.name;
       let tmpPrice = product.totalPrice ? product.totalPrice : product.price;
       tmpName += curColor !== 'null' ? '-' + curColor : '';
@@ -111,17 +94,7 @@ function DetailThree(props) {
   }
 
   function isDisabled(color, size) {
-    // if ( color === 'null' || size === 'null' ) return false;
-    //
-    // if ( sizes.length === 0 ) {
-    //     return product.data.variants.findIndex( item => item.color.name === curColor ) === -1;
-    // }
-    //
-    // if ( colors.length === 0 ) {
-    //     return product.data.variants.findIndex( item => item.size.name === curSize ) === -1;
-    // }
-    //
-    // return product.data.variants.findIndex( item => item.color.name === color && item.size.name === size ) === -1;
+
   }
 
   function changeQty(qty) {
@@ -172,7 +145,7 @@ function DetailThree(props) {
             <button className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold ${cartActive ? '' : 'disabled'}`} onClick={addToCartHandler}><i className='d-icon-bag'></i>В корзину</button>
           </>
             :
-            <h5>Товара нет в наличии</h5>
+            <h5>Под заказ</h5>
           }
         </div>
       </div>

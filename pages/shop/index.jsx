@@ -1,8 +1,6 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Helmet from 'react-helmet';
-
 import ALink from '~/components/features/custom-link';
-
 import SidebarFilterOne from '~/components/partials/shop/sidebar/sidebar-filter-one'
 import ProductListOne from '~/components/partials/shop/product-list/product-list-one';
 import {getBannerSlide} from "~/utils/endpoints/slides";
@@ -13,7 +11,7 @@ import {getFilters} from "~/utils/endpoints/filters";
 Shop.getInitialProps = async ({ query }) => {
   const filters = await getFilters(query.category);
   const banner = await getBannerSlide();
-  const { category, page, per_page, price, sortby, type, min_price, max_price, ...customProperties } = query;
+  const { category, page, per_page, price, sortby, type, min_price, max_price, search, ...customProperties } = query;
   const requestFilters = {
     baseProperties: {},
     customProperties: {},
@@ -54,6 +52,9 @@ Shop.getInitialProps = async ({ query }) => {
       $eq: category
     }
   }
+  if (search) {
+    requestFilters.search = search;
+  }
   if (sortby) {
     switch (sortby) {
       case 'price-low':
@@ -71,7 +72,7 @@ Shop.getInitialProps = async ({ query }) => {
     }
   }
   const products = await getProducts(requestFilters);
-  return { banner: banner.data[0], products, filters };
+  return { banner: banner?.data[0], products, filters };
 }
 
 export default function Shop({ banner, products, filters }) {

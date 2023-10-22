@@ -32,7 +32,6 @@ ProductDefault.getInitialProps = async ({ query }) => {
 }
 
 export default function ProductDefault({ product, featured, deliveryMethods }) {
-  //console.log(deliveryMethods);
 
   if (!product) return '';
 
@@ -76,43 +75,6 @@ export default function ProductDefault({ product, featured, deliveryMethods }) {
             </div>
           </div> : ''
       }
-      {/*{*/}
-      {/*    loaded && !loading ? ''*/}
-      {/*        : <div className="skeleton-body container mb-8 mt-10">*/}
-      {/*            <div className="row gutter-lg">*/}
-      {/*                <div className="col-lg-3 right-sidebar sidebar-fixed sticky-sidebar-wrapper">*/}
-      {/*                    <div className="sidebar-content">*/}
-      {/*                        <div className="widget-2"></div>*/}
-      {/*                    </div>*/}
-      {/*                </div>*/}
-      {/*                <div className="col-lg-9">*/}
-      {/*                    <div className="row mb-10">*/}
-      {/*                        <div className="col-md-6">*/}
-      {/*                            <div className="skel-pro-gallery"></div>*/}
-      {/*                        </div>*/}
-
-      {/*                        <div className="col-md-6">*/}
-      {/*                            <div className="skel-pro-summary"></div>*/}
-      {/*                        </div>*/}
-      {/*                    </div>*/}
-
-      {/*                    <div className="skel-pro-tabs"></div>*/}
-
-      {/*                    <section className="pt-3 mt-4">*/}
-      {/*                        <h2 className="title justify-content-center">Related Products</h2>*/}
-
-      {/*                        <OwlCarousel adClass="owl-carousel owl-theme owl-nav-full" options={ mainSlider17 }>*/}
-      {/*                            {*/}
-      {/*                                [ 1, 2, 3, 4, 5, 6 ].map( ( item ) =>*/}
-      {/*                                    <div className="product-loading-overlay" key={ 'popup-skel-' + item }></div>*/}
-      {/*                                )*/}
-      {/*                            }*/}
-      {/*                        </OwlCarousel>*/}
-      {/*                    </section>*/}
-      {/*                </div>*/}
-      {/*            </div>*/}
-      {/*        </div>*/}
-      {/*}*/}
     </main>
   )
 }

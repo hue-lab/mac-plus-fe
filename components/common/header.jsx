@@ -88,6 +88,6 @@ export default function Header({ categoryTree, fields }) {
           <MainMenu categoryTree={categoryTree} />
         </div>
       </div>
-    </header >
+    </header>
   );
 }

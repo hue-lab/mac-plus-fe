@@ -65,16 +65,12 @@ export default function StickyFooter() {
         <span>Главная</span>
       </ALink>
       <ALink href="/shop" className="sticky-link">
-        <i className="d-icon-volume"></i>
+        <i className="d-icon-bars"></i>
         <span>Категории</span>
       </ALink>
-      <ALink href="/pages/wishlist" className="sticky-link">
-        <i className="d-icon-heart"></i>
-        <span>Желаемое</span>
-      </ALink>
-      <ALink href="/pages/account" className="sticky-link">
-        <i className="d-icon-user"></i>
-        <span>Профиль</span>
+      <ALink href="/blog" className="sticky-link">
+        <i className="d-icon-star"></i>
+        <span>Блог</span>
       </ALink>
       <ALink href="/pages/cart" className="sticky-link">
         <i className="d-icon-bag"></i>

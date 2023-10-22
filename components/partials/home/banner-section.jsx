@@ -7,52 +7,40 @@ import OwlCarousel from '~/components/features/owl-carousel';
 
 import { fadeIn, fadeInRightShorter, fadeInLeftShorter } from '~/utils/data/keyframes';
 import { bannerSlider } from '~/utils/data/carousel';
+import Image from "next/image";
 
-function BannerSection () {
+function BannerSection ({ tradeInTitle, tradeInDescription }) {
     return (
         <section className="banner-group container mt-10 pb-4 pt-2 mb-10">
             <Reveal keyframes={ fadeIn } delay={ 200 } duration={ 1200 } triggerOnce>
-                <OwlCarousel adClass="owl-theme" options={ bannerSlider }>
-                    <Reveal keyframes={ fadeInRightShorter } delay={ 200 } duration={ 1200 } triggerOnce>
-                        <div className="banner1 banner banner-fixed overlay-zoom" style={ { backgroundColor: "#3cbea4" } }>
-                            <figure>
-                                <LazyLoadImage
-                                    src="./images/home/banner/1.jpg"
-                                    alt="banner"
-                                    effect="opacity; transform;"
-                                    width="auto"
-                                    height={ 219 }
-                                />
-                            </figure>
-                            <div className="banner-content y-50">
-                                <h3 className="banner-title text-white ls-normal lh-1">Customized Products</h3>
-                                <p className="mb-7 text-white">Partner with one of 8,000 experienced manufacturers with design & production capabilities</p>
-                                <ALink href="/shop" className="btn btn-link btn-white btn-underline font-weight-bold">Oem Factories<i className="fas fa-angle-right"></i></ALink>
-                                <ALink href="/shop" className="btn btn-link btn-white btn-underline font-weight-bold">Top suppliers<i className="fas fa-angle-right"></i></ALink>
-                            </div>
+                <div className="banner1 banner banner-fixed overlay-zoom" style={ { backgroundColor: "#3cbea4" } }>
+                    <figure>
+                        <LazyLoadImage
+                          src="./images/trade-in.jpg"
+                          alt="banner"
+                          effect="opacity; transform;"
+                          width="auto"
+                          height={ 219 }
+                        />
+                    </figure>
+                    <div className="banner-content y-50">
+                        <div>
+                            <LazyLoadImage
+                              src="./images/recycle.png"
+                              alt="recycle"
+                              width="auto"
+                              height={ 60 }
+                              className="banner-icon mb-4"
+                            />
                         </div>
-                    </Reveal>
-
-                    <Reveal keyframes={ fadeInLeftShorter } delay={ 200 } duration={ 1200 } triggerOnce>
-                        <div className="banner2 banner banner-fixed overlay-zoom" style={ { backgroundColor: "#444443" } }>
-                            <figure>
-                                <LazyLoadImage
-                                    src="./images/home/banner/2.jpg"
-                                    alt="banner"
-                                    effect="opacity; transform;"
-                                    width="auto"
-                                    height={ 219 }
-                                />
-                            </figure>
-                            <div className="banner-content y-50">
-                                <h3 className="banner-title text-white ls-normal lh-1">Ready-To-Ship Products</h3>
-                                <p className="mb-7 text-white">Source from 15 milion products that are ready to ship, and leave the facility within 15 days</p>
-                                <ALink href="/shop" className="btn btn-link btn-white btn-underline font-weight-bold">New Arrivals<i className="fas fa-angle-right"></i></ALink>
-                                <ALink href="/shop" className="btn btn-link btn-white btn-underline font-weight-bold">Best Sellers<i className="fas fa-angle-right"></i></ALink>
-                            </div>
+                        <h3 className="banner-title text-white ls-normal lh-1">{tradeInTitle}</h3>
+                        <p className="mb-7 text-white">{tradeInDescription}</p>
+                        <div className="banner-links">
+                            <ALink href="/pages/trade-in" className="btn btn-link btn-white btn-underline font-weight-bold">Подробнее<i className="fas fa-angle-right"></i></ALink>
+                            <ALink href="/pages/contact-us" className="btn btn-link btn-white btn-underline font-weight-bold">Связаться<i className="fas fa-angle-right"></i></ALink>
                         </div>
-                    </Reveal>
-                </OwlCarousel>
+                    </div>
+                </div>
             </Reveal>
         </section>
     )
