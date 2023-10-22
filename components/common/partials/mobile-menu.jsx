@@ -2,12 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import { useRouter } from 'next/router';
 import SlideToggle from 'react-slide-toggle';
-
 import ALink from '~/components/features/custom-link';
-import Card from '~/components/features/accordion/card';
-
-import { mainMenu } from '~/utils/data/menu';
-
 
 
 function MobileMenu({ categoryTree }) {
@@ -79,166 +74,13 @@ function MobileMenu({ categoryTree }) {
         <Tabs selectedTabClassName="active" selectedTabPanelClassName="active" className="tab tab-nav-simple tab-nav-boxed form-tab mt-5">
           <TabList className="nav nav-tabs nav-fill">
             <Tab className="nav-item">
-              <span className="nav-link">Меню</span>
-            </Tab>
-            <Tab className="nav-item">
-              <span className="nav-link">Категории</span>
+              <span className="nav-link">Навигация</span>
             </Tab>
           </TabList>
           <div className="tab-content">
-            <TabPanel className="tab-pane">
-              <ul className="mobile-menu mmenu-anim">
-                <li>
-                  <ALink href="/">Home</ALink>
-                </li>
-
-                <li>
-                  <Card title="categories" type="mobile" url="/shop">
-                    <ul>
-                      <li>
-                        <Card title="Variations 1" type="mobile">
-                          <ul>
-                            {
-                              mainMenu.shop.variation1.map((item, index) => (
-                                <li key={index}>
-                                  <ALink href={'/' + item.url}>
-                                    {item.title}
-                                    {item.hot ? <span className="tip tip-hot">Hot</span> : ""}
-                                  </ALink>
-                                </li>
-                              ))
-                            }
-                          </ul>
-                        </Card>
-                      </li>
-                      <li>
-                        <Card title="Variations 2" type="mobile">
-                          <ul>
-                            {
-                              mainMenu.shop.variation2.map((item, index) => (
-                                <li key={index}>
-                                  <ALink href={'/' + item.url}>
-                                    {item.title}
-                                    {item.new ? <span className="tip tip-new">New</span> : ""}
-                                  </ALink>
-                                </li>
-                              ))
-                            }
-                          </ul>
-                        </Card>
-                      </li>
-                    </ul>
-                  </Card>
-                </li>
-
-                <li>
-                  <Card title="Products" type="mobile" url="/product/default/woman-dress">
-                    <ul>
-                      <li>
-                        <Card title="Product Pages" type="mobile">
-                          {
-                            mainMenu.product.pages.map((item, index) => (
-                              <ALink href={'/' + item.url} key={index}>
-                                {item.title}
-                                {item.hot ? <span className="tip tip-hot">Hot</span> : ""}
-                              </ALink>
-                            ))
-                          }
-                        </Card>
-                      </li>
-
-                      <li>
-                        <Card title="Product Layouts" type="mobile">
-                          <ul>
-                            {
-                              mainMenu.product.layout.map((item, index) => (
-                                <li key={index}>
-                                  <ALink href={'/' + item.url}>
-                                    {item.title}
-                                    {item.new ? <span className="tip tip-new">New</span> : ""}
-                                  </ALink>
-                                </li>
-                              ))
-                            }
-                          </ul>
-                        </Card>
-                      </li>
-                    </ul>
-                  </Card>
-                </li>
-
-                <li>
-                  <Card title="Pages" type="mobile" url="/pages/about-us">
-                    <ul>
-                      {
-                        mainMenu.other.map((item, index) => (
-                          <li key={index}>
-                            <ALink href={'/' + item.url}>
-                              {item.title}
-                              {item.new ? <span className="tip tip-new">New</span> : ""}
-                            </ALink>
-                          </li>
-                        ))
-                      }
-                    </ul>
-                  </Card>
-                </li>
-
-                <li>
-                  <Card title="Blog" type="mobile" url="/blog/classic">
-                    <ul>
-                      {
-                        mainMenu.blog.map((item, index) => (
-                          item.subPages ?
-                            <li key={index}>
-                              <Card title={item.title} url={'/' + item.url} type="mobile">
-                                <ul>
-                                  {
-                                    item.subPages.map((item, index) => (
-                                      <li key={index}>
-                                        <ALink href={'/' + item.url}>
-                                          {item.title}
-                                        </ALink>
-                                      </li>
-                                    ))
-                                  }
-                                </ul>
-                              </Card>
-                            </li> :
-
-                            <li key={index} className={item.subPages ? "submenu" : ""}>
-                              <ALink href={'/' + item.url}>
-                                {item.title}
-                              </ALink>
-                            </li>
-                        ))
-                      }
-                    </ul>
-                  </Card>
-                </li>
-
-                <li>
-                  <Card title="elements" type="mobile" url="/elements">
-                    <ul>
-                      {
-                        mainMenu.element.map((item, index) => (
-                          <li key={index}>
-                            <ALink href={'/' + item.url}>
-                              {item.title}
-                            </ALink>
-                          </li>
-                        ))
-                      }
-                    </ul>
-                  </Card>
-                </li>
-
-                <li><ALink href="#">Buy Riode!</ALink></li>
-              </ul>
-            </TabPanel>
-
             <TabPanel>
               <ul className="mobile-menu">
+                <li><ALink href="/">Главная</ALink></li>
                 <li><ALink href="/shop" class="menu-title">Все товары</ALink></li>
                 {categoryTree.map((category, index) => (
                   category.children.length ?
