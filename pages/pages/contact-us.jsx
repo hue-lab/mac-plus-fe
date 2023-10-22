@@ -27,8 +27,6 @@ export default function ContactUs({ fields }) {
     zoom: 11
   };
 
-  console.log(fields)
-
   return (
     <main className="main contact-us">
       <Helmet>

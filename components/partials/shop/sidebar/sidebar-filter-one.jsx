@@ -1,19 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import InputRange from 'react-input-range';
-import SlideToggle from 'react-slide-toggle';
-
 import ALink from '~/components/features/custom-link';
 import Card from '~/components/features/accordion/card';
-import OwlCarousel from '~/components/features/owl-carousel';
-
-import SmallProduct from '~/components/features/product/product-sm';
-
-
-
-import filterData from '~/utils/data/shop';
-import { scrollTopHandler } from '~/utils';
-import CustomNumberInput from "~/components/partials/shop/sidebar/custom-number-input";
 import CustomPriceInput from "~/components/partials/shop/sidebar/custom-number-input";
 
 export default function SidebarFilterOne({ type = "left", isFeatured = false, filters = [] }) {
@@ -123,7 +111,7 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                 </Card>
               </div>
 
-              {(filters || []).map((item, index) => (
+              {filters && Array.isArray(filters) && filters.map((item, index) => (
                 ['CHECKBOX'].includes(item.type) ?
 
                   <div key={index} className="widget widget-box-checkbox widget-collapsible">

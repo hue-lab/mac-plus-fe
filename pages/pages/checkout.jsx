@@ -8,6 +8,7 @@ import { toDecimal } from '~/utils';
 import { getDeliveryMethods } from '~/utils/endpoints/orders';
 import { getCalculation } from "~/utils/endpoints/calculate";
 import { addOrder } from '~/utils/endpoints/orders';
+import {cartActions} from "~/store/cart";
 
 Checkout.getInitialProps = async (context) => {
   const delivery = await getDeliveryMethods();
@@ -29,7 +30,7 @@ function CheckoutButton({ pending, error, terms, removeError }) {
 }
 
 function Checkout(props) {
-  const { cartList, delivery } = props;
+  const { cartList, delivery, updateCart } = props;
   const [currentRadio, setCurrentRadio] = useState(0);
   const [payment, setPayment] = useState(0);
   const [discount, setDiscount] = useState(0);
@@ -108,10 +109,10 @@ function Checkout(props) {
       }
       router.push(`/pages/order/${res.orderCode}`);
     } catch (e) {
-      console.log(`${e}`);
       setOrderError(true);
     } finally {
       setIsPending(false)
+      updateCart([]);
     }
   }
 
@@ -310,4 +311,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(Checkout);
+export default connect(mapStateToProps, { updateCart: cartActions.updateCart })(Checkout);

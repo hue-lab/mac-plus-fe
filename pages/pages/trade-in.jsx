@@ -1,6 +1,6 @@
 function TradeIn () {
   return (
-    <div>
+    <div className="container">
       <h1>In development...</h1>
     </div>
   )

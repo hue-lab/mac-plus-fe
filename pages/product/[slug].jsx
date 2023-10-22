@@ -32,7 +32,6 @@ ProductDefault.getInitialProps = async ({ query }) => {
 }
 
 export default function ProductDefault({ product, featured, deliveryMethods }) {
-  //console.log(deliveryMethods);
 
   if (!product) return '';
 

@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import Helmet from 'react-helmet';
 import { useRouter } from 'next/router';
-
 import ALink from '~/components/features/custom-link';
 import Pagination from '~/components/features/pagination';
-
 import PostOne from '~/components/features/post/post-one';
-
 import { getArticles } from '~/utils/endpoints/articles';
 
 Classic.getInitialProps = async ({query}) => {
@@ -28,8 +25,6 @@ export default function Classic({posts}) {
   const loading = false;
   const [perPage, setPerPage] = useState(showingCount);
   const totalPage = posts?.data ? parseInt(posts.metadata.lastPage) : 1;
-
-  console.log(query);
 
   return (
     <main className="main skeleton-body">

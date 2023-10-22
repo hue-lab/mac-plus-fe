@@ -22,7 +22,8 @@ function MobileMenu({ categoryTree }) {
 
   useEffect(() => {
     setSearch("");
-  }, [router.query.slug])
+    hideMobileMenu();
+  }, [router.query])
 
   const hideMobileMenuHandler = () => {
     if (window.innerWidth > 991) {
@@ -65,7 +66,7 @@ function MobileMenu({ categoryTree }) {
       <div className="mobile-menu-container scrollable">
         <form action="#" className="input-wrapper" onSubmit={onSubmitSearchForm}>
           <input type="text" className="form-control" name="search" autoComplete="off" value={search} onChange={onSearchChange}
-            placeholder="Search your keyword..." required />
+            placeholder="Поиск..." required />
           <button className="btn btn-search" type="submit">
             <i className="d-icon-search"></i>
           </button>
@@ -87,7 +88,7 @@ function MobileMenu({ categoryTree }) {
                     <SlideToggle duration={300} collapsed key={index} >
                       {({ onToggle, setCollapsibleElement, toggleState }) => (
                         <li className={`submenu ${toggleState === 'EXPANDED' ? 'show' : ''}`}>
-                          <ALink href={{ pathname: `/shop`, query: { category: category.handle, grid: query.grid } }} scroll={false}>
+                          <ALink href={{ pathname: `/shop`, query: { category: category._id, grid: query.grid } }} scroll={false}>
                             <i className="d-icon-camera1"></i>{category.name}
                             <span className={`toggle-btn ${toggleState.toLowerCase()}`} onClick={e => { e.stopPropagation(); e.preventDefault(); onToggle(); }}></span>
                           </ALink>
@@ -95,7 +96,7 @@ function MobileMenu({ categoryTree }) {
                           <div ref={setCollapsibleElement} style={{ overflow: 'hidden' }}>
                             <ul style={{ display: "block", background: "#232323" }}>
                               {category.children.map((item, index) => (
-                                <li key={index}><ALink href={{ pathname: '/shop', query: { category: item.handle } }} scroll={false}>{item.name}</ALink></li>
+                                <li key={index}><ALink href={{ pathname: '/shop', query: { category: item._id } }} scroll={false}>{item.name}</ALink></li>
                               ))}
                             </ul>
                           </div>
@@ -104,7 +105,7 @@ function MobileMenu({ categoryTree }) {
                     </SlideToggle>
                     :
                     <li key={index}>
-                      <ALink href={{ pathname: '/shop', query: { category: category.handle } }}>
+                      <ALink href={{ pathname: '/shop', query: { category: category._id } }}>
                         <i className="d-icon-camera1"></i>{category.name}
                       </ALink>
                     </li>
