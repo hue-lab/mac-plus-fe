@@ -1,71 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Helmet from 'react-helmet';
-import { useLazyQuery } from '@apollo/react-hooks';
 import { useRouter } from 'next/router';
-
-// Import Apollo Server and Query
-import withApollo from '~/server/apollo';
-import { GET_POSTS } from '~/server/queries';
-
 import ALink from '~/components/features/custom-link';
 import Pagination from '~/components/features/pagination';
-
 import PostOne from '~/components/features/post/post-one';
-import BlogSidebar from '~/components/partials/post/blog-sidebar';
+import { getArticles } from '~/utils/endpoints/articles';
 
-import { scrollTopHandler } from '~/utils';
+Classic.getInitialProps = async ({query}) => {
+  const { page, per_page } = query;
+  const pagination = {
+    page: Number(page) || 1,
+    limit: Number(per_page) || 8,
+  };
+  const posts = await getArticles(pagination.page, pagination.limit);
+  return {
+    posts: posts,
+  }
+}
 
-function Classic() {
+export default function Classic({posts}) {
   const router = useRouter();
-  const [isFirst, setFirst] = useState(true);
   const query = router.query;
   const showingCount = 8;
-  //const [ getPosts, { data, loading, error } ] = useLazyQuery( GET_POSTS );
-  const data = {
-    posts: {
-      data: [
-        {
-          author: 'John Doe',
-          title: 'Lorem ipsum',
-          content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt euismod interdum. Maecenas interdum dictum purus sit amet lacinia. Ut orci felis, facilisis vitae risus ac, pharetra molestie ligula. Aliquam tincidunt venenatis purus quis eleifend. Nam eget ullamcorper libero. Curabitur lacinia auctor arcu, a dictum lectus. Etiam eget condimentum urna.',
-          picture: [],
-          slug: 'lorem-ipsum',
-          date: '07-31-2021',
-        },
-        {
-          author: 'Jane Doe',
-          title: 'Fusce in euismod massa',
-          content: 'Fusce in euismod massa. Integer blandit porttitor dictum. Quisque et tincidunt nunc. Donec pellentesque interdum velit nec volutpat. Fusce a ullamcorper neque, eu convallis risus. Vestibulum molestie mauris tellus. Duis sollicitudin lobortis nisi, sed iaculis massa posuere ut. Sed tortor ante, dignissim eget mi sit amet, luctus pulvinar arcu.',
-          picture: [],
-          slug: 'fusce-in',
-          date: '04-16-2022',
-        },
-      ],
-    }
-  };
   const loading = false;
   const [perPage, setPerPage] = useState(showingCount);
-  const posts = data && data.posts.data;
-  const totalPage = data ? parseInt(data.posts.total / perPage) + (data.posts.total % perPage ? 1 : 0) : 1;
-  let page = query.page ? query.page : 1;
-
-  // useEffect( () => {
-  //     getPosts( {
-  //         variables: {
-  //             category: query.category,
-  //             from: perPage * ( page - 1 ),
-  //             to: perPage * page
-  //         }
-  //     } );
-
-  //     setTimeout( () => {
-  //         if ( isFirst ) {
-  //             setFirst( false );
-  //         } else {
-  //             scrollTopHandler();
-  //         }
-  //     }, 100 );
-  // }, [ query ] )
+  const totalPage = posts?.data ? parseInt(posts.metadata.lastPage) : 1;
 
   return (
     <main className="main skeleton-body">
@@ -97,26 +56,20 @@ function Classic() {
                       </div>
                     )) :
                     posts ?
-                      posts.length ?
-                        posts.slice(0, posts.length).map((post, index) => (
-                          <React.Fragment key={"post-one" + index}>
-                            <PostOne post={post} />
-                          </React.Fragment>
-                        )) :
-                        <div className="info-box with-icon"><p className="mt-4">No blogs were found matching your selection.</p></div>
-                      : ''
+                      posts.data.slice(0, posts.length).map((post, index) => (
+                        <React.Fragment key={"post-one" + index}>
+                          <PostOne post={post} />
+                        </React.Fragment>
+                      )) :
+                      <div className="info-box with-icon"><p className="mt-4">No blogs were found matching your selection.</p></div>
                 }
               </div>
 
               <Pagination totalPage={totalPage} />
             </div>
-
-            {/* <BlogSidebar /> */}
           </div>
         </div>
       </div >
     </main >
   )
 }
-
-export default withApollo({ ssr: typeof window === "undefined" })(Classic);

@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { useRouter } from 'next/router';
@@ -19,8 +19,9 @@ import { modalActions } from '~/store/modal';
 
 import { showScrollTopHandler, scrollTopHandler, stickyHeaderHandler, stickyFooterHandler } from '~/utils';
 
-function Layout({ children, closeQuickview, categoryTree }) {
+function Layout({ children, closeQuickview, categoryTree, layoutFields, footerNav }) {
   const router = useRouter();
+
   useLayoutEffect(() => {
     document.querySelector('body').classList.remove('loaded');
   }, [router.pathname])
@@ -57,18 +58,18 @@ function Layout({ children, closeQuickview, categoryTree }) {
   return (
     <>
       <div className="page-wrapper">
-        <Header categoryTree={categoryTree} />
+        <Header categoryTree={categoryTree} fields={layoutFields} />
 
         {children}
 
-        <Footer />
+        <Footer categoryTree={categoryTree} fields={layoutFields} footerNav={footerNav} />
 
         <StickyFooter />
       </div>
 
       <ALink id="scroll-top" href="#" title="Top" role="button" className="scroll-top" onClick={() => scrollTopHandler(false)}><i className="d-icon-arrow-up"></i></ALink>
 
-      <MobileMenu />
+      <MobileMenu categoryTree={categoryTree} />
 
       <ToastContainer
         autoClose={3000}

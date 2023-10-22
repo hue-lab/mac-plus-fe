@@ -1,68 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import {debounceTime, Subject} from "rxjs";
 
 import ALink from '~/components/features/custom-link';
+import { autocomplete } from '~/utils/endpoints/autocomplete';
 
-import withApollo from '~/server/apollo';
-
-import { toDecimal } from '~/utils';
-
-function SearchForm() {
+export default function SearchForm() {
   const router = useRouter();
   const [search, setSearch] = useState("");
-  const data = [
-    {
-      name: 'Apple iPhone 14 Pro 128 GB Чёрный космос',
-      slug: '',
-    },
-    {
-      name: 'Apple iPhone 14 Pro 128 GB Золотой',
-      slug: '',
-    },
-    {
-      name: 'Apple iPhone 14 Pro 256 GB Чёрный космос',
-      slug: '',
-    },
-    {
-      name: 'Apple iPhone 14 Pro 128 GB Чёрный космос',
-      slug: '',
-    },
-    {
-      name: 'Apple iPhone 14 Pro 128 GB Золотой',
-      slug: '',
-    },
-    {
-      name: 'Apple iPhone 14 Pro 256 GB Чёрный космос',
-      slug: '',
-    },
-    {
-      name: 'Apple iPhone 14 Pro 128 GB Чёрный космос',
-      slug: '',
-    },
-    {
-      name: 'Apple iPhone 14 Pro 128 GB Золотой',
-      slug: '',
-    },
-    {
-      name: 'Apple iPhone 14 Pro 256 GB Чёрный космос',
-      slug: '',
-    },
-    {
-      name: 'Apple iPhone 14 Pro 128 GB Чёрный космос',
-      slug: '',
-    },
-    {
-      name: 'Apple iPhone 14 Pro 128 GB Золотой',
-      slug: '',
-    },
-    {
-      name: 'Apple iPhone 14 Pro 256 GB Чёрный космос',
-      slug: '',
-    },
-  ];
+  const [searchResult, setSearchResult] = useState([]);
+  const onSearch = new Subject();
 
-  const [timer, setTimer] = useState(null);
+  onSearch.pipe(debounceTime(400)).subscribe((res) => {
+    searchProducts(res).then((searchRes) => {
+      setSearchResult(searchRes);
+      setSearch(res);
+    });
+  });
+
+  async function searchProducts(text) {
+    if (!text?.length) {
+      return;
+    }
+    return  await autocomplete(text);
+  }
+
 
   useEffect(() => {
     document.querySelector("body").addEventListener("click", onBodyClick);
@@ -71,22 +33,6 @@ function SearchForm() {
       document.querySelector("body").removeEventListener("click", onBodyClick);
     })
   }, [])
-
-  useEffect(() => {
-    setSearch("");
-  }, [router.query.slug])
-
-  useEffect(() => {
-    if (search.length > 2) {
-      if (timer) clearTimeout(timer);
-      let timerId = setTimeout(() => {
-        // searchProducts( { variables: { search: search } } );
-        setTimer(null);
-      }, 500);
-
-      setTimer(timerId);
-    }
-  }, [search])
 
   useEffect(() => {
     document.querySelector('.header-search.show-results') && document.querySelector('.header-search.show-results').classList.remove('show-results');
@@ -130,7 +76,7 @@ function SearchForm() {
   }
 
   function onSearchChange(e) {
-    setSearch(e.target.value);
+    onSearch.next(e.target.value);
   }
 
   function onSubmitSearchForm(e) {
@@ -146,24 +92,24 @@ function SearchForm() {
   return (
     <div className="header-search hs-simple">
       <form action="#" method="get" onSubmit={onSubmitSearchForm} className="input-wrapper">
-        <input type="text" className="form-control" name="search" autoComplete="off" value={search} onChange={onSearchChange}
+        <input type="text" className="form-control" name="search" autoComplete="off" onChange={e => onSearchChange(e)}
           placeholder="Поиск..." required onClick={showSearchBox} />
 
         <button className="btn btn-search" type="submit">
           <i className="d-icon-search"></i>
         </button>
 
-        <div className="live-search-list scrollable bg-white">
-          {data && data.map((product, index) => (
-            <ALink href={`/product/default/${product.slug}`} className="autocomplete-suggestion" key={`search-result-${index}`}>
-              <div className="search-name" dangerouslySetInnerHTML={removeXSSAttacks(matchEmphasize(product.name))}></div>
-            </ALink>
-          ))
-          }
-        </div>
+        {
+          !!searchResult?.length && <div className="live-search-list scrollable bg-white">
+            {searchResult && searchResult.map((product, index) => (
+              <ALink href={`/product/default/${product._id}`} className="autocomplete-suggestion" key={`search-result-${index}`}>
+                <div className="search-name" dangerouslySetInnerHTML={removeXSSAttacks(matchEmphasize(product.name))}></div>
+              </ALink>
+            ))
+            }
+          </div>
+        }
       </form>
     </div>
   );
 }
-
-export default withApollo({ ssr: typeof window === 'undefined' })(SearchForm);

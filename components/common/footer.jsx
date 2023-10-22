@@ -1,28 +1,6 @@
 import ALink from '~/components/features/custom-link';
 
-export default function Footer() {
-  const categories = [
-    {
-      name: 'Mac',
-      href: '/shop/mac/',
-    },
-    {
-      name: 'iPhone',
-      href: '/shop/iphone/',
-    },
-    {
-      name: 'iPad',
-      href: '/shop/ipad/',
-    },
-    {
-      name: 'Watch',
-      href: '/shop/watch/',
-    },
-    {
-      name: 'AirPods',
-      href: '/shop/airpods/',
-    },
-  ];
+export default function Footer({ fields, categoryTree, footerNav }) {
   const YEAR = new Date().getFullYear();
 
   return (
@@ -47,21 +25,21 @@ export default function Footer() {
                 <ul className="widget-body">
                   <li>
                     <label>Телефон: </label>
-                    <ALink href="tel:#">Toll Free (123) 456-7890</ALink>
+                    <ALink href={`tel:${fields.phone}`}>{fields.phone}</ALink>
                   </li>
                   <li>
                     <label>Email: </label>
-                    <ALink href="mailto:mail@riode.com">riode@mail.com</ALink>
+                    <ALink href={`mailto:${fields.email}`}>{fields.email}</ALink>
                   </li>
                   <li>
                     <label>Адрес: </label>
-                    <ALink href="#">123 Street, City, Country</ALink>
+                    <a href={`http://maps.google.com/?q=${fields.address}`} target="_blank">{fields.address}</a>
                   </li>
                   <li>
                     <label>Рабочее время: </label>
                   </li>
                   <li>
-                    <ALink href="#">Пн - Вс / 9:00 - 20:00</ALink>
+                    <ALink href="#">{fields.work_time}</ALink>
                   </li>
                 </ul>
               </div>
@@ -71,21 +49,15 @@ export default function Footer() {
               <div className="widget ml-lg-4">
                 <h4 className="widget-title">Навигация</h4>
                 <ul className="widget-body">
-                  <li>
-                    <ALink href="/">Главная</ALink>
-                  </li>
-                  <li>
-                    <ALink href="/shop">Каталог</ALink>
-                  </li>
-                  <li>
-                    <ALink href="/pages/cart">Корзина</ALink>
-                  </li>
-                  <li>
-                    <ALink href="/blog">Блог</ALink>
-                  </li>
-                  <li>
-                    <ALink href="/pages/contact-us">Контакты</ALink>
-                  </li>
+                  {footerNav.children.length ?
+                    (footerNav.children.map(item => (
+                      <li key={item._id}>
+                        <ALink href={item.handle}>{item.name}</ALink>
+                      </li>
+                    ))
+                    )
+                    : ''
+                  }
                 </ul>
               </div>
             </div>
@@ -94,10 +66,10 @@ export default function Footer() {
               <div className="widget ml-lg-4">
                 <h4 className="widget-title">Категории</h4>
                 <ul className="widget-body">{
-                  categories.map((item, index) => {
+                  categoryTree.map((item, index) => {
                     return (
-                      <li key={item.name + index}>
-                        <ALink href={item.href}>{item.name}</ALink>
+                      <li key={item._id}>
+                        <ALink href={`/shop/?category=${item._id}`}>{item.name}</ALink>
                       </li>
                     )
                   })
@@ -119,9 +91,9 @@ export default function Footer() {
           </div>
           <div className="footer-right">
             <div className="social-links">
-              <ALink href="#" className="social-link social-facebook fab fa-facebook-f"></ALink>
-              <ALink href="#" className="social-link social-twitter fab fa-twitter"></ALink>
-              <ALink href="#" className="social-link social-linkedin fab fa-linkedin-in"></ALink>
+              { fields.telegram && <ALink href={fields.telegram} className="social-link social-telegram fab fa-telegram-plane"></ALink> }
+              { fields.viber && <ALink href={`viber://chat?number=${fields.viber}`} className="social-link social-viber fab fa-viber"></ALink> }
+              { fields.instagram && <ALink href={fields.instagram} className="social-link social-instagram fab fa-instagram"></ALink> }
             </div>
           </div>
         </div>

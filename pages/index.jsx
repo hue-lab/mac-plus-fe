@@ -1,22 +1,33 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 
-// import Home Components
 import IntroSection from '~/components/partials/home/intro-section';
 import CategorySection from '~/components/partials/home/category-section';
 import BannerSection from '~/components/partials/home/banner-section';
 import ServiceBox from '~/components/partials/home/service-section';
 import BlogSection from '~/components/partials/home/blog-section';
-import { getCategoryTree } from "~/utils/endpoints/categoryTree";
+
 import { getLatestArticles } from '~/utils/endpoints/articles';
+import { getRecProducts } from "~/utils/endpoints/products";
+import { getSlides } from "~/utils/endpoints/slides";
+import { getFieldsObject } from '~/utils/endpoints/fields';
 
 HomePage.getInitialProps = async (context) => {
-  const categoryTree = await getCategoryTree();
   const articles = await getLatestArticles();
-  return { categoryTree: categoryTree.children, articles: articles.data };
+  const recProducts = await getRecProducts();
+  const slides = await getSlides();
+  const features = await getFieldsObject('features_1', 'features_2', 'features_3', 'features_4');
+  const fields = await getFieldsObject('trade-in-title', 'trade-in-description');
+  return {
+    articles: articles.data,
+    recProducts: recProducts.data,
+    slides: slides.data,
+    fields: fields,
+    features: features,
+  };
 }
 
-export default function HomePage({ categoryTree, articles }) {
+export default function HomePage({ articles, recProducts, slides, fields, features }) {
 
 
   return (
@@ -28,13 +39,13 @@ export default function HomePage({ categoryTree, articles }) {
       <h1 className="d-none">Mac Plus - Главная</h1>
 
       <div className="page-content">
-        <IntroSection />
+        <IntroSection slides={slides} />
 
-        <CategorySection categoryTree={categoryTree} />
+        <CategorySection recProducts={recProducts} />
 
-        <BannerSection />
+        <BannerSection tradeInDescription={fields['trade-in-description']} tradeInTitle={fields['trade-in-title']} />
 
-        <ServiceBox />
+        <ServiceBox fields={features} />
 
         <BlogSection posts={articles} />
       </div>

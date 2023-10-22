@@ -105,12 +105,8 @@ export default function ToolBox(props) {
           }
           <select name="orderby" className="form-control" defaultValue={query.sortby ? query.sortby : 'default'} onChange={e => onChangeAttri(e, 'sortby')}>
             <option value="default">Обычная</option>
-            <option value="popularity">По популярности</option>
-            <option value="rating">По рейтингу</option>
-            <option value="date">По дате добавления</option>
             <option value="price-low">По возрастанию цены</option>
             <option value="price-high">По убыванию цены</option>
-            {/* <option value="">Очистить</option> */}
           </select>
         </div>
       </div>

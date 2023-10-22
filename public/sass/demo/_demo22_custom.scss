@@ -275,17 +275,38 @@ Demo 22
 		object-fit: cover;
 	}
 	.banner-content {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
 		padding: 0 1.5rem 0 6.9%;
 		width: 100%;
+		.banner-icon {
+			height: 60px !important;
+			width: 60px !important;
+			object-fit: contain !important;
+			min-height: auto !important;
+			@include mq(lg, max) {
+				display: none;
+			}
+		}
+	}
+	.banner-links {
+		display: flex;
+		justify-content: center;
 	}
 	.banner-title {
 		margin-bottom: .8rem;
-		font-size: 2.4em;
+		text-align: center;
+		font-size: 3rem;
 	}
 	p {
-		max-width: 40rem;
+		text-align: center;
+		width: 80%;
+		max-width: 45rem;
 		line-height: 1.43;
 		opacity: .9;
+		font-size: 1.6rem !important;
 	}
 	.btn {
 		margin-right: 2.1rem;

@@ -377,7 +377,7 @@ export const serviceSlider = {
 }
 
 export const bannerSlider = {
-    items: 2,
+    items: 1,
     nav: false,
     dots: true,
     margin: 20,
@@ -386,7 +386,7 @@ export const bannerSlider = {
             items: 1
         },
         768: {
-            items: 2
+            items: 1
         },
         992: {
             dots: false

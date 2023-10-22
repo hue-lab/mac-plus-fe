@@ -7,9 +7,18 @@ import GoogleMapReact from 'google-map-react';
 import ALink from '~/components/features/custom-link';
 import { fadeIn } from '~/utils/data/keyframes';
 
+import { getFieldsObject } from '~/utils/endpoints/fields';
+
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
-function ContactUs() {
+ContactUs.getInitialProps = async (context) => {
+  const fields = await getFieldsObject('phone', 'email', 'address');
+  return {
+    fields: fields,
+  }
+}
+
+export default function ContactUs({ fields }) {
   const defaultProps = {
     center: {
       lat: 59.95,
@@ -48,19 +57,16 @@ function ContactUs() {
                   <div className="grey-section d-flex align-items-center h-100">
                     <div>
                       <h4 className="mb-2 text-capitalize">Адрес</h4>
-                      <p>1600 Amphitheatre Parkway<br />New York WC1 1BA</p>
+                      <p><a href={`http://maps.google.com/?q=${fields.address}`} target="_blank">{fields.address}</a></p>
 
                       <h4 className="mb-2 text-capitalize">Телефон</h4>
                       <p>
-                        <ALink href="#">1.800.458.56</ALink><br />
-                        <ALink href="#">1.800.458.56</ALink>
+                        <ALink href={`tel:${fields.phone}`}>{fields.phone}</ALink>
                       </p>
 
                       <h4 className="mb-2 text-capitalize">Почта</h4>
                       <p className="mb-4">
-                        <ALink href="#">support@your-domain.com</ALink><br />
-                        <ALink href="#">help@your-domain.com</ALink><br />
-                        <ALink href="#">Sale</ALink>
+                        <ALink href={`mailto:${fields.email}`}>{fields.email}</ALink>
                       </p>
                     </div>
                   </div>
@@ -211,4 +217,4 @@ function ContactUs() {
 
 }
 
-export default React.memo(ContactUs);
+//export default React.memo(ContactUs);

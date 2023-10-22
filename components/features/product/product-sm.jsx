@@ -3,73 +3,64 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 import ALink from '~/components/features/custom-link';
 
-import { toDecimal } from '~/utils';
+import { toDecimal, getImgPath } from '~/utils';
 
-function SmallProduct ( props ) {
-    const { product, adClass, isReviewCount = true } = props;
+function SmallProduct(props) {
+  const { product, adClass, isReviewCount = true } = props;
 
-    return (
-        <div className={ `product product-list-sm ${ adClass }` }>
-            <figure className="product-media">
-                <ALink href={ `/product/default/${ product.slug }` }>
-                    <LazyLoadImage
-                        alt="product"
-                        src={ process.env.NEXT_PUBLIC_ASSET_URI + product.pictures[ 0 ].url }
-                        threshold={ 500 }
-                        effect="opacity"
-                        width="300"
-                        height="338"
-                    />
+  return (
+    <div className={`product product-list-sm ${adClass}`}>
+      <figure className="product-media">
+        <ALink href={`/product/${product._id}`}>
+          <LazyLoadImage
+            alt="product"
+            src={getImgPath(product.media[0])}
+            threshold={500}
+            width="100"
+            height="100"
+            effect="opacity"
+            style={{ objectFit: 'contain', padding: '0.75rem 1.25rem 1.25rem' }}
+          />
 
-                    {
-                        product.pictures.length >= 2 ?
-                            <LazyLoadImage
-                                alt="product"
-                                src={ process.env.NEXT_PUBLIC_ASSET_URI + product.pictures[ 1 ].url }
-                                threshold={ 500 }
-                                width="300"
-                                height="338"
-                                effect="opacity"
-                                wrapperClassName="product-image-hover"
-                            />
-                            : ""
-                    }
-                </ALink>
-            </figure>
+          {
+            product.media.length >= 2 ?
+              <LazyLoadImage
+                alt="product"
+                src={getImgPath(product.media[1])}
+                threshold={500}
+                width="100"
+                height="100"
+                effect="opacity"
+                wrapperClassName="product-image-hover"
+                style={{ objectFit: 'contain', padding: '0.75rem 1.25rem 1.25rem' }}
+              />
+              : ""
+          }
+        </ALink>
+      </figure>
 
-            <div className="product-details">
-                <h3 className="product-name">
-                    <ALink href={ `/product/default/${ product.slug }` }>{ product.name }</ALink>
-                </h3>
+      <div className="product-details">
+        <h3 className="product-name related-name">
+          <ALink href={`/product/${product._id}`}>{product.name}</ALink>
+        </h3>
 
-                <div className="product-price">
-                    {
-                        product.price[ 0 ] !== product.price[ 1 ] ?
-                            product.variants.length === 0 || ( product.variants.length > 0 && !product.variants[ 0 ].price ) ?
-                                <>
-                                    <ins className="new-price">${ toDecimal( product.price[ 0 ] ) }</ins>
-                                    <del className="old-price">${ toDecimal( product.price[ 1 ] ) }</del>
-                                </>
-                                :
-                                < del className="new-price">${ toDecimal( product.price[ 0 ] ) } – ${ toDecimal( product.price[ 1 ] ) }</del>
-                            : <ins className="new-price">${ toDecimal( product.price[ 0 ] ) }</ins>
-                    }
-                </div>
-
-                <div className="ratings-container">
-                    <div className="ratings-full">
-                        <span className="ratings" style={ { width: 20 * product.ratings + '%' } }></span>
-                        <span className="tooltiptext tooltip-top">{ toDecimal( product.ratings ) }</span>
-                    </div>
-
-                    {
-                        isReviewCount ?
-                            <ALink href={ `/product/default/${ product.slug }` } className="rating-reviews">( { product.reviews } reviews )</ALink> : ''
-                    }
-                </div>
-            </div>
+        <div className="product-price related-price">
+          {
+            product.price !== product.totalPrice ?
+              <>
+                <del className="old-price">{toDecimal(product.price)} BYN</del>
+                <ins className="new-price">{toDecimal(product.totalPrice)} BYN</ins>
+              </>
+              : <ins className="new-price">{toDecimal(product.price)} BYN</ins>
+          }
         </div>
-    )
+
+        <div className="brand">
+          <span>{product.brand.name}</span>
+        </div>
+      </div>
+    </div>
+  )
 }
 
-export default React.memo( SmallProduct );
+export default React.memo(SmallProduct);

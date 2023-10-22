@@ -4,7 +4,7 @@ import ALink from '~/components/features/custom-link';
 
 import { cartActions } from '~/store/cart';
 
-import { getTotalPrice, getCartCount, toDecimal } from '~/utils';
+import { getTotalPrice, getCartCount, toDecimal, getImgPath } from '~/utils';
 
 function CartMenu(props) {
   const { cartList, removeFromCart } = props;
@@ -50,19 +50,19 @@ function CartMenu(props) {
                   cartList.map((item, index) =>
                     <div className="product product-cart" key={'cart-menu-product-' + index}>
                       <figure className="product-media pure-media">
-                        <ALink href={'/product/default/' + item.slug} onClick={hideCartMenu}>
-                          <img src={process.env.NEXT_PUBLIC_ASSET_URI + item.pictures[0].url} alt="product" width="80"
-                            height="88" />
+                        <ALink href={'/product/' + item._id} onClick={hideCartMenu}>
+                          <img src={getImgPath(item.media[0])} alt="product" width="70"
+                            height="70" />
                         </ALink>
                         <button className="btn btn-link btn-close" onClick={() => { removeCart(item) }}>
                           <i className="fas fa-times"></i><span className="sr-only">Закрыть</span>
                         </button>
                       </figure>
                       <div className="product-detail">
-                        <ALink href={'/product/default/' + item.slug} className="product-name" onClick={hideCartMenu}>{item.name}</ALink>
+                        <ALink href={'/product/' + item._id} className="product-name" onClick={hideCartMenu}>{item.name}</ALink>
                         <div className="price-box">
                           <span className="product-quantity">{item.qty}</span>
-                          <span className="product-price">BYN{toDecimal(item.price)}</span>
+                          <span className="product-price">{toDecimal(item.price)} BYN</span>
                         </div>
                       </div>
                     </div>
@@ -70,13 +70,13 @@ function CartMenu(props) {
               </div>
 
               <div className="cart-total">
-                <label>Subtotal:</label>
-                <span className="price">${toDecimal(getTotalPrice(cartList))}</span>
+                <label>Сумма:</label>
+                <span className="price">{toDecimal(getTotalPrice(cartList))} BYN</span>
               </div>
 
               <div className="cart-action">
-                <ALink href="/pages/cart" className="btn btn-dark btn-link" onClick={hideCartMenu}>View Cart</ALink>
-                <ALink href="/pages/checkout" className="btn btn-dark" onClick={hideCartMenu}><span>Go To Checkout</span></ALink>
+                <ALink href="/pages/cart" className="btn btn-dark btn-link" onClick={hideCartMenu}>Корзина</ALink>
+                <ALink href="/pages/checkout" className="btn btn-dark" onClick={hideCartMenu}><span>Оформить заказ</span></ALink>
               </div>
             </> :
             <p className="mt-4 text-center font-weight-semi-bold ls-normal text-body">Корзина пуста.</p>

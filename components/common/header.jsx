@@ -6,7 +6,7 @@ import CartMenu from '~/components/common/partials/cart-menu';
 import MainMenu from '~/components/common/partials/main-menu';
 import SearchBox from '~/components/common/partials/search-box';
 
-export default function Header({ categoryTree }) {
+export default function Header({ categoryTree, fields }) {
   const router = useRouter();
 
   useEffect(() => {
@@ -44,15 +44,15 @@ export default function Header({ categoryTree }) {
               </div>
               <div className="icon-box-content d-lg-show">
                 <h4 className="icon-box-title">Телефон:</h4>
-                <p>0(800) 123-456</p>
+                <p>{fields.phone}</p>
               </div>
             </ALink>
 
             <span className="divider"></span>
 
-            <ALink href="/pages/wishlist" className="wishlist">
-              <i className="d-icon-heart"></i>
-            </ALink>
+            { fields.telegram && <ALink href={fields.telegram} className="social-link social-link-header social-telegram fab fa-telegram-plane"></ALink> }
+            { fields.viber && <ALink href={`viber://chat?number=${fields.viber}`} className="social-link social-link-header social-viber fab fa-viber"></ALink> }
+            { fields.instagram && <ALink href={fields.instagram} className="social-link social-link-header social-instagram fab fa-instagram"></ALink> }
 
             <span className="divider"></span>
 
@@ -64,18 +64,18 @@ export default function Header({ categoryTree }) {
       <div className="header-bottom has-dropdown pb-0">
         <div className="container d-flex align-items-center">
           <div className="dropdown category-dropdown has-border fixed">
-            <ALink href="#" className="text-white font-weight-semi-bold category-toggle"><i className="d-icon-bars2"></i><span>Каталог</span></ALink>
+            <ALink href="/shop" className="text-white font-weight-semi-bold category-toggle"><i className="d-icon-bars2"></i><span>Каталог</span></ALink>
 
             <div className="dropdown-box">
               <ul className="menu vertical-menu category-menu">
                 <li><ALink href="#" className="menu-title">Разделы каталога</ALink></li>
 
                 {(categoryTree || []).map((item, index) => (
-                  <li key={index} className={ item.children?.length ? 'submenu' : '' }>
-                    <ALink href={{ pathname: `/shop`, query: { category: item.handle }}}><i className="d-icon-camera1"></i>{ item.name }</ALink>
-                    { item.children?.length > 0 && <ul>
+                  <li key={index} className={item.children?.length ? 'submenu' : ''}>
+                    <ALink href={{ pathname: `/shop`, query: { category: item._id } }}><i style={{ fontSize: `${item.icon.split('||')[1] || '1.8'}rem` }} className={item.icon.split('||')[0] || 'd-icon-arrow-right'}></i>{item.name}</ALink>
+                    {item.children?.length > 0 && <ul>
                       {item.children.map((item, index) => (
-                        <li key={index}><ALink href={{ pathname: `/shop`, query: { category: item.handle }}}>{ item.name }</ALink></li>
+                        <li key={index}><ALink href={{ pathname: `/shop`, query: { category: item._id } }}>{item.name}</ALink></li>
                       ))}
                     </ul>
                     }
@@ -85,9 +85,9 @@ export default function Header({ categoryTree }) {
             </div>
           </div>
 
-          <MainMenu />
+          <MainMenu categoryTree={categoryTree} />
         </div>
       </div>
-    </header >
+    </header>
   );
 }
