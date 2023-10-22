@@ -16,16 +16,18 @@ HomePage.getInitialProps = async (context) => {
   const articles = await getLatestArticles();
   const recProducts = await getRecProducts();
   const slides = await getSlides();
-  const fields = await getFieldsObject('features_1', 'features_2', 'features_3', 'features_4', 'trade-in-title', 'trade-in-description');
+  const features = await getFieldsObject('features_1', 'features_2', 'features_3', 'features_4');
+  const fields = await getFieldsObject('trade-in-title', 'trade-in-description');
   return {
     articles: articles.data,
     recProducts: recProducts.data,
     slides: slides.data,
     fields: fields,
+    features: features,
   };
 }
 
-export default function HomePage({ articles, recProducts, slides, fields }) {
+export default function HomePage({ articles, recProducts, slides, fields, features }) {
 
 
   return (
@@ -43,7 +45,7 @@ export default function HomePage({ articles, recProducts, slides, fields }) {
 
         <BannerSection tradeInDescription={fields['trade-in-description']} tradeInTitle={fields['trade-in-title']} />
 
-        <ServiceBox fields={fields} />
+        <ServiceBox fields={features} />
 
         <BlogSection posts={articles} />
       </div>

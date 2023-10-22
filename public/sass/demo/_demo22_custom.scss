@@ -281,6 +281,15 @@ Demo 22
 		flex-direction: column;
 		padding: 0 1.5rem 0 6.9%;
 		width: 100%;
+		.banner-icon {
+			height: 60px !important;
+			width: 60px !important;
+			object-fit: contain !important;
+			min-height: auto !important;
+			@include mq(lg, max) {
+				display: none;
+			}
+		}
 	}
 	.banner-links {
 		display: flex;

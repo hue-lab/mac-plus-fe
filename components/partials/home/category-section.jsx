@@ -35,7 +35,7 @@ export default function CategorySection({ recProducts }) {
                         <li>Бренд: { item.brand.name }</li>
                         { item.isStock
                           ? <li style={{ color: 'var(--toastify-color-success)' }}>В наличии</li>
-                          : <li style={{ color: 'var(--toastify-color-error)' }}>Отсутствует</li>
+                          : <li style={{ color: 'var(--toastify-color-error)' }}>Под заказ</li>
                         }
                         <li>
                           { item.discount > 0

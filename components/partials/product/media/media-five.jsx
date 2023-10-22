@@ -20,10 +20,6 @@ export default function MediaFive ( props ) {
     let lgImages = product.media;
 
     useEffect( () => {
-        setIndex( 0 );
-    }, [ window.location.pathname ] )
-
-    useEffect( () => {
         if ( mediaRef !== null && mediaRef.current !== null && index >= 0 ) {
             mediaRef.current.$car.to( index, 300, true );
         }
