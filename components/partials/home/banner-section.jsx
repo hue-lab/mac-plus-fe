@@ -9,7 +9,7 @@ import { fadeIn, fadeInRightShorter, fadeInLeftShorter } from '~/utils/data/keyf
 import { bannerSlider } from '~/utils/data/carousel';
 import Image from "next/image";
 
-function BannerSection ({ tradeInTitle, tradeInDescription }) {
+function BannerSection ({ tradeInTitle, tradeInSubtitle, tradeInDescription }) {
     return (
         <section className="banner-group container mt-10 pb-4 pt-2 mb-10">
             <Reveal keyframes={ fadeIn } delay={ 200 } duration={ 1200 } triggerOnce>
@@ -34,6 +34,7 @@ function BannerSection ({ tradeInTitle, tradeInDescription }) {
                             />
                         </div>
                         <h3 className="banner-title text-white ls-normal lh-1">{tradeInTitle}</h3>
+                        <h3 className="banner-subtitle text-white ls-normal lh-1">{tradeInSubtitle}</h3>
                         <p className="mb-7 text-white">{tradeInDescription}</p>
                         <div className="banner-links">
                             <ALink href="/pages/trade-in" className="btn btn-link btn-white btn-underline font-weight-bold">Подробнее<i className="fas fa-angle-right"></i></ALink>

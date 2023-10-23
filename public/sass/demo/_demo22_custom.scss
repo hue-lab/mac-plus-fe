@@ -279,7 +279,7 @@ Demo 22
 		justify-content: center;
 		align-items: center;
 		flex-direction: column;
-		padding: 0 1.5rem 0 6.9%;
+		padding: 0 1rem;
 		width: 100%;
 		.banner-icon {
 			height: 60px !important;
@@ -299,6 +299,11 @@ Demo 22
 		margin-bottom: .8rem;
 		text-align: center;
 		font-size: 3rem;
+	}
+	.banner-subtitle {
+		margin-bottom: .8rem;
+		text-align: center;
+		font-size: 2rem;
 	}
 	p {
 		text-align: center;
