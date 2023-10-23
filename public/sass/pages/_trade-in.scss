@@ -1,0 +1,48 @@
+.trade {
+  &__hero {
+    background: $primary-color;
+    padding: 4rem 0;
+    &-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    &-icon {
+      height: 10rem;
+      @include mq(lg, max) {
+        height: 7rem;
+      }
+    }
+    &-image {
+      height: 30rem;
+      object-fit: contain;
+      margin: 2rem;
+      @include mq(lg, max) {
+        height: 20rem;
+      }
+      @include mq(md, max) {
+        height: 15rem;
+      }
+    }
+    h1 {
+      margin: 0;
+      color: $white-color;
+      font-size: 4.5rem;
+      text-align: center;
+    }
+    h2 {
+      color: $white-color;
+      font-size: 2.5rem;
+      text-align: center;
+    }
+    p {
+      color: $white-color;
+      font-size: 2rem;
+      max-width: 50rem;
+      text-align: center;
+    }
+  }
+  &__text {
+    padding: 3rem 0;
+  }
+}
