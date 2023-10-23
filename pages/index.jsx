@@ -17,7 +17,7 @@ HomePage.getInitialProps = async (context) => {
   const recProducts = await getRecProducts();
   const slides = await getSlides();
   const features = await getFieldsObject('features_1', 'features_2', 'features_3', 'features_4');
-  const fields = await getFieldsObject('trade-in-title', 'trade-in-description');
+  const fields = await getFieldsObject('trade-in-title', 'trade-in-subtitle' ,'trade-in-description');
   return {
     articles: articles.data,
     recProducts: recProducts.data,
@@ -43,7 +43,11 @@ export default function HomePage({ articles, recProducts, slides, fields, featur
 
         <CategorySection recProducts={recProducts} />
 
-        <BannerSection tradeInDescription={fields['trade-in-description']} tradeInTitle={fields['trade-in-title']} />
+        <BannerSection
+          tradeInDescription={fields['trade-in-description']}
+          tradeInSubtitle={fields['trade-in-subtitle']}
+          tradeInTitle={fields['trade-in-title']}
+        />
 
         <ServiceBox fields={features} />
 
