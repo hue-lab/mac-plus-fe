@@ -5,8 +5,6 @@ import { Magnifier } from 'react-image-magnifiers';
 import Modal from 'react-modal';
 import imagesLoaded from 'imagesloaded';
 
-import withApollo from '~/server/apollo';
-
 import OwlCarousel from '~/components/features/owl-carousel';
 
 import DetailOne from '~/components/partials/product/detail/detail-one';
@@ -145,4 +143,4 @@ function mapStateToProps ( state ) {
     }
 }
 
-export default withApollo( { ssr: typeof window === 'undefined' } )( connect( mapStateToProps, { closeQuickview: modalActions.closeQuickview } )( Quickview ) );
+export default connect( mapStateToProps, { closeQuickview: modalActions.closeQuickview } )( Quickview );

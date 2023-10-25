@@ -1,16 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Reveal from 'react-awesome-reveal';
 
 import ALink from '~/components/features/custom-link';
-
 import ProductTwo from '~/components/features/product/product-two';
-
-import withApollo from '~/server/apollo';
-
 import { fadeIn, fadeInUpShorter } from '~/utils/data/keyframes';
 import { categoryList } from '~/utils/data/menu';
 
-function ProductCollection ( props ) {
+export default function ProductCollection ( props ) {
     const { id = 0, subTitle = "Featured", title = "Fashion Design", titleAdClass = 'ls-s', url = "./images/home/banner/3.jpg", adClass = '', wrapperAdClass = '' } = props;
 
     const data = null;
@@ -87,5 +83,3 @@ function ProductCollection ( props ) {
         </Reveal>
     )
 }
-
-export default withApollo( { ssr: typeof window === 'undefined' } )( ProductCollection );
