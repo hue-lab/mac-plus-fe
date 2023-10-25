@@ -3,12 +3,9 @@ import { useRouter } from 'next/router';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 import ALink from '~/components/features/custom-link';
-
-import withApollo from '~/server/apollo';
-
 import { toDecimal } from '~/utils';
 
-function SearchForm () {
+export default function SearchForm () {
     const router = useRouter();
     const [ search, setSearch ] = useState( "" );
     const data = [];
@@ -134,5 +131,3 @@ function SearchForm () {
         </div>
     );
 }
-
-export default withApollo( { ssr: typeof window === 'undefined' } )( SearchForm );
