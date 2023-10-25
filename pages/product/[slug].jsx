@@ -1,23 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { useQuery } from '@apollo/react-hooks';
+import React from 'react';
 import Helmet from 'react-helmet';
-import imagesLoaded from 'imagesloaded';
 
-import withApollo from '~/server/apollo';
-import { GET_PRODUCT } from '~/server/queries';
-
-import OwlCarousel from '~/components/features/owl-carousel';
 import ALink from '~/components/features/custom-link';
-
 import MediaFive from '~/components/partials/product/media/media-five';
 import DetailThree from '~/components/partials/product/detail/detail-three';
 import DescOne from '~/components/partials/product/desc/desc-one';
-import RelatedProducts from '~/components/partials/product/related-products';
 import ProductSidebar from '~/components/partials/product/product-sidebar';
-import ProductNav from '~/components/partials/product/product-nav';
-
-import { mainSlider17 } from '~/utils/data/carousel';
 import { getProductById, getProductsAdvanced } from "~/utils/endpoints/products";
 import { getDeliveryMethods } from "~/utils/endpoints/orders";
 

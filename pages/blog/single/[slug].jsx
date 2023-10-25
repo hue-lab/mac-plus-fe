@@ -16,8 +16,6 @@ PostSingle.getInitialProps = async (context) => {
 export default function PostSingle({ post }) {
   const loading = false;
 
-  //if (error) return <ErrorPage />;
-
   return (
     <main className="main skeleton-body">
       <Helmet>
