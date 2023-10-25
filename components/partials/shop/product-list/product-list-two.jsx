@@ -1,50 +1,20 @@
 import { useEffect, useState, useLayoutEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useLazyQuery } from '@apollo/react-hooks';
 import InfiniteScroll from 'react-infinite-scroll-component';
-
-import withApollo from '~/server/apollo';
-import { GET_PRODUCTS } from '~/server/queries';
 
 import ToolBox from '~/components/partials/shop/toolbox';
 import ProductTwo from '~/components/features/product/product-two';
 import ProductEight from '~/components/features/product/product-eight';
 
-function ProductListTwo(props) {
+export default function ProductListTwo() {
   const router = useRouter();
   const query = router.query;
   const [products, setProducts] = useState([]);
-  //const [ getInitData, { data, loading, error } ] = useLazyQuery( GET_PRODUCTS );
-  //const [ loadMoreProducts, { data: newData } ] = useLazyQuery( GET_PRODUCTS, { fetchPolicy: 'no-cache' } );
   const data = null;
   const newData = null;
   const loading = false;
-  const perPage = query.per_page ? parseInt(query.per_page) : 12;
-  const [loadedCount, setLoadedCount] = useState(perPage);
   const totalCount = data && data.products.total;
   const gridType = query.type ? query.type : 'grid';
-
-  useEffect(() => {
-    setLoadedCount(perPage);
-  }, [query])
-
-  // useEffect( () => {
-  //     getInitData( {
-  //         variables: {
-  //             search: query.search,
-  //             colors: query.colors ? query.colors.split( ',' ) : [],
-  //             sizes: query.sizes ? query.sizes.split( ',' ) : [],
-  //             brands: query.brands ? query.brands.split( ',' ) : [],
-  //             min_price: parseInt( query.min_price ),
-  //             max_price: parseInt( query.max_price ),
-  //             category: query.category,
-  //             tag: query.tag,
-  //             sortBy: query.sortby,
-  //             from: 0,
-  //             to: loadedCount
-  //         }
-  //     } );
-  // }, [ query ] )
 
   useLayoutEffect(() => {
     data && setProducts(data.products.data);
@@ -55,33 +25,12 @@ function ProductListTwo(props) {
     setProducts([...products, ...newProducts]);
   }, [newData])
 
-  // const productLoadHandler = () => {
-  //     setTimeout( () => {
-  //         loadMoreProducts( {
-  //             variables: {
-  //                 search: query.search,
-  //                 colors: query.colors ? query.colors.split( ',' ) : [],
-  //                 sizes: query.sizes ? query.sizes.split( ',' ) : [],
-  //                 brands: query.brands ? query.brands.split( ',' ) : [],
-  //                 min_price: parseInt( query.min_price ),
-  //                 max_price: parseInt( query.max_price ),
-  //                 category: query.category,
-  //                 tag: query.tag,
-  //                 sortBy: query.sortby,
-  //                 from: products.length,
-  //                 to: products.length + 3
-  //             }
-  //         } );
-  //     }, 1500 );
-  //}
-
   return (
     <>
       <ToolBox />
 
       <InfiniteScroll
         dataLength={products ? products.length : 0}
-        //next={productLoadHandler}
         style={{ overflow: "visible" }}
         hasMore={products.length >= totalCount ? false : true}
         loader={<div className="d-loading"></div>}
@@ -131,5 +80,3 @@ function ProductListTwo(props) {
     </>
   )
 }
-
-export default withApollo({ ssr: typeof window === 'undefined' })(ProductListTwo);
