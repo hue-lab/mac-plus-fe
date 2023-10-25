@@ -22,25 +22,27 @@ import { showScrollTopHandler, scrollTopHandler, stickyHeaderHandler, stickyFoot
 function Layout({ children, closeQuickview, categoryTree, layoutFields, footerNav }) {
   const router = useRouter();
 
-  useLayoutEffect(() => {
-    document.querySelector('body').classList.remove('loaded');
-  }, [router.pathname])
+  if (typeof  window !== 'undefined') {
+    useLayoutEffect(() => {
+      document.querySelector('body').classList.remove('loaded');
+    }, [router.pathname]);
 
-  useEffect(() => {
-    window.addEventListener('scroll', showScrollTopHandler, true);
-    window.addEventListener('scroll', stickyHeaderHandler, true);
-    window.addEventListener('scroll', stickyFooterHandler, true);
-    window.addEventListener('resize', stickyHeaderHandler, true);
-    window.addEventListener('resize', stickyFooterHandler, true);
+    useEffect(() => {
+      window.addEventListener('scroll', showScrollTopHandler, true);
+      window.addEventListener('scroll', stickyHeaderHandler, true);
+      window.addEventListener('scroll', stickyFooterHandler, true);
+      window.addEventListener('resize', stickyHeaderHandler, true);
+      window.addEventListener('resize', stickyFooterHandler, true);
 
-    return () => {
-      window.removeEventListener('scroll', showScrollTopHandler, true);
-      window.removeEventListener('scroll', stickyHeaderHandler, true);
-      window.removeEventListener('scroll', stickyFooterHandler, true);
-      window.removeEventListener('resize', stickyHeaderHandler, true);
-      window.removeEventListener('resize', stickyFooterHandler, true);
-    }
-  }, [])
+      return () => {
+        window.removeEventListener('scroll', showScrollTopHandler, true);
+        window.removeEventListener('scroll', stickyHeaderHandler, true);
+        window.removeEventListener('scroll', stickyFooterHandler, true);
+        window.removeEventListener('resize', stickyHeaderHandler, true);
+        window.removeEventListener('resize', stickyFooterHandler, true);
+      }
+    }, [])
+  }
 
   useEffect(() => {
     closeQuickview();
