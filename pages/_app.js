@@ -2,7 +2,7 @@ import { useStore, Provider } from "react-redux";
 import { PersistGate } from 'redux-persist/integration/react';
 import Helmet from "react-helmet";
 
-import { wrapper } from "../store/index.js";
+import { wrapper } from "~/store";
 import Layout from '~/components/layout';
 
 import "~/public/sass/style.scss";
