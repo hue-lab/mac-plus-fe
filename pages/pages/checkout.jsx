@@ -146,7 +146,7 @@ function Checkout(props) {
                         </div>
                         <div className="col-xs-6">
                           <label>Фамилия *</label>
-                          <input type="text" className="form-control" name="surname" required />
+                          <input type="text" className="form-control" name="surname" />
                         </div>
                       </div>
                       {
