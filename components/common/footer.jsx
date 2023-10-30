@@ -47,7 +47,7 @@ export default function Footer({ fields, categoryTree, footerNav }) {
 
             <div className="col-lg-2 col-md-6">
               <div className="widget ml-lg-4">
-                <h4 className="widget-title">Навигация</h4>
+                <h4 className="widget-title">Информация</h4>
                 <ul className="widget-body">
                   {footerNav.children.length ?
                     (footerNav.children.map(item => (
