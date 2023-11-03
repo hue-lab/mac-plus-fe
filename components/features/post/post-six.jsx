@@ -59,33 +59,36 @@ function PostSix(props) {
           <figure className="post-media">
             {
               isLazy ?
-                <LazyLoadImage
-                  src={getImgPath(post.media)}
-                  alt="post gallery"
-                  width={380}
-                  height={230}
-                  effect="opacity; transform"
-                  style={{ backgroundColor: "#DEE6E8" }}
-                />
+                <ALink href={`/blog/single/${post._id}`}>
+                  <LazyLoadImage
+                    src={getImgPath(post.media)}
+                    alt="post gallery"
+                    width={380}
+                    height={230}
+                    effect="opacity; transform"
+                    style={{ backgroundColor: "#DEE6E8" }}
+                  />
+                </ALink>
                 :
-                <img
-                  src={getImgPath(post.media)}
-                  alt="post gallery"
-                  width={380}
-                  height={230}
-                />
+                <ALink href={`/blog/single/${post._id}`}>
+                  <img
+                    src={getImgPath(post.media)}
+                    alt="post gallery"
+                    width={380}
+                    height={230}
+                  />
+                </ALink>
             }
           </figure>
       }
 
       <div className="post-details">
         <div className="post-meta">
-          <ALink href="#" className="post-date">{getPostDate(post.createdAt)}</ALink>
+          <ALink href={`/blog/single/${post._id}`} className="post-date">{getPostDate(post.createdAt)}</ALink>
         </div>
         <h4 className="post-title">
           <ALink href={`/blog/single/${post._id}`}>{post.title}</ALink>
         </h4>
-        <ALink href={`/blog/single/${post._id}`} className={`btn btn-link btn-underline ${btnAdClass}`}>{btnText}<i className="d-icon-arrow-right"></i></ALink>
       </div>
     </div >
   )

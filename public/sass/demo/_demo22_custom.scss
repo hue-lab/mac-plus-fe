@@ -582,6 +582,9 @@ Demo 22
 }
 .shop-banner {
 	padding: 8.1rem 1.5rem 7.7rem 9.1%;
+	@include mq(md, 'max') {
+		display: none;
+	}
 	.banner-subtitle {
 		font-size: 2em;
 		line-height: 1.3;

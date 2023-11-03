@@ -358,11 +358,11 @@ export const introSlider = {
 export const serviceSlider = {
     items: 4,
     nav: false,
-    dots: false,
+    dots: true,
     margin: 20,
     responsive: {
         0: {
-            items: 1
+            items: 2
         },
         576: {
             items: 2
