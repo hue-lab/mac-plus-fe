@@ -9,14 +9,6 @@ import SearchBox from '~/components/common/partials/search-box';
 export default function Header({ categoryTree, fields }) {
   const router = useRouter();
 
-  useEffect(() => {
-    if (router.pathname !== '/') {
-      document.querySelector('.category-dropdown.dropdown').classList.contains('fixed') && document.querySelector('.category-dropdown.dropdown').classList.remove('fixed')
-    } else {
-      document.querySelector('.category-dropdown.dropdown').classList.add('fixed')
-    }
-  }, [router.pathname])
-
   const showMobileMenu = () => {
     document.querySelector('body').classList.add('mmenu-active');
   }
@@ -63,7 +55,7 @@ export default function Header({ categoryTree, fields }) {
 
       <div className="header-bottom has-dropdown pb-0">
         <div className="container d-flex align-items-center">
-          <div className="dropdown category-dropdown has-border fixed">
+          <div className="dropdown category-dropdown has-border">
             <ALink href="/shop" className="text-white font-weight-semi-bold category-toggle"><i className="d-icon-bars2"></i><span>Каталог</span></ALink>
 
             <div className="dropdown-box">
