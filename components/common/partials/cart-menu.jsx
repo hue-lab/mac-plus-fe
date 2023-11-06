@@ -50,7 +50,7 @@ function CartMenu(props) {
                   cartList.map((item, index) =>
                     <div className="product product-cart" key={'cart-menu-product-' + index}>
                       <figure className="product-media pure-media">
-                        <ALink href={'/product/' + item._id} onClick={hideCartMenu}>
+                        <ALink href={'/' + item.seo?.seoUrl || '#'} onClick={hideCartMenu}>
                           <img src={getImgPath(item.media[0])} alt="product" width="70"
                             height="70" />
                         </ALink>
@@ -59,7 +59,7 @@ function CartMenu(props) {
                         </button>
                       </figure>
                       <div className="product-detail">
-                        <ALink href={'/product/' + item._id} className="product-name" onClick={hideCartMenu}>{item.name}</ALink>
+                        <ALink href={'/' + item.seo?.seoUrl || '#'} className="product-name" onClick={hideCartMenu}>{item.name}</ALink>
                         <div className="price-box">
                           <span className="product-quantity">{item.qty}</span>
                           <span className="product-price">{toDecimal(item.price)} BYN</span>

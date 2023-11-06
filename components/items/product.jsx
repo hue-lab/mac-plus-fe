@@ -6,20 +6,8 @@ import MediaFive from '~/components/partials/product/media/media-five';
 import DetailThree from '~/components/partials/product/detail/detail-three';
 import DescOne from '~/components/partials/product/desc/desc-one';
 import ProductSidebar from '~/components/partials/product/product-sidebar';
-import { getProductById, getProductsAdvanced } from "~/utils/endpoints/products";
-import { getDeliveryMethods } from "~/utils/endpoints/orders";
 
-ProductDefault.getInitialProps = async ({ query }) => {
-  const productRes = query.slug ? await getProductById(query.slug) : null;
-  const product = await productRes;
-  const featuredRes = await getProductsAdvanced(product.category._id, product._id);
-  const featured = await featuredRes;
-  const deliveryRes = await getDeliveryMethods();
-  const deliveryMethods = await deliveryRes;
-  return { product, featured, deliveryMethods }
-}
-
-export default function ProductDefault({ product, featured, deliveryMethods }) {
+export default function ProductItem({ product, featured, deliveryMethods }) {
 
   if (!product) return '';
 
@@ -39,12 +27,13 @@ export default function ProductDefault({ product, featured, deliveryMethods }) {
                 <ul className="breadcrumb breadcrumb-lg">
                   <li><ALink href="/"><i className="d-icon-home"></i></ALink></li>
                   <li><ALink href="/shop" className="active">Каталог</ALink></li>
+                  <li><ALink href={`/${product.category.handle}/`} className="active">{ product.category.name }</ALink></li>
                   <li>{product.name}</li>
                 </ul>
               </div>
 
               <div className="row gutter-lg">
-                <ProductSidebar featured={featured.data} deliveryMethods={deliveryMethods} />
+                <ProductSidebar featured={featured?.data || []} deliveryMethods={deliveryMethods || []} />
 
                 <div className="col-lg-9">
                   <div className="product product-single row">

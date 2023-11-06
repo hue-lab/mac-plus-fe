@@ -73,7 +73,7 @@ function Cart(props) {
                             <tr key={'cart' + item.name}>
                               <td className="product-thumbnail">
                                 <figure>
-                                  <ALink href={'/product/' + item._id}>
+                                  <ALink href={'/' + item.seo?.seoUrl || '#'}>
                                     <img src={getImgPath(item.media[0])} width="100" height="100"
                                       alt="product" />
                                   </ALink>
@@ -81,7 +81,7 @@ function Cart(props) {
                               </td>
                               <td className="product-name">
                                 <div className="product-name-section">
-                                  <ALink href={'/product/' + item._id}>{item.name}</ALink>
+                                  <ALink href={'/' + item.seo?.seoUrl || '#'}>{item.name}</ALink>
                                 </div>
                               </td>
                               <td className="product-subtotal">
