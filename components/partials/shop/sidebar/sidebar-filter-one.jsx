@@ -20,7 +20,7 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
   }, [])
 
   const filterByPrice = (filterPrice) => {
-    let url = router.pathname.replace('[grid]', query.grid);
+    let url = router.asPath;
     let arr = [`min_price=${filterPrice.min}`, `max_price=${filterPrice.max}`, 'page=1'];
     for (let key in query) {
       if (key !== 'min_price' && key !== 'max_price' && key !== 'page' && key !== 'grid') arr.push(key + '=' + query[key]);

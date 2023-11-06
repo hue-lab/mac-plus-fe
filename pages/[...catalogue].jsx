@@ -21,7 +21,7 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
       return;
     }
 
-    window.location = `${window.location.origin}/404`
+    window.location = `${window.location.origin}/404`;
   }
 
   if (item?.price) {
