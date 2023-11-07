@@ -15,7 +15,7 @@ export default function CategorySection({ recProducts }) {
 
         <div className="row">
           {recProducts.map((item, index) => (
-            <ALink key={index} className="col-xl-4 col-md-6 mb-4" href={ `/${item.seo?.seoUrl || '#'}` }>
+            <ALink key={index} className="col-xl-4 col-md-6 mb-4" href={ `/${item.categoryHandle ? item.categoryHandle + '/' : ''}${item.seo?.seoUrl || '#'}` }>
               <div>
                 <Reveal keyframes={fadeIn} delay={200} duration={1200} triggerOnce>
                   <div style={{ cursor: 'pointer' }} className="category category-group-image">

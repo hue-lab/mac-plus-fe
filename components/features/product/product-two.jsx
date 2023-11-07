@@ -21,7 +21,7 @@ function ProductTwo(props) {
   return (
     <div className={`product ${adClass}`}>
       <figure className="product-media">
-        <ALink href={`/${product.seo?.seoUrl || '#'}`}>
+        <ALink href={`/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`}>
           <LazyLoadImage
             alt="product"
             src={getImgPath(product.media[0])}
@@ -47,7 +47,7 @@ function ProductTwo(props) {
         <div className="product-action-vertical">
           {
             0 > 0 ?
-              <ALink href={`/${product.seo?.seoUrl || '#'}`} className="btn-product-icon btn-cart" title="Go to product">
+              <ALink href={`/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`} className="btn-product-icon btn-cart" title="Go to product">
                 <i className="d-icon-arrow-right"></i>
               </ALink> :
               <a href="#" className="btn-product-icon btn-cart" title="Add to cart" onClick={addToCartHandler}>
@@ -57,13 +57,13 @@ function ProductTwo(props) {
         </div>
 
         <div className="product-action">
-          <ALink href={`/${product.seo?.seoUrl || '#'}`} className="btn-product btn-quickview" title="Quick View">Подробнее</ALink>
+          <ALink href={`/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`} className="btn-product btn-quickview" title="Quick View">Подробнее</ALink>
         </div>
       </figure>
 
       <div className="product-details" style={{ paddingBottom: '1rem' }}>
         <h3 className="product-name">
-          <ALink href={`/${product.seo?.seoUrl || '#'}`}>{product.name}</ALink>
+          <ALink href={`/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`}>{product.name}</ALink>
         </h3>
 
         <div className="product-price shop-price">

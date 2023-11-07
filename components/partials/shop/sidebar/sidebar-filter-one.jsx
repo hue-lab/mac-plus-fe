@@ -6,7 +6,7 @@ import CustomPriceInput from "~/components/partials/shop/sidebar/custom-number-i
 
 export default function SidebarFilterOne({ type = "left", isFeatured = false, filters = [] }) {
   const router = useRouter();
-  const query = router.query;
+  const { catalogue, ...query } = router.query;
   const data = null;
   const loading = false;
   let timerId;
@@ -20,7 +20,7 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
   }, [])
 
   const filterByPrice = (filterPrice) => {
-    let url = router.asPath;
+    let url = router.asPath.split('?')[0];
     let arr = [`min_price=${filterPrice.min}`, `max_price=${filterPrice.max}`, 'page=1'];
     for (let key in query) {
       if (key !== 'min_price' && key !== 'max_price' && key !== 'page' && key !== 'grid') arr.push(key + '=' + query[key]);

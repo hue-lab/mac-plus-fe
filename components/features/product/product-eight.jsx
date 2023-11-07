@@ -16,7 +16,7 @@ function ProductEight ( props ) {
     return (
         <div className={ `product product-list ${ adClass }` }>
             <figure className="product-media">
-                <ALink href={ `/${product.seo?.seoUrl || '#'}` }>
+                <ALink href={ `/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}` }>
                     <LazyLoadImage
                         alt="product"
                         src={getImgPath(product.media[0])}
@@ -42,7 +42,7 @@ function ProductEight ( props ) {
 
             <div className="product-details">
                 <h3 className="product-name">
-                    <ALink href={ `/${product.seo?.seoUrl || '#'}` }>{ product.name }</ALink>
+                    <ALink href={ `/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}` }>{ product.name }</ALink>
                 </h3>
 
                 <div className="product-price">
@@ -61,7 +61,7 @@ function ProductEight ( props ) {
                 <p className="product-short-desc">{ product.description }</p>
 
                 <div className="product-action">
-                    <ALink href={ `/${product.seo?.seoUrl || '#'}` } className="btn-product btn-cart" title="Go to product">
+                    <ALink href={ `/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}` } className="btn-product btn-cart" title="Go to product">
                         <span>Подробнее</span>
                     </ALink>
                 </div>
