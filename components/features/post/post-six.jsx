@@ -15,7 +15,7 @@ function PostSix(props) {
           <figure className="post-media">
             {
               isLazy ?
-                <ALink href={`/blog/single/${post._id}`}>
+                <ALink href={`/blog/${post.seo?.seoUrl || '#'}`}>
                   {
                     isOriginal ? <LazyLoadImage
                       src={getImgPath(post.media)}
@@ -37,7 +37,7 @@ function PostSix(props) {
                   }
                 </ALink>
                 :
-                <ALink href={`/blog/single/${post._id}`}>
+                <ALink href={`/blog/${post.seo?.seoUrl || '#'}`}>
                   {
                     isOriginal ? <img
                       src={getImgPath(post.media)}
@@ -59,7 +59,7 @@ function PostSix(props) {
           <figure className="post-media">
             {
               isLazy ?
-                <ALink href={`/blog/single/${post._id}`}>
+                <ALink href={`/blog/${post.seo?.seoUrl || '#'}`}>
                   <LazyLoadImage
                     src={getImgPath(post.media)}
                     alt="post gallery"
@@ -70,7 +70,7 @@ function PostSix(props) {
                   />
                 </ALink>
                 :
-                <ALink href={`/blog/single/${post._id}`}>
+                <ALink href={`/blog/${post.seo?.seoUrl || '#'}`}>
                   <img
                     src={getImgPath(post.media)}
                     alt="post gallery"
@@ -84,10 +84,10 @@ function PostSix(props) {
 
       <div className="post-details">
         <div className="post-meta">
-          <ALink href={`/blog/single/${post._id}`} className="post-date">{getPostDate(post.createdAt)}</ALink>
+          <ALink href={`/blog/${post.seo?.seoUrl || '#'}`} className="post-date">{getPostDate(post.createdAt)}</ALink>
         </div>
         <h4 className="post-title">
-          <ALink href={`/blog/single/${post._id}`}>{post.title}</ALink>
+          <ALink href={`/blog/${post.seo?.seoUrl || '#'}`}>{post.title}</ALink>
         </h4>
       </div>
     </div >

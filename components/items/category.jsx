@@ -33,7 +33,7 @@ export default function Category({ banner, products, filters, category }) {
                     style={{ color: 'white', padding: '.5rem 1rem' }}
                   >{ banner.description }</h4>
                   <h1 className="banner-title font-weight-bold ls-normal text-uppercase">{ banner.title }</h1>
-                  <ALink href={`/blog/single/${banner._id}`} className="btn btn-outline btn-dark btn-rounded">Подробнее</ALink>
+                  <ALink href={`/blog/${banner.seo?.seoUrl || '#'}`} className="btn btn-outline btn-dark btn-rounded">Подробнее</ALink>
                 </div>
               </div> }
 
