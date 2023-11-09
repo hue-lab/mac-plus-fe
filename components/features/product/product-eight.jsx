@@ -11,39 +11,12 @@ import { wishlistActions } from '~/store/wishlist';
 import {getImgPath, toDecimal} from '~/utils';
 
 function ProductEight ( props ) {
-    const { product, adClass, toggleWishlist, wishlist, addToCart, openQuickview } = props;
-
-    // decide if the product is wishlisted
-    let isWishlisted;
-    isWishlisted = wishlist.findIndex( item => item._id === product._id ) > -1 ? true : false;
-
-    const showQuickviewHandler = () => {
-        openQuickview( product._id );
-    }
-
-    const wishlistHandler = ( e ) => {
-        if ( toggleWishlist ) {
-            toggleWishlist( product );
-        }
-
-        e.preventDefault();
-        let currentTarget = e.currentTarget;
-        currentTarget.classList.add( 'load-more-overlay', 'loading' );
-
-        setTimeout( () => {
-            currentTarget.classList.remove( 'load-more-overlay', 'loading' );
-        }, 1000 );
-    }
-
-    const addToCartHandler = ( e ) => {
-        e.preventDefault();
-        addToCart( { ...product, qty: 1, price: product.totalPrice } );
-    }
+    const { product, adClass, addToCart } = props;
 
     return (
         <div className={ `product product-list ${ adClass }` }>
             <figure className="product-media">
-                <ALink href={ `/product/${ product._id }` }>
+                <ALink href={ `/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}` }>
                     <LazyLoadImage
                         alt="product"
                         src={getImgPath(product.media[0])}
@@ -68,22 +41,8 @@ function ProductEight ( props ) {
             </figure>
 
             <div className="product-details">
-                {/*<div className="product-cat">*/}
-                {/*    {*/}
-                {/*        product.categories ?*/}
-                {/*            product.categories.map( ( item, index ) => (*/}
-                {/*                <React.Fragment key={ item.name + '-' + index }>*/}
-                {/*                    <ALink href={ { pathname: '/shop', query: { category: item.slug } } }>*/}
-                {/*                        { item.name }*/}
-                {/*                        { index < product.categories.length - 1 ? ', ' : "" }*/}
-                {/*                    </ALink>*/}
-                {/*                </React.Fragment>*/}
-                {/*            ) ) : ""*/}
-                {/*    }*/}
-                {/*</div>*/}
-
                 <h3 className="product-name">
-                    <ALink href={ `/product/${ product._id }` }>{ product.name }</ALink>
+                    <ALink href={ `/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}` }>{ product.name }</ALink>
                 </h3>
 
                 <div className="product-price">
@@ -102,7 +61,7 @@ function ProductEight ( props ) {
                 <p className="product-short-desc">{ product.description }</p>
 
                 <div className="product-action">
-                    <ALink href={ `/product/${ product._id }` } className="btn-product btn-cart" title="Go to product">
+                    <ALink href={ `/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}` } className="btn-product btn-cart" title="Go to product">
                         <span>Подробнее</span>
                     </ALink>
                 </div>

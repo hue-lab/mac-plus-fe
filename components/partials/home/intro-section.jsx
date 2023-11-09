@@ -31,7 +31,7 @@ function IntroSection({ slides }) {
                   <Reveal keyframes={blurIn} delay={200} duration={1500}>
                     <h3 className="banner-title ls-l text-white text-uppercase font-weight-bold">{item.title}</h3>
                     <p className="ls-l mb-5 text-white font-primary">{item.description}</p>
-                    <ALink className="btn btn-outline btn-white btn-rounded mb-1" href={`blog/single/${item._id}`}>Подробнее</ALink>
+                    <ALink className="btn btn-outline btn-white btn-rounded mb-1" href={`/blog/${item.seo?.seoUrl || '#'}`}>Подробнее</ALink>
                   </Reveal>
                 </div>
               </div>

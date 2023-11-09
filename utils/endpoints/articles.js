@@ -16,3 +16,8 @@ export async function getArticleById(id) {
   const res = await fetch(process.env.API_HOST + '/article/' + id);
   return await res.json() || [];
 }
+
+export async function getArticleBySlug(slug) {
+  const res = await fetch(process.env.API_HOST + `/article/item?slug=${slug}`);
+  return await res.json() || [];
+}

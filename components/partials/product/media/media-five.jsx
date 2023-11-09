@@ -42,7 +42,6 @@ export default function MediaFive ( props ) {
     }
 
     const openLightBox = () => {
-        console.log('test');
         setOpenState( true );
     }
 

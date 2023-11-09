@@ -1,15 +1,14 @@
 import Helmet from 'react-helmet';
 
 import ALink from '~/components/features/custom-link';
-import ErrorPage from '~/pages/pages/404';
 
-import { getImgPath, videoHandler } from '~/utils';
-import { getArticleById } from '~/utils/endpoints/articles';
+import { getImgPath } from '~/utils';
+import { getArticleBySlug } from '~/utils/endpoints/articles';
 import { getPostDate } from '~/utils';
 
 
 PostSingle.getInitialProps = async (context) => {
-  const post = await getArticleById(context.query.slug);
+  const post = await getArticleBySlug(context.query.slug);
   return { post: post };
 }
 

@@ -11,29 +11,7 @@ import { wishlistActions } from '~/store/wishlist';
 import { getImgPath, toDecimal } from '~/utils';
 
 function ProductTwo(props) {
-  const { product, adClass = 'text-center', toggleWishlist, wishlist, addToCart, openQuickview, isCat = true } = props;
-
-  // decide if the product is wishlisted
-  let isWishlisted;
-  isWishlisted = wishlist.findIndex(item => item._id === product._id) > -1 ? true : false;
-
-  const showQuickviewHandler = () => {
-    openQuickview(product._id);
-  }
-
-  const wishlistHandler = (e) => {
-    if (toggleWishlist) {
-      toggleWishlist(product);
-    }
-
-    e.preventDefault();
-    let currentTarget = e.currentTarget;
-    currentTarget.classList.add('load-more-overlay', 'loading');
-
-    setTimeout(() => {
-      currentTarget.classList.remove('load-more-overlay', 'loading');
-    }, 1000);
-  }
+  const { product, adClass = 'text-center', addToCart, isCat = true } = props;
 
   const addToCartHandler = (e) => {
     e.preventDefault();
@@ -43,7 +21,7 @@ function ProductTwo(props) {
   return (
     <div className={`product ${adClass}`}>
       <figure className="product-media">
-        <ALink href={`/product/${product._id}`}>
+        <ALink href={`/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`}>
           <LazyLoadImage
             alt="product"
             src={getImgPath(product.media[0])}
@@ -69,7 +47,7 @@ function ProductTwo(props) {
         <div className="product-action-vertical">
           {
             0 > 0 ?
-              <ALink href={`/product/${product._id}`} className="btn-product-icon btn-cart" title="Go to product">
+              <ALink href={`/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`} className="btn-product-icon btn-cart" title="Go to product">
                 <i className="d-icon-arrow-right"></i>
               </ALink> :
               <a href="#" className="btn-product-icon btn-cart" title="Add to cart" onClick={addToCartHandler}>
@@ -79,13 +57,13 @@ function ProductTwo(props) {
         </div>
 
         <div className="product-action">
-          <ALink href={`/product/${product._id}`} className="btn-product btn-quickview" title="Quick View">Подробнее</ALink>
+          <ALink href={`/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`} className="btn-product btn-quickview" title="Quick View">Подробнее</ALink>
         </div>
       </figure>
 
       <div className="product-details" style={{ paddingBottom: '1rem' }}>
         <h3 className="product-name">
-          <ALink href={`/product/${product._id}`}>{product.name}</ALink>
+          <ALink href={`/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`}>{product.name}</ALink>
         </h3>
 
         <div className="product-price shop-price">

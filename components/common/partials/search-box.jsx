@@ -102,7 +102,7 @@ export default function SearchForm() {
         {
           !!searchResult?.length && <div className="live-search-list scrollable bg-white">
             {searchResult && searchResult.map((product, index) => (
-              <ALink href={`/product/default/${product._id}`} className="autocomplete-suggestion" key={`search-result-${index}`}>
+              <ALink href={`/${product.category.handle ? product.category.handle + '/' : ''}${product.seoUrl || '#'}`} className="autocomplete-suggestion" key={`search-result-${index}`}>
                 <div className="search-name" dangerouslySetInnerHTML={removeXSSAttacks(matchEmphasize(product.name))}></div>
               </ALink>
             ))
