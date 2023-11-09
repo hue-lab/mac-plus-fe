@@ -125,8 +125,8 @@ export default function ToolBox(props) {
           </select>
         </div>
         <div className={`toolbox-item toolbox-layout ${type === "right" ? "mr-lg-0" : ''}`}>
-          <ALink href={{ pathname: router.pathname, query: { ...query, type: "list" } }} scroll={false} className={`d-icon-mode-list btn-layout ${gridType === 'list' ? 'active' : ''}`}></ALink>
-          <ALink href={{ pathname: router.pathname, query: { ...query, type: "grid" } }} scroll={false} className={`d-icon-mode-grid btn-layout ${gridType !== 'list' ? 'active' : ''}`}></ALink>
+          <ALink href={{ pathname: getPathname(), query: { ...query, type: "list" } }} scroll={false} className={`d-icon-mode-list btn-layout ${gridType === 'list' ? 'active' : ''}`}></ALink>
+          <ALink href={{ pathname: getPathname(), query: { ...query, type: "grid" } }} scroll={false} className={`d-icon-mode-grid btn-layout ${gridType !== 'list' ? 'active' : ''}`}></ALink>
         </div>
 
         {
