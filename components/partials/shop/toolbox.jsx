@@ -8,7 +8,8 @@ import SidebarFilterThree from '~/components/partials/shop/sidebar/sidebar-filte
 export default function ToolBox(props) {
   const { type = "left" } = props;
   const router = useRouter();
-  const query = router.query;
+  const { catalogue, ...query } = router.query;
+  const catalogueUrl = catalogue.join('/');
   const gridType = query.type ? query.type : 'grid';
   const perPage = query.per_page ? query.per_page : 12;
   let tmp = 0;
@@ -21,9 +22,13 @@ export default function ToolBox(props) {
     }
   }, [])
 
+  const getPathname = () => {
+    return typeof catalogueUrl === 'string' ? router.pathname.replace('[...catalogue]', catalogueUrl) : router.pathname;
+  }
+
   const onChangeAttri = (e, attri) => {
     e.preventDefault();
-    let url = router.pathname.replace('[grid]', query.grid);
+    let url = getPathname();
     let arr = [`${attri}=${e.target.value}`, 'page=1'];
     for (let key in query) {
       if (key !== attri && key !== 'page' && key !== 'grid') arr.push(key + '=' + query[key]);
