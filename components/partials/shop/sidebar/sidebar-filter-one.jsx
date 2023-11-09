@@ -6,7 +6,8 @@ import CustomPriceInput from "~/components/partials/shop/sidebar/custom-number-i
 
 export default function SidebarFilterOne({ type = "left", isFeatured = false, filters = [] }) {
   const router = useRouter();
-  const query = router.query;
+  const { catalogue, ...query } = router.query;
+  const catalogueUrl = catalogue.join('/');
   const data = null;
   const loading = false;
   let timerId;
@@ -19,8 +20,12 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
     }
   }, [])
 
+  const getPathname = () => {
+    return typeof catalogueUrl === 'string' ? router.pathname.replace('[...catalogue]', catalogueUrl) : router.pathname;
+  }
+
   const filterByPrice = (filterPrice) => {
-    let url = router.pathname.replace('[grid]', query.grid);
+    let url = getPathname();
     let arr = [`min_price=${filterPrice.min}`, `max_price=${filterPrice.max}`, 'page=1'];
     for (let key in query) {
       if (key !== 'min_price' && key !== 'max_price' && key !== 'page' && key !== 'grid') arr.push(key + '=' + query[key]);
@@ -95,7 +100,7 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                           <i className="d-icon-arrow-left"></i> : <i className="d-icon-arrow-right"></i>
                       }
                     </a>
-                    <ALink href={{ pathname: router.pathname, query: { grid: query.grid, type: router.query.type ? router.query.type : null } }} scroll={false} className="filter-clean">Clean All</ALink>
+                    <ALink href={{ pathname: getPathname(), query: { grid: query.grid, type: router.query.type ? router.query.type : null } }} scroll={false} className="filter-clean">Clean All</ALink>
                   </div>
               }
 
@@ -121,7 +126,7 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                           className={containsAttrInUrl(item._id, 'true') ? 'active' : ''}
                           key={index}
                         >
-                          <ALink className="font-weight-bold" scroll={false} href={{ pathname: router.pathname, query: { ...query, page: 1, [item._id]: !containsAttrInUrl(item._id, 'true') ? true : undefined } }}>{item.name}</ALink>
+                          <ALink className="font-weight-bold" scroll={false} href={{ pathname: getPathname(), query: { ...query, page: 1, [item._id]: !containsAttrInUrl(item._id, 'true') ? true : undefined } }}>{item.name}</ALink>
                         </li>
                       </ul>
                     </Card>
@@ -138,7 +143,7 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                               className={containsAttrInUrl(item._id, option) ? 'active' : ''}
                               key={index}
                             >
-                              <ALink scroll={false} href={{ pathname: router.pathname, query: { ...query, page: 1, [item._id]: getUrlForAttrs(item._id, option) } }}>{option} {item.units}</ALink>
+                              <ALink scroll={false} href={{ pathname: getPathname(), query: { ...query, page: 1, [item._id]: getUrlForAttrs(item._id, option) } }}>{option} {item.units}</ALink>
                             </li>
                           )
 
@@ -153,7 +158,7 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                               className={containsAttrInUrl(item._id, option) ? 'active' : ''}
                               key={index}
                             >
-                              <ALink scroll={false} href={{ pathname: router.pathname, query: { ...query, page: 1, [item._id]: getUrlForAttrs(item._id, option) } }}>{option}</ALink>
+                              <ALink scroll={false} href={{ pathname: getPathname(), query: { ...query, page: 1, [item._id]: getUrlForAttrs(item._id, option) } }}>{option}</ALink>
                             </li>
                           )
 

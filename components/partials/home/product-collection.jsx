@@ -14,7 +14,6 @@ export default function ProductCollection ( props ) {
     const products = data && data.products.data;
 
     function activeHandler ( e ) {
-        console.log( e.currentTarget.closest( '.category-list' ) )
         e.currentTarget.closest( '.category-list' ).querySelector( '.show' ) && e.currentTarget.closest( '.category-list' ).querySelector( '.show' ).classList.remove( 'show' );
         e.currentTarget.classList.add( "show" );
     }

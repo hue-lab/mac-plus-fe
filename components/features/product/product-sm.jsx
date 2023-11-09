@@ -11,7 +11,7 @@ function SmallProduct(props) {
   return (
     <div className={`product product-list-sm ${adClass}`}>
       <figure className="product-media">
-        <ALink href={`/product/${product._id}`}>
+        <ALink href={`/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`}>
           <LazyLoadImage
             alt="product"
             src={getImgPath(product.media[0])}
@@ -41,7 +41,7 @@ function SmallProduct(props) {
 
       <div className="product-details">
         <h3 className="product-name related-name">
-          <ALink href={`/product/${product._id}`}>{product.name}</ALink>
+          <ALink href={`/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`}>{product.name}</ALink>
         </h3>
 
         <div className="product-price related-price">

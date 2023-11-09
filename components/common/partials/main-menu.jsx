@@ -14,7 +14,7 @@ function MainMenu({ router, categoryTree }) {
         {categoryTree.map((route, index) => {
           return (
             <li className={`${route.children?.length ? 'submenu' : ''} ${asPath.includes(route._id) ? 'active' : ''}`} key={route.name + index}>
-              <ALink href={{ pathname: `/shop`, query: { category: route._id } }}>{route.name}</ALink>
+              <ALink href={{ pathname: `/${route.handle}` }}>{route.name}</ALink>
 
               {route.children?.length ?
                 <div className="megamenu" style={{ marginLeft: "-19px" }}> ?
@@ -24,7 +24,7 @@ function MainMenu({ router, categoryTree }) {
                         {
                           route.children.map((item, index) => (
                             <li key={`shop-${item.name + index}`}>
-                              <ALink href={{ pathname: `/shop`, query: { category: item._id } }}>
+                              <ALink href={{ pathname: `/${item.handle}` }}>
                                 {item.name}
                                 {item.hot ? <span className="tip tip-hot">Hot</span> : ""}
                               </ALink>
