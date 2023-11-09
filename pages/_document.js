@@ -8,7 +8,7 @@ export default class MyDocument extends Document {
 
   render() {
     return (
-      <Html lang="en">
+      <Html lang="ru">
         <Head>
           <base href="/"></base>
           <title>Mac Plus</title>
