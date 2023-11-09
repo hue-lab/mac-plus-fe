@@ -9,7 +9,10 @@ import Category from "~/components/items/category";
 GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
   const { catalogue, page, per_page, price, sortby, type, min_price, max_price, search, ...customProperties } = query;
   const path = catalogue.join('/');
-  const item = await getItemBySlug(path);
+  const item = path === 'shop' ? {
+    name: 'Все товары',
+    description: 'Все товары каталога',
+  } : await getItemBySlug(path);
 
   if (item?.statusCode === 404 && path !== 'shop') {
     if (res) {
