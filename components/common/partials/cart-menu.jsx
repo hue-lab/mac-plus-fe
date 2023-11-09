@@ -50,7 +50,7 @@ function CartMenu(props) {
                   cartList.map((item, index) =>
                     <div className="product product-cart" key={'cart-menu-product-' + index}>
                       <figure className="product-media pure-media">
-                        <ALink href={'/' + item.seo?.seoUrl || '#'} onClick={hideCartMenu}>
+                        <ALink href={`/${item.category.handle ? item.category.handle + '/' : ''}${item.seo?.seoUrl || '#'}`} onClick={hideCartMenu}>
                           <img src={getImgPath(item.media[0])} alt="product" width="70"
                             height="70" />
                         </ALink>

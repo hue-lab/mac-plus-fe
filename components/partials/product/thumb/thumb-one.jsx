@@ -152,7 +152,6 @@ export default function ThumbOne ( props ) {
             // newTerm = Math.ceil( ( ( document.querySelector( '.product-gallery.pg-vertical' ).offsetHeight + thumbSpace ) ) / transformUnit );
             let newTerm = ( ( document.querySelector( '.product-gallery.pg-vertical' ).offsetHeight + thumbSpace ) );
             newTerm = parseInt( newTerm / transformUnit );
-            console.log( "new term is", newTerm, window.innerWidth );
             if ( newTerm !== term ) {
                 setTerm( newTerm );
             }

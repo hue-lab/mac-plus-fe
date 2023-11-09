@@ -14,7 +14,7 @@ export default function CartPopup(props) {
 
         <div className="product product-purchased  product-cart mb-0">
           <figure className="product-media pure-media">
-            <ALink href={`/${product.seo?.seoUrl || '#'}`}>
+            <ALink href={`/${product.category.handle ? product.category.handle + '/' : ''}${product.seo?.seoUrl || '#'}`}>
               <img
                 src={getImgPath(product.media[0])}
                 alt="product"

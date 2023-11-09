@@ -15,7 +15,6 @@ import { getFieldsObject } from '~/utils/endpoints/fields';
 HomePage.getInitialProps = async (context) => {
   const articles = await getLatestArticles();
   const recProducts = await getRecProducts();
-  console.log(recProducts);
   const slides = await getSlides();
   const features = await getFieldsObject('features_1', 'features_2', 'features_3', 'features_4');
   const fields = await getFieldsObject('trade-in-title', 'trade-in-subtitle' ,'trade-in-description');

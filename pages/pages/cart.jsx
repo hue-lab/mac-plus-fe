@@ -73,7 +73,7 @@ function Cart(props) {
                             <tr key={'cart' + item.name}>
                               <td className="product-thumbnail">
                                 <figure>
-                                  <ALink href={'/' + item.seo?.seoUrl || '#'}>
+                                  <ALink href={`/${item.category.handle ? item.category.handle + '/' : ''}${item.seo?.seoUrl || '#'}`}>
                                     <img src={getImgPath(item.media[0])} width="100" height="100"
                                       alt="product" />
                                   </ALink>
