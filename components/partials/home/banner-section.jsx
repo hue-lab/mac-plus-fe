@@ -27,7 +27,7 @@ function BannerSection ({ tradeInTitle, tradeInSubtitle, tradeInDescription }) {
                         <div>
                             <LazyLoadImage
                               src="./images/recycle.png"
-                              alt="recycle"
+                              alt="Trade-in"
                               width="auto"
                               height={ 60 }
                               className="banner-icon mb-4"

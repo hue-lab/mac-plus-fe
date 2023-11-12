@@ -19,7 +19,7 @@ function PostSix(props) {
                   {
                     isOriginal ? <LazyLoadImage
                       src={getImgPath(post.media)}
-                      alt="post image"
+                      alt={post.seo?.seoImageAlt || ''}
                       width={380}
                       height={230}
                       effect="opacity; transform"
@@ -28,7 +28,7 @@ function PostSix(props) {
                       :
                       <LazyLoadImage
                         src={getImgPath(post.media)}
-                        alt="post image"
+                        alt={post.seo?.seoImageAlt || ''}
                         width={380}
                         height={230}
                         effect="opacity; transform"
@@ -41,14 +41,14 @@ function PostSix(props) {
                   {
                     isOriginal ? <img
                       src={getImgPath(post.media)}
-                      alt="post image"
+                      alt={post.seo?.seoImageAlt || ''}
                       width={300}
                       height={post.large_picture[0].height}
                     /> :
 
                       <img
                         src={getImgPath(post.media)}
-                        alt="post image"
+                        alt={post.seo?.seoImageAlt || ''}
                         width={300}
                         height={post.picture[0].height}
                       />
@@ -62,7 +62,7 @@ function PostSix(props) {
                 <ALink href={`/blog/${post.seo?.seoUrl || '#'}`}>
                   <LazyLoadImage
                     src={getImgPath(post.media)}
-                    alt="post gallery"
+                    alt={post.seo?.seoImageAlt || ''}
                     width={380}
                     height={230}
                     effect="opacity; transform"
@@ -73,7 +73,7 @@ function PostSix(props) {
                 <ALink href={`/blog/${post.seo?.seoUrl || '#'}`}>
                   <img
                     src={getImgPath(post.media)}
-                    alt="post gallery"
+                    alt={post.seo?.seoImageAlt || ''}
                     width={380}
                     height={230}
                   />

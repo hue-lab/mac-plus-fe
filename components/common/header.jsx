@@ -23,7 +23,7 @@ export default function Header({ categoryTree, fields }) {
             </ALink>
 
             <ALink href="/" className="logo">
-              <img src='./images/home/logo.png' alt="logo" width="154" height="43" />
+              <img src='./images/home/logo.png' alt="Mac Plus" width="200" height="auto" />
             </ALink>
 
             <SearchBox />
