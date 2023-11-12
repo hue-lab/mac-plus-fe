@@ -23,8 +23,8 @@ function ProductTwo(props) {
       <figure className="product-media">
         <ALink href={`/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`}>
           <LazyLoadImage
-            alt="product"
-            src={getImgPath(product.media[0])}
+            alt={product.seo?.seoImage[0]?.imageAlt || ''}
+            src={getImgPath(product.seo?.seoImage[0]?.imageName)}
             threshold={500}
             effect="opacity"
             width="300"

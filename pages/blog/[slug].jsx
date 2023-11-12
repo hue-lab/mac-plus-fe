@@ -5,6 +5,7 @@ import ALink from '~/components/features/custom-link';
 import { getImgPath } from '~/utils';
 import { getArticleBySlug } from '~/utils/endpoints/articles';
 import { getPostDate } from '~/utils';
+import React from "react";
 
 
 PostSingle.getInitialProps = async (context) => {
@@ -18,7 +19,10 @@ export default function PostSingle({ post }) {
   return (
     <main className="main skeleton-body">
       <Helmet>
-        <title>Mac Plus | {post.title}</title>
+        <title>{post.seo?.seoTitle || post.title || 'Mac Plus'}</title>
+        <meta name="description" content={post.seo?.seoDescription || product.name || ''} />
+        <meta name="keywords" content={post.seo?.seoKeywords?.join(', ')} />
+        <meta name="author" content={post.seo?.seoAuthor || 'Mac Plus'} />
       </Helmet>
 
       <h1 className="d-none">Mac Plus - {post.title}</h1>
@@ -45,7 +49,7 @@ export default function PostSingle({ post }) {
                     <figure className="post-media">
                       <img
                         src={getImgPath(post.media)}
-                        alt="post gallery"
+                        alt={post.seo?.seoImageAlt || post.title || ''}
                         style={{ backgroundColor: "#DEE6E8", width: 900, height: 500, objectFit: "cover" }}
                       />
                     </figure>

@@ -14,7 +14,9 @@ export default function ProductItem({ product, featured, deliveryMethods }) {
   return (
     <main className="main single-product">
       <Helmet>
-        <title>Mac Plus | {product.name || ''}</title>
+        <title>{product.seo?.seoTitle || product.name || 'Mac Plus'}</title>
+        <meta name="description" content={product.seo?.seoDescription || product.name || ''} />
+        <meta name="keywords" content={product.seo?.seoKeywords?.join(', ')} />
       </Helmet>
 
       <h1 className="d-none">Mac Plus - {product.name}</h1>

@@ -51,9 +51,9 @@ const App = ({ Component, pageProps }) => {
 
             <title>Mac Plus</title>
 
-            <meta name="keywords" content="React Template" />
-            <meta name="description" content="Riode - React eCommerce Template" />
-            <meta name="author" content="D-THEMES" />
+            <meta name="keywords" content="Apple, Iphone, Mac, Ipad, Watch, AirPods" />
+            <meta name="description" content="Продажа Электроники / Гаджетов в Минске и Беларуси" />
+            <meta name="author" content="Mac Plus" />
           </Helmet>
 
           <Layout categoryTree={pageProps.categoryTree} layoutFields={pageProps.layoutFields} footerNav={pageProps.footerNav}>

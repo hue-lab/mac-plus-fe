@@ -14,19 +14,19 @@ function PostOne(props) {
       <figure className={`post-media ${post.type === 'image' ? 'overlay-zoom' : ''}`}>
         {
           isLazy ?
-            <ALink href={`/blog/single/${post._id}`}>
+            <ALink href={`/blog/${post.seo?.seoUrl || '#'}`}>
               <LazyLoadImage
                 src={getImgPath(post.media)}
-                alt="post image"
+                alt={post.seo?.seoImageAlt || post.title || ''}
                 effect="opacity; transform"
                 style={{ backgroundColor: "#DEE6E8" }}
               />
             </ALink>
             :
-            <ALink href={`/blog/single/${post._id}`}>
+            <ALink href={`/blog/${post.seo?.seoUrl || '#'}`}>
               <img
                 src={getImgPath(post.media)}
-                alt="post image"
+                alt={post.seo?.seoImageAlt || post.title || ''}
               />
             </ALink>
         }
@@ -38,12 +38,12 @@ function PostOne(props) {
           <ALink href='#' className="post-date">{getPostDate(post.createdAt)}</ALink>
         </div>
         <h4 className="post-title">
-          <ALink href={`/blog/single/${post._id}`}>{post.title}</ALink>
+          <ALink href={`/blog/${post.seo?.seoUrl || '#'}`}>{post.title}</ALink>
         </h4>
         <p className="post-content" dangerouslySetInnerHTML={{ __html: post.content }}></p>
         {
           isButton ?
-            <ALink href={`/blog/single/${post._id}`} className={`btn btn-link btn-underline btn-primary ${btnAdClass}`}>{btnText}<i className="d-icon-arrow-right"></i></ALink>
+            <ALink href={`/blog/${post.seo?.seoUrl || '#'}`} className={`btn btn-link btn-underline btn-primary ${btnAdClass}`}>{btnText}<i className="d-icon-arrow-right"></i></ALink>
             : ''
         }
       </div>
