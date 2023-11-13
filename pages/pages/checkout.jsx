@@ -9,6 +9,9 @@ import { getDeliveryMethods } from '~/utils/endpoints/orders';
 import { getCalculation } from "~/utils/endpoints/calculate";
 import { addOrder } from '~/utils/endpoints/orders';
 import {cartActions} from "~/store/cart";
+import 'react-phone-number-input/style.css';
+import PhoneInput from 'react-phone-number-input';
+import ru from '~/public/labels/ru';
 
 Checkout.getInitialProps = async (context) => {
   const delivery = await getDeliveryMethods();
@@ -40,6 +43,7 @@ function Checkout(props) {
   const [isTerms, setIsTerms] = useState(false);
   const [isPending, setIsPending] = useState(false);
   const [orderError, setOrderError] = useState('');
+  const [phoneValue, setPhoneValue] = useState();
 
   const router = useRouter();
 
@@ -84,7 +88,7 @@ function Checkout(props) {
   }
 
   const fillOrderObj = (obj) => {
-    orderObj.customer.phone = obj.phone.trim();
+    orderObj.customer.phone = phoneValue;
     orderObj.customer.name = obj.name.trim();
     orderObj.customer.surname = obj.surname.trim();
     orderObj.delivery.deliveryMethod = { ...delivery[currentRadio] };
@@ -162,7 +166,13 @@ function Checkout(props) {
                       <div className="row">
                         <div className="col-xs-6">
                           <label>Телефон *</label>
-                          <input type="text" className="form-control" name="phone" required />
+                          {/*<input type="text" className="form-control" name="phone" required />*/}
+                          <PhoneInput
+                            country="RU"
+                            labels={ru}
+                            className="form-control"
+                            value={phoneValue}
+                            onChange={setPhoneValue}/>
                         </div>
                         <div className="col-xs-6">
                           <label>Email</label>
