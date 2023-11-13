@@ -21,9 +21,9 @@ export default function CategorySection({ recProducts }) {
                   <div style={{ cursor: 'pointer' }} className="category category-group-image">
                     <figure className="category-media">
                       <LazyLoadImage
-                        src={getImgPath(item.media[0])}
+                        src={getImgPath(item.seo?.seoImage[0]?.imageName)}
                         style={ { height: '150px', width: '100%', objectFit: 'contain', padding: '1rem' } }
-                        alt="category banner"
+                        alt={ item.seo?.seoImage[0]?.imageAlt || '' }
                         effect="opacity;"
                         width="auto"
                         height={169}

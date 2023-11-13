@@ -9,7 +9,8 @@ export default function Category({ banner, products, filters, category }) {
   return (
     <main className="main bt-lg-none shop">
       <Helmet>
-        <title>Mac Plus | { category.name || 'Каталог' }</title>
+        <title>{ category.name || 'Каталог' }</title>
+        <meta name="description" content={category.description || category.name || ''} />
       </Helmet>
 
       <h1 className="d-none">Mac Plus - { category.name || 'Каталог' }</h1>
@@ -26,7 +27,7 @@ export default function Category({ banner, products, filters, category }) {
             <SidebarFilterOne filters={filters} type="banner" />
 
             <div className="col-lg-9 main-content">
-              { banner && <div className="shop-banner banner" style={{ backgroundImage: `url('${getImgPath(banner.media)}')`, backgroundColor: "#f2f2f3" }}>
+              { banner && <div className="shop-banner banner" title={banner.seo?.seoImageAlt || ''} style={{ backgroundImage: `url('${getImgPath(banner.media)}')`, backgroundColor: "#f2f2f3" }}>
                 <div className="banner-content">
                   <h4
                     className="banner-subtitle d-inline-block mb-2 text-uppercase ls-normal bg-dark"

@@ -19,7 +19,7 @@ function IntroSection({ slides }) {
                 <figure>
                   <LazyLoadImage
                     src={getImgPath(item.media)}
-                    alt="Intro Slider"
+                    alt={item.seo?.seoImageAlt  || ''}
                     effect="opacity"
                     width="auto"
                     height={460}

@@ -17,7 +17,7 @@ export default function MediaFive ( props ) {
     const [ isOpen, setOpenState ] = useState( false );
     const [ mediaRef, setMediaRef ] = useState( null );
 
-    let lgImages = product.media;
+    let lgImages = product.seo?.seoImage || [];
 
     useEffect( () => {
         if ( mediaRef !== null && mediaRef.current !== null && index >= 0 ) {
@@ -82,10 +82,10 @@ export default function MediaFive ( props ) {
             >
                 {
                     lgImages.map( ( image, index ) =>
-                        <div key={ image + '-' + index }>
+                        <div key={ image.imageName + '-' + index }>
                             <Magnifier
-                                imageSrc={ getImgPath(image) }
-                                imageAlt="magnifier"
+                                imageSrc={ getImgPath(image.imageName) }
+                                imageAlt={image.imageAlt || product.name || ''}
                                 className="product-image large-image"
 
                             />

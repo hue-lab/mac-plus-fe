@@ -33,15 +33,15 @@ function MediaLightBox( props ) {
             {
                 isOpen ?
                     <Lightbox
-                        mainSrc={ getImgPath(images[ index ]) }
-                        nextSrc={ getImgPath(images[ ( index + 1 ) % images.length ]) }
-                        prevSrc={ getImgPath(images[ ( index + images.length - 1 ) % images.length ]) }
+                        mainSrc={ getImgPath(images[ index ].imageName) }
+                        nextSrc={ getImgPath(images[ ( index + 1 ) % images.length ].imageName) }
+                        prevSrc={ getImgPath(images[ ( index + images.length - 1 ) % images.length ].imageName) }
                         onCloseRequest={ closeLightBox }
                         onMovePrevRequest={ setPrevHandler }
                         onMoveNextRequest={ setNextHandler }
                         animationDisabled={ false }
                         animationDuration={ 300 }
-                        imageTitle={ product.name }
+                        imageTitle={ images[ index ].imageAlt || product.name }
                         imagePadding={ 80 }
                         clickOutsideToClose={ true }
                     />
