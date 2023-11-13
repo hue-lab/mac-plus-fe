@@ -10,7 +10,7 @@ export default function Footer({ fields, categoryTree, footerNav }) {
           <div className="row align-items-center">
             <div className="col-lg-3">
               <ALink href="/" className="logo-footer">
-                <img src="./images/home/logo-footer.png" alt="logo-footer" width="154" height="43" />
+                <img src="./images/home/logo-short.png" alt="logo-footer" width="100" height="auto" />
               </ALink>
             </div>
           </div>
