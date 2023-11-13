@@ -24,6 +24,8 @@ export default function StickyFooter() {
       height = stickyFooter.offsetHeight;
     }
 
+    const limitHeight = document.body.scrollHeight - window.innerHeight - 100;
+
     if (window.pageYOffset >= top && window.innerWidth < 768 && e.currentTarget.scrollY >= tmp) {
       if (stickyFooter) {
         stickyFooter.classList.add('fixed');
@@ -40,7 +42,7 @@ export default function StickyFooter() {
           document.querySelector('.sticky-content-wrapper').setAttribute("style", "height: " + height + "px");
         }
       }
-    } else {
+    } else if (e.currentTarget.scrollY < limitHeight) {
       if (stickyFooter) {
         stickyFooter.classList.remove('fixed');
         stickyFooter.setAttribute('style', `margin-bottom: -${height}px`)
