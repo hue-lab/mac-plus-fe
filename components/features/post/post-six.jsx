@@ -12,7 +12,7 @@ function PostSix(props) {
     <div className={`post ${post.type === 'gallery' ? '' : 'overlay-zoom'} ${post.type === 'video' ? 'post-video' : ''} ${adClass}`}>
       {
         post.type === 'image' || post.type === 'video' ?
-          <figure className="post-media">
+          <figure style={{borderRadius: "2rem", overflow: "hidden"}} className="post-media">
             {
               isLazy ?
                 <ALink href={`/blog/${post.seo?.seoUrl || '#'}`}>
@@ -56,7 +56,7 @@ function PostSix(props) {
                 </ALink>
             }
           </figure> :
-          <figure className="post-media">
+          <figure style={{borderRadius: "2rem", overflow: "hidden"}} className="post-media">
             {
               isLazy ?
                 <ALink href={`/blog/${post.seo?.seoUrl || '#'}`}>

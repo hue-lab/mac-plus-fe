@@ -68,7 +68,7 @@ export default function StickyFooter() {
       </ALink>
       <ALink href="/shop" className="sticky-link">
         <i className="d-icon-bars"></i>
-        <span>Категории</span>
+        <span>Каталог</span>
       </ALink>
       <ALink href="/blog" className="sticky-link">
         <i className="d-icon-star"></i>

@@ -11,7 +11,7 @@ function PostOne(props) {
   const { post, adClass = 'mb-7', isLazy = false, isOriginal = false, btnText = "Подробнее", btnAdClass = '', isButton = true } = props;
   return (
     <div className={`post post-classic ${post.type === 'video' ? 'post-video' : ''} ${adClass}`}>
-      <figure className={`post-media ${post.type === 'image' ? 'overlay-zoom' : ''}`}>
+      <figure style={{borderRadius: "2rem", overflow: "hidden"}} className={`post-media ${post.type === 'image' ? 'overlay-zoom' : ''}`}>
         {
           isLazy ?
             <ALink href={`/blog/${post.seo?.seoUrl || '#'}`}>

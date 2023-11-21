@@ -83,7 +83,7 @@ export default function Footer({ fields, categoryTree, footerNav }) {
         <div className="footer-bottom">
           <div className="footer-left">
             <figure className="payment">
-              <img src="./images/payment.png" alt="payment" width="159" height="29" />
+              <img src="./images/payment.png" alt="payment" width="auto" height="29" />
             </figure>
           </div>
           <div className="footer-center">
