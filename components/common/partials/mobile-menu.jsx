@@ -89,7 +89,7 @@ function MobileMenu({ categoryTree }) {
                       {({ onToggle, setCollapsibleElement, toggleState }) => (
                         <li className={`submenu ${toggleState === 'EXPANDED' ? 'show' : ''}`}>
                           <ALink href={{ pathname: `/shop`, query: { category: category._id, grid: query.grid } }} scroll={false}>
-                            <i className="d-icon-camera1"></i>{category.name}
+                            <i style={{ fontSize: `${category.icon.split('||')[1] || '1.8'}rem` }} className={category.icon.split('||')[0] || 'd-icon-arrow-right'}></i>{category.name}
                             <span className={`toggle-btn ${toggleState.toLowerCase()}`} onClick={e => { e.stopPropagation(); e.preventDefault(); onToggle(); }}></span>
                           </ALink>
 
@@ -106,7 +106,7 @@ function MobileMenu({ categoryTree }) {
                     :
                     <li key={index}>
                       <ALink href={{ pathname: '/shop', query: { category: category._id } }}>
-                        <i className="d-icon-camera1"></i>{category.name}
+                        <i style={{ fontSize: `${category.icon.split('||')[1] || '1.8'}rem` }} className={category.icon.split('||')[0] || 'd-icon-arrow-right'}></i>{category.name}
                       </ALink>
                     </li>
                 ))}

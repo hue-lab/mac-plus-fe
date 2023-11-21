@@ -143,6 +143,8 @@ Demo 22
 }
 // Intro Slider
 .intro-slider {
+	overflow: hidden;
+	border-radius: 2rem;
 	.banner img {
 		height: 46rem;
 		object-fit: cover;
