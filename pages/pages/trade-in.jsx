@@ -3,7 +3,19 @@ import React from "react";
 import {getFieldsObject} from "~/utils/endpoints/fields";
 
 TradeIn.getInitialProps = async (context) => {
-  const fields = await getFieldsObject('trade-in-title', 'trade-in-subtitle' ,'trade-in-description');
+  const fields = await getFieldsObject(
+    'trade-in-title',
+    'trade-in-subtitle',
+    'trade-in-description',
+    'trade-in-1',
+    'trade-in-1-text',
+    'trade-in-2',
+    'Trade-in-2-text',
+    'trade-in-3',
+    'trade-in-3-text',
+    'trade-in-date',
+    'trade-in-conditions',
+  );
   return { fields: fields };
 }
 
@@ -38,10 +50,10 @@ export default function TradeIn ({ fields }) {
               01
             </div>
             <div className="trade-item__title">
-              Принесите свои устройства в наш магазин
+              {fields['trade-in-1'] || ''}
             </div>
             <div className="trade-item__text">
-              Мы принимаем все модели iPhone, iPad, Apple Watch, ноутбуки Mac, а также смартфоны и планшеты других производителей. Устройство не должно иметь следов вздутия батареи, отсутствующих деталей и деформации корпуса.
+              {fields['trade-in-1-text'] || ''}
             </div>
           </div>
           <div className="trade__points-item">
@@ -49,10 +61,10 @@ export default function TradeIn ({ fields }) {
               02
             </div>
             <div className="trade-item__title">
-              Отдайте устройство на мгновенную диагностику
+              {fields['trade-in-2'] || ''}
             </div>
             <div className="trade-item__text">
-              Если устройство соответствует условиям из пункта 1, мы проведем диагностику для оценки его стоимости. При оценке мы учитываем повреждения и царапины на корпусе, экране, сколы и другие следы использования. Это займет не более 15 минут.
+              {fields['Trade-in-2-text'] || ''}
             </div>
           </div>
           <div className="trade__points-item">
@@ -60,10 +72,10 @@ export default function TradeIn ({ fields }) {
               03
             </div>
             <div className="trade-item__title">
-              Используйте скидку при покупке нового устройства
+              {fields['trade-in-3'] || ''}
             </div>
             <div className="trade-item__text">
-              Все ваши устройства, сданные по программе трейд-ин, могут теперь суммарно использоваться при оплате вашей покупки. Что вы хотите купить — решать вам, ограничений по ассортименту нет. Оставшуюся сумму можно доплатить картой, наличными или оформить в рассрочку или кредит.
+              {fields['trade-in-3-text'] || ''}
             </div>
           </div>
         </div>
@@ -71,14 +83,8 @@ export default function TradeIn ({ fields }) {
       <div className="trade__text">
         <div className="container">
           <p>Условия акции:</p>
-          <p>Срок действия акции не ограничен.</p>
-          <p>
-            Акция действует при покупке в розничных магазинах, при заказе в интернет-магазине при условии самовывоза, а также с помощью услуги «Выездной выкуп». В акции могут принять участие физические лица, достигшие 18-летнего возраста.
-            Сдать по акции можно все модели iPhone, iPad, Apple Watch, ноутбуки Mac а также смартфоны и планшеты других производителей. Приобрести — любую технику и аксессуары из ассортимента restore, при условии, что общая сумма покупки будет равна или больше выкупной стоимости сданной техники.
-            Чтобы узнать возможный размер скидки, нужно обратиться в любой розничный магазин с паспортом и с устройством к сдаче.
-            Новые устройство может быть приобретено по действующей на момент заключения договора программе кредитования или рассрочки. Подробности и условия можно уточнить у консультантов в магазине. Акция не суммируется с другими скидками и специальными предложениями. Бонусная программа действует только на начисление, списание бонусов недоступно. Оплата нового устройства может быть произведена наличными средствами, платежной картой, а также Подарочной картой restore.
-            Компания оставляет за собой право на завершение акции без предварительного уведомления покупателей.
-          </p>
+          <p>{fields['trade-in-date'] || ''}</p>
+          <p>{fields['trade-in-conditions'] || ''}</p>
         </div>
       </div>
     </div>
