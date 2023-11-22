@@ -20,7 +20,7 @@ export default function PostSingle({ post }) {
     <main className="main skeleton-body">
       <Helmet>
         <title>{post.seo?.seoTitle || post.title || 'Mac Plus'}</title>
-        <meta name="description" content={post.seo?.seoDescription || product.name || ''} />
+        <meta name="description" content={post.seo?.seoDescription || post.title || ''} />
         <meta name="keywords" content={post.seo?.seoKeywords?.join(', ')} />
         <meta name="author" content={post.seo?.seoAuthor || 'Mac Plus'} />
       </Helmet>
