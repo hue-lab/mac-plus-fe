@@ -44,18 +44,6 @@ function ProductTwo(props) {
           }
         </div>
 
-        <div className="product-action-vertical">
-          {
-            0 > 0 ?
-              <ALink href={`/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`} className="btn-product-icon btn-cart" title="Go to product">
-                <i className="d-icon-arrow-right"></i>
-              </ALink> :
-              <a href="#" className="btn-product-icon btn-cart" title="Add to cart" onClick={addToCartHandler}>
-                <i className="d-icon-bag"></i>
-              </a>
-          }
-        </div>
-
         <div className="product-action">
           <ALink href={`/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`} className="btn-product btn-quickview" title="Quick View">Подробнее</ALink>
         </div>

@@ -88,7 +88,7 @@ function MobileMenu({ categoryTree }) {
                     <SlideToggle duration={300} collapsed key={index} >
                       {({ onToggle, setCollapsibleElement, toggleState }) => (
                         <li className={`submenu ${toggleState === 'EXPANDED' ? 'show' : ''}`}>
-                          <ALink href={{ pathname: `/shop`, query: { category: category._id, grid: query.grid } }} scroll={false}>
+                          <ALink href={{ pathname: `/${category.handle}` }} scroll={false}>
                             <i style={{ fontSize: `${category.icon.split('||')[1] || '1.8'}rem` }} className={category.icon.split('||')[0] || 'd-icon-arrow-right'}></i>{category.name}
                             <span className={`toggle-btn ${toggleState.toLowerCase()}`} onClick={e => { e.stopPropagation(); e.preventDefault(); onToggle(); }}></span>
                           </ALink>
@@ -96,7 +96,7 @@ function MobileMenu({ categoryTree }) {
                           <div ref={setCollapsibleElement} style={{ overflow: 'hidden' }}>
                             <ul style={{ display: "block", background: "#232323" }}>
                               {category.children.map((item, index) => (
-                                <li key={index}><ALink href={{ pathname: '/shop', query: { category: item._id } }} scroll={false}>{item.name}</ALink></li>
+                                <li key={index}><ALink href={{ pathname: `/${item.handle}` }} scroll={false}>{item.name}</ALink></li>
                               ))}
                             </ul>
                           </div>
@@ -105,7 +105,7 @@ function MobileMenu({ categoryTree }) {
                     </SlideToggle>
                     :
                     <li key={index}>
-                      <ALink href={{ pathname: '/shop', query: { category: category._id } }}>
+                      <ALink href={{ pathname: `/${category.handle}` }}>
                         <i style={{ fontSize: `${category.icon.split('||')[1] || '1.8'}rem` }} className={category.icon.split('||')[0] || 'd-icon-arrow-right'}></i>{category.name}
                       </ALink>
                     </li>
