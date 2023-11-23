@@ -12,6 +12,10 @@ export const parseOptions = function (options) {
   return {};
 }
 
+export const orderCategories = (a, b) => {
+  return (a.order || 0) - (b.order || 0);
+}
+
 export const useDebounce = (value, delay) => {
   const [debouncedValue, setDebouncedValue] = useState(value)
 

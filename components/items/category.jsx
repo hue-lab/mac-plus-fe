@@ -9,8 +9,9 @@ export default function Category({ banner, products, filters, category }) {
   return (
     <main className="main bt-lg-none shop">
       <Helmet>
-        <title>{ category.name || 'Каталог' }</title>
+        <title>{ category.title ||  category.name || 'Каталог' }</title>
         <meta name="description" content={category.description || category.name || ''} />
+        <meta name="keywords" content={(category.keywords || []).join(', ')} />
       </Helmet>
 
       <h1 className="d-none">Mac Plus - { category.name || 'Каталог' }</h1>
