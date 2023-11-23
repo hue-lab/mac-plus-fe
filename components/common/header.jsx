@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import CartMenu from '~/components/common/partials/cart-menu';
 import MainMenu from '~/components/common/partials/main-menu';
 import SearchBox from '~/components/common/partials/search-box';
+import {orderCategories} from "~/utils";
 
 export default function Header({ categoryTree, fields }) {
   const router = useRouter();
@@ -62,11 +63,11 @@ export default function Header({ categoryTree, fields }) {
               <ul className="menu vertical-menu category-menu">
                 <li><ALink href="#" className="menu-title">Разделы каталога</ALink></li>
 
-                {(categoryTree || []).map((item, index) => (
+                {(categoryTree || []).sort(orderCategories).map((item, index) => (
                   <li key={index} className={item.children?.length ? 'submenu' : ''}>
                     <ALink href={{ pathname: `/${item.handle}` }}><i style={{ fontSize: `${item.icon.split('||')[1] || '1.8'}rem` }} className={item.icon.split('||')[0] || 'd-icon-arrow-right'}></i>{item.name}</ALink>
                     {item.children?.length > 0 && <ul>
-                      {item.children.map((item, index) => (
+                      {item.children.sort(orderCategories).map((item, index) => (
                         <li key={index}><ALink href={{ pathname: `/${item.handle}`}}>{item.name}</ALink></li>
                       ))}
                     </ul>

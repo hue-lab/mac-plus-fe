@@ -3,6 +3,7 @@ import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import { useRouter } from 'next/router';
 import SlideToggle from 'react-slide-toggle';
 import ALink from '~/components/features/custom-link';
+import {orderCategories} from "~/utils";
 
 
 function MobileMenu({ categoryTree }) {
@@ -83,7 +84,7 @@ function MobileMenu({ categoryTree }) {
               <ul className="mobile-menu">
                 <li><ALink href="/">Главная</ALink></li>
                 <li><ALink href="/shop" class="menu-title">Все товары</ALink></li>
-                {categoryTree.map((category, index) => (
+                {categoryTree.sort(orderCategories).map((category, index) => (
                   category.children.length ?
                     <SlideToggle duration={300} collapsed key={index} >
                       {({ onToggle, setCollapsibleElement, toggleState }) => (
@@ -95,7 +96,7 @@ function MobileMenu({ categoryTree }) {
 
                           <div ref={setCollapsibleElement} style={{ overflow: 'hidden' }}>
                             <ul style={{ display: "block", background: "#232323" }}>
-                              {category.children.map((item, index) => (
+                              {category.children.sort(orderCategories).map((item, index) => (
                                 <li key={index}><ALink href={{ pathname: `/${item.handle}` }} scroll={false}>{item.name}</ALink></li>
                               ))}
                             </ul>

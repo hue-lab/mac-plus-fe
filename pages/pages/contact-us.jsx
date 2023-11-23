@@ -1,13 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Helmet from 'react-helmet';
 import Reveal from 'react-awesome-reveal';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import GoogleMapReact from 'google-map-react';
 
 import ALink from '~/components/features/custom-link';
 import { fadeIn } from '~/utils/data/keyframes';
 
 import { getFieldsObject } from '~/utils/endpoints/fields';
+import {sendMessage} from "~/utils/endpoints/message";
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
@@ -19,13 +18,29 @@ ContactUs.getInitialProps = async (context) => {
 }
 
 export default function ContactUs({ fields }) {
-  const defaultProps = {
-    center: {
-      lat: 59.95,
-      lng: 30.33
-    },
-    zoom: 11
-  };
+  const [btn, setBtn] = useState('Отправить');
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = Object.values(form).reduce((obj, field) => { obj[field.name] = field.value; return obj }, {});
+    setBtn('Отправка...')
+    sendMessage({
+      name: formData?.name || 'Неизвестно',
+      email: formData?.email || 'Неизвестно',
+      message: formData?.message || 'Неизвестно',
+    }).then(res => {
+      if (res.error) {
+        setBtn('Неудачно');
+      } else {
+        setBtn('Готово');
+      }
+      document.getElementById("contact-form").reset();
+    }).catch(e => {
+      document.getElementById("contact-form").reset();
+      setBtn('Неудачно');
+    })
+  }
 
   return (
     <main className="main contact-us">
@@ -73,22 +88,22 @@ export default function ContactUs({ fields }) {
                 </div>
                 <div className="col-lg-9 col-md-8 col-sm-6 d-flex align-items-center mb-4">
                   <div className="w-100">
-                    <form className="pl-lg-2" action="#">
+                    <form id="contact-form" className="pl-lg-2" onSubmit={submitHandler}>
                       <h4 className="ls-m font-weight-bold">Напишите нам</h4>
                       <p>Ваш электронный адрес не будет передан третьим лицам. Обязательные поля помечены *</p>
                       <div className="row mb-2">
                         <div className="col-12 mb-4">
-                          <textarea className="form-control" required
+                          <textarea name="message" className="form-control" required
                             placeholder="Комментарий *"></textarea>
                         </div>
                         <div className="col-md-6 mb-4">
-                          <input className="form-control" type="text" placeholder="Имя *" required />
+                          <input className="form-control" name="name" type="text" placeholder="Имя *" required />
                         </div>
                         <div className="col-md-6 mb-4">
-                          <input className="form-control" type="email" placeholder="Email *" required />
+                          <input className="form-control" name="email" type="email" placeholder="Email *" required />
                         </div>
                       </div>
-                      <button className="btn btn-dark btn-rounded">Отправить<i className="d-icon-arrow-right"></i></button>
+                      <button className="btn btn-dark btn-rounded">{btn}{ btn === 'Отправить' && <i className="d-icon-arrow-right"></i> }</button>
                     </form>
                   </div>
                 </div>
@@ -101,5 +116,3 @@ export default function ContactUs({ fields }) {
   )
 
 }
-
-//export default React.memo(ContactUs);

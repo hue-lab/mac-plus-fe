@@ -1,4 +1,5 @@
 import ALink from '~/components/features/custom-link';
+import {orderCategories} from "~/utils";
 
 export default function Footer({ fields, categoryTree, footerNav }) {
   const YEAR = new Date().getFullYear();
@@ -66,7 +67,7 @@ export default function Footer({ fields, categoryTree, footerNav }) {
               <div className="widget ml-lg-4">
                 <h4 className="widget-title">Категории</h4>
                 <ul className="widget-body">{
-                  categoryTree.map((item, index) => {
+                  categoryTree.sort(orderCategories).map((item, index) => {
                     return (
                       <li key={item._id}>
                         <ALink href={`/shop/?category=${item._id}`}>{item.name}</ALink>

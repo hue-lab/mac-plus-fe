@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 
 import ALink from '~/components/features/custom-link';
+import {orderCategories} from "~/utils";
 
 function MainMenu({ router, categoryTree }) {
   const { pathname, query, asPath, route } = useRouter();
@@ -11,7 +12,7 @@ function MainMenu({ router, categoryTree }) {
         <li className={`${asPath === '/' ? 'active' : ''}`}>
           <ALink href="/">Главная</ALink>
         </li>
-        {categoryTree.map((route, index) => {
+        {categoryTree.sort(orderCategories).map((route, index) => {
           return (
             <li className={`${route.children?.length ? 'submenu' : ''} ${asPath.includes(route._id) ? 'active' : ''}`} key={route.name + index}>
               <ALink href={{ pathname: `/${route.handle}` }}>{route.name}</ALink>
@@ -22,7 +23,7 @@ function MainMenu({ router, categoryTree }) {
                     <div className="col-5">
                       <ul>
                         {
-                          route.children.map((item, index) => (
+                          route.children.sort(orderCategories).map((item, index) => (
                             <li key={`shop-${item.name + index}`}>
                               <ALink href={{ pathname: `/${item.handle}` }}>
                                 {item.name}
