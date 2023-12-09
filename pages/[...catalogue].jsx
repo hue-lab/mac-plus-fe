@@ -102,6 +102,7 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
   }
   const products = await getProducts(requestFilters);
   return {
+    page: page,
     banner: banner?.data[0],
     data: item,
     products: products,
@@ -110,8 +111,8 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
   }
 }
 
-export default function GenericCatalogueItem({ data,  type, featured, deliveryMethods, banner, filters, products }) {
+export default function GenericCatalogueItem({ data,  type, featured, deliveryMethods, banner, filters, products, page }) {
   return type === 'product' ?
     <ProductItem product={data} featured={featured} deliveryMethods={deliveryMethods}/>
-    : <Category banner={banner} filters={filters} products={products} category={data}/>;
+    : <Category page={page} banner={banner} filters={filters} products={products} category={data}/>;
 }

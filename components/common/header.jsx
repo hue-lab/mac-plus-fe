@@ -65,7 +65,7 @@ export default function Header({ categoryTree, fields }) {
 
                 {(categoryTree || []).sort(orderCategories).map((item, index) => (
                   <li key={index} className={item.children?.length ? 'submenu' : ''}>
-                    <ALink href={{ pathname: `/${item.handle}` }}><i style={{ fontSize: `${item.icon.split('||')[1] || '1.8'}rem` }} className={item.icon.split('||')[0] || 'd-icon-arrow-right'}></i>{item.name}</ALink>
+                    <ALink href={{ pathname: `/${item.handle}` }}><span style={{ width: '30px', textAlign: 'center', display: 'inline-block' }}><i style={{ fontSize: `${item.icon.split('||')[1] || '1.8'}rem` }} className={item.icon.split('||')[0] || 'd-icon-arrow-right'}></i></span>{item.name}</ALink>
                     {item.children?.length > 0 && <ul>
                       {item.children.sort(orderCategories).map((item, index) => (
                         <li key={index}><ALink href={{ pathname: `/${item.handle}`}}>{item.name}</ALink></li>

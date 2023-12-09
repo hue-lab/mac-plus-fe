@@ -1,11 +1,17 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Helmet from 'react-helmet';
 import ALink from '~/components/features/custom-link';
 import SidebarFilterOne from '~/components/partials/shop/sidebar/sidebar-filter-one'
 import ProductListOne from '~/components/partials/shop/product-list/product-list-one';
 import {getImgPath} from "~/utils";
 
-export default function Category({ banner, products, filters, category }) {
+export default function Category({ banner, products, filters, category, page }) {
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+  }, [page, filters]);
+
   return (
     <main className="main bt-lg-none shop">
       <Helmet>
