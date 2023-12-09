@@ -54,7 +54,7 @@ function DescOne(props) {
             <tbody className='products-table'>
               {product.productProps.map(property => (
                 <tr className='products-table__content' key={property.productTypePropertyId}>
-                  <th className="font-weight-semi-bold text-dark pl-0">{property.name}</th>
+                  <td className="font-weight-semi-bold text-dark pl-0">{property.name}</td>
                   <td className="pl-4">{`${property.value}${property.units ? ` ${property.units}` : ''}`}</td>
                 </tr>
               ))}
