@@ -31,7 +31,7 @@ export default function Header({ categoryTree, fields }) {
           </div>
 
           <div className="header-right">
-            <ALink href="tel:#" className="icon-box icon-box-side">
+            <ALink href={`tel:${fields.phone}`} className="icon-box icon-box-side">
               <div className="icon-box-icon">
                 <i className="d-icon-phone"></i>
               </div>

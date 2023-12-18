@@ -368,10 +368,6 @@
         margin-bottom: 1.5rem;
         text-transform: none;
         display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        word-break: break-all;
 
         font: {
             size: 1.6rem;
@@ -381,6 +377,9 @@
         letter-spacing: -.01em;
     }
     .category-list {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
         font: {
             size: 1.3rem;
         }
