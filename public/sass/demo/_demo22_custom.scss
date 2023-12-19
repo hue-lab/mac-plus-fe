@@ -390,6 +390,17 @@ Demo 22
 		flex-direction: column;
 		background-color: #fff;
 	}
+	.product.product-list {
+		flex-direction: row;
+	}
+	@include mq(lg, max) {
+		.product.product-list {
+			flex-direction: column;
+			.product-media {
+				width: 100%;
+			}
+		}
+	}
 }
 .products-box .product-media,
 .product-wrapper .product-media {
