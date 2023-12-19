@@ -81,7 +81,7 @@ function Cart(props) {
                               </td>
                               <td className="product-name">
                                 <div className="product-name-section">
-                                  <ALink href={'/' + item.seo?.seoUrl || '#'}>{item.name}</ALink>
+                                  <ALink href={`/${item.category.handle ? item.category.handle + '/' : ''}${item.seo?.seoUrl || '#'}`}>{item.name}</ALink>
                                 </div>
                               </td>
                               <td className="product-subtotal">

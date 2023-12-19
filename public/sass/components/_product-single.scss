@@ -198,8 +198,6 @@
         @include print_css( product-single, name );
         display: -webkit-box;
         -webkit-line-clamp: 2;
-        overflow: hidden;
-        -webkit-box-orient: vertical;
     }
     .product-price {
         display: block;

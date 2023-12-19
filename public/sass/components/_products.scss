@@ -117,6 +117,10 @@
 
 .text-center {
   .product-details {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     padding-left: .5rem;
     padding-right: .5rem;
   }
@@ -124,6 +128,7 @@
 
 // Default
 .product-wrap {
+  position: relative;
   margin-bottom: 2rem;
   padding-bottom: 0;
 }
@@ -1166,12 +1171,7 @@
   .product-details,
   .product-hide-details {
     .btn-cart {
-      max-width: 4.2rem;
       display: flex;
-
-      span {
-        display: none;
-      }
 
       i {
         margin-right: 0;

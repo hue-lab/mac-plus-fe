@@ -24,7 +24,7 @@ export default function CartPopup(props) {
             </ALink>
           </figure>
           <div className="product-detail">
-            <ALink href={`/product/${product._id}`} className="product-name">{product.name}</ALink>
+            <ALink href={`/${product.category.handle ? product.category.handle + '/' : ''}${product.seo?.seoUrl || '#'}`} className="product-name">{product.name}</ALink>
             <span className="price-box">
               <span className="product-quantity">{product.qty}</span>
               <span className="product-price">{toDecimal(product.price)} BYN</span>

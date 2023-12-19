@@ -267,6 +267,8 @@ Demo 22
 	}
 
 	.category-group-image > .category-content {
+		display: flex;
+		flex-direction: column;
 		flex: 0 1 auto;
 	}
 }
@@ -327,7 +329,6 @@ Demo 22
 // Product wrapper
 .product-wrapper {
 	figure {
-		height: 100%;
 		img {
 			height: 100%;
 			object-fit: cover;
@@ -384,7 +385,21 @@ Demo 22
 		}
 	}
 	.product {
+		height: 100%;
+		display: flex;
+		flex-direction: column;
 		background-color: #fff;
+	}
+	.product.product-list {
+		flex-direction: row;
+	}
+	@include mq(lg, max) {
+		.product.product-list {
+			flex-direction: column;
+			.product-media {
+				width: 100%;
+			}
+		}
 	}
 }
 .products-box .product-media,
@@ -649,5 +664,9 @@ Demo 22
 	textarea {
 		font-size: 16px;
 	}
+}
+
+.spacer-div {
+	flex: 1 1 auto;
 }
 

@@ -126,10 +126,10 @@ function DetailThree(props) {
         {
           product.discount > 0 ?
             <>
-              <ins className="new-price">{toDecimal(product.totalPrice)} BYN</ins>
+              <ins className="new-price">от {toDecimal(product.totalPrice)} BYN</ins>
               <del className="old-price">{toDecimal(product.price)} BYN</del>
             </>
-            : <ins className="new-price">{toDecimal(product.price)} BYN</ins>
+            : <ins className="new-price">от {toDecimal(product.price)} BYN</ins>
         }
       </div>
 
