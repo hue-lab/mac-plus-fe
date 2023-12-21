@@ -126,7 +126,7 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                           className={containsAttrInUrl(item._id, 'true') ? 'active' : ''}
                           key={index}
                         >
-                          <ALink className="font-weight-bold" scroll={false} href={{ pathname: getPathname(), query: { ...query, page: 1, [item._id]: !containsAttrInUrl(item._id, 'true') ? true : undefined } }}>{item.name}</ALink>
+                          <ALink className="font-weight-bold" scroll={false} href={{ pathname: getPathname(), query: { ...query, page: 1, [item.code || item._id]: !containsAttrInUrl(item.code || item._id, 'true') ? true : undefined } }}>{item.name}</ALink>
                         </li>
                       </ul>
                     </Card>
@@ -143,7 +143,7 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                               className={containsAttrInUrl(item._id, option) ? 'active' : ''}
                               key={index}
                             >
-                              <ALink scroll={false} href={{ pathname: getPathname(), query: { ...query, page: 1, [item._id]: getUrlForAttrs(item._id, option) } }}>{option} {item.units}</ALink>
+                              <ALink scroll={false} href={{ pathname: getPathname(), query: { ...query, page: 1, [item.code || item._id]: getUrlForAttrs(item.code || item._id, option) } }}>{option} {item.units}</ALink>
                             </li>
                           )
 
@@ -158,7 +158,7 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                               className={containsAttrInUrl(item._id, option) ? 'active' : ''}
                               key={index}
                             >
-                              <ALink scroll={false} href={{ pathname: getPathname(), query: { ...query, page: 1, [item._id]: getUrlForAttrs(item._id, option) } }}>{option}</ALink>
+                              <ALink scroll={false} href={{ pathname: getPathname(), query: { ...query, page: 1, [item.code || item._id]: getUrlForAttrs(item.code || item._id, option) } }}>{option}</ALink>
                             </li>
                           )
 

@@ -38,7 +38,6 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
     }
   }
 
-
   const filters = item ? await getFilters(item._id) : [];
   const banner = await getBannerSlide();
   const requestFilters = {
@@ -50,16 +49,18 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
       limit: Number(per_page) || 12,
     }
   };
+
   if (customProperties && Object.keys(customProperties).length) {
     requestFilters.customProperties = Object.keys(customProperties).reduce((acc, key) => {
       const values = customProperties[key]?.split(',');
       if (values?.length && values[0].length) {
+        const filterId = (filters || []).find(filter => filter.code === key)?._id;
         if (values.length === 1) {
-          acc[key] = {
+          acc[filterId || key] = {
             $eq: values[0] === 'true' ? true : values[0]
           }
         } else {
-          acc[key] = {
+          acc[filterId || key] = {
             $in: values,
           };
         }
