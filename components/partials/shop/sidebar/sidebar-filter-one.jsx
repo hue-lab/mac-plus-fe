@@ -123,7 +123,7 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                     <Card type="parse" expanded={true}>
                       <ul className="filter-items">
                         <li
-                          className={containsAttrInUrl(item._id, 'true') ? 'active' : ''}
+                          className={containsAttrInUrl(item.code || item._id, 'true') ? 'active' : ''}
                           key={index}
                         >
                           <ALink className="font-weight-bold" scroll={false} href={{ pathname: getPathname(), query: { ...query, page: 1, [item.code || item._id]: !containsAttrInUrl(item.code || item._id, 'true') ? true : undefined } }}>{item.name}</ALink>
@@ -140,7 +140,7 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                       {
                         (item.options || []).map((option, index) => (
                             <li
-                              className={containsAttrInUrl(item._id, option) ? 'active' : ''}
+                              className={containsAttrInUrl(item.code || item._id, option) ? 'active' : ''}
                               key={index}
                             >
                               <ALink scroll={false} href={{ pathname: getPathname(), query: { ...query, page: 1, [item.code || item._id]: getUrlForAttrs(item.code || item._id, option) } }}>{option} {item.units}</ALink>
@@ -155,7 +155,7 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                       {
                         (item.options || []).map((option, index) => (
                             <li
-                              className={containsAttrInUrl(item._id, option) ? 'active' : ''}
+                              className={containsAttrInUrl(item.code || item._id, option) ? 'active' : ''}
                               key={index}
                             >
                               <ALink scroll={false} href={{ pathname: getPathname(), query: { ...query, page: 1, [item.code || item._id]: getUrlForAttrs(item.code || item._id, option) } }}>{option}</ALink>
