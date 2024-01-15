@@ -42,6 +42,12 @@ export default function Footer({ fields, categoryTree, footerNav }) {
                   <li>
                     <ALink href="#">{fields.work_time}</ALink>
                   </li>
+                  <li>
+                    <label>Реквизиты компании: </label>
+                  </li>
+                  <li>
+                    <div style={{whiteSpace: 'pre-wrap'}}>{fields.legal}</div>
+                  </li>
                 </ul>
               </div>
             </div>

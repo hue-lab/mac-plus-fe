@@ -1,9 +1,18 @@
 import Document, { NextScript, Head, Main, Html } from 'next/document';
+import Helmet from "react-helmet";
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
     const initialProps = await Document.getInitialProps(ctx)
-    return { ...initialProps }
+    return { ...initialProps, helmet: Helmet.renderStatic() }
+  }
+
+  get headTitle() {
+    return this.props.helmet.title.toComponent();
+  }
+
+  get headMeta() {
+    return this.props.helmet.meta.toComponent();
   }
 
   render() {
@@ -20,6 +29,8 @@ export default class MyDocument extends Document {
           <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
           <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
           <script src="//code.jivo.ru/widget/ZlrgcjXbN7" async></script>
+          {this.headTitle}
+          {this.headMeta}
         </Head>
 
         <body>
