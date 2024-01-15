@@ -67,7 +67,7 @@ const App = ({ Component, pageProps }) => {
 App.getInitialProps = async ({ Component, ctx }) => {
   const categoryTree = await getCategoryTree();
   const footerNav = await getMenuByCode('footer_nav');
-  const layoutFields = await getFieldsObject('telegram', 'viber', 'instagram', 'phone', 'email', 'address', 'work_time', 'copyright');
+  const layoutFields = await getFieldsObject('telegram', 'viber', 'instagram', 'phone', 'email', 'address', 'work_time', 'copyright', 'legal');
   let pageProps = {};
   if (Component.getInitialProps) {
     pageProps = await Component.getInitialProps(ctx);
