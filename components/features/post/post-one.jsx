@@ -20,6 +20,7 @@ function PostOne(props) {
                 alt={post.seo?.seoImageAlt || post.title || ''}
                 effect="opacity; transform"
                 style={{ backgroundColor: "#DEE6E8" }}
+                className="post-cover-img"
               />
             </ALink>
             :
@@ -27,6 +28,8 @@ function PostOne(props) {
               <img
                 src={getImgPath(post.media)}
                 alt={post.seo?.seoImageAlt || post.title || ''}
+                style={{ backgroundColor: "#DEE6E8" }}
+                className="post-cover-img"
               />
             </ALink>
         }

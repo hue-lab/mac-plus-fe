@@ -172,3 +172,11 @@
         margin: -2rem -1.5rem;
     }
 }
+
+.post-cover-img {
+    object-fit: cover !important;
+    height: 44rem !important;
+    @include mq(md, max) {
+        height: 26rem !important;
+    }
+}

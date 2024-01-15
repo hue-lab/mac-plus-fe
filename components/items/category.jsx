@@ -16,7 +16,9 @@ export default function Category({ banner, products, filters, category, page }) 
     <main className="main bt-lg-none shop">
       <Helmet>
         <title>{ category.title ||  category.name || 'Каталог' }</title>
+        <meta property="og:title" content={category.title ||  category.name || 'Каталог'} />
         <meta name="description" content={category.description || category.name || ''} />
+        <meta property="og:description" content={category.description || category.name || ''} />
         <meta name="keywords" content={(category.keywords || []).join(', ')} />
       </Helmet>
 

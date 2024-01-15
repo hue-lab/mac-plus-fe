@@ -90,7 +90,7 @@ function Checkout(props) {
   const fillOrderObj = (obj) => {
     orderObj.customer.phone = phoneValue;
     orderObj.customer.name = obj.name.trim();
-    orderObj.customer.surname = obj.surname.trim();
+    orderObj.customer.surname = '';
     orderObj.delivery.deliveryMethod = { ...delivery[currentRadio] };
     orderObj.delivery.deliveryMethod.paymentMethods = delivery[currentRadio].paymentMethods.map(method => method._id);
     orderObj.delivery.deliveryData = [...delivery[currentRadio].fields.map(field => ({ name: field, value: obj[field] }))]
@@ -144,13 +144,9 @@ function Checkout(props) {
                     <div className="col-lg-7 mb-6 mb-lg-0 pr-lg-4">
                       <h3 className="title title-simple text-left text-uppercase">Детали заказа</h3>
                       <div className="row">
-                        <div className="col-xs-6">
+                        <div className="col-xs-12">
                           <label>Имя *</label>
                           <input type="text" className="form-control" name="name" required />
-                        </div>
-                        <div className="col-xs-6">
-                          <label>Фамилия *</label>
-                          <input type="text" className="form-control" name="surname" />
                         </div>
                       </div>
                       {
@@ -249,7 +245,7 @@ function Checkout(props) {
                                 <td className="pb-0">
                                   <h4 className="summary-subtitle">Всего</h4>
                                 </td>
-                                <td className=" pt-0 pb-0">
+                                <td style={{width: '40  %'}} className="pt-0 pb-0">
                                   <p className="summary-total-price ls-s text-primary">{toDecimal(totalPrice)} BYN</p>
                                 </td>
                               </tr>

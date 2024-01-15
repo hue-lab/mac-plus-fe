@@ -6,17 +6,23 @@ import MediaFive from '~/components/partials/product/media/media-five';
 import DetailThree from '~/components/partials/product/detail/detail-three';
 import DescOne from '~/components/partials/product/desc/desc-one';
 import ProductSidebar from '~/components/partials/product/product-sidebar';
+import {getImgPath} from "~/utils";
 
 export default function ProductItem({ product, featured, deliveryMethods }) {
 
   if (!product) return '';
 
+  const ogImage = product.seo?.seoImage[0];
+
   return (
     <main className="main single-product">
       <Helmet>
         <title>{product.seo?.seoTitle || product.name || 'Mac Plus'}</title>
+        <meta property="og:title" content={product.seo?.seoTitle || product.name || 'Mac Plus'} />
         <meta name="description" content={product.seo?.seoDescription || product.name || ''} />
+        <meta property="og:description" content={product.seo?.seoDescription || product.name || ''} />
         <meta name="keywords" content={product.seo?.seoKeywords?.join(', ')} />
+        {ogImage && <meta property="og:image" content={getImgPath(ogImage.imageName)} />}
       </Helmet>
 
       <h1 className="d-none">Mac Plus - {product.name}</h1>
