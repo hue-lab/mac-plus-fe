@@ -89,10 +89,10 @@ function MobileMenu({ categoryTree }) {
                     <SlideToggle duration={300} collapsed key={index} >
                       {({ onToggle, setCollapsibleElement, toggleState }) => (
                         <li className={`submenu ${toggleState === 'EXPANDED' ? 'show' : ''}`}>
-                          <ALink href={{ pathname: `/${category.handle}` }} scroll={false}>
+                          <div onClick={e => { e.stopPropagation(); e.preventDefault(); onToggle(); }} className="toggle-div">
                             <i style={{ fontSize: `${category.icon.split('||')[1] || '1.8'}rem` }} className={category.icon.split('||')[0] || 'd-icon-arrow-right'}></i>{category.name}
-                            <span className={`toggle-btn ${toggleState.toLowerCase()}`} onClick={e => { e.stopPropagation(); e.preventDefault(); onToggle(); }}></span>
-                          </ALink>
+                            <span className={`toggle-btn ${toggleState.toLowerCase()}`}></span>
+                          </div>
 
                           <div ref={setCollapsibleElement} style={{ overflow: 'hidden' }}>
                             <ul style={{ display: "block", background: "#232323" }}>

@@ -688,7 +688,7 @@
     }
 
     li {
-        a {
+        .toggle-div, a {
             display: block;
             position: relative;
             @include css( padding, mobile-menu, item, padding);
