@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Magnifier, TOUCH_ACTIVATION } from 'react-image-magnifiers';
+import { Magnifier, MOUSE_ACTIVATION, TOUCH_ACTIVATION } from 'react-image-magnifiers';
 
 import ALink from '~/components/features/custom-link';
 import OwlCarousel from '~/components/features/owl-carousel';
@@ -88,7 +88,8 @@ export default function MediaFive ( props ) {
                                 imageAlt={image.imageAlt || product.name || ''}
                                 className="product-image large-image"
                                 touchActivation={TOUCH_ACTIVATION.LONG_TOUCH}
-
+                                mouseActivation={MOUSE_ACTIVATION.DOUBLE_CLICK}
+                                cursorStyle="default"
                             />
                         </div>
                     ) }
