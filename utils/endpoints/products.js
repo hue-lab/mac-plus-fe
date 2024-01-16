@@ -1,4 +1,4 @@
-export async function getRecProducts(limit = 4) {
+export async function getRecProducts(limit = 6) {
   const res = await fetch(process.env.API_HOST + '/store/products', {
     method: "POST",
     headers: { 'Content-Type': 'application/json' },
