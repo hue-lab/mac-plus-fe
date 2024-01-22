@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
 
 import ALink from '~/components/features/custom-link';
-import {orderCategories} from "~/utils";
+import {getImgPath, orderCategories} from "~/utils";
 
-function MainMenu({ router, categoryTree }) {
+function MainMenu({ router, categoryTree, layoutFields }) {
   const { pathname, query, asPath, route } = useRouter();
 
   return (
@@ -37,14 +37,10 @@ function MainMenu({ router, categoryTree }) {
 
                     <div className="col-7 menu-banner menu-banner1 banner banner-fixed">
                       <figure>
-                        <img src="./images/menu/banner-1.jpg" alt="Menu banner" width="221" height="330" />
+                        <img style={{objectFit: "cover"}} src={getImgPath(layoutFields['nav-sale-image'])} alt="Menu banner" width="221" height="330" />
                       </figure>
                       <div className="banner-content y-50">
-                        <h4 className="banner-subtitle font-weight-bold text-primary ls-m">Sale.
-                        </h4>
-                        <h3 className="banner-title font-weight-bold"><span
-                          className="text-uppercase">Up to</span>70% Off</h3>
-                        <ALink href={"/shop"} className="btn btn-link btn-underline">shop now<i
+                        <ALink href={layoutFields['nav-sale-link'] || '#'} className="btn btn-link btn-underline" style={{fontWeight: '600', fontSize: '1.7rem'}}>{ layoutFields['nav-sale-title'] || 'Купить' }<i
                           className="d-icon-arrow-right"></i></ALink>
                       </div>
                     </div>
