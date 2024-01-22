@@ -78,7 +78,7 @@ export default function Header({ categoryTree, fields }) {
             </div>
           </div>
 
-          <MainMenu categoryTree={categoryTree} />
+          <MainMenu layoutFields={fields} categoryTree={categoryTree} />
         </div>
       </div>
     </header>
