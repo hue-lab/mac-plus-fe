@@ -35,7 +35,7 @@ function MainMenu({ router, categoryTree, layoutFields }) {
                       </ul>
                     </div>
 
-                    <div className="col-7 menu-banner menu-banner1 banner banner-fixed">
+                    <div style={{minHeight: '520px'}} className="col-7 menu-banner menu-banner1 banner banner-fixed">
                       <figure>
                         <img style={{objectFit: "cover"}} src={getImgPath(layoutFields['nav-sale-image'])} alt="Menu banner" width="221" height="330" />
                       </figure>
