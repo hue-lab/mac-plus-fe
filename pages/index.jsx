@@ -17,7 +17,7 @@ HomePage.getInitialProps = async (context) => {
   const recProducts = await getRecProducts();
   const slides = await getSlides();
   const features = await getFieldsObject('features_1', 'features_2', 'features_3', 'features_4');
-  const fields = await getFieldsObject('trade-in-title', 'trade-in-subtitle' ,'trade-in-description');
+  const fields = await getFieldsObject('trade-in-title', 'trade-in-subtitle' ,'trade-in-description', 'main-seo-title', 'main-seo-description');
   return {
     articles: articles.data,
     recProducts: recProducts.data,
@@ -33,15 +33,18 @@ export default function HomePage({ articles, recProducts, slides, fields, featur
   return (
     <div className="main home mt-lg-4 homepage">
       <Helmet>
-        <title>Mac Plus | Главная</title>
+        <title>{fields['main-seo-title'] || 'Mac Plus'}</title>
+        <meta property="og:title" content={fields['main-seo-title'] || 'Mac Plus'}/>
+        <meta name="description" content={fields['main-seo-description'] || 'Интернет-магазин электроники в Беларуси'}/>
+        <meta property="og:description" content={fields['main-seo-description'] || 'Интернет-магазин электроники в Беларуси'}/>
       </Helmet>
 
-      <h1 className="d-none">Mac Plus - Главная</h1>
+      <h1 className="d-none">{fields['main-seo-title'] || 'Mac Plus'}</h1>
 
       <div className="page-content">
-        <IntroSection slides={slides} />
+        <IntroSection slides={slides}/>
 
-        <CategorySection recProducts={recProducts} />
+        <CategorySection recProducts={recProducts}/>
 
         <BannerSection
           tradeInDescription={fields['trade-in-description']}
