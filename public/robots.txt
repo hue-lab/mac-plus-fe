@@ -1,5 +1,6 @@
 # Allow all crawlers
 User-agent: *
+Disallow: /ymlfeed.xml
 Allow: /
 
 Sitemap: https://macplus.by/sitemap.xml
