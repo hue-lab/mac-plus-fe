@@ -24,11 +24,11 @@ function generateYmlFeed({categories, products, fields}) {
             return acc;
           }, []).join('')}
         </categories>
-        <delivery>${fields['yml-feed-delivery']}</delivery>
         <offers>
           ${(products?.data || []).map((item) => {
             return `
               <offer id="${item._id}">
+                <delivery>${fields['yml-feed-delivery']}</delivery>
                 <name>${normalizeString((item.name || ''))}</name>
                 <vendor>${normalizeString(item.brand?.name || '')}</vendor>
                 <url>${`${host}/${item.categoryHandle}/${item.seo?.seoUrl}`}</url>
