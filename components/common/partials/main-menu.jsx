@@ -18,9 +18,9 @@ function MainMenu({ router, categoryTree, layoutFields }) {
               <ALink href={{ pathname: `/${route.handle}` }}>{route.name}</ALink>
 
               {route.children?.length ?
-                <div className="megamenu" style={{ marginLeft: "-19px" }}> ?
-                  <div className="row">
-                    <div className="col-5">
+                <div className="megamenu" style={{ marginLeft: index > 2 ? "-370px" : "-19px" }}>
+                  <div style={{flexDirection: index > 2 ? "row-reverse" : "row"}} className="row">
+                    <div style={{width: 'calc(100% - 350px)'}}>
                       <ul>
                         {
                           route.children.sort(orderCategories).map((item, index) => (
@@ -35,9 +35,9 @@ function MainMenu({ router, categoryTree, layoutFields }) {
                       </ul>
                     </div>
 
-                    <div style={{minHeight: '520px'}} className="col-7 menu-banner menu-banner1 banner banner-fixed">
+                    <div style={{minHeight: '520px', width: '350px'}} className="menu-banner menu-banner1 banner banner-fixed">
                       <figure>
-                        <img style={{objectFit: "cover"}} src={getImgPath(layoutFields['nav-sale-image'])} alt="Menu banner" width="221" height="330" />
+                        <img style={{objectFit: "cover", objectPosition: 'left top'}} src={getImgPath(layoutFields['nav-sale-image'])} alt="Menu banner" width="221" height="330" />
                       </figure>
                       <div className="banner-content y-50">
                         <ALink href={layoutFields['nav-sale-link'] || '#'} className="btn btn-link btn-underline" style={{fontWeight: '600', fontSize: '1.7rem'}}>{ layoutFields['nav-sale-title'] || 'Купить' }<i

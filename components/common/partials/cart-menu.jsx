@@ -33,7 +33,7 @@ function CartMenu(props) {
         <i className="d-icon-bag"><span className="cart-count">{getCartCount(cartList)}</span></i>
       </a>
       <div className="cart-overlay" onClick={hideCartMenu}></div>
-      <div className={`dropdown-box ${cartList.length > 0 ? '' : 'pl-0 pr-0 pt-2 pb-2'}`}>
+      <div style={{zIndex: 10000}} className={`dropdown-box ${cartList.length > 0 ? '' : 'pl-0 pr-0 pt-2 pb-2'}`}>
         {
           cartList.length > 0 ?
             <div className="cart-header mb-4">
