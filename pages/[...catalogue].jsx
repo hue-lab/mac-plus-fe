@@ -39,6 +39,9 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
   }
 
   const filters = item ? await getFilters(item._id) : [];
+  const filtersCodes = (filters || []).map(filterItem => {
+    return filterItem.code || filterItem._id;
+  });
   const banner = await getBannerSlide();
   const requestFilters = {
     baseProperties: {},
@@ -53,7 +56,7 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
   if (customProperties && Object.keys(customProperties).length) {
     requestFilters.customProperties = Object.keys(customProperties).reduce((acc, key) => {
       const values = customProperties[key]?.split(',');
-      if (values?.length && values[0].length) {
+      if (values?.length && values[0].length && filtersCodes.includes(key)) {
         const filterId = (filters || []).find(filter => filter.code === key)?._id;
         if (values.length === 1) {
           acc[filterId || key] = {
