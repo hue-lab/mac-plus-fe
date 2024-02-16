@@ -1,0 +1,32 @@
+.intro_categories {
+  &-wrapper {
+    display: none;
+    @include mq(lg, max) {
+      display: block;
+    }
+  }
+  &__item {
+    &:first-child {
+      border-top: 1px solid #eee;
+    }
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__arrow {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  &__icon {
+    width: 2rem;
+    &-wrapper {
+      display: flex;
+    }
+  }
+  &__name {
+    margin-left: 1rem;
+  }
+}

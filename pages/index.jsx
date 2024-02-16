@@ -11,6 +11,7 @@ import { getLatestArticles } from '~/utils/endpoints/articles';
 import { getRecProducts } from "~/utils/endpoints/products";
 import { getSlides } from "~/utils/endpoints/slides";
 import { getFieldsObject } from '~/utils/endpoints/fields';
+import IntroCategories from "~/components/partials/home/intro-categories";
 
 HomePage.getInitialProps = async (context) => {
   const articles = await getLatestArticles();
@@ -27,7 +28,7 @@ HomePage.getInitialProps = async (context) => {
   };
 }
 
-export default function HomePage({ articles, recProducts, slides, fields, features }) {
+export default function HomePage({ articles, recProducts, slides, fields, features, categoryTree }) {
 
 
   return (
@@ -43,6 +44,8 @@ export default function HomePage({ articles, recProducts, slides, fields, featur
 
       <div className="page-content">
         <IntroSection slides={slides}/>
+
+        <IntroCategories categories={categoryTree}></IntroCategories>
 
         <CategorySection recProducts={recProducts}/>
 
