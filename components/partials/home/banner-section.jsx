@@ -13,7 +13,7 @@ function BannerSection ({ tradeInTitle, tradeInSubtitle, tradeInDescription }) {
     return (
         <section className="banner-group container mt-10 pb-4 pt-2 mb-10">
             <Reveal keyframes={ fadeIn } delay={ 200 } duration={ 1200 } triggerOnce>
-                <div className="banner1 banner banner-fixed overlay-zoom" style={ { backgroundColor: "#3cbea4", overflow: "hidden", borderRadius: "2rem" } }>
+                <div className="banner1 banner banner-fixed overlay-zoom" style={ { backgroundColor: "#007945", overflow: "hidden", borderRadius: "2rem" } }>
                     <figure>
                         <LazyLoadImage
                           src="./images/trade-in.jpg"

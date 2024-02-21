@@ -352,7 +352,7 @@ export const introSlider = {
     dots: true,
     loop: false,
     items: 1,
-    autoplay: false
+    autoplay: true,
 }
 
 export const serviceSlider = {
