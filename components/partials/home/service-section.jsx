@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 import Reveal from "react-awesome-reveal";
 
-import OwlCarousel from '~/components/features/owl-carousel';
+import OwlCarousel from "~/components/features/owl-carousel";
 
-import { serviceSlider } from '~/utils/data/carousel';
-import { zoomInLeft } from '~/utils/data/keyframes';
+import { serviceSlider } from "~/utils/data/carousel";
+import { zoomInLeft } from "~/utils/data/keyframes";
 
 function ServiceBox({ fields }) {
   return (
@@ -14,17 +14,20 @@ function ServiceBox({ fields }) {
           {Object.values(fields).map((feature) => (
             <Reveal keyframes={zoomInLeft} delay={200} duration={1200} triggerOnce key={feature}>
               <div className="icon-box text-center">
-                <i className={`icon-box-icon ${feature.split('||')[1]}`} style={{ fontSize: `${feature.split('||')[2] || '3.5'}rem` }}></i>
+                <i
+                  className={`icon-box-icon ${feature.split("||")[1]}`}
+                  style={{ fontSize: `${feature.split("||")[2] || "3.5"}rem` }}
+                ></i>
                 <div className="icon-box-content">
-                  <h4 className="icon-box-title">{feature.split('||')[0]}</h4>
+                  <span className="icon-box-title text-dark">{feature.split("||")[0]}</span>
                 </div>
               </div>
             </Reveal>
           ))}
         </OwlCarousel>
       </div>
-    </section >
-  )
+    </section>
+  );
 }
 
 export default React.memo(ServiceBox);
