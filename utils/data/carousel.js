@@ -351,6 +351,7 @@ export const introSlider = {
     nav: false,
     dots: true,
     loop: false,
+    rewind: true,
     items: 1,
     autoplay: true,
 }
