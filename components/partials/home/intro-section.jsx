@@ -44,7 +44,7 @@ function IntroSection({ slides }) {
                     </p>
                     <ALink
                       className="btn btn-outline btn-white btn-rounded mb-1"
-                      href={`/blog/${item.slideLink || item.seo?.seoUrl || "#"}`}
+                      href={`${item.slideLink || "/blog/" + item.seo?.seoUrl || "#"}`}
                     >
                       Подробнее
                     </ALink>
