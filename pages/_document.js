@@ -66,7 +66,8 @@ export default class MyDocument extends Document {
                   }}
           />
           <noscript>
-            <div><img src="https://mc.yandex.ru/watch/96220740" style={{position: 'absolute', left: '-9999px'}} alt=""/></div>
+            <div><img src="https://mc.yandex.ru/watch/96220740" style={{position: 'absolute', left: '-9999px'}} alt=""/>
+            </div>
           </noscript>
           <base href="/"></base>
           <title>Mac Plus</title>
@@ -80,6 +81,7 @@ export default class MyDocument extends Document {
           <script src="//code.jivo.ru/widget/ZlrgcjXbN7" async></script>
           {this.headTitle}
           {this.headMeta}
+          <meta name="google-site-verification" content="zkGKtNXlNUPH0rhw2sORnyS0J9USz7B6xXI0Gey3NwE"/>
         </Head>
 
         <body>
