@@ -1,25 +1,32 @@
-import React from 'react';
+import React from "react";
 import Reveal from "react-awesome-reveal";
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
-import ALink from '~/components/features/custom-link';
-import OwlCarousel from '~/components/features/owl-carousel';
-import { introSlider } from '~/utils/data/carousel';
-import { blurIn } from '~/utils/data/keyframes';
-import {getImgPath} from "~/utils";
+import ALink from "~/components/features/custom-link";
+import OwlCarousel from "~/components/features/owl-carousel";
+import { introSlider } from "~/utils/data/carousel";
+import { blurIn } from "~/utils/data/keyframes";
+import { getImgPath } from "~/utils";
 
 function IntroSection({ slides }) {
   return (
     <div className="intro-section container">
       <div className="row">
         <div className="mb-4 mb-lg-0">
-          <OwlCarousel adClass="intro-slider owl-theme owl-dot-inner animation-slider" options={introSlider}>
+          <OwlCarousel
+            adClass="intro-slider owl-theme owl-dot-inner animation-slider"
+            options={introSlider}
+          >
             {(slides || []).map((item, index) => (
-              <div key={index} className="banner banner-fixed intro-slide2" style={{ backgroundColor: "#101010" }}>
+              <div
+                key={index}
+                className="banner banner-fixed intro-slide2"
+                style={{ backgroundColor: "#101010" }}
+              >
                 <figure>
                   <LazyLoadImage
                     src={getImgPath(item.media)}
-                    alt={item.seo?.seoImageAlt  || ''}
+                    alt={item.seo?.seoImageAlt || ""}
                     effect="opacity"
                     width="auto"
                     height={460}
@@ -29,18 +36,27 @@ function IntroSection({ slides }) {
 
                 <div className="banner-content x-50 y-50 text-center">
                   <Reveal keyframes={blurIn} delay={200} duration={1500}>
-                    <h3 className="banner-title ls-l text-white text-uppercase font-weight-bold">{item.title}</h3>
-                    <p className="ls-l mb-5 text-white font-primary">{item.description}</p>
-                    <ALink className="btn btn-outline btn-white btn-rounded mb-1" href={`/blog/${item.seo?.seoUrl || '#'}`}>Подробнее</ALink>
+                    <h3 className="banner-title ls-l text-white text-uppercase font-weight-bold">
+                      {item.slideTitle || item.title || " "}
+                    </h3>
+                    <p className="ls-l mb-5 text-white font-primary">
+                      {item.slideDescription || item.description || " "}
+                    </p>
+                    <ALink
+                      className="btn btn-outline btn-white btn-rounded mb-1"
+                      href={`${item.slideLink || "/blog/" + item.seo?.seoUrl || "#"}`}
+                    >
+                      Подробнее
+                    </ALink>
                   </Reveal>
                 </div>
               </div>
             ))}
-          </OwlCarousel >
+          </OwlCarousel>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default React.memo(IntroSection);
