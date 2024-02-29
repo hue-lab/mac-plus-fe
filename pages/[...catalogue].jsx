@@ -5,10 +5,16 @@ import {getDeliveryMethods} from "~/utils/endpoints/orders";
 import {getFilters} from "~/utils/endpoints/filters";
 import {getBannerSlide} from "~/utils/endpoints/slides";
 import Category from "~/components/items/category";
+import {parseFilterString} from "~/utils";
 
 GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
   const { catalogue, page, per_page, price, sortby, type, min_price, max_price, search, ...customProperties } = query;
-  const path = catalogue.join('/');
+  const fullPath = catalogue.join('/');
+  const pathSegments = fullPath.split('/filter/');
+  const filterString = pathSegments[1] || null;
+  const filterObject = parseFilterString(filterString);
+  console.log(filterObject);
+  const path = pathSegments[0];
   const item = path === 'shop' ? {
     name: 'Все товары',
     description: 'Все товары каталога',

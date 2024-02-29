@@ -16,6 +16,17 @@ export const orderCategories = (a, b) => {
   return (a.order || 0) - (b.order || 0);
 }
 
+export const parseFilterString = (str) => {
+  const filterSegments = str.split('/');
+  return (filterSegments || []).reduce((acc, curr) => {
+    if (curr?.includes('-is-')) {
+      const [filterKey, filterValueSegments] = curr.split('-is-');
+      acc[filterKey] = filterValueSegments.split('-or-');
+    }
+    return acc;
+  }, {});
+}
+
 export const useDebounce = (value, delay) => {
   const [debouncedValue, setDebouncedValue] = useState(value)
 
