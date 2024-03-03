@@ -17,6 +17,9 @@ export const orderCategories = (a, b) => {
 }
 
 export const parseFilterString = (str) => {
+  if (!str) {
+    return {};
+  }
   const filterSegments = str.split('/');
   return (filterSegments || []).reduce((acc, curr) => {
     if (curr?.includes('-is-')) {

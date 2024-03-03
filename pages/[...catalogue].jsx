@@ -13,7 +13,6 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
   const pathSegments = fullPath.split('/filter/');
   const filterString = pathSegments[1] || null;
   const filterObject = parseFilterString(filterString);
-  console.log(filterObject);
   const path = pathSegments[0];
   const item = path === 'shop' ? {
     name: 'Все товары',
@@ -59,9 +58,9 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
     }
   };
 
-  if (customProperties && Object.keys(customProperties).length) {
-    requestFilters.customProperties = Object.keys(customProperties).reduce((acc, key) => {
-      const values = customProperties[key]?.split(',');
+  if (filterObject && Object.keys(filterObject).length) {
+    requestFilters.customProperties = Object.keys(filterObject).reduce((acc, key) => {
+      const values = filterObject[key];
       if (values?.length && values[0].length && filtersCodes.includes(key)) {
         const filterId = (filters || []).find(filter => filter.code === key)?._id;
         if (values.length === 1) {
@@ -118,11 +117,12 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
     products: products,
     filters,
     type: 'category',
+    filterObject: filterObject,
   }
 }
 
-export default function GenericCatalogueItem({ data,  type, featured, deliveryMethods, banner, filters, products, page }) {
+export default function GenericCatalogueItem({ data,  type, featured, deliveryMethods, banner, filters, products, page, filterObject }) {
   return type === 'product' ?
     <ProductItem product={data} featured={featured} deliveryMethods={deliveryMethods}/>
-    : <Category page={page} banner={banner} filters={filters} products={products} category={data}/>;
+    : <Category page={page} banner={banner} filters={filters} products={products} category={data} filterObject={filterObject} />;
 }

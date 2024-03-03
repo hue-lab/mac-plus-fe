@@ -5,7 +5,7 @@ import SidebarFilterOne from '~/components/partials/shop/sidebar/sidebar-filter-
 import ProductListOne from '~/components/partials/shop/product-list/product-list-one';
 import {getImgPath} from "~/utils";
 
-export default function Category({ banner, products, filters, category, page }) {
+export default function Category({ banner, products, filters, category, page, filterObject }) {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       window.scrollTo({top: 0, behavior: 'smooth'});
@@ -33,7 +33,7 @@ export default function Category({ banner, products, filters, category, page }) 
           </ul>
 
           <div className="row gutter-lg main-content-wrap">
-            <SidebarFilterOne filters={filters} type="banner" />
+            <SidebarFilterOne filters={filters} type="banner" filterObject={filterObject} />
 
             <div className="col-lg-9 main-content">
               { banner && <div className="shop-banner banner" title={banner.seo?.seoImageAlt || ''} style={{ backgroundImage: `url('${getImgPath(banner.media)}')`, backgroundColor: "#f2f2f3" }}>

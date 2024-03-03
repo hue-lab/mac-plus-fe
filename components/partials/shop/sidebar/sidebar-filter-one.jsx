@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import {useEffect} from 'react';
+import {useRouter} from 'next/router';
 import ALink from '~/components/features/custom-link';
 import Card from '~/components/features/accordion/card';
 import CustomPriceInput from "~/components/partials/shop/sidebar/custom-number-input";
 
-export default function SidebarFilterOne({ type = "left", isFeatured = false, filters = [] }) {
+export default function SidebarFilterOne({ type = "left", isFeatured = false, filters = [], filterObject }) {
   const router = useRouter();
   const { catalogue, ...query } = router.query;
   const catalogueUrl = catalogue.join('/');
@@ -14,7 +14,6 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
 
   useEffect(() => {
     window.addEventListener('resize', hideSidebar);
-
     return () => {
       window.removeEventListener('resize', hideSidebar);
     }
@@ -24,12 +23,46 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
     return typeof catalogueUrl === 'string' ? router.pathname.replace('[...catalogue]', catalogueUrl) : router.pathname;
   }
 
+  const advancedPathname = (key, value) => {
+    const filterObjectClone = Object.assign({}, filterObject);
+    if (filterObjectClone.hasOwnProperty(key)) {
+      const keySet = new Set(filterObjectClone[key]);
+      if (keySet.has(value)) {
+        keySet.delete(value);
+      } else {
+        keySet.add(value);
+      }
+      if (keySet.size) {
+        filterObjectClone[key] = Array.from(keySet);
+      } else {
+        delete filterObjectClone[key];
+      }
+    } else {
+      filterObjectClone[key] = [value];
+    }
+    const filterArraySorted = Object.entries(filterObjectClone).sort((a, b) => {
+      return a[0] > b[0] ? 1 : 0;
+    });
+    const basePath = getPathname().split('/filter')[0];
+    const path = filterArraySorted.length ? `${basePath}/filter` : basePath;
+    return filterArraySorted.reduce((acc, [key, value]) => {
+      acc = acc.concat(`/${key}-is-${value.sort().join('-or-')}`);
+      return acc;
+    }, path);
+  }
+
   const filterByPrice = (filterPrice) => {
     let url = getPathname();
-    let arr = [`min_price=${filterPrice.min}`, `max_price=${filterPrice.max}`, 'page=1'];
-    for (let key in query) {
-      if (key !== 'min_price' && key !== 'max_price' && key !== 'page' && key !== 'grid') arr.push(key + '=' + query[key]);
+    let arr = ['page=1'];
+    if (filterPrice?.min) {
+      arr.push(`min_price=${filterPrice.min}`);
     }
+    if (filterPrice?.max) {
+      arr.push(`max_price=${filterPrice.max}`);
+    }
+    // for (let key in query) {
+    //   if (key !== 'min_price' && key !== 'max_price' && key !== 'page' && key !== 'grid') arr.push(key + '=' + query[key]);
+    // }
     url = url + '?' + arr.join('&');
     router.push(url);
   }
@@ -100,7 +133,7 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                           <i className="d-icon-arrow-left"></i> : <i className="d-icon-arrow-right"></i>
                       }
                     </a>
-                    <ALink href={{ pathname: getPathname(), query: { grid: query.grid, type: router.query.type ? router.query.type : null } }} scroll={false} className="filter-clean">Clean All</ALink>
+                    <ALink href={{ pathname: getPathname(), query: { grid: query.grid, type: router.query.type ? router.query.type : null } }} scroll={false} className="filter-clean">Очистить</ALink>
                   </div>
               }
 
@@ -155,10 +188,10 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                       {
                         (item.options || []).map((option, index) => (
                             <li
-                              className={containsAttrInUrl(item.code || item._id, option) ? 'active' : ''}
+                              className={filterObject[item.code || item._id]?.includes(option) ? 'active' : ''}
                               key={index}
                             >
-                              <ALink scroll={false} href={{ pathname: getPathname(), query: { ...query, page: 1, [item.code || item._id]: getUrlForAttrs(item.code || item._id, option) } }}>{option}</ALink>
+                              <ALink scroll={false} href={{ pathname: advancedPathname(item.code || item._id, option), query: { ...query, page: 1 } }}>{option}</ALink>
                             </li>
                           )
 
