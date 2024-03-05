@@ -6,8 +6,10 @@ import {getFilters} from "~/utils/endpoints/filters";
 import {getBannerSlide} from "~/utils/endpoints/slides";
 import Category from "~/components/items/category";
 import {parseFilterString} from "~/utils";
+import CyrillicToTranslit from "cyrillic-to-translit-js";
 
 GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
+  const cyrillicToTranslit = new CyrillicToTranslit();
   const { catalogue, page, per_page, price, sortby, type, min_price, max_price, search, ...customProperties } = query;
   const fullPath = catalogue.join('/');
   const pathSegments = fullPath.split('/filter/');
@@ -44,6 +46,20 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
   }
 
   const filters = item ? await getFilters(item._id) : [];
+  const filtersPairs = filters.reduce((filterAcc, filterCurr) => {
+    const optionsArr = [];
+    filterAcc[filterCurr.code || filterCurr._id] = filterCurr.options.reduce((optionAcc, optionCurr) => {
+       const translitOption = cyrillicToTranslit.transform(optionCurr, "_").toLowerCase();
+       optionsArr.push({
+         key: translitOption,
+         value: optionCurr,
+       });
+       optionAcc[translitOption] = optionCurr;
+       return optionAcc;
+    }, {});
+    filterCurr.options = optionsArr;
+    return filterAcc;
+  }, {});
   const filtersCodes = (filters || []).map(filterItem => {
     return filterItem.code || filterItem._id;
   });
@@ -65,11 +81,11 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
         const filterId = (filters || []).find(filter => filter.code === key)?._id;
         if (values.length === 1) {
           acc[filterId || key] = {
-            $eq: values[0] === 'true' ? true : values[0]
+            $eq: values[0] === 'true' ? true : filtersPairs[key][values[0]]
           }
         } else {
           acc[filterId || key] = {
-            $in: values,
+            $in: values.map(val => filtersPairs[key][val]),
           };
         }
       }

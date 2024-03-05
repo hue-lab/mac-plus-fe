@@ -188,10 +188,10 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                       {
                         (item.options || []).map((option, index) => (
                             <li
-                              className={filterObject[item.code || item._id]?.includes(option) ? 'active' : ''}
+                              className={filterObject[item.code || item._id]?.includes(option.key) ? 'active' : ''}
                               key={index}
                             >
-                              <ALink scroll={false} href={{ pathname: advancedPathname(item.code || item._id, option), query: { ...query, page: 1 } }}>{option}</ALink>
+                              <ALink scroll={false} href={{ pathname: advancedPathname(item.code || item._id, option.key), query: { ...query, page: 1 } }}>{option.value}</ALink>
                             </li>
                           )
 
