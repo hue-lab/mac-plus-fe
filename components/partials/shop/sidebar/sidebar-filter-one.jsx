@@ -20,7 +20,7 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
   }, [])
 
   const getPathname = () => {
-    return typeof catalogueUrl === 'string' ? router.pathname.replace('[...catalogue]', catalogueUrl) : router.pathname;
+    return (typeof catalogueUrl === 'string' ? router.pathname.replace('[...catalogue]', catalogueUrl) : router.pathname)?.split('/page-is-')[0];
   }
 
   const advancedPathname = (key, value) => {
@@ -53,7 +53,7 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
 
   const filterByPrice = (filterPrice) => {
     let url = getPathname();
-    let arr = ['page=1'];
+    let arr = [];
     if (filterPrice?.min) {
       arr.push(`min_price=${filterPrice.min}`);
     }
@@ -63,7 +63,7 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
     // for (let key in query) {
     //   if (key !== 'min_price' && key !== 'max_price' && key !== 'page' && key !== 'grid') arr.push(key + '=' + query[key]);
     // }
-    url = url + '?' + arr.join('&');
+    url = url + (arr.length ? '?' : '') + arr.join('&');
     router.push(url);
   }
 
@@ -156,10 +156,10 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                     <Card type="parse" expanded={true}>
                       <ul className="filter-items">
                         <li
-                          className={containsAttrInUrl(item.code || item._id, 'true') ? 'active' : ''}
+                          className={filterObject[item.code || item._id]?.includes('true') ? 'active' : ''}
                           key={index}
                         >
-                          <ALink className="font-weight-bold" scroll={false} href={{ pathname: getPathname(), query: { ...query, page: 1, [item.code || item._id]: !containsAttrInUrl(item.code || item._id, 'true') ? true : undefined } }}>{item.name}</ALink>
+                          <ALink className="font-weight-bold" scroll={false} href={{ pathname: advancedPathname(item.code || item._id, 'true'), query: { ...query } }}>{item.name}</ALink>
                         </li>
                       </ul>
                     </Card>
@@ -176,7 +176,7 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                               className={containsAttrInUrl(item.code || item._id, option) ? 'active' : ''}
                               key={index}
                             >
-                              <ALink scroll={false} href={{ pathname: getPathname(), query: { ...query, page: 1, [item.code || item._id]: getUrlForAttrs(item.code || item._id, option) } }}>{option} {item.units}</ALink>
+                              <ALink scroll={false} href={{ pathname: getPathname(), query: { ...query, [item.code || item._id]: getUrlForAttrs(item.code || item._id, option) } }}>{option} {item.units}</ALink>
                             </li>
                           )
 
@@ -191,7 +191,7 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                               className={filterObject[item.code || item._id]?.includes(option.key) ? 'active' : ''}
                               key={index}
                             >
-                              <ALink scroll={false} href={{ pathname: advancedPathname(item.code || item._id, option.key), query: { ...query, page: 1 } }}>{option.value}</ALink>
+                              <ALink scroll={false} href={{ pathname: advancedPathname(item.code || item._id, option.key), query: { ...query } }}>{option.value}</ALink>
                             </li>
                           )
 

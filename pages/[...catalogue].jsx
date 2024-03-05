@@ -10,12 +10,13 @@ import CyrillicToTranslit from "cyrillic-to-translit-js";
 
 GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
   const cyrillicToTranslit = new CyrillicToTranslit();
-  const { catalogue, page, per_page, price, sortby, type, min_price, max_price, search, ...customProperties } = query;
+  const { catalogue, per_page, price, sortby, type, min_price, max_price, search, ...customProperties } = query;
   const fullPath = catalogue.join('/');
   const pathSegments = fullPath.split('/filter/');
-  const filterString = pathSegments[1] || null;
+  const page = parseInt(fullPath.split('/page-is-')[1] || 1);
+  const filterString = pathSegments[1]?.split('/page-is-')[0] || null;
   const filterObject = parseFilterString(filterString);
-  const path = pathSegments[0];
+  const path = pathSegments[0].split('/page-is-')[0];
   const item = path === 'shop' ? {
     name: 'Все товары',
     description: 'Все товары каталога',
@@ -134,11 +135,12 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
     filters,
     type: 'category',
     filterObject: filterObject,
+    fullPath: fullPath,
   }
 }
 
-export default function GenericCatalogueItem({ data,  type, featured, deliveryMethods, banner, filters, products, page, filterObject }) {
+export default function GenericCatalogueItem({ data,  type, featured, deliveryMethods, banner, filters, products, page, filterObject, fullPath }) {
   return type === 'product' ?
     <ProductItem product={data} featured={featured} deliveryMethods={deliveryMethods}/>
-    : <Category page={page} banner={banner} filters={filters} products={products} category={data} filterObject={filterObject} />;
+    : <Category page={page} banner={banner} filters={filters} products={products} category={data} filterObject={filterObject} fullPath={fullPath} />;
 }

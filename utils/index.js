@@ -16,6 +16,11 @@ export const orderCategories = (a, b) => {
   return (a.order || 0) - (b.order || 0);
 }
 
+export const pagedPathname = (path, page) => {
+  const pageSegment = page > 1 ? `page-is-${page}` : '';
+  return `/${path.split('/page-is-')[0]}/${pageSegment}`;
+}
+
 export const parseFilterString = (str) => {
   if (!str) {
     return {};

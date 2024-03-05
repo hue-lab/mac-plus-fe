@@ -5,7 +5,7 @@ import SidebarFilterOne from '~/components/partials/shop/sidebar/sidebar-filter-
 import ProductListOne from '~/components/partials/shop/product-list/product-list-one';
 import {getImgPath} from "~/utils";
 
-export default function Category({ banner, products, filters, category, page, filterObject }) {
+export default function Category({ banner, products, filters, category, page, filterObject, fullPath }) {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       window.scrollTo({top: 0, behavior: 'smooth'});
@@ -47,7 +47,7 @@ export default function Category({ banner, products, filters, category, page, fi
                 </div>
               </div> }
 
-              <ProductListOne products={products} type="banner" />
+              <ProductListOne products={products} type="banner" fullPath={fullPath} />
             </div>
           </div>
         </div>
