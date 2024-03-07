@@ -36,15 +36,13 @@ function IntroSection({ slides }) {
 
                 <div className="banner-content x-50 y-50 text-center">
                   <Reveal keyframes={blurIn} delay={200} duration={1500}>
-                    <h3 className="banner-title ls-l text-white text-uppercase font-weight-bold">
-                      {item.slideTitle || item.title || " "}
-                    </h3>
-                    <p className="ls-l mb-5 text-white font-primary">
-                      {item.slideDescription || item.description || " "}
-                    </p>
+                    <span className="banner-title ls-l text-white text-uppercase font-weight-bold">
+                      {item.title}
+                    </span>
+                    <p className="ls-l mb-5 text-white font-primary">{item.description}</p>
                     <ALink
                       className="btn btn-outline btn-white btn-rounded mb-1"
-                      href={`${item.slideLink || "/blog/" + item.seo?.seoUrl || "#"}`}
+                      href={`/blog/${item.seo?.seoUrl || "#"}`}
                     >
                       Подробнее
                     </ALink>
