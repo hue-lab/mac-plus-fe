@@ -5,10 +5,18 @@ import {getDeliveryMethods} from "~/utils/endpoints/orders";
 import {getFilters} from "~/utils/endpoints/filters";
 import {getBannerSlide} from "~/utils/endpoints/slides";
 import Category from "~/components/items/category";
+import {parseFilterString} from "~/utils";
+import CyrillicToTranslit from "cyrillic-to-translit-js";
 
 GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
-  const { catalogue, page, per_page, price, sortby, type, min_price, max_price, search, ...customProperties } = query;
-  const path = catalogue.join('/');
+  const cyrillicToTranslit = new CyrillicToTranslit();
+  const { catalogue, per_page, price, sortby, type, min_price, max_price, search, ...customProperties } = query;
+  const fullPath = catalogue.join('/');
+  const pathSegments = fullPath.split('/filter/');
+  const page = parseInt(fullPath.split('/page-is-')[1] || 1);
+  const filterString = pathSegments[1]?.split('/page-is-')[0] || null;
+  const filterObject = parseFilterString(filterString);
+  const path = pathSegments[0].split('/page-is-')[0];
   const item = path === 'shop' ? {
     name: 'Все товары',
     description: 'Все товары каталога',
@@ -39,6 +47,20 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
   }
 
   const filters = item ? await getFilters(item._id) : [];
+  const filtersPairs = filters.reduce((filterAcc, filterCurr) => {
+    const optionsArr = [];
+    filterAcc[filterCurr.code || filterCurr._id] = filterCurr.options.reduce((optionAcc, optionCurr) => {
+       const translitOption = cyrillicToTranslit.transform(optionCurr, "_").toLowerCase();
+       optionsArr.push({
+         key: translitOption,
+         value: optionCurr,
+       });
+       optionAcc[translitOption] = optionCurr;
+       return optionAcc;
+    }, {});
+    filterCurr.options = optionsArr;
+    return filterAcc;
+  }, {});
   const filtersCodes = (filters || []).map(filterItem => {
     return filterItem.code || filterItem._id;
   });
@@ -53,18 +75,18 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
     }
   };
 
-  if (customProperties && Object.keys(customProperties).length) {
-    requestFilters.customProperties = Object.keys(customProperties).reduce((acc, key) => {
-      const values = customProperties[key]?.split(',');
+  if (filterObject && Object.keys(filterObject).length) {
+    requestFilters.customProperties = Object.keys(filterObject).reduce((acc, key) => {
+      const values = filterObject[key];
       if (values?.length && values[0].length && filtersCodes.includes(key)) {
         const filterId = (filters || []).find(filter => filter.code === key)?._id;
         if (values.length === 1) {
           acc[filterId || key] = {
-            $eq: values[0] === 'true' ? true : values[0]
+            $eq: values[0] === 'true' ? true : filtersPairs[key][values[0]]
           }
         } else {
           acc[filterId || key] = {
-            $in: values,
+            $in: values.map(val => filtersPairs[key][val]),
           };
         }
       }
@@ -112,11 +134,13 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
     products: products,
     filters,
     type: 'category',
+    filterObject: filterObject,
+    fullPath: fullPath,
   }
 }
 
-export default function GenericCatalogueItem({ data,  type, featured, deliveryMethods, banner, filters, products, page }) {
+export default function GenericCatalogueItem({ data,  type, featured, deliveryMethods, banner, filters, products, page, filterObject, fullPath }) {
   return type === 'product' ?
     <ProductItem product={data} featured={featured} deliveryMethods={deliveryMethods}/>
-    : <Category page={page} banner={banner} filters={filters} products={products} category={data}/>;
+    : <Category page={page} banner={banner} filters={filters} products={products} category={data} filterObject={filterObject} fullPath={fullPath} />;
 }
