@@ -12,6 +12,7 @@ export default function Category({
   category,
   page,
   filterObject,
+  filtersPairs,
   fullPath,
 }) {
   useEffect(() => {

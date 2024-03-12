@@ -62,7 +62,8 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
   const filters = item ? await getFilters(item._id) : [];
   const filtersPairs = filters.reduce((filterAcc, filterCurr) => {
     const optionsArr = [];
-    filterAcc[filterCurr.code || filterCurr._id] = filterCurr.options.reduce(
+    const filterKey = [filterCurr.code || filterCurr._id];
+    const valuesPairs = filterAcc[filterKey] = filterCurr.options.reduce(
       (optionAcc, optionCurr) => {
         const translitOption = cyrillicToTranslit.transform(optionCurr, "_").toLowerCase();
         optionsArr.push({
@@ -74,6 +75,10 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
       },
       {}
     );
+    filterAcc[filterKey] = {
+      valuesPairs,
+      ...filterCurr,
+    };
     filterCurr.options = optionsArr;
     return filterAcc;
   }, {});
@@ -98,11 +103,11 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
         const filterId = (filters || []).find((filter) => filter.code === key)?._id;
         if (values.length === 1) {
           acc[filterId || key] = {
-            $eq: values[0] === "true" ? true : filtersPairs[key][values[0]],
+            $eq: values[0] === "true" ? true : filtersPairs[key].valuesPairs[values[0]],
           };
         } else {
           acc[filterId || key] = {
-            $in: values.map((val) => filtersPairs[key][val]),
+            $in: values.map((val) => filtersPairs[key].valuesPairs[val]),
           };
         }
       }
@@ -154,6 +159,7 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
     }),
     type: "category",
     filterObject: filterObject,
+    filtersPairs,
     fullPath: fullPath,
   };
 };
@@ -168,6 +174,7 @@ export default function GenericCatalogueItem({
   products,
   page,
   filterObject,
+  filtersPairs,
   fullPath,
 }) {
   return type === "product" ? (
@@ -181,6 +188,7 @@ export default function GenericCatalogueItem({
       category={data}
       filterObject={filterObject}
       fullPath={fullPath}
+      filtersPairs={filtersPairs}
     />
   );
 }
