@@ -4,29 +4,29 @@ import ALink from "~/components/features/custom-link";
 
 import { getImgPath } from "~/utils";
 import { getArticleBySlug } from "~/utils/endpoints/articles";
+import { getFieldsObject } from "~/utils/endpoints/fields";
 import { getPostDate } from "~/utils";
 import React from "react";
 
 PostSingle.getInitialProps = async (context) => {
   const post = await getArticleBySlug(context.query.slug);
-  return { post: post };
+  const seoFields = await getFieldsObject("blog-seo-title", "blog-seo-description");
+  return { post: post, seoFields };
 };
 
-export default function PostSingle({ post }) {
+export default function PostSingle({ post, seoFields }) {
   const loading = false;
-  const titleString = `${
-    post.seo?.seoTitle || post.title || "Mac Plus"
-  }. Цена на технику Apple в интернет-магазине Macplus
-  `;
-  const descriptionString = `${
-    post.seo?.seoTitle || post.title || ""
-  }. Полезные Статьи 📚 Про Технику Apple от специалистов интернет-магазина - Macplus✅`;
+  const titleString = `${post.seo?.seoTitle || post.title || "Mac Plus"}`;
+  const descriptionString = `${post.seo?.seoTitle || post.title || ""}`;
 
   return (
     <main className="main skeleton-body">
       <Helmet>
-        <title>{titleString}</title>
-        <meta name="description" content={descriptionString} />
+        <title>{seoFields["blog-seo-title"].replaceAll("{TITLE}", titleString)}</title>
+        <meta
+          name="description"
+          content={seoFields["blog-seo-description"].replaceAll("{TITLE}", descriptionString)}
+        />
         <meta name="keywords" content={post.seo?.seoKeywords?.join(", ")} />
         <meta name="author" content={post.seo?.seoAuthor || "Mac Plus"} />
       </Helmet>
