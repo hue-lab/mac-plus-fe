@@ -30,22 +30,32 @@ export default function Category({
     return appliedFilter;
   });
 
+  const categoryString = `${category.title || category.name || ""}`;
+
   const filtersString = `${appliedFilters
     .map((filter) => `${filter.name} - ${filter.options.map((option) => option.value).join(", ")}`)
-    .join("; ")}${page > 1 ? `; Страница №${page}` : ""}`;
+    .join("; ")}`;
 
   const titleString = `${category.title || category.name || "Каталог"}${
     filtersString.length ? `: ${filtersString}` : ""
   }, купить в Минске. Цена на технику Apple в магазине - Macplus`;
 
-  const headerString = `${category.title}${filtersString.length ? `: ${filtersString}` : ""}`;
+  const descriptionString = `✅Выгодные Цены 💸 на ${categoryString}${
+    filtersString.length
+      ? `: ${filtersString} с доставкой в Минске. Только оригинальная техника Apple в интернет-магазине - Macplus✅`
+      : ` с доставкой в Минске. Купить ${categoryString} ⭐ Высокого Качества в интернет-магазине технике Эпл - Macplus✅`
+  }`;
+
+  const headerString = `${category.title}${filtersString.length ? `: ${filtersString}` : ""}${
+    page > 1 ? `; Страница №${page}` : ""
+  }`;
 
   return (
     <main className="main bt-lg-none shop">
       <Helmet>
         <title>{titleString}</title>
         <meta property="og:title" content={category.title || category.name || "Каталог"} />
-        <meta name="description" content={category.description || category.name || ""} />
+        <meta name="description" content={descriptionString} />
         <meta property="og:description" content={category.description || category.name || ""} />
         <meta name="keywords" content={(category.keywords || []).join(", ")} />
       </Helmet>

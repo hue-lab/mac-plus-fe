@@ -18,17 +18,20 @@ export default function PostSingle({ post }) {
     post.seo?.seoTitle || post.title || "Mac Plus"
   }. Цена на технику Apple в интернет-магазине Macplus
   `;
+  const descriptionString = `${
+    post.seo?.seoTitle || post.title || ""
+  }. Полезные Статьи 📚 Про Технику Apple от специалистов интернет-магазина - Macplus✅`;
 
   return (
     <main className="main skeleton-body">
       <Helmet>
         <title>{titleString}</title>
-        <meta name="description" content={post.seo?.seoDescription || post.title || ""} />
+        <meta name="description" content={descriptionString} />
         <meta name="keywords" content={post.seo?.seoKeywords?.join(", ")} />
         <meta name="author" content={post.seo?.seoAuthor || "Mac Plus"} />
       </Helmet>
 
-      <h1 className="d-none">Mac Plus - {post.title}</h1>
+      <h1 className="d-none">{post.title}</h1>
 
       <nav className="breadcrumb-nav">
         <div className="container">

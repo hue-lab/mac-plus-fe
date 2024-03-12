@@ -15,6 +15,9 @@ export default function ProductItem({ product, featured, deliveryMethods }) {
   const titleString = `${
     product.seo?.seoTitle || product.name || "Mac Plus"
   }, купить в Минске. Интернет-магазин - Macplus`;
+  const descriptionString = `✅Лучшая цена на ${
+    product.seo?.seoTitle || product.name || ""
+  } с доставкой в Минске. ⭐Купить ${product.category.name} в интернет-магазине Macplus✅`;
   const headerString = `${product.name} - купить в Минске. Интернет-магазин Macplus`;
 
   return (
@@ -22,7 +25,7 @@ export default function ProductItem({ product, featured, deliveryMethods }) {
       <Helmet>
         <title>{titleString}</title>
         <meta property="og:title" content={product.seo?.seoTitle || product.name || "Mac Plus"} />
-        <meta name="description" content={product.seo?.seoDescription || product.name || ""} />
+        <meta name="description" content={descriptionString} />
         <meta
           property="og:description"
           content={product.seo?.seoDescription || product.name || ""}
