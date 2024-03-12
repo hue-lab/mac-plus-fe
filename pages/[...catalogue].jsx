@@ -4,6 +4,7 @@ import { getProducts, getProductsAdvanced } from "~/utils/endpoints/products";
 import { getDeliveryMethods } from "~/utils/endpoints/orders";
 import { getFilters } from "~/utils/endpoints/filters";
 import { getBannerSlide } from "~/utils/endpoints/slides";
+import { getFieldsObject } from "../utils/endpoints/fields";
 import Category from "~/components/items/category";
 import { parseFilterString } from "~/utils";
 import CyrillicToTranslit from "cyrillic-to-translit-js";
@@ -27,6 +28,11 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
   const filterString = pathSegments[1]?.split("/page-is-")[0] || null;
   const filterObject = parseFilterString(filterString);
   const path = pathSegments[0].split("/page-is-")[0];
+  const seoFields = await getFieldsObject(
+    "category-seo-header",
+    "category-seo-title",
+    "category-seo-description"
+  );
   const item =
     path === "shop"
       ? {
@@ -63,7 +69,7 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
   const filtersPairs = filters.reduce((filterAcc, filterCurr) => {
     const optionsArr = [];
     const filterKey = [filterCurr.code || filterCurr._id];
-    const valuesPairs = filterAcc[filterKey] = filterCurr.options.reduce(
+    const valuesPairs = (filterAcc[filterKey] = filterCurr.options.reduce(
       (optionAcc, optionCurr) => {
         const translitOption = cyrillicToTranslit.transform(optionCurr, "_").toLowerCase();
         optionsArr.push({
@@ -74,7 +80,7 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
         return optionAcc;
       },
       {}
-    );
+    ));
     filterAcc[filterKey] = {
       valuesPairs,
       ...filterCurr,
@@ -161,6 +167,7 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
     filterObject: filterObject,
     filtersPairs,
     fullPath: fullPath,
+    seoFields,
   };
 };
 
@@ -176,6 +183,7 @@ export default function GenericCatalogueItem({
   filterObject,
   filtersPairs,
   fullPath,
+  seoFields,
 }) {
   return type === "product" ? (
     <ProductItem product={data} featured={featured} deliveryMethods={deliveryMethods} />
@@ -189,6 +197,7 @@ export default function GenericCatalogueItem({
       filterObject={filterObject}
       fullPath={fullPath}
       filtersPairs={filtersPairs}
+      seoFields={seoFields}
     />
   );
 }

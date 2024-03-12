@@ -14,6 +14,7 @@ export default function Category({
   filterObject,
   filtersPairs,
   fullPath,
+  seoFields,
 }) {
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -21,31 +22,22 @@ export default function Category({
     }
   }, [page, filters]);
 
-  const appliedFiltersKeys = Object.keys(filterObject);
-  const appliedFilters = appliedFiltersKeys.map((key) => {
-    const filter = filters.find((filter) => filter.code === key);
-    const appliedFilter = { name: filter.name, code: filter.code, _id: filter._id };
-    appliedFilter.options = filter.options.filter((option) =>
-      filterObject[key].includes(option.key)
-    );
-    return appliedFilter;
-  });
+  const filtersString = Object.entries(filterObject)
+    .map(
+      (filter) =>
+        `${filtersPairs[filter[0]].name} - ${filter[1]
+          .map((option) => `${filtersPairs[filter[0]].valuesPairs[option]}`)
+          .join(", ")}`
+    )
+    .join("; ");
 
   const categoryString = `${category.title || category.name || ""}`;
 
-  const filtersString = `${appliedFilters
-    .map((filter) => `${filter.name} - ${filter.options.map((option) => option.value).join(", ")}`)
-    .join("; ")}`;
-
   const titleString = `${category.title || category.name || "Каталог"}${
     filtersString.length ? `: ${filtersString}` : ""
-  }, купить в Минске. Цена на технику Apple в магазине - Macplus`;
-
-  const descriptionString = `✅Выгодные Цены 💸 на ${categoryString}${
-    filtersString.length
-      ? `: ${filtersString} с доставкой в Минске. Только оригинальная техника Apple в интернет-магазине - Macplus✅`
-      : ` с доставкой в Минске. Купить ${categoryString} ⭐ Высокого Качества в интернет-магазине технике Эпл - Macplus✅`
   }`;
+
+  const descriptionString = `${categoryString}${filtersString.length ? `: ${filtersString}` : ``}`;
 
   const headerString = `${category.title}${filtersString.length ? `: ${filtersString}` : ""}${
     page > 1 ? `; Страница №${page}` : ""
@@ -54,14 +46,19 @@ export default function Category({
   return (
     <main className="main bt-lg-none shop">
       <Helmet>
-        <title>{titleString}</title>
+        <title>{seoFields["category-seo-title"].replaceAll("{TITLE}", titleString)}</title>
         <meta property="og:title" content={category.title || category.name || "Каталог"} />
-        <meta name="description" content={descriptionString} />
+        <meta
+          name="description"
+          content={seoFields["category-seo-description"].replaceAll("{TITLE}", descriptionString)}
+        />
         <meta property="og:description" content={category.description || category.name || ""} />
         <meta name="keywords" content={(category.keywords || []).join(", ")} />
       </Helmet>
 
-      <h1 className="d-none">{headerString}</h1>
+      <h1 className="d-none">
+        {seoFields["category-seo-header"].replaceAll("{TITLE}", headerString)}
+      </h1>
 
       <div className="page-content mb-10 pb-2">
         <div className="container">
