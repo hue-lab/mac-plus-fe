@@ -32,16 +32,18 @@ export default function Category({
 
   const filtersString = `${appliedFilters
     .map((filter) => `${filter.name} - ${filter.options.map((option) => option.value).join(", ")}`)
-    .join("; ")}`;
+    .join("; ")}${page > 1 ? `; Страница №${page}` : ""}`;
 
-  const headerString = `${category.title}${filtersString.length ? ": " : ""}${filtersString}${
-    page > 1 ? `; Страница №${page}` : ""
-  }`;
+  const titleString = `${category.title || category.name || "Каталог"}${
+    filtersString.length ? `: ${filtersString}` : ""
+  }, купить в Минске. Цена на технику Apple в магазине - Macplus`;
+
+  const headerString = `${category.title}${filtersString.length ? `: ${filtersString}` : ""}`;
 
   return (
     <main className="main bt-lg-none shop">
       <Helmet>
-        <title>{category.title || category.name || "Каталог"}</title>
+        <title>{titleString}</title>
         <meta property="og:title" content={category.title || category.name || "Каталог"} />
         <meta name="description" content={category.description || category.name || ""} />
         <meta property="og:description" content={category.description || category.name || ""} />

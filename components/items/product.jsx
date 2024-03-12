@@ -12,12 +12,15 @@ export default function ProductItem({ product, featured, deliveryMethods }) {
   if (!product) return "";
 
   const ogImage = product.seo?.seoImage[0];
+  const titleString = `${
+    product.seo?.seoTitle || product.name || "Mac Plus"
+  }, купить в Минске. Интернет-магазин - Macplus`;
   const headerString = `${product.name} - купить в Минске. Интернет-магазин Macplus`;
 
   return (
     <main className="main single-product">
       <Helmet>
-        <title>{product.seo?.seoTitle || product.name || "Mac Plus"}</title>
+        <title>{titleString}</title>
         <meta property="og:title" content={product.seo?.seoTitle || product.name || "Mac Plus"} />
         <meta name="description" content={product.seo?.seoDescription || product.name || ""} />
         <meta
