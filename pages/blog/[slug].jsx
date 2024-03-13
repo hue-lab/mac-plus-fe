@@ -16,22 +16,24 @@ PostSingle.getInitialProps = async (context) => {
 
 export default function PostSingle({ post, seoFields }) {
   const loading = false;
+  const ogImage = post.media;
   const titleString = `${post.seo?.seoTitle || post.title || "Mac Plus"}`;
   const descriptionString = `${post.seo?.seoTitle || post.title || ""}`;
+
+  const interpolatedTitle = seoFields["blog-seo-title"].replaceAll("{TITLE}", titleString);
+  const interpolatedDescription = seoFields["blog-seo-description"].replaceAll("{TITLE}", descriptionString);
 
   return (
     <main className="main skeleton-body">
       <Helmet>
-        <title>{seoFields["blog-seo-title"].replaceAll("{TITLE}", titleString)}</title>
-        <meta
-          name="description"
-          content={seoFields["blog-seo-description"].replaceAll("{TITLE}", descriptionString)}
-        />
-        <meta name="keywords" content={post.seo?.seoKeywords?.join(", ")} />
-        <meta name="author" content={post.seo?.seoAuthor || "Mac Plus"} />
+        <title>{interpolatedTitle}</title>
+        <meta property="og:title" content={interpolatedTitle}/>
+        <meta name="description" content={interpolatedDescription}/>
+        <meta property="og:description" content={interpolatedDescription}/>
+        <meta name="keywords" content={post.seo?.seoKeywords?.join(", ")}/>
+        <meta name="author" content={post.seo?.seoAuthor || "Mac Plus"}/>
+        {ogImage && <meta property="og:image" content={getImgPath(ogImage)} />}
       </Helmet>
-
-      <h1 className="d-none">{post.title}</h1>
 
       <nav className="breadcrumb-nav">
         <div className="container">
@@ -77,12 +79,10 @@ export default function PostSingle({ post, seoFields }) {
                         {getPostDate(post.createdAt)}
                       </ALink>
                     </div>
-                    <h4 className="post-title">
-                      <ALink href="#">{post.title}</ALink>
-                    </h4>
+                    <h1 className="post-title">{post.title}</h1>
                     <div
                       className="post-body mb-7"
-                      dangerouslySetInnerHTML={{ __html: post.content }}
+                      dangerouslySetInnerHTML={{__html: post.content}}
                     ></div>
                   </div>
                 </div>

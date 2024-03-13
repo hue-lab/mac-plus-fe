@@ -43,22 +43,21 @@ export default function Category({
     page > 1 ? `; Страница №${page}` : ""
   }`;
 
+  const interpolatedTitle = seoFields["category-seo-title"].replaceAll("{TITLE}", titleString);
+  const interpolatedDescription = seoFields["category-seo-description"].replaceAll("{TITLE}", descriptionString);
+  const interpolatedHeader = seoFields["category-seo-header"].replaceAll("{TITLE}", headerString);
+
   return (
     <main className="main bt-lg-none shop">
       <Helmet>
-        <title>{seoFields["category-seo-title"].replaceAll("{TITLE}", titleString)}</title>
-        <meta property="og:title" content={category.title || category.name || "Каталог"} />
-        <meta
-          name="description"
-          content={seoFields["category-seo-description"].replaceAll("{TITLE}", descriptionString)}
-        />
-        <meta property="og:description" content={category.description || category.name || ""} />
+        <title>{interpolatedTitle}</title>
+        <meta property="og:title" content={interpolatedTitle} />
+        <meta name="description" content={interpolatedDescription} />
+        <meta property="og:description" content={interpolatedDescription} />
         <meta name="keywords" content={(category.keywords || []).join(", ")} />
       </Helmet>
 
-      <h1 className="d-none">
-        {seoFields["category-seo-header"].replaceAll("{TITLE}", headerString)}
-      </h1>
+      <h1 className="d-none">{interpolatedHeader}</h1>
 
       <div className="page-content mb-10 pb-2">
         <div className="container">

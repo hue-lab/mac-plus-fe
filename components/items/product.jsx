@@ -17,28 +17,24 @@ export default function ProductItem({ product, featured, deliveryMethods, seoFie
   const categoryString = `${product.category.name}`;
   const headerString = `${product.name}`;
 
+  const interpolatedTitle = seoFields["product-seo-title"].replaceAll("{TITLE}", titleString);
+  const interpolatedDescription = seoFields["product-seo-description"]
+    .replaceAll("{TITLE}", descriptionString)
+    .replaceAll("{CATEGORY}", categoryString);
+  const interpolatedHeader = seoFields["product-seo-header"].replaceAll("{TITLE}", headerString);
+
   return (
     <main className="main single-product">
       <Helmet>
-        <title>{seoFields["product-seo-title"].replaceAll("{TITLE}", titleString)}</title>
-        <meta property="og:title" content={product.seo?.seoTitle || product.name || "Mac Plus"} />
-        <meta
-          name="description"
-          content={seoFields["product-seo-description"]
-            .replaceAll("{TITLE}", descriptionString)
-            .replaceAll("{CATEGORY}", categoryString)}
-        />
-        <meta
-          property="og:description"
-          content={product.seo?.seoDescription || product.name || ""}
-        />
+        <title>{interpolatedTitle}</title>
+        <meta property="og:title" content={interpolatedTitle} />
+        <meta name="description" content={interpolatedDescription} />
+        <meta property="og:description" content={interpolatedDescription} />
         <meta name="keywords" content={product.seo?.seoKeywords?.join(", ")} />
         {ogImage && <meta property="og:image" content={getImgPath(ogImage.imageName)} />}
       </Helmet>
 
-      <h1 className="d-none">
-        {seoFields["product-seo-header"].replaceAll("{TITLE}", headerString)}
-      </h1>
+      <h1 className="d-none">{interpolatedHeader}</h1>
 
       {!!product ? (
         <div className={`page-content mb-8`}>
