@@ -8,29 +8,26 @@ import DescOne from "~/components/partials/product/desc/desc-one";
 import ProductSidebar from "~/components/partials/product/product-sidebar";
 import { getImgPath } from "~/utils";
 
-export default function ProductItem({
-  product,
-  featured,
-  deliveryMethods,
-  seoFields,
-}) {
+export default function ProductItem({ product, featured, deliveryMethods, seoFields }) {
   if (!product) return "";
-  console.log(seoFields);
+
   const ogImage = product.seo?.seoImage[0];
-  const titleString = `${
-    product.seo?.seoTitle || product.name || "Mac Plus"
-  }, купить в Минске. Интернет-магазин - Macplus`;
-  const descriptionString = `✅Лучшая цена на ${
-    product.seo?.seoTitle || product.name || ""
-  } с доставкой в Минске. ⭐Купить ${product.category.name} в интернет-магазине Macplus✅`;
-  const headerString = `${product.name} - купить в Минске. Интернет-магазин Macplus`;
+  const titleString = `${product.seo?.seoTitle || product.name || "Mac Plus"}`;
+  const descriptionString = `${product.seo?.seoTitle || product.name || ""}`;
+  const categoryString = `${product.category.name}`;
+  const headerString = `${product.name}`;
 
   return (
     <main className="main single-product">
       <Helmet>
-        <title>{titleString}</title>
+        <title>{seoFields["product-seo-title"].replaceAll("{TITLE}", titleString)}</title>
         <meta property="og:title" content={product.seo?.seoTitle || product.name || "Mac Plus"} />
-        <meta name="description" content={descriptionString} />
+        <meta
+          name="description"
+          content={seoFields["product-seo-description"]
+            .replaceAll("{TITLE}", descriptionString)
+            .replaceAll("{CATEGORY}", categoryString)}
+        />
         <meta
           property="og:description"
           content={product.seo?.seoDescription || product.name || ""}
@@ -39,7 +36,9 @@ export default function ProductItem({
         {ogImage && <meta property="og:image" content={getImgPath(ogImage.imageName)} />}
       </Helmet>
 
-      <h1 className="d-none">{headerString}</h1>
+      <h1 className="d-none">
+        {seoFields["product-seo-header"].replaceAll("{TITLE}", headerString)}
+      </h1>
 
       {!!product ? (
         <div className={`page-content mb-8`}>
