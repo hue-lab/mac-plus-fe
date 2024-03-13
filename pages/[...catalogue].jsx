@@ -4,7 +4,7 @@ import { getProducts, getProductsAdvanced } from "~/utils/endpoints/products";
 import { getDeliveryMethods } from "~/utils/endpoints/orders";
 import { getFilters } from "~/utils/endpoints/filters";
 import { getBannerSlide } from "~/utils/endpoints/slides";
-import { getFieldsObject } from "../utils/endpoints/fields";
+import { getFieldsObject } from "~/utils/endpoints/fields";
 import Category from "~/components/items/category";
 import { parseFilterString } from "~/utils";
 import CyrillicToTranslit from "cyrillic-to-translit-js";
@@ -31,7 +31,10 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
   const seoFields = await getFieldsObject(
     "category-seo-header",
     "category-seo-title",
-    "category-seo-description"
+    "category-seo-description",
+    "product-seo-header",
+    "product-seo-title",
+    "product-seo-description",
   );
   const item =
     path === "shop"
@@ -62,6 +65,7 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
       deliveryMethods: deliveryRes || [],
       data: item,
       type: "product",
+      seoFields,
     };
   }
 
@@ -186,7 +190,12 @@ export default function GenericCatalogueItem({
   seoFields,
 }) {
   return type === "product" ? (
-    <ProductItem product={data} featured={featured} deliveryMethods={deliveryMethods} />
+    <ProductItem
+      product={data}
+      featured={featured}
+      deliveryMethods={deliveryMethods}
+      seoFields={seoFields}
+    />
   ) : (
     <Category
       page={page}

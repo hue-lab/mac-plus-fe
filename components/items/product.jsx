@@ -8,9 +8,14 @@ import DescOne from "~/components/partials/product/desc/desc-one";
 import ProductSidebar from "~/components/partials/product/product-sidebar";
 import { getImgPath } from "~/utils";
 
-export default function ProductItem({ product, featured, deliveryMethods }) {
+export default function ProductItem({
+  product,
+  featured,
+  deliveryMethods,
+  seoFields,
+}) {
   if (!product) return "";
-
+  console.log(seoFields);
   const ogImage = product.seo?.seoImage[0];
   const titleString = `${
     product.seo?.seoTitle || product.name || "Mac Plus"
