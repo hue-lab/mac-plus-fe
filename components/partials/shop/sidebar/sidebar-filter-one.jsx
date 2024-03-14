@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import {useEffect} from 'react';
+import {useRouter} from 'next/router';
 import ALink from '~/components/features/custom-link';
 import Card from '~/components/features/accordion/card';
 import CustomPriceInput from "~/components/partials/shop/sidebar/custom-number-input";
 
-export default function SidebarFilterOne({ type = "left", isFeatured = false, filters = [] }) {
+export default function SidebarFilterOne({ type = "left", isFeatured = false, filters = [], filterObject }) {
   const router = useRouter();
   const { catalogue, ...query } = router.query;
   const catalogueUrl = catalogue.join('/');
@@ -14,23 +14,56 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
 
   useEffect(() => {
     window.addEventListener('resize', hideSidebar);
-
     return () => {
       window.removeEventListener('resize', hideSidebar);
     }
   }, [])
 
   const getPathname = () => {
-    return typeof catalogueUrl === 'string' ? router.pathname.replace('[...catalogue]', catalogueUrl) : router.pathname;
+    return (typeof catalogueUrl === 'string' ? router.pathname.replace('[...catalogue]', catalogueUrl) : router.pathname)?.split('/page-is-')[0];
+  }
+
+  const advancedPathname = (key, value) => {
+    const filterObjectClone = Object.assign({}, filterObject);
+    if (filterObjectClone.hasOwnProperty(key)) {
+      const keySet = new Set(filterObjectClone[key]);
+      if (keySet.has(value)) {
+        keySet.delete(value);
+      } else {
+        keySet.add(value);
+      }
+      if (keySet.size) {
+        filterObjectClone[key] = Array.from(keySet);
+      } else {
+        delete filterObjectClone[key];
+      }
+    } else {
+      filterObjectClone[key] = [value];
+    }
+    const filterArraySorted = Object.entries(filterObjectClone).sort((a, b) => {
+      return a[0] > b[0] ? 1 : 0;
+    });
+    const basePath = getPathname().split('/filter')[0];
+    const path = filterArraySorted.length ? `${basePath}/filter` : basePath;
+    return filterArraySorted.reduce((acc, [key, value]) => {
+      acc = acc.concat(`/${key}-is-${value.sort().join('-or-')}`);
+      return acc;
+    }, path);
   }
 
   const filterByPrice = (filterPrice) => {
     let url = getPathname();
-    let arr = [`min_price=${filterPrice.min}`, `max_price=${filterPrice.max}`, 'page=1'];
-    for (let key in query) {
-      if (key !== 'min_price' && key !== 'max_price' && key !== 'page' && key !== 'grid') arr.push(key + '=' + query[key]);
+    let arr = [];
+    if (filterPrice?.min) {
+      arr.push(`min_price=${filterPrice.min}`);
     }
-    url = url + '?' + arr.join('&');
+    if (filterPrice?.max) {
+      arr.push(`max_price=${filterPrice.max}`);
+    }
+    // for (let key in query) {
+    //   if (key !== 'min_price' && key !== 'max_price' && key !== 'page' && key !== 'grid') arr.push(key + '=' + query[key]);
+    // }
+    url = url + (arr.length ? '?' : '') + arr.join('&');
     router.push(url);
   }
 
@@ -100,12 +133,12 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                           <i className="d-icon-arrow-left"></i> : <i className="d-icon-arrow-right"></i>
                       }
                     </a>
-                    <ALink href={{ pathname: getPathname(), query: { grid: query.grid, type: router.query.type ? router.query.type : null } }} scroll={false} className="filter-clean">Clean All</ALink>
+                    <ALink href={{ pathname: getPathname(), query: { grid: query.grid, type: router.query.type ? router.query.type : null } }} scroll={false} className="filter-clean">Очистить</ALink>
                   </div>
               }
 
               <div className="widget widget-collapsible">
-                <Card title="<h3 class='widget-title'>Цена<span class='toggle-btn p-0 parse-content'></span></h3>" type="parse" expanded={true}>
+                <Card title={`<div style="color: #222;" class='widget-title'>Цена<span class='toggle-btn p-0 parse-content'></span></div>`} type="parse" expanded={true}>
                   <div className="widget-body">
                     <form action="#">
                       <div className="widget-body filter-items">
@@ -123,10 +156,10 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                     <Card type="parse" expanded={true}>
                       <ul className="filter-items">
                         <li
-                          className={containsAttrInUrl(item.code || item._id, 'true') ? 'active' : ''}
+                          className={filterObject[item.code || item._id]?.includes('true') ? 'active' : ''}
                           key={index}
                         >
-                          <ALink className="font-weight-bold" scroll={false} href={{ pathname: getPathname(), query: { ...query, page: 1, [item.code || item._id]: !containsAttrInUrl(item.code || item._id, 'true') ? true : undefined } }}>{item.name}</ALink>
+                          <ALink className="font-weight-bold" scroll={false} href={{ pathname: advancedPathname(item.code || item._id, 'true'), query: { ...query } }}>{item.name}</ALink>
                         </li>
                       </ul>
                     </Card>
@@ -135,7 +168,7 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                   :
 
                   <div key={index} className="widget widget-collapsible">
-                  <Card title={`<h3 class='widget-title'>${item.name}<span class='toggle-btn p-0 parse-content'></span></h3>`} type="parse" expanded={false}>
+                  <Card title={`<div style="color: #222;" class='widget-title'>${item.name}<span class='toggle-btn p-0 parse-content'></span></div>`} type="parse" expanded={false}>
                     { item.type === 'NUMBER_SELECT' && <ul className="widget-body filter-items">
                       {
                         (item.options || []).map((option, index) => (
@@ -143,7 +176,7 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                               className={containsAttrInUrl(item.code || item._id, option) ? 'active' : ''}
                               key={index}
                             >
-                              <ALink scroll={false} href={{ pathname: getPathname(), query: { ...query, page: 1, [item.code || item._id]: getUrlForAttrs(item.code || item._id, option) } }}>{option} {item.units}</ALink>
+                              <ALink scroll={false} href={{ pathname: getPathname(), query: { ...query, [item.code || item._id]: getUrlForAttrs(item.code || item._id, option) } }}>{option} {item.units}</ALink>
                             </li>
                           )
 
@@ -155,10 +188,10 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                       {
                         (item.options || []).map((option, index) => (
                             <li
-                              className={containsAttrInUrl(item.code || item._id, option) ? 'active' : ''}
+                              className={filterObject[item.code || item._id]?.includes(option.key) ? 'active' : ''}
                               key={index}
                             >
-                              <ALink scroll={false} href={{ pathname: getPathname(), query: { ...query, page: 1, [item.code || item._id]: getUrlForAttrs(item.code || item._id, option) } }}>{option}</ALink>
+                              <ALink scroll={false} href={{ pathname: advancedPathname(item.code || item._id, option.key), query: { ...query } }}>{option.value}</ALink>
                             </li>
                           )
 

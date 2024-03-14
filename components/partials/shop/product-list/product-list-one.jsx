@@ -4,7 +4,7 @@ import ProductTwo from '~/components/features/product/product-two';
 import ProductEight from '~/components/features/product/product-eight';
 import Pagination from '~/components/features/pagination';
 
-export  default function ProductListOne({ itemsPerRow = 3, type = "left", isToolbox = true, products }) {
+export  default function ProductListOne({ itemsPerRow = 3, type = "left", isToolbox = true, products, fullPath }) {
   const router = useRouter();
   const query = router.query;
   const loading = false;
@@ -73,7 +73,7 @@ export  default function ProductListOne({ itemsPerRow = 3, type = "left", isTool
               productsData && <p className="show-info">Показано<span>{ productsData.length || 0 } из { products.metadata.total }</span>продуктов</p>
             }
 
-            <Pagination totalPage={totalPage} />
+            <Pagination totalPage={totalPage} fullPath={fullPath} />
           </div> : ''
       }
     </>

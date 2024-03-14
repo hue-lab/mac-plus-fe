@@ -1,24 +1,54 @@
-import {getItemBySlug} from "~/utils/endpoints/item";
+import { getItemBySlug } from "~/utils/endpoints/item";
 import ProductItem from "~/components/items/product";
-import {getProducts, getProductsAdvanced} from "~/utils/endpoints/products";
-import {getDeliveryMethods} from "~/utils/endpoints/orders";
-import {getFilters} from "~/utils/endpoints/filters";
-import {getBannerSlide} from "~/utils/endpoints/slides";
+import { getProducts, getProductsAdvanced } from "~/utils/endpoints/products";
+import { getDeliveryMethods } from "~/utils/endpoints/orders";
+import { getFilters } from "~/utils/endpoints/filters";
+import { getBannerSlide } from "~/utils/endpoints/slides";
+import { getFieldsObject } from "~/utils/endpoints/fields";
 import Category from "~/components/items/category";
+import { parseFilterString } from "~/utils";
+import CyrillicToTranslit from "cyrillic-to-translit-js";
 
 GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
-  const { catalogue, page, per_page, price, sortby, type, min_price, max_price, search, ...customProperties } = query;
-  const path = catalogue.join('/');
-  const item = path === 'shop' ? {
-    name: 'Все товары',
-    description: 'Все товары каталога',
-  } : await getItemBySlug(path);
+  const cyrillicToTranslit = new CyrillicToTranslit();
+  const {
+    catalogue,
+    per_page,
+    price,
+    sortby,
+    type,
+    min_price,
+    max_price,
+    search,
+    ...customProperties
+  } = query;
+  const fullPath = catalogue.join("/");
+  const pathSegments = fullPath.split("/filter/");
+  const page = parseInt(fullPath.split("/page-is-")[1] || 1);
+  const filterString = pathSegments[1]?.split("/page-is-")[0] || null;
+  const filterObject = parseFilterString(filterString);
+  const path = pathSegments[0].split("/page-is-")[0];
+  const seoFields = await getFieldsObject(
+    "category-seo-header",
+    "category-seo-title",
+    "category-seo-description",
+    "product-seo-header",
+    "product-seo-title",
+    "product-seo-description",
+  );
+  const item =
+    path === "shop"
+      ? {
+          name: "Все товары",
+          description: "Все товары каталога",
+        }
+      : await getItemBySlug(path);
 
-  if (item?.statusCode === 404 && path !== 'shop') {
+  if (item?.statusCode === 404 && path !== "shop") {
     if (res) {
       res.writeHead(301, {
-        Location: '/404',
-        'Content-Type': 'text/html; charset=utf-8',
+        Location: "/404",
+        "Content-Type": "text/html; charset=utf-8",
       });
       res.end();
       return;
@@ -34,12 +64,35 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
       featured: featuredRes || [],
       deliveryMethods: deliveryRes || [],
       data: item,
-      type: 'product'
-    }
+      type: "product",
+      seoFields,
+    };
   }
 
   const filters = item ? await getFilters(item._id) : [];
-  const filtersCodes = (filters || []).map(filterItem => {
+  const filtersPairs = filters.reduce((filterAcc, filterCurr) => {
+    const optionsArr = [];
+    const filterKey = [filterCurr.code || filterCurr._id];
+    const valuesPairs = (filterAcc[filterKey] = filterCurr.options.reduce(
+      (optionAcc, optionCurr) => {
+        const translitOption = cyrillicToTranslit.transform(optionCurr, "_").toLowerCase();
+        optionsArr.push({
+          key: translitOption,
+          value: optionCurr,
+        });
+        optionAcc[translitOption] = optionCurr;
+        return optionAcc;
+      },
+      {}
+    ));
+    filterAcc[filterKey] = {
+      valuesPairs,
+      ...filterCurr,
+    };
+    filterCurr.options = optionsArr;
+    return filterAcc;
+  }, {});
+  const filtersCodes = (filters || []).map((filterItem) => {
     return filterItem.code || filterItem._id;
   });
   const banner = await getBannerSlide();
@@ -50,21 +103,21 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
     pagination: {
       page: Number(page) || 1,
       limit: Number(per_page) || 12,
-    }
+    },
   };
 
-  if (customProperties && Object.keys(customProperties).length) {
-    requestFilters.customProperties = Object.keys(customProperties).reduce((acc, key) => {
-      const values = customProperties[key]?.split(',');
+  if (filterObject && Object.keys(filterObject).length) {
+    requestFilters.customProperties = Object.keys(filterObject).reduce((acc, key) => {
+      const values = filterObject[key];
       if (values?.length && values[0].length && filtersCodes.includes(key)) {
-        const filterId = (filters || []).find(filter => filter.code === key)?._id;
+        const filterId = (filters || []).find((filter) => filter.code === key)?._id;
         if (values.length === 1) {
           acc[filterId || key] = {
-            $eq: values[0] === 'true' ? true : values[0]
-          }
+            $eq: values[0] === "true" ? true : filtersPairs[key].valuesPairs[values[0]],
+          };
         } else {
           acc[filterId || key] = {
-            $in: values,
+            $in: values.map((val) => filtersPairs[key].valuesPairs[val]),
           };
         }
       }
@@ -82,24 +135,24 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
   }
   if (item?._id) {
     requestFilters.baseProperties.categoryId = {
-      $eq: item._id
-    }
+      $eq: item._id,
+    };
   }
   if (search) {
     requestFilters.search = search;
   }
   if (sortby) {
     switch (sortby) {
-      case 'price-low':
+      case "price-low":
         requestFilters.sort = {
           direction: 1,
-          property: 'totalPrice',
+          property: "totalPrice",
         };
         break;
-      case 'price-high':
+      case "price-high":
         requestFilters.sort = {
           direction: -1,
-          property: 'totalPrice',
+          property: "totalPrice",
         };
         break;
     }
@@ -110,13 +163,50 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
     banner: banner?.data[0],
     data: item,
     products: products,
-    filters,
-    type: 'category',
-  }
-}
+    filters: filters.map((el) => {
+      el.code = el.code || el._id;
+      return el;
+    }),
+    type: "category",
+    filterObject: filterObject,
+    filtersPairs,
+    fullPath: fullPath,
+    seoFields,
+  };
+};
 
-export default function GenericCatalogueItem({ data,  type, featured, deliveryMethods, banner, filters, products, page }) {
-  return type === 'product' ?
-    <ProductItem product={data} featured={featured} deliveryMethods={deliveryMethods}/>
-    : <Category page={page} banner={banner} filters={filters} products={products} category={data}/>;
+export default function GenericCatalogueItem({
+  data,
+  type,
+  featured,
+  deliveryMethods,
+  banner,
+  filters,
+  products,
+  page,
+  filterObject,
+  filtersPairs,
+  fullPath,
+  seoFields,
+}) {
+  return type === "product" ? (
+    <ProductItem
+      product={data}
+      featured={featured}
+      deliveryMethods={deliveryMethods}
+      seoFields={seoFields}
+    />
+  ) : (
+    <Category
+      page={page}
+      banner={banner}
+      filters={filters}
+      products={products}
+      category={data}
+      filterObject={filterObject}
+      fullPath={fullPath}
+      filtersPairs={filtersPairs}
+      seoFields={seoFields}
+    />
+  );
 }
