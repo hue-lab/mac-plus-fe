@@ -138,7 +138,7 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
               }
 
               <div className="widget widget-collapsible">
-                <Card title="<h3 class='widget-title'>Цена<span class='toggle-btn p-0 parse-content'></span></h3>" type="parse" expanded={true}>
+                <Card title={`<div style="color: #222;" class='widget-title'>Цена<span class='toggle-btn p-0 parse-content'></span></div>`} type="parse" expanded={true}>
                   <div className="widget-body">
                     <form action="#">
                       <div className="widget-body filter-items">
@@ -168,7 +168,7 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
                   :
 
                   <div key={index} className="widget widget-collapsible">
-                  <Card title={`<h3 class='widget-title'>${item.name}<span class='toggle-btn p-0 parse-content'></span></h3>`} type="parse" expanded={false}>
+                  <Card title={`<div style="color: #222;" class='widget-title'>${item.name}<span class='toggle-btn p-0 parse-content'></span></div>`} type="parse" expanded={false}>
                     { item.type === 'NUMBER_SELECT' && <ul className="widget-body filter-items">
                       {
                         (item.options || []).map((option, index) => (
