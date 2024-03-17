@@ -97,6 +97,13 @@ function DetailThree(props) {
     }
   };
 
+  const orderOneClick = () => {
+    if (cartActive) {
+      addToCartHandler();
+      router.push("/pages/cart");
+    }
+  }
+
   const resetValueHandler = (e) => {
     setCurColor("null");
     setCurSize("null");
@@ -158,12 +165,12 @@ function DetailThree(props) {
         <div className="product-form-group">
           {product.isStock ? (
             <>
-              <Quantity
-                max={1000}
-                product={product}
-                onChangeQty={changeQty}
-                isStock={product.isStock}
-              />
+              {/*<Quantity*/}
+              {/*  max={1000}*/}
+              {/*  product={product}*/}
+              {/*  onChangeQty={changeQty}*/}
+              {/*  isStock={product.isStock}*/}
+              {/*/>*/}
               <button
                 className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold ${
                   cartActive ? "" : "disabled"
@@ -171,6 +178,14 @@ function DetailThree(props) {
                 onClick={addToCartHandler}
               >
                 <i className="d-icon-bag"></i>В корзину
+              </button>
+              <button
+                className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold ${
+                  cartActive ? "" : "disabled"
+                }`}
+                onClick={orderOneClick}
+              >
+                Купить сразу
               </button>
             </>
           ) : (
@@ -183,7 +198,7 @@ function DetailThree(props) {
 
       <div className="product-footer"></div>
 
-      {isDesc ? <DescTwo product={product.data} adClass={adClass} isSizeGuide={isSizeGuide} /> : ""}
+      {isDesc ? <DescTwo product={product.data} adClass={adClass} isSizeGuide={isSizeGuide}/> : ""}
     </div>
   );
 }
