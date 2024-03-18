@@ -156,7 +156,7 @@ export default function ProductItem({ product, featured, deliveryMethods, seoFie
       >
         <div className="newsletter-popup" id="newsletter-popup">
           <div className="newsletter-content">
-            <h2 className="font-weight-semi-bold">Заказ в 1 клик</h2>
+            <span className="newsletter-content_title">Заказ в 1 клик</span>
             <p className="text-grey">{product.name}</p>
 
             { fastFormDone ? (

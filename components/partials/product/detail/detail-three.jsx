@@ -181,7 +181,7 @@ function DetailThree(props) {
                 <i className="d-icon-bag"></i>В корзину
               </button>
               <button
-                className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold ${
+                className={`btn-product btn-cart btn-cart-fast text-normal ls-normal font-weight-semi-bold ${
                   cartActive ? "" : "disabled"
                 }`}
                 onClick={() => openModal(true)}
