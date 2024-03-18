@@ -24,6 +24,7 @@ function DetailThree(props) {
     adClass = "",
     isSizeGuide = true,
     isNav = true,
+    openModal,
   } = props;
   const { toggleWishlist, addToCart, wishlist } = props;
   const [curColor, setCurColor] = useState("null");
@@ -183,7 +184,7 @@ function DetailThree(props) {
                 className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold ${
                   cartActive ? "" : "disabled"
                 }`}
-                onClick={orderOneClick}
+                onClick={() => openModal(true)}
               >
                 Купить сразу
               </button>

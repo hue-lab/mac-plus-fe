@@ -457,7 +457,7 @@ button.mfp-close {
 // Popup - Newsletter
 .newsletter-popup {
     display: flex;
-    max-width: 72rem;
+    max-width: 60rem;
     text-align: center;
     background-position: 60% center;
     background-size: cover;
@@ -489,9 +489,14 @@ button.mfp-close {
     }
 
     .btn {
+        margin-top: 2rem;
         min-width: auto;
-        padding: .5em 1.5em;
+        padding: 1em 2em;
         font-size: 1.3rem;
+        &:disabled {
+            opacity: 50%;
+            cursor: default;
+        }
     }
     p {
         max-width: 100%;
@@ -500,7 +505,7 @@ button.mfp-close {
         line-height: 1.7;
     }
     label {
-        display: inline;
+        text-align: start;
         font-size: 1.2rem;
         &::before {
             border-color: $body-color;
@@ -514,7 +519,6 @@ button.mfp-close {
     .form-control {
         border: 1px solid $dark-color;
         background: #fff;
-        border-right: none;
     }
     .input-wrapper-inline {
         margin-bottom: 2.6rem;
@@ -522,20 +526,33 @@ button.mfp-close {
         .form-control {
             padding-left: 1.2rem;
             padding-right: 1.2rem;
-            border-radius: .3rem 0 0 .3rem;
+            border-radius: .3rem;
         }
         .btn {
             border-radius: 0 .3rem .3rem 0; 
         }
     }
     .custom-checkbox + label {
-        padding-left: 2.6rem;
+        padding-left: 3rem;
+    }
+    .fast-done {
+        &_icon {
+            width: 5rem;
+            height: 5rem;
+            stroke: #007945;
+        }
+        &_title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #222;
+        }
     }
 }
 .newsletter-content {
     margin-left: auto;
-    max-width: 41.4rem;
-    padding: 7.1rem 4.2rem 5rem;
+    margin-right: auto;
+    max-width: 50rem;
+    padding: 5rem 4.2rem;
 }
 
 // Popup - Product
