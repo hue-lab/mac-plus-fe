@@ -278,7 +278,7 @@ function Checkout(props) {
                             <input type="checkbox" className="custom-checkbox" id="terms-condition"
                               name="terms-condition" onChange={e => setIsTerms(!isTerms)} required />
                             <label className="form-control-label" htmlFor="terms-condition">
-                              Я прочитал(а) <ALink href="#"><u>правила обработки персональных данных</u></ALink> и соглашаюсь на обработку персональных данных *
+                              Я прочитал(а) <ALink href="/pages/privacy/"><u>правила обработки персональных данных</u></ALink> и соглашаюсь на обработку персональных данных *
                             </label>
                           </div>
                           {orderError && !isPending ? (
