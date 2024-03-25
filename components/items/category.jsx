@@ -89,7 +89,7 @@ export default function Category({
                   <div className="banner-content">
                     <h4
                       className="banner-subtitle d-inline-block mb-2 text-uppercase ls-normal bg-dark"
-                      style={{ color: "white", padding: ".5rem 1rem" }}
+                      style={{color: "white", padding: ".5rem 1rem"}}
                     >
                       {banner.description}
                     </h4>
@@ -106,7 +106,11 @@ export default function Category({
                 </div>
               )}
 
-              <ProductListOne products={products} type="banner" fullPath={fullPath} />
+              <ProductListOne products={products} type="banner" fullPath={fullPath}/>
+              <div
+                className="rendered-content"
+                dangerouslySetInnerHTML={{__html: category.content || ''}}
+              ></div>
             </div>
           </div>
         </div>

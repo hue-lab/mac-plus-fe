@@ -393,4 +393,9 @@
 
 .product-tabs .nav-item {
   margin-bottom: 1px;
+  @include mq(xs, max) {
+    span {
+      font-size: 1.8rem !important;
+    }
+  }
 }

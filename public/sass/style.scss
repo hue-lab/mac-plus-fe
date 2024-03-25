@@ -106,3 +106,16 @@
 @import 'pages/trade-in';
 
 @import 'demo/demo22_custom';
+
+.rendered-content {
+  li {
+    list-style-position: inside;
+    list-style-type: disc;
+    p {
+      display: inline;
+    }
+  }
+  ul {
+    padding-left: 0;
+  }
+}
