@@ -52,8 +52,9 @@ export default function SidebarFilterOne({ type = "left", isFeatured = false, fi
   }
 
   const filterByPrice = (filterPrice) => {
-    let url = getPathname();
-    let arr = [];
+    const urlSegments = getPathname().split('?');
+    let url = urlSegments[0];
+    const arr = Object.entries(query)?.map(([key, value]) => `${key}=${value}`) || [];
     if (filterPrice?.min) {
       arr.push(`min_price=${filterPrice.min}`);
     }
