@@ -71,9 +71,7 @@ const App = ({ Component, pageProps }) => {
           <meta charSet="UTF-8" />
           <meta http-equiv="X-UA-Compatible" content="IE=edge" />
           <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
           <title>Mac Plus</title>
-
           <meta name="keywords" content="Apple, Iphone, Mac, Ipad, Watch, AirPods" />
           <meta name="description" content="Продажа Электроники / Гаджетов в Минске и Беларуси" />
           <meta name="author" content="Mac Plus" />
