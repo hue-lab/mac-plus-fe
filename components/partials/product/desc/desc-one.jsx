@@ -8,7 +8,7 @@ import { modalActions } from "~/store/modal";
 
 import { toDecimal } from "~/utils";
 function DescOne(props) {
-  const { product, isGuide = true, isDivider = true, openModal } = props;
+  const { product, isGuide = true, isDivider = true, openModal, mainSeo } = props;
 
   let colors = [],
     sizes = [];
@@ -49,7 +49,7 @@ function DescOne(props) {
     <Tabs className="tab tab-nav-simple product-tabs" selectedTabClassName="show" selectedTabPanelClassName="active" defaultIndex={ 0 } >
       <TabList className="nav nav-tabs justify-content-center" role="tablist">
         {
-          product.content && (
+          (mainSeo?.content || product.content) && (
             <Tab className="nav-item">
               <span className="nav-link">Описание</span>
             </Tab>
@@ -62,11 +62,11 @@ function DescOne(props) {
 
       <div className="tab-content">
         {
-          product.content && (
+          (mainSeo?.content || product.content) && (
             <TabPanel className="tab-pane">
               <div
                 className="rendered-content"
-                dangerouslySetInnerHTML={{__html: product.content || ''}}
+                dangerouslySetInnerHTML={{__html: mainSeo?.content || product.content || ''}}
               ></div>
             </TabPanel>
           )

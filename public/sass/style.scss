@@ -119,3 +119,24 @@
     padding-left: 0;
   }
 }
+
+.collapsed-content {
+  overflow-y: hidden;
+  max-height: 50rem;
+}
+
+.collapsed-btn {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: $primary-color;
+  svg {
+    margin-left: .5rem;
+    margin-top: .1rem;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}

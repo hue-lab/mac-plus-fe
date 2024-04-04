@@ -8,6 +8,7 @@ import { getFieldsObject } from "~/utils/endpoints/fields";
 import Category from "~/components/items/category";
 import { parseFilterString } from "~/utils";
 import CyrillicToTranslit from "cyrillic-to-translit-js";
+import {getSeoByUrl} from "~/utils/endpoints/seo";
 
 GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
   const cyrillicToTranslit = new CyrillicToTranslit();
@@ -36,6 +37,8 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
     "product-seo-title",
     "product-seo-description",
   );
+  const seoMainMeta = await getSeoByUrl(`/${fullPath}`);
+
   const item =
     path === "shop"
       ? {
@@ -65,6 +68,7 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
       deliveryMethods: deliveryRes || [],
       data: item,
       type: "product",
+      mainSeo: seoMainMeta,
       seoFields,
     };
   }
@@ -171,6 +175,7 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
     filterObject: filterObject,
     filtersPairs,
     fullPath: fullPath,
+    mainSeo: seoMainMeta,
     seoFields,
   };
 };
@@ -187,6 +192,7 @@ export default function GenericCatalogueItem({
   filterObject,
   filtersPairs,
   fullPath,
+  mainSeo,
   seoFields,
 }) {
   return type === "product" ? (
@@ -195,6 +201,7 @@ export default function GenericCatalogueItem({
       featured={featured}
       deliveryMethods={deliveryMethods}
       seoFields={seoFields}
+      mainSeo={mainSeo}
     />
   ) : (
     <Category
@@ -207,6 +214,7 @@ export default function GenericCatalogueItem({
       fullPath={fullPath}
       filtersPairs={filtersPairs}
       seoFields={seoFields}
+      mainSeo={mainSeo}
     />
   );
 }
