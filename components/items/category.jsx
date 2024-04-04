@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import Helmet from "react-helmet";
 import ALink from "~/components/features/custom-link";
 import SidebarFilterOne from "~/components/partials/shop/sidebar/sidebar-filter-one";
@@ -14,14 +14,15 @@ export default function Category({
   filterObject,
   filtersPairs,
   fullPath,
+  mainSeo,
   seoFields,
 }) {
+  const [isCollapsed, setIsCollapsed] = useState(false);
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }, [page, filters]);
-
   const filtersString = Object.entries(filterObject)
     .map(
       (filter) =>
@@ -30,6 +31,10 @@ export default function Category({
           .join(", ")}`
     )
     .join("; ");
+
+  const collapseContent = () => {
+    setIsCollapsed(!isCollapsed);
+  }
 
   const categoryString = `${category.title || category.name || ""}`;
 
@@ -43,9 +48,9 @@ export default function Category({
     page > 1 ? `; Страница №${page}` : ""
   }`;
 
-  const interpolatedTitle = seoFields["category-seo-title"].replaceAll("{TITLE}", titleString);
-  const interpolatedDescription = seoFields["category-seo-description"].replaceAll("{TITLE}", descriptionString);
-  const interpolatedHeader = seoFields["category-seo-header"].replaceAll("{TITLE}", headerString);
+  const interpolatedTitle = mainSeo?.title || seoFields["category-seo-title"].replaceAll("{TITLE}", titleString);
+  const interpolatedDescription = mainSeo?.description || seoFields["category-seo-description"].replaceAll("{TITLE}", descriptionString);
+  const interpolatedHeader = mainSeo?.tag || seoFields["category-seo-header"].replaceAll("{TITLE}", headerString);
 
   return (
     <main className="main bt-lg-none shop">
@@ -54,7 +59,7 @@ export default function Category({
         <meta property="og:title" content={interpolatedTitle} />
         <meta name="description" content={interpolatedDescription} />
         <meta property="og:description" content={interpolatedDescription} />
-        <meta name="keywords" content={(category.keywords || []).join(", ")} />
+        <meta name="keywords" content={(mainSeo?.keywords || category.keywords || []).join(", ")} />
       </Helmet>
 
       <h1 className="d-none">{interpolatedHeader}</h1>
@@ -108,9 +113,18 @@ export default function Category({
 
               <ProductListOne products={products} type="banner" fullPath={fullPath}/>
               <div
-                className="rendered-content"
-                dangerouslySetInnerHTML={{__html: category.content || ''}}
+                className={`rendered-content ${!isCollapsed ? 'collapsed-content' : ''}`}
+                dangerouslySetInnerHTML={{__html: mainSeo?.content || category.content || ''}}
               ></div>
+              <div onClick={collapseContent} className="collapsed-btn">
+                <div>
+                  {isCollapsed ? 'Скрыть' : 'Читать дальше'}
+                </div>
+                <svg style={{transform: isCollapsed ? 'rotateX(180deg)' : 'none'}} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="3"
+                     stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3"/>
+                </svg>
+              </div>
             </div>
           </div>
         </div>

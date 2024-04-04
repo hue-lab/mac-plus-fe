@@ -13,9 +13,8 @@ import PhoneInput from 'react-phone-number-input';
 import ru from '~/public/labels/ru';
 import {sendMessage} from "~/utils/endpoints/message";
 
-export default function ProductItem({ product, featured, deliveryMethods, seoFields }) {
+export default function ProductItem({ product, featured, deliveryMethods, seoFields, mainSeo }) {
   if (!product) return "";
-
   const modalStyles = {
     content: {
       position: "relative"
@@ -39,11 +38,11 @@ export default function ProductItem({ product, featured, deliveryMethods, seoFie
   const [btn, setBtn] = useState('Отправить');
   const [fastFormDone, setFastFormDone] = useState(false);
 
-  const interpolatedTitle = seoFields["product-seo-title"].replaceAll("{TITLE}", titleString);
-  const interpolatedDescription = seoFields["product-seo-description"]
+  const interpolatedTitle = mainSeo?.title || seoFields["product-seo-title"].replaceAll("{TITLE}", titleString);
+  const interpolatedDescription = mainSeo?.description || seoFields["product-seo-description"]
     .replaceAll("{TITLE}", descriptionString)
     .replaceAll("{CATEGORY}", categoryString);
-  const interpolatedHeader = seoFields["product-seo-header"].replaceAll("{TITLE}", headerString);
+  const interpolatedHeader = mainSeo?.tag || seoFields["product-seo-header"].replaceAll("{TITLE}", headerString);
 
   function closeModal () {
     document.querySelector( ".ReactModal__Overlay.newsletter-modal-overlay" ).classList.add( 'removed' );
@@ -91,7 +90,7 @@ export default function ProductItem({ product, featured, deliveryMethods, seoFie
         <meta property="og:title" content={interpolatedTitle} />
         <meta name="description" content={interpolatedDescription} />
         <meta property="og:description" content={interpolatedDescription} />
-        <meta name="keywords" content={product.seo?.seoKeywords?.join(", ")} />
+        <meta name="keywords" content={mainSeo?.keywords || product.seo?.seoKeywords?.join(", ")} />
         {ogImage && <meta property="og:image" content={getImgPath(ogImage.imageName)} />}
       </Helmet>
 
@@ -138,7 +137,7 @@ export default function ProductItem({ product, featured, deliveryMethods, seoFie
                   </div>
                 </div>
 
-                <DescOne product={product} isDivider={false} className="mt-2 m-4" isGuide={false} />
+                <DescOne mainSeo={mainSeo} product={product} isDivider={false} className="mt-2 m-4" isGuide={false} />
               </div>
             </div>
           </div>
