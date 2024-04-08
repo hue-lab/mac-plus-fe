@@ -27,7 +27,7 @@ export default function ContactUs({ fields }) {
     setBtn('Отправка...')
     sendMessage({
       name: formData?.name || 'Неизвестно',
-      email: formData?.email || 'Неизвестно',
+      phone: formData?.phone || 'Неизвестно',
       message: formData?.message || 'Неизвестно',
     }).then(res => {
       if (res.error) {
@@ -100,7 +100,7 @@ export default function ContactUs({ fields }) {
                           <input className="form-control" name="name" type="text" placeholder="Имя *" required />
                         </div>
                         <div className="col-md-6 mb-4">
-                          <input className="form-control" name="email" type="email" placeholder="Email *" required />
+                          <input className="form-control" name="phone" type="phone" placeholder="Телефон *" required />
                         </div>
                       </div>
                       <button className="btn btn-dark btn-rounded">{btn}{ btn === 'Отправить' && <i className="d-icon-arrow-right"></i> }</button>

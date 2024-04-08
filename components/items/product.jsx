@@ -68,7 +68,7 @@ export default function ProductItem({ product, featured, deliveryMethods, seoFie
     setBtn('Отправка...')
     sendMessage({
       name: formData?.name || 'Неизвестно',
-      email: formData?.phone || 'Неизвестно',
+      phone: formData?.phone || 'Неизвестно',
       message: formData?.product ? `[Быстрый заказ]: ${product.name}` : 'Неизвестно',
     }).then(res => {
       if (res.error) {
