@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import { useRouter } from "next/router";
-import { Collapse } from "react-bootstrap";
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { useRouter } from 'next/router';
+import { Collapse } from 'react-bootstrap';
 
-import ALink from "~/components/features/custom-link";
-import Countdown from "~/components/features/countdown";
-import Quantity from "~/components/features/quantity";
+import ALink from '~/components/features/custom-link';
+import Countdown from '~/components/features/countdown';
+import Quantity from '~/components/features/quantity';
 
-import ProductNav from "~/components/partials/product/product-nav";
-import DescTwo from "~/components/partials/product/desc/desc-two";
+import ProductNav from '~/components/partials/product/product-nav';
+import DescTwo from '~/components/partials/product/desc/desc-two';
 
-import { wishlistActions } from "~/store/wishlist";
-import { cartActions } from "~/store/cart";
+import { wishlistActions } from '~/store/wishlist';
+import { cartActions } from '~/store/cart';
 
-import { toDecimal } from "~/utils";
+import { toDecimal } from '~/utils';
 
 function DetailThree(props) {
   let router = useRouter();
@@ -21,14 +21,14 @@ function DetailThree(props) {
     product,
     isSticky = false,
     isDesc = false,
-    adClass = "",
+    adClass = '',
     isSizeGuide = true,
     isNav = true,
     openModal,
   } = props;
   const { toggleWishlist, addToCart, wishlist } = props;
-  const [curColor, setCurColor] = useState("null");
-  const [curSize, setCurSize] = useState("null");
+  const [curColor, setCurColor] = useState('null');
+  const [curSize, setCurSize] = useState('null');
   const [curIndex, setCurIndex] = useState(0);
   const [cartActive, setCartActive] = useState(false);
   const [quantity, setQuantity] = useState(1);
@@ -57,21 +57,21 @@ function DetailThree(props) {
 
     if (toggleWishlist && !isWishlisted) {
       let currentTarget = e.currentTarget;
-      currentTarget.classList.add("load-more-overlay", "loading");
+      currentTarget.classList.add('load-more-overlay', 'loading');
       toggleWishlist(product.data);
 
       setTimeout(() => {
-        currentTarget.classList.remove("load-more-overlay", "loading");
+        currentTarget.classList.remove('load-more-overlay', 'loading');
       }, 1000);
     } else {
-      router.push("/pages/wishlist");
+      router.push('/pages/wishlist');
     }
   };
 
   const toggleColorHandler = (color) => {
     if (!isDisabled(color.name, curSize)) {
       if (curColor === color.name) {
-        setCurColor("null");
+        setCurColor('null');
       } else {
         setCurColor(color.name);
       }
@@ -81,7 +81,7 @@ function DetailThree(props) {
   const toggleSizeHandler = (size) => {
     if (!isDisabled(curColor, size.name)) {
       if (curSize === size.name) {
-        setCurSize("null");
+        setCurSize('null');
       } else {
         setCurSize(size.name);
       }
@@ -92,8 +92,8 @@ function DetailThree(props) {
     if (cartActive) {
       let tmpName = product.name;
       let tmpPrice = product.totalPrice ? product.totalPrice : product.price;
-      tmpName += curColor !== "null" ? "-" + curColor : "";
-      tmpName += curSize !== "null" ? "-" + curSize : "";
+      tmpName += curColor !== 'null' ? '-' + curColor : '';
+      tmpName += curSize !== 'null' ? '-' + curSize : '';
       addToCart({ ...product, name: tmpName, qty: quantity, price: tmpPrice });
     }
   };
@@ -101,13 +101,13 @@ function DetailThree(props) {
   const orderOneClick = () => {
     if (cartActive) {
       addToCartHandler();
-      router.push("/pages/cart");
+      router.push('/pages/cart');
     }
-  }
+  };
 
   const resetValueHandler = (e) => {
-    setCurColor("null");
-    setCurSize("null");
+    setCurColor('null');
+    setCurSize('null');
   };
 
   function isDisabled(color, size) {}
@@ -117,7 +117,7 @@ function DetailThree(props) {
   }
 
   return (
-    <div className={`product-details ${isSticky ? "sticky" : ""} ${adClass}`}>
+    <div className={`product-details ${isSticky ? 'sticky' : ''} ${adClass}`}>
       {isNav ? (
         <div className="product-navigation pt-0">
           <ul className="breadcrumb breadcrumb-lg">
@@ -137,7 +137,7 @@ function DetailThree(props) {
           <ProductNav product={product} />
         </div>
       ) : (
-        ""
+        ''
       )}
 
       <span className="product-name">{product.name}</span>
@@ -174,7 +174,7 @@ function DetailThree(props) {
               {/*/>*/}
               <button
                 className={`btn-product btn-cart btn-cart-fast text-normal ls-normal font-weight-semi-bold ${
-                  cartActive ? "" : "disabled"
+                  cartActive ? '' : 'disabled'
                 }`}
                 onClick={addToCartHandler}
               >
@@ -182,7 +182,7 @@ function DetailThree(props) {
               </button>
               <button
                 className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold ${
-                  cartActive ? "" : "disabled"
+                  cartActive ? '' : 'disabled'
                 }`}
                 onClick={() => openModal(true)}
               >
@@ -190,7 +190,15 @@ function DetailThree(props) {
               </button>
             </>
           ) : (
-            <span>Под заказ</span>
+            <>
+              <span>Под заказ</span>
+              <button
+                className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold`}
+                onClick={() => openModal(true)}
+              >
+                Заказать
+              </button>
+            </>
           )}
         </div>
       </div>
@@ -199,7 +207,7 @@ function DetailThree(props) {
 
       <div className="product-footer"></div>
 
-      {isDesc ? <DescTwo product={product.data} adClass={adClass} isSizeGuide={isSizeGuide}/> : ""}
+      {isDesc ? <DescTwo product={product.data} adClass={adClass} isSizeGuide={isSizeGuide} /> : ''}
     </div>
   );
 }
