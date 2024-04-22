@@ -1,11 +1,11 @@
-import {getCategoryTree} from "~/utils/endpoints/categoryTree";
-import {getProducts} from "~/utils/endpoints/products";
-import {getFieldsObject} from "~/utils/endpoints/fields";
-import {getImgPath} from "~/utils";
+import { getCategoryTree } from '~/utils/endpoints/categoryTree';
+import { getProducts } from '~/utils/endpoints/products';
+import { getFieldsObject } from '~/utils/endpoints/fields';
+import { getImgPath, normalizeString } from '~/utils';
 
 const host = process.env.NEXT_PUBLIC_HOST || 'https://macplus.by';
 
-function generateYmlFeed({categories, products, fields}) {
+function generateYmlFeed({ categories, products, fields }) {
   const date = new Date();
   return `<?xml version="1.0" encoding="UTF-8"?>
     <yml_catalog date="${date.toISOString()}">
@@ -14,22 +14,29 @@ function generateYmlFeed({categories, products, fields}) {
         <company>${fields['yml-feed-company']}</company>
         <url>${host}</url>
         <categories>
-          ${(categories || []).reduce((acc, item) => {
-            acc.push(`<category id="${item._id}">${item.name || ''}</category>`);
-            if (item.children?.length) {
-              item.children.forEach((child) => {
-                acc.push(`<category id="${child._id}" parentId="${item._id}">${child.name || ''}</category>`)
-              });
-            }
-            return acc;
-          }, []).join('')}
+          ${(categories || [])
+            .reduce((acc, item) => {
+              acc.push(`<category id="${item._id}">${item.name || ''}</category>`);
+              if (item.children?.length) {
+                item.children.forEach((child) => {
+                  acc.push(
+                    `<category id="${child._id}" parentId="${item._id}">${
+                      child.name || ''
+                    }</category>`
+                  );
+                });
+              }
+              return acc;
+            }, [])
+            .join('')}
         </categories>
         <offers>
-          ${(products?.data || []).map((item) => {
-            return `
+          ${(products?.data || [])
+            .map((item) => {
+              return `
               <offer id="${item._id}">
                 <delivery>${fields['yml-feed-delivery']}</delivery>
-                <name>${normalizeString((item.name || ''))}</name>
+                <name>${normalizeString(item.name || '')}</name>
                 <vendor>${normalizeString(item.brand?.name || '')}</vendor>
                 <url>${`${host}/${item.categoryHandle}/${item.seo?.seoUrl}`}</url>
                 <price>${item.totalPrice || 0}</price>
@@ -40,25 +47,16 @@ function generateYmlFeed({categories, products, fields}) {
                 <picture>${item.media?.length ? getImgPath(item.media[0]) : undefined}</picture>
                 <description>${normalizeString(item.description || '')}</description>       
               </offer>
-            `
-  }).join('')}            
+            `;
+            })
+            .join('')}            
         </offers>
       </shop>
     </yml_catalog>
   `;
 }
 
-function YmlFeed() { }
-
-function normalizeString(name) {
-  return name
-    .replace("\"", "&quot;")
-    .replace("&", "&amp;")
-    .replace(">", "&gt;")
-    .replace("<", "&lt;")
-    .replace("'", "&apos;")
-    .trim()
-}
+function YmlFeed() {}
 
 export async function getServerSideProps({ res }) {
   const categoriesRoot = await getCategoryTree();
@@ -71,7 +69,7 @@ export async function getServerSideProps({ res }) {
       limit: 2000,
     },
   });
-  const ymlFeed = generateYmlFeed({categories, products, fields});
+  const ymlFeed = generateYmlFeed({ categories, products, fields });
 
   res.setHeader('Content-Type', 'text/xml');
   res.write(ymlFeed);
