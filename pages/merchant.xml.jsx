@@ -4,12 +4,7 @@ import { getDeliveryMethods } from '~/utils/endpoints/orders';
 import { getImgPath, normalizeString } from '~/utils';
 
 function generateMerchantFeed({ products, fields, deliveryMethods }) {
-  const date = new Date();
-
-  console.log(products.data[1]);
-  // console.log(deliveryMethods);
-
-  return `
+  return `<?xml version="1.0" encoding="UTF-8"?>
     <rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
       <channel>
         <title>${fields['yml-feed-name']}</title>
@@ -41,7 +36,6 @@ function generateMerchantFeed({ products, fields, deliveryMethods }) {
               `
             )}
             <g:brand>${product.brand?.name || 'Apple'}</g:brand>
-            <g:google_product_category>${product.categoryId[0]._id}</g:google_product_category>
           </item>
         `
           )
