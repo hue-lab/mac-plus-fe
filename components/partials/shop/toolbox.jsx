@@ -23,13 +23,13 @@ export default function ToolBox(props) {
   }, [])
 
   const getPathname = () => {
-    return typeof catalogueUrl === 'string' ? router.pathname.replace('[...catalogue]', catalogueUrl) : router.pathname;
+    return (typeof catalogueUrl === 'string' ? router.pathname.replace('[...catalogue]', catalogueUrl) : router.pathname)?.split('/page-is-')[0];
   }
 
   const onChangeAttri = (e, attri) => {
     e.preventDefault();
     let url = getPathname();
-    let arr = [`${attri}=${e.target.value}`, 'page=1'];
+    let arr = [`${attri}=${e.target.value}`];
     for (let key in query) {
       if (key !== attri && key !== 'page' && key !== 'grid') arr.push(key + '=' + query[key]);
     }
