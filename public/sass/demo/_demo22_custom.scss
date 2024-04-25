@@ -687,3 +687,18 @@ Demo 22
 .search-bar-bold {
   font-weight: 600;
 }
+
+.categories-link {
+  &-mobile {
+    display: none;
+    @include mq(lg, max) {
+      display: inline;
+    }
+  }
+  &-desktop {
+    display: inline;
+    @include mq(lg, max) {
+      display: none;
+    }
+  }
+}

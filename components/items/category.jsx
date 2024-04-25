@@ -73,7 +73,8 @@ export default function Category({
               </ALink>
             </li>
             <li>
-              <ALink href="/shop">Каталог</ALink>
+              <ALink className="categories-link-desktop" href="/shop">Каталог</ALink>
+              <ALink className="categories-link-mobile" href="/categories">Каталог</ALink>
             </li>
             {category?.name && <li>{category.name}</li>}
           </ul>
