@@ -1,6 +1,11 @@
 # Allow all crawlers
 User-agent: *
 Disallow: /ymlfeed.xml
+Disallow: *?*sortby=
+Disallow: *?*type=
+Disallow: *?*per_page=
+Disallow: *?*max_price=
+Disallow: *?*min_price=
 Allow: /
 
 Sitemap: https://macplus.by/sitemap.xml
