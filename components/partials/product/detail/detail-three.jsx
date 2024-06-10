@@ -140,24 +140,29 @@ function DetailThree(props) {
         ''
       )}
 
-      <span className="product-name">{product.name}</span>
+      <span className="product-name" itemProp="name">{product.name}</span>
 
       <div className="product-meta">
         Категория: <span className="product-brand">{product.category.name}</span>
       </div>
 
-      <div className="product-price">
+      <div itemProp="offers" itemScope itemType="https://schema.org/Offer" className="product-price">
         {product.discount > 0 ? (
           <>
+            <meta itemProp="price" content={product.totalPrice} />
             <ins className="new-price">от {toDecimal(product.totalPrice)} BYN</ins>
             <del className="old-price">{toDecimal(product.price)} BYN</del>
           </>
         ) : (
-          <ins className="new-price">от {toDecimal(product.price)} BYN</ins>
+          <>
+            <meta itemProp="price" content={product.price}/>
+            <ins className="new-price">от {toDecimal(product.price)} BYN</ins>
+          </>
         )}
+        <meta itemProp="priceCurrency" content="BYN" />
       </div>
 
-      <p className="product-short-desc">{product.description}</p>
+      <p className="product-short-desc" itemProp="description">{product.description}</p>
 
       <hr className="product-divider"></hr>
 

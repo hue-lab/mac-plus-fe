@@ -19,7 +19,7 @@ function ProductTwo(props) {
   };
 
   return (
-    <div className={`product ${adClass}`}>
+    <div itemProp="itemListElement" itemScope itemType="https://schema.org/Offer" className={`product ${adClass}`}>
       <figure className="product-media">
         <ALink
           href={`/${product.categoryHandle ? product.categoryHandle + "/" : ""}${
@@ -27,6 +27,7 @@ function ProductTwo(props) {
           }`}
         >
           <LazyLoadImage
+            itemProp="image"
             alt={product.seo?.seoImage[0]?.imageAlt || ""}
             src={getImgPath(product.seo?.seoImage[0]?.imageName)}
             threshold={500}
@@ -62,8 +63,9 @@ function ProductTwo(props) {
       </figure>
 
       <div className="product-details" style={{ paddingBottom: "1rem" }}>
-        <span className="product-name">
+        <span itemProp="name" className="product-name">
           <ALink
+            itemProp="url"
             href={`/${product.categoryHandle ? product.categoryHandle + "/" : ""}${
               product.seo?.seoUrl || "#"
             }`}
@@ -75,12 +77,17 @@ function ProductTwo(props) {
         <div className="product-price shop-price">
           {product.discount > 0 ? (
             <>
+              <meta itemProp="price" content={product.totalPrice}/>
               <ins className="new-price">от {toDecimal(product.totalPrice)} BYN</ins>
               <del className="old-price">{toDecimal(product.price)} BYN</del>
             </>
           ) : (
-            <ins className="new-price">от {toDecimal(product.price)} BYN</ins>
+            <>
+              <meta itemProp="price" content={product.price}/>
+              <ins className="new-price">от {toDecimal(product.price)} BYN</ins>
+            </>
           )}
+          <meta itemProp="priceCurrency" content="BYN"/>
         </div>
       </div>
     </div>

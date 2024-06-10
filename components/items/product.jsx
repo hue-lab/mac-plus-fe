@@ -97,7 +97,7 @@ export default function ProductItem({ product, featured, deliveryMethods, seoFie
       <h1 className="d-none">{interpolatedHeader}</h1>
 
       {!!product ? (
-        <div className={`page-content mb-8`}>
+        <div itemScope itemType="https://schema.org/Product" className={`page-content mb-8`}>
           <div className="container skeleton-body">
             <div className="product-navigation">
               <ul className="breadcrumb breadcrumb-lg">

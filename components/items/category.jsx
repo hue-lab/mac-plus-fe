@@ -64,7 +64,7 @@ export default function Category({
 
       <h1 className="d-none">{interpolatedHeader}</h1>
 
-      <div className="page-content mb-10 pb-2">
+      <div itemScope itemType="https://schema.org/OfferCatalog" className="page-content mb-10 pb-2">
         <div className="container">
           <ul className="breadcrumb breadcrumb-sm">
             <li>
@@ -76,7 +76,7 @@ export default function Category({
               <ALink className="categories-link-desktop" href="/shop">Каталог</ALink>
               <ALink className="categories-link-mobile" href="/categories">Каталог</ALink>
             </li>
-            {category?.name && <li>{category.name}</li>}
+            {category?.name && <li itemProp="name">{category.name}</li>}
           </ul>
 
           <div className="row gutter-lg main-content-wrap">

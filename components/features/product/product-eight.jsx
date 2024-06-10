@@ -14,7 +14,7 @@ function ProductEight(props) {
   const { product, adClass, addToCart } = props;
 
   return (
-    <div className={`product product-list ${adClass}`}>
+    <div itemProp="itemListElement" itemScope itemType="https://schema.org/Offer" className={`product product-list ${adClass}`}>
       <figure className="product-media">
         <ALink
           href={`/${product.categoryHandle ? product.categoryHandle + "/" : ""}${
@@ -22,6 +22,7 @@ function ProductEight(props) {
           }`}
         >
           <LazyLoadImage
+            itemProp="image"
             alt={product.seo?.seoImage[0]?.imageAlt || ""}
             src={getImgPath(product.seo?.seoImage[0]?.imageName)}
             threshold={500}
@@ -45,8 +46,9 @@ function ProductEight(props) {
       </figure>
 
       <div className="product-details">
-        <span className="product-name">
+        <span itemProp="name" className="product-name">
           <ALink
+            itemProp="url"
             href={`/${product.categoryHandle ? product.categoryHandle + "/" : ""}${
               product.seo?.seoUrl || "#"
             }`}
@@ -58,19 +60,24 @@ function ProductEight(props) {
         <div className="product-price">
           {product.discount > 0 ? (
             <>
+              <meta itemProp="price" content={product.totalPrice}/>
               <ins className="new-price">от {toDecimal(product.totalPrice)} BYN</ins>
               <del className="old-price">{toDecimal(product.price)} BYN</del>
             </>
           ) : (
-            <ins className="new-price">от {toDecimal(product.price)} BYN</ins>
+            <>
+              <meta itemProp="price" content={product.price}/>
+              <ins className="new-price">от {toDecimal(product.price)} BYN</ins>
+            </>
           )}
+          <meta itemProp="priceCurrency" content="BYN"/>
         </div>
 
-        <p className="product-short-desc" style={{ marginBottom: ".5rem" }}>
+        <p className="product-short-desc" style={{marginBottom: ".5rem"}}>
           Бренд: {product.brand.name}
         </p>
 
-        <p className="product-short-desc">{product.description}</p>
+        <p itemProp="description" className="product-short-desc">{product.description}</p>
 
         <div className="product-action">
           <ALink
