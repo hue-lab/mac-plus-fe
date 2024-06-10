@@ -52,15 +52,37 @@ export default function Category({
   const interpolatedDescription = mainSeo?.description || seoFields["category-seo-description"].replaceAll("{TITLE}", descriptionString);
   const interpolatedHeader = mainSeo?.tag || seoFields["category-seo-header"].replaceAll("{TITLE}", headerString);
 
+  const jsonLd = {
+    "@context": "https://schema.org/",
+    "@type": "OfferCatalog",
+    "name": category.name,
+    "description": interpolatedDescription,
+    "itemListElement": (products?.data || []).map((item) => ({
+      "@type": "Offer",
+      "name": item.name,
+      "description": item.description,
+      "url": `${process.env.NEXT_PUBLIC_HOST || 'https://macplus.by'}/${item.categoryHandle ? item.categoryHandle + "/" : ""}${item.seo?.seoUrl || "#"}`,
+      "price": item.discount > 0 ? item.totalPrice : item.price,
+      "priceCurrency": "BYN",
+      "image": item.seo?.seoImage[0]?.imageName ? getImgPath(item.seo?.seoImage[0]?.imageName) : undefined,
+      "availability": item.isStock ? 'In stock' : 'Pre-order'
+    }))
+  }
+
   return (
     <main className="main bt-lg-none shop">
       <Helmet>
         <title>{interpolatedTitle}</title>
-        <meta property="og:title" content={interpolatedTitle} />
-        <meta name="description" content={interpolatedDescription} />
-        <meta property="og:description" content={interpolatedDescription} />
-        <meta name="keywords" content={(mainSeo?.keywords || category.keywords || []).join(", ")} />
+        <meta property="og:title" content={interpolatedTitle}/>
+        <meta name="description" content={interpolatedDescription}/>
+        <meta property="og:description" content={interpolatedDescription}/>
+        <meta name="keywords" content={(mainSeo?.keywords || category.keywords || []).join(", ")}/>
       </Helmet>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{__html: JSON.stringify(jsonLd)}}
+      />
 
       <h1 className="d-none">{interpolatedHeader}</h1>
 
@@ -80,7 +102,7 @@ export default function Category({
           </ul>
 
           <div className="row gutter-lg main-content-wrap">
-            <SidebarFilterOne filters={filters} type="banner" filterObject={filterObject} />
+            <SidebarFilterOne filters={filters} type="banner" filterObject={filterObject}/>
 
             <div className="col-lg-9 main-content">
               {banner && (
@@ -121,7 +143,8 @@ export default function Category({
                 <div>
                   {isCollapsed ? 'Скрыть' : 'Читать дальше'}
                 </div>
-                <svg style={{transform: isCollapsed ? 'rotateX(180deg)' : 'none'}} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="3"
+                <svg style={{transform: isCollapsed ? 'rotateX(180deg)' : 'none'}} xmlns="http://www.w3.org/2000/svg"
+                     fill="none" viewBox="0 0 24 24" strokeWidth="3"
                      stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3"/>
                 </svg>
