@@ -111,7 +111,10 @@ App.getInitialProps = async ({ Component, ctx }) => {
   );
   let pageProps = {};
   if (Component.getInitialProps) {
-    pageProps = await Component.getInitialProps(ctx);
+    const pagePropsRes = await Component.getInitialProps(ctx);
+    if (pagePropsRes) {
+      pageProps = pagePropsRes;
+    }
   }
   return {
     pageProps: Object.assign(pageProps, {
