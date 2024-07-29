@@ -7,11 +7,12 @@ import BannerSection from '~/components/partials/home/banner-section';
 import ServiceBox from '~/components/partials/home/service-section';
 import BlogSection from '~/components/partials/home/blog-section';
 
-import { getLatestArticles } from '~/utils/endpoints/articles';
-import { getRecProducts } from "~/utils/endpoints/products";
-import { getSlides } from "~/utils/endpoints/slides";
-import { getFieldsObject } from '~/utils/endpoints/fields';
+import {getLatestArticles} from '~/utils/endpoints/articles';
+import {getRecProducts} from "~/utils/endpoints/products";
+import {getSlides} from "~/utils/endpoints/slides";
+import {getFieldsObject} from '~/utils/endpoints/fields';
 import IntroCategories from "~/components/partials/home/intro-categories";
+import {getSeoByUrl} from "~/utils/endpoints/seo";
 
 HomePage.getInitialProps = async (context) => {
   const articles = await getLatestArticles();
@@ -19,28 +20,32 @@ HomePage.getInitialProps = async (context) => {
   const slides = await getSlides();
   const features = await getFieldsObject('features_1', 'features_2', 'features_3', 'features_4');
   const fields = await getFieldsObject('trade-in-title', 'trade-in-subtitle' ,'trade-in-description', 'main-seo-title', 'main-seo-description');
+  const seoMainMeta = await getSeoByUrl(`/`);
   return {
     articles: articles.data,
     recProducts: recProducts.data,
     slides: slides.data,
     fields: fields,
     features: features,
+    mainSeo: seoMainMeta,
   };
 }
 
-export default function HomePage({ articles, recProducts, slides, fields, features, categoryTree }) {
-
+export default function HomePage({ articles, recProducts, slides, fields, features, categoryTree, mainSeo }) {
 
   return (
     <div className="main home mt-lg-4 homepage">
       <Helmet>
-        <title>{fields['main-seo-title'] || 'Mac Plus'}</title>
-        <meta property="og:title" content={fields['main-seo-title'] || 'Mac Plus'}/>
-        <meta name="description" content={fields['main-seo-description'] || 'Интернет-магазин электроники в Беларуси'}/>
-        <meta property="og:description" content={fields['main-seo-description'] || 'Интернет-магазин электроники в Беларуси'}/>
+        <title>{mainSeo?.title || fields['main-seo-title'] || 'Mac Plus'}</title>
+        <meta property="og:title" content={mainSeo?.title || fields['main-seo-title'] || 'Mac Plus'}/>
+        <meta name="description"
+              content={mainSeo?.description || fields['main-seo-description'] || 'Интернет-магазин электроники в Беларуси'}/>
+        <meta property="og:description"
+              content={mainSeo?.description || fields['main-seo-description'] || 'Интернет-магазин электроники в Беларуси'}/>
+        <meta name="keywords" content={mainSeo?.keywords}/>
       </Helmet>
 
-      <h1 className="d-none">{fields['main-seo-title'] || 'Mac Plus'}</h1>
+      <h1 className="d-none">{mainSeo?.tag || fields['main-seo-title'] || 'Mac Plus'}</h1>
 
       <div className="page-content">
         <IntroSection slides={slides}/>
@@ -55,9 +60,16 @@ export default function HomePage({ articles, recProducts, slides, fields, featur
           tradeInTitle={fields['trade-in-title']}
         />
 
-        <ServiceBox fields={features} />
+        <ServiceBox fields={features}/>
 
-        <BlogSection posts={articles} />
+        <BlogSection posts={articles}/>
+
+        { mainSeo?.content && (
+          <div
+            className={`rendered-content container`}
+            dangerouslySetInnerHTML={{__html: mainSeo?.content || ''}}
+          ></div>
+        )}
       </div>
     </div>
   )
