@@ -9,7 +9,7 @@ function Pagination(props) {
 
     const router = useRouter();
     const { catalogue, ...query } = router.query;
-    const page = parseInt(props.fullPath.split('/page-is-')[1] || 1);
+    const page = parseInt(props.fullPath?.split('/page-is-')[1] || 1);
     let indexList = [];
     let min = Math.max(page - distance, 2);
     let max = Math.min(page + distance, totalPage - 1)
