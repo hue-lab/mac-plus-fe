@@ -1,28 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import Helmet from 'react-helmet';
-import {useRouter} from 'next/router';
-import ALink from '~/components/features/custom-link';
-import PostOne from '~/components/features/post/post-one';
-import {getArticles} from '~/utils/endpoints/articles';
+import Helmet from "react-helmet";
+import ALink from "~/components/features/custom-link";
+import React, {useState} from "react";
+import {useRouter} from "next/router";
+import PostOne from "~/components/features/post/post-one";
 import BlogPagination from "~/components/features/blog-pagination";
 
-Classic.getInitialProps = async ({query}) => {
-  const pagination = {
-    page: 1,
-    limit: 8,
-  };
-  const posts = await getArticles(pagination.page, pagination.limit);
-  return {
-    posts: posts,
-  }
-}
-
-export default function Classic({posts, page}) {
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.scrollTo({top: 0, behavior: "smooth"});
-    }
-  }, []);
+export default function PostList({posts, fullPath}) {
   const router = useRouter();
   const query = router.query;
   const showingCount = 8;
@@ -70,7 +53,7 @@ export default function Classic({posts, page}) {
                 }
               </div>
 
-              <BlogPagination fullPath={router.asPath} totalPage={totalPage}/>
+              <BlogPagination fullPath={fullPath} totalPage={totalPage}/>
             </div>
           </div>
         </div>
