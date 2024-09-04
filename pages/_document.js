@@ -81,6 +81,16 @@ export default class MyDocument extends Document {
             `
                   }}
           />
+          <script dangerouslySetInnerHTML={{
+                    __html: `
+                var _mtm = window._mtm = window._mtm || [];
+                 _mtm.push({ 'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start' });
+                 (function () {
+                     var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+                     g.src = 'https://stat1.clickfraud.ru/js/container_v5tvjjul.js'; s.parentNode.insertBefore(g, s);
+                 })();
+            `
+          }} />
           <noscript>
             <div><img src="https://mc.yandex.ru/watch/96220740" style={{position: 'absolute', left: '-9999px'}} alt=""/>
             </div>
