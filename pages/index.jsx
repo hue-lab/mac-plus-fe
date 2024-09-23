@@ -34,7 +34,7 @@ HomePage.getInitialProps = async (context) => {
 export default function HomePage({ articles, recProducts, slides, fields, features, categoryTree, mainSeo }) {
 
   return (
-    <div className="main home mt-lg-4 homepage">
+    <>
       <Helmet>
         <title>{mainSeo?.title || fields['main-seo-title'] || 'Mac Plus'}</title>
         <meta property="og:title" content={mainSeo?.title || fields['main-seo-title'] || 'Mac Plus'}/>
@@ -44,33 +44,34 @@ export default function HomePage({ articles, recProducts, slides, fields, featur
               content={mainSeo?.description || fields['main-seo-description'] || 'Интернет-магазин электроники в Беларуси'}/>
         <meta name="keywords" content={mainSeo?.keywords}/>
       </Helmet>
+      <div className="main home mt-lg-4 homepage">
+        <h1 className="d-none">{mainSeo?.tag || fields['main-seo-title'] || 'Mac Plus'}</h1>
 
-      <h1 className="d-none">{mainSeo?.tag || fields['main-seo-title'] || 'Mac Plus'}</h1>
+        <div className="page-content">
+          <IntroSection slides={slides}/>
 
-      <div className="page-content">
-        <IntroSection slides={slides}/>
+          <IntroCategories categories={categoryTree}></IntroCategories>
 
-        <IntroCategories categories={categoryTree}></IntroCategories>
+          <CategorySection recProducts={recProducts}/>
 
-        <CategorySection recProducts={recProducts}/>
+          <BannerSection
+            tradeInDescription={fields['trade-in-description']}
+            tradeInSubtitle={fields['trade-in-subtitle']}
+            tradeInTitle={fields['trade-in-title']}
+          />
 
-        <BannerSection
-          tradeInDescription={fields['trade-in-description']}
-          tradeInSubtitle={fields['trade-in-subtitle']}
-          tradeInTitle={fields['trade-in-title']}
-        />
+          <ServiceBox fields={features}/>
 
-        <ServiceBox fields={features}/>
+          <BlogSection posts={articles}/>
 
-        <BlogSection posts={articles}/>
-
-        { mainSeo?.content && (
-          <div
-            className={`rendered-content container`}
-            dangerouslySetInnerHTML={{__html: mainSeo?.content || ''}}
-          ></div>
-        )}
+          { mainSeo?.content && (
+            <div
+              className={`rendered-content container`}
+              dangerouslySetInnerHTML={{__html: mainSeo?.content || ''}}
+            ></div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
