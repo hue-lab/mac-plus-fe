@@ -104,7 +104,6 @@ export default class MyDocument extends Document {
           <link rel="stylesheet" type="text/css" href="vendor/owl-carousel/owl.carousel.min.css"/>
           <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
           <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-          <script src="//code.jivo.ru/widget/ZlrgcjXbN7" async></script>
           {this.headTitle}
           {this.headMeta}
           <meta name="google-site-verification" content="zkGKtNXlNUPH0rhw2sORnyS0J9USz7B6xXI0Gey3NwE"/>
