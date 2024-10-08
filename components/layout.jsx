@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { useRouter } from 'next/router';
@@ -12,6 +12,7 @@ import Header from '~/components/common/header';
 import Footer from '~/components/common/footer';
 import StickyFooter from '~/components/common/sticky-footer';
 import Quickview from '~/components/features/product/common/quickview-modal';
+import VideoModal from '~/components/features/modals/video-modal';
 import MobileMenu from '~/components/common/partials/mobile-menu';
 
 import { modalActions } from '~/store/modal';
@@ -84,6 +85,8 @@ function Layout({ children, closeQuickview, categoryTree, layoutFields, footerNa
       />
 
       <Quickview />
+
+      <VideoModal />
     </>
   )
 }
