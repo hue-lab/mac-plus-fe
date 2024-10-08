@@ -1,5 +1,4 @@
 import { useStore, Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
 import Helmet from "react-helmet";
 
 import { wrapper } from "~/store";
@@ -14,7 +13,7 @@ import React from "react";
 const App = ({ Component, pageProps }) => {
   const store = useStore();
 
-  return typeof window === "undefined" ? (
+  return (
     <Provider store={store}>
       <Helmet>
         <meta charSet="UTF-8" />
@@ -52,41 +51,7 @@ const App = ({ Component, pageProps }) => {
         <Component {...pageProps} />
       </Layout>
     </Provider>
-  ) : (
-    <Provider store={store}>
-      <PersistGate
-        persistor={store.__persistor}
-        loading={
-          <div className="loading-overlay">
-            <div className="bounce-loader">
-              <div className="bounce1"></div>
-              <div className="bounce2"></div>
-              <div className="bounce3"></div>
-              <div className="bounce4"></div>
-            </div>
-          </div>
-        }
-      >
-        <Helmet>
-          <meta charSet="UTF-8" />
-          <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-          <title>Mac Plus</title>
-          <meta name="keywords" content="Apple, Iphone, Mac, Ipad, Watch, AirPods" />
-          <meta name="description" content="Продажа Электроники / Гаджетов в Минске и Беларуси" />
-          <meta name="author" content="Mac Plus" />
-        </Helmet>
-
-        <Layout
-          categoryTree={pageProps.categoryTree}
-          layoutFields={pageProps.layoutFields}
-          footerNav={pageProps.footerNav}
-        >
-          <Component {...pageProps} />
-        </Layout>
-      </PersistGate>
-    </Provider>
-  );
+  )
 };
 
 App.getInitialProps = async ({ Component, ctx }) => {

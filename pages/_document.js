@@ -96,16 +96,12 @@ export default class MyDocument extends Document {
             </div>
           </noscript>
           <base href="/"></base>
-          <title>Mac Plus</title>
           <link rel="icon" href="images/icons/favicon.ico"/>
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900"/>
           <link rel="stylesheet" type="text/css" href="vendor/riode-fonts/riode-fonts.css"/>
           <link rel="stylesheet" type="text/css" href="vendor/fontawesome-free/css/all.min.css"/>
           <link rel="stylesheet" type="text/css" href="vendor/owl-carousel/owl.carousel.min.css"/>
-          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
           <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-          {this.headTitle}
-          {this.headMeta}
           <meta name="google-site-verification" content="zkGKtNXlNUPH0rhw2sORnyS0J9USz7B6xXI0Gey3NwE"/>
         </Head>
 

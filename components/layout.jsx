@@ -1,6 +1,5 @@
-import { useState, useEffect, useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { connect } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
 import { useRouter } from 'next/router';
 import 'react-toastify/dist/ReactToastify.min.css';
 import 'react-image-lightbox/style.css';
@@ -12,7 +11,6 @@ import Header from '~/components/common/header';
 import Footer from '~/components/common/footer';
 import StickyFooter from '~/components/common/sticky-footer';
 import Quickview from '~/components/features/product/common/quickview-modal';
-import VideoModal from '~/components/features/modals/video-modal';
 import MobileMenu from '~/components/common/partials/mobile-menu';
 
 import { modalActions } from '~/store/modal';
@@ -73,20 +71,7 @@ function Layout({ children, closeQuickview, categoryTree, layoutFields, footerNa
 
       <MobileMenu categoryTree={categoryTree} />
 
-      <ToastContainer
-        autoClose={3000}
-        duration={300}
-        newestOnTo={true}
-        className="toast-container"
-        position="bottom-left"
-        closeButton={false}
-        hideProgressBar={true}
-        newestOnTop={true}
-      />
-
       <Quickview />
-
-      <VideoModal />
     </>
   )
 }

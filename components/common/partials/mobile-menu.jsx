@@ -83,7 +83,7 @@ function MobileMenu({ categoryTree }) {
             <TabPanel>
               <ul className="mobile-menu">
                 <li><ALink href="/">Главная</ALink></li>
-                <li><ALink href="/categories" class="menu-title">Каталог</ALink></li>
+                <li><ALink href="/categories" className="menu-title">Каталог</ALink></li>
                 {categoryTree.sort(orderCategories).map((category, index) => (
                   category.children.length ?
                     <SlideToggle duration={300} collapsed key={index} >

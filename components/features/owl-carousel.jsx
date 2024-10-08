@@ -4,7 +4,7 @@ import Carousel from 'react-owl-carousel2';
 // let prevPath;
 function OwlCarousel( props ) {
     const { adClass, options } = props;
-    const carouselRef = useRef( null );
+    const carouselRef = useRef( null);
     const defaultOptions = {
         items: 1,
         loop: false,
