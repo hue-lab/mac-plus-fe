@@ -7,19 +7,20 @@ export default class MyDocument extends Document {
     return {...initialProps, helmet: Helmet.renderStatic()}
   }
 
-  get headTitle() {
-    return this.props.helmet.title.toComponent();
-  }
-
-  get headMeta() {
-    return this.props.helmet.meta.toComponent();
-  }
-
   render() {
     return (
       <Html lang="ru">
         <Head>
-          <script id="google-tag-manager"
+          <base href="/"></base>
+          <title>Mac Plus</title>
+          <link rel="icon" href="images/icons/favicon.ico"/>
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900"/>
+          <link rel="stylesheet" type="text/css" href="vendor/riode-fonts/riode-fonts.css" media="screen"/>
+          <link rel="stylesheet" type="text/css" href="vendor/fontawesome-free/css/all.min.css" media="screen"/>
+          <link rel="stylesheet" type="text/css" href="vendor/owl-carousel/owl.carousel.min.css" media="screen"/>
+          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" media="screen"/>
+          <script async src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+          <script async id="google-tag-manager"
                   dangerouslySetInnerHTML={{
                     __html: `
                 if (window) {
@@ -32,7 +33,7 @@ export default class MyDocument extends Document {
               `
                   }}
           />
-          <script id="google-tag-manager"
+          <script async id="google-tag-manager"
                   dangerouslySetInnerHTML={{
                     __html: `
                 if (window) {
@@ -45,7 +46,7 @@ export default class MyDocument extends Document {
               `
                   }}
           />
-          <script id="yandex-analytics"
+          <script async id="yandex-analytics"
                   dangerouslySetInnerHTML={{
                     __html: `
                 if (window) {
@@ -65,10 +66,11 @@ export default class MyDocument extends Document {
             `
                   }}
           />
-          <script id="meta-pixel"
+          <script async id="meta-pixel"
                   dangerouslySetInnerHTML={{
                     __html: `
-               !function(f,b,e,v,n,t,s)
+               if (window) {
+                !function(f,b,e,v,n,t,s)
                 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
                 n.callMethod.apply(n,arguments):n.queue.push(arguments)};
                 if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
@@ -78,38 +80,30 @@ export default class MyDocument extends Document {
                 'https://connect.facebook.net/en_US/fbevents.js');
                 fbq('init', '1184434382543279');
                 fbq('track', 'PageView');
+               }
             `
                   }}
           />
-          <script dangerouslySetInnerHTML={{
-                    __html: `
-                var _mtm = window._mtm = window._mtm || [];
+          <script async dangerouslySetInnerHTML={{
+            __html: `
+                if (window) {
+                  var _mtm = window._mtm = window._mtm || [];
                  _mtm.push({ 'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start' });
                  (function () {
                      var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
                      g.src = 'https://stat1.clickfraud.ru/js/container_v5tvjjul.js'; s.parentNode.insertBefore(g, s);
                  })();
+                }
             `
-          }} />
-          <noscript>
-            <div><img src="https://mc.yandex.ru/watch/96220740" style={{position: 'absolute', left: '-9999px'}} alt=""/>
-            </div>
-          </noscript>
-          <base href="/"></base>
-          <title>Mac Plus</title>
-          <link rel="icon" href="images/icons/favicon.ico"/>
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900"/>
-          <link rel="stylesheet" type="text/css" href="vendor/riode-fonts/riode-fonts.css"/>
-          <link rel="stylesheet" type="text/css" href="vendor/fontawesome-free/css/all.min.css"/>
-          <link rel="stylesheet" type="text/css" href="vendor/owl-carousel/owl.carousel.min.css"/>
-          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-          <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-          {this.headTitle}
-          {this.headMeta}
+          }}/>
           <meta name="google-site-verification" content="zkGKtNXlNUPH0rhw2sORnyS0J9USz7B6xXI0Gey3NwE"/>
         </Head>
 
         <body>
+        <noscript>
+          <div><img src="https://mc.yandex.ru/watch/96220740" style={{position: 'absolute', left: '-9999px'}} alt=""/>
+          </div>
+        </noscript>
         <noscript>
           <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KZX7JHJG" height="0" width="0"
                   style={{display: 'none', visibility: 'hidden'}}></iframe>

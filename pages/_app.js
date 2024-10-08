@@ -10,6 +10,7 @@ import { getCategoryTree } from "~/utils/endpoints/categoryTree";
 import { getFieldsObject } from "~/utils/endpoints/fields";
 import { getMenuByCode } from "~/utils/endpoints/menu";
 import React from "react";
+import Script from "next/script";
 
 const App = ({ Component, pageProps }) => {
   const store = useStore();
@@ -68,13 +69,13 @@ const App = ({ Component, pageProps }) => {
         }
       >
         <Helmet>
-          <meta charSet="UTF-8" />
-          <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+          <meta charSet="UTF-8"/>
+          <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
           <title>Mac Plus</title>
-          <meta name="keywords" content="Apple, Iphone, Mac, Ipad, Watch, AirPods" />
-          <meta name="description" content="Продажа Электроники / Гаджетов в Минске и Беларуси" />
-          <meta name="author" content="Mac Plus" />
+          <meta name="keywords" content="Apple, Iphone, Mac, Ipad, Watch, AirPods"/>
+          <meta name="description" content="Продажа Электроники / Гаджетов в Минске и Беларуси"/>
+          <meta name="author" content="Mac Plus"/>
         </Helmet>
 
         <Layout
