@@ -7,14 +7,6 @@ export default class MyDocument extends Document {
     return {...initialProps, helmet: Helmet.renderStatic()}
   }
 
-  get headTitle() {
-    return this.props.helmet.title.toComponent();
-  }
-
-  get headMeta() {
-    return this.props.helmet.meta.toComponent();
-  }
-
   render() {
     return (
       <Html lang="ru">
