@@ -1,4 +1,7 @@
-@include set (
+@use "../config/variables";
+@use "../mixins/core";
+
+@include core.set (
     (
         vendor: (
             details: (
@@ -53,30 +56,30 @@
 .vendor-details {
     display: flex;
     align-items: center;
-    @include print_css ( vendor, details );
+    @include core.print_css ( vendor, details );
 }
 
 .vendor-logo {
-    @include print_css ( vendor, logo );
+    @include core.print_css ( vendor, logo );
 }
 
 .vendor-name {
-    @include print_css ( vendor, name );
+    @include core.print_css ( vendor, name );
 }
 
 .vendor-products-count {
-    @include print_css ( vendor, count );
+    @include core.print_css ( vendor, count );
 }
 
 .vendor-products {
     &.grid-type {
         display: grid;
-        @include css ( grid-template-columns, vendor, products, grid, grid-template-columns );
+        @include core.css ( grid-template-columns, vendor, products, grid, grid-template-columns );
         grid-auto-rows: 1fr;
         
         .vendor-product {
-            @include css( grid-column-end, vendor, products, grid, _end-conumn );
-            @include css( grid-row-end, vendor, products, grid, _end-row );
+            @include core.css( grid-column-end, vendor, products, grid, _end-conumn );
+            @include core.css( grid-row-end, vendor, products, grid, _end-row );
         }
     }
 }
@@ -101,14 +104,14 @@
         display: flex;
         align-items: center;
         a {
-            @include print_css ( store, title );
+            @include core.print_css ( store, title );
         }
     }
     .featured-label {
         width: max-content;
         width: -moz-max-content;
         width: -webkit-max-content;
-        @include print_css ( store, label );
+        @include core.print_css ( store, label );
     }
     .ratings-container {
         margin: 0 0 1.1rem .2rem;
@@ -117,7 +120,7 @@
     }
     .ratings-full::before {
         content: '\e954''\e954''\e954''\e954''\e954';
-        color: $secondary-color;
+        color: variables.$secondary-color;
     }
     p {
         margin-bottom: .2rem;

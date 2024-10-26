@@ -1,3 +1,8 @@
+@use "sass:color";
+@use "../config/variables";
+@use "../mixins/buttons";
+@use "../mixins/core";
+
 /* -------------------------------------------
     Buttons
         - Button
@@ -26,7 +31,7 @@
     font: {
         weight: 700;
         size: 1.4rem;
-        family: $font-family;
+        family: variables.$font-family;
     }
     letter-spacing: 0;
     line-height: 1.2;
@@ -41,8 +46,8 @@
     &:active,
     &:focus {
         color: #222;
-        border-color:   darken( #e4eaec , 7% );
-        background-color: darken( #e4eaec , 7% );  
+        border-color:   color.adjust( #e4eaec , $lightness: -7% );
+        background-color: color.adjust( #e4eaec , $lightness: -7% );  
     }
 
     i {
@@ -380,7 +385,7 @@
 }
 .btn.btn-link {
     padding: 0;
-    @include only-for-ie() {
+    @include core.only-for-ie() {
         overflow: visible;
     }
 }
@@ -388,36 +393,36 @@
 
 // 8. Button Color Styles
 .btn-primary {
-    @include button-variant($primary-color);
+    @include buttons.button-variant(variables.$primary-color);
 }
 
 
 .btn-secondary {
-    @include button-variant($secondary-color);
+    @include buttons.button-variant(variables.$secondary-color);
 }
 
 .btn-alert { 
-    @include button-variant($alert-color);
+    @include buttons.button-variant(variables.$alert-color);
 }
 
 .btn-success  {
-    @include button-variant($success-color);
+    @include buttons.button-variant(variables.$success-color);
 }
 
 .btn-dark {
-    @include button-variant($dark-color);
+    @include buttons.button-variant(variables.$dark-color);
 }
 
 .btn-white {
-    color: $dark-color;
+    color: variables.$dark-color;
     background-color: #fff;
     border-color: #fff;
     &:hover,
     &:active,
     &:focus {
-        color: $white-color;
-        border-color: $primary-color;
-        background-color: $primary-color; 
+        color: variables.$white-color;
+        border-color: variables.$primary-color;
+        background-color: variables.$primary-color; 
     }
     &.btn-outline {
         color: #fff;
@@ -426,7 +431,7 @@
         &:hover,
         &:active,
         &:focus {
-            color: $primary-color;
+            color: variables.$primary-color;
             background-color: #fff;
         }
     }

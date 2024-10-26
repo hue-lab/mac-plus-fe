@@ -1,3 +1,6 @@
+@use "../config/variables";
+@use "../mixins/breakpoints";
+
 /* -------------------------------------------
     Helper
 ---------------------------------------------- */
@@ -76,7 +79,7 @@
 .overflow-hidden {
     overflow: hidden !important;
 }
-@include mq(xl) {
+@include breakpoints.mq(xl) {
     .d-xl-none {
         display: none !important;
     }
@@ -90,7 +93,7 @@
         display: inline-flex !important;
     }
 }
-@include mq(lg) {
+@include breakpoints.mq(lg) {
     .d-lg-none {
         display: none !important;
     }
@@ -104,12 +107,12 @@
         display: inline-flex !important;
     }
 }
-@include mq(xl, max) {
+@include breakpoints.mq(xl, max) {
     .d-xl-show {
         display: none !important;
     }
 }
-@include mq(lg, max) {
+@include breakpoints.mq(lg, max) {
     .d-lg-show {
         display: none !important;
     }
@@ -117,13 +120,13 @@
 
 // Font Family
 .font-primary {
-    font-family: $font-family !important;
+    font-family: variables.$font-family !important;
 }
 .font-secondary {
-    font-family: $second-font-family !important;
+    font-family: variables.$second-font-family !important;
 }
 .font-tertiary {
-    font-family: $third-font-family !important;
+    font-family: variables.$third-font-family !important;
 }
 
 // Font Weight
@@ -176,25 +179,25 @@
     color: #fff !important;
 }
 .text-light {
-    color: $light-color !important;
+    color: variables.$light-color !important;
 }
 .text-grey {
-    color: $grey-color !important;
+    color: variables.$grey-color !important;
 }
 .text-body {
-    color: $body-color !important;
+    color: variables.$body-color !important;
 }
 .text-dark {
-    color: $dark-color !important;
+    color: variables.$dark-color !important;
 }
 .text-black {
     color: #000 !important;
 }
 .text-primary {
-    color: $primary-color !important;
+    color: variables.$primary-color !important;
 }
 .text-secondary {
-    color: $secondary-color !important;
+    color: variables.$secondary-color !important;
 }
 
 // Letter Spacing
@@ -229,22 +232,22 @@
     background-color: #fff !important;
 }
 .bg-dark {
-    background-color: $dark-color !important;
+    background-color: variables.$dark-color !important;
 }
 .bg-grey {
-    background-color: $grey-color !important;
+    background-color: variables.$grey-color !important;
 }
 .bg-light {
-    background-color: $light-color !important;
+    background-color: variables.$light-color !important;
 }
 .bg-black {
     background-color: #000 !important;
 }
 .bg-primary {
-    background-color: $primary-color !important;
+    background-color: variables.$primary-color !important;
 }
 .bg-secondary {
-    background-color: $secondary-color !important; 
+    background-color: variables.$secondary-color !important; 
 }
 
 // Border

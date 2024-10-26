@@ -1,3 +1,6 @@
+@use "../config/variables";
+@use "../mixins/breakpoints";
+
 /* -------------------------------------------
     Popup
         - Popup
@@ -310,7 +313,7 @@ button.mfp-close {
 
     .tab {
         font-size: 1.8rem;
-        color: $light-color;
+        color: variables.$light-color;
         .nav-item {
             flex: none;
         }
@@ -318,7 +321,7 @@ button.mfp-close {
 
     .nav-item .nav-link {
         padding: 0 0 1px;
-        color: $grey-color;
+        color: variables.$grey-color;
         font-size: 1.8rem;
         font-weight: 700;
         letter-spacing: -.025em;
@@ -374,9 +377,9 @@ button.mfp-close {
             padding: 1.2rem 1.5rem 1.1rem;
             height: 3.7rem;
             font-size: 1.3rem;
-            color: $grey-color;
+            color: variables.$grey-color;
             border-radius: .3rem;
-            border-color: $border-color;
+            border-color: variables.$border-color;
         }
     }
 
@@ -401,10 +404,10 @@ button.mfp-close {
     }
     .lost-link {
         text-align: right;
-        color: $grey-color;
+        color: variables.$grey-color;
         font-size: 1.2rem;
         &:hover {
-            color: $primary-color;
+            color: variables.$primary-color;
         }
     }
 
@@ -413,12 +416,12 @@ button.mfp-close {
         align-items: center;
         margin-bottom: 1.3rem;
         font-size: 1.2rem;
-        color: $body-color;
+        color: variables.$body-color;
         &::after, &::before {
             content: '';
             height: 1px;
             flex: 1;
-            background: $border-color;
+            background: variables.$border-color;
         }
         &::after {
             margin-left: 3rem;
@@ -436,7 +439,7 @@ button.mfp-close {
         height: 3.6rem;
         font-size: 1.4rem;
         border-radius: .3rem;
-        color: $white-color;
+        color: variables.$white-color;
         &.social-google {
             background-color: #db402c;
         }
@@ -508,7 +511,7 @@ button.mfp-close {
         text-align: start;
         font-size: 1.2rem;
         &::before {
-            border-color: $body-color;
+            border-color: variables.$body-color;
         }
     }
     .email {
@@ -517,7 +520,7 @@ button.mfp-close {
         background: #f4f4f4;
     }
     .form-control {
-        border: 1px solid $dark-color;
+        border: 1px solid variables.$dark-color;
         background: #fff;
     }
     .input-wrapper-inline {
@@ -663,7 +666,7 @@ button.mfp-close {
 }
 
 // Responsive
-@include mq(md, max) {
+@include breakpoints.mq(md, max) {
     .quickview-modal .product {
         padding: 2rem 1rem;
     }
@@ -674,7 +677,7 @@ button.mfp-close {
         position: relative;
     }
 }
-@include mq(md) {
+@include breakpoints.mq(md) {
     .quickview-modal {
         .row {
             margin: 0 -1.5rem;
@@ -698,7 +701,7 @@ button.mfp-close {
         top: 0;
     }
 }
-@include mq(md, max) {
+@include breakpoints.mq(md, max) {
     .newsletter-content {
         max-width: 36rem;
         padding-left: 2rem;
@@ -710,7 +713,7 @@ button.mfp-close {
     }
 }
 
-@include mq(sm, max) {
+@include breakpoints.mq(sm, max) {
     .newsletter-popup {
         background-image: none !important;
 

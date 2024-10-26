@@ -1,3 +1,5 @@
+@use "../config/variables";
+
 /* -------------------------------------------
     Overlay
 ---------------------------------------------- */
@@ -47,7 +49,7 @@
 }
 .overlay-visible {
     figure:hover & {
-        background: rgba( $primary-color, .9);
+        background: rgba( variables.$primary-color, .9);
         padding-bottom: 9rem;
     }
 }
@@ -71,7 +73,7 @@
         right: 0;
         top: 0;
         bottom: 0;
-        background: $dark-color;
+        background: variables.$dark-color;
         opacity: 0;
         transition: opacity .3s, background .3s, transform .3s;
     }
@@ -93,7 +95,7 @@
 
 .overlay-light figure::after,
 .banner.overlay-light::after {
-    background: $light-color;
+    background: variables.$light-color;
 }
 
 // Zoom

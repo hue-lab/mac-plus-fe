@@ -1,3 +1,5 @@
+@use "../config/variables";
+
 
 /* -------------------------------------------
     Social Links
@@ -32,65 +34,65 @@
         line-height: 1;
     }
     &:hover {
-        background: $primary-color;
-        border-color: $primary-color;
+        background: variables.$primary-color;
+        border-color: variables.$primary-color;
         color: #fff;
     }
     &.social-facebook:hover {
-        background: $social-facebook;
-        border-color: $social-facebook;
+        background: variables.$social-facebook;
+        border-color: variables.$social-facebook;
     }
     &.social-twitter:hover {
-        background: $social-twitter;
-        border-color: $social-twitter;
+        background: variables.$social-twitter;
+        border-color: variables.$social-twitter;
     }
     &.social-linkedin:hover {
-        background: $social-linkedin;
-        border-color: $social-linkedin;
+        background: variables.$social-linkedin;
+        border-color: variables.$social-linkedin;
     }
     &.social-email:hover {
-        background: $social-email;
-        border-color: $social-email;
+        background: variables.$social-email;
+        border-color: variables.$social-email;
     }
     &.social-google:hover {
-        background: $social-google;
-        border-color: $social-google;
+        background: variables.$social-google;
+        border-color: variables.$social-google;
     }
     &.social-pinterest:hover {
-        background: $social-pinterest;
-        border-color: $social-pinterest;
+        background: variables.$social-pinterest;
+        border-color: variables.$social-pinterest;
     }
     &.social-reddit:hover {
-        background: $social-reddit;
-        border-color: $social-reddit;
+        background: variables.$social-reddit;
+        border-color: variables.$social-reddit;
     }
     &.social-tumblr:hover {
-        background: $social-tumblr;
-        border-color: $social-tumblr;
+        background: variables.$social-tumblr;
+        border-color: variables.$social-tumblr;
     }
     &.social-vk:hover {
-        background: $social-vk;
-        border-color: $social-vk;
+        background: variables.$social-vk;
+        border-color: variables.$social-vk;
     }
     &.social-whatsapp:hover {
-        background: $social-whatsapp;
-        border-color: $social-whatsapp;
+        background: variables.$social-whatsapp;
+        border-color: variables.$social-whatsapp;
     }
     &.social-xing:hover {
-        background: $social-xing;
-        border-color: $social-xing;
+        background: variables.$social-xing;
+        border-color: variables.$social-xing;
     }
     &.social-instagram:hover {
-        background: $social-instagram;
-        border-color: $social-instagram;
+        background: variables.$social-instagram;
+        border-color: variables.$social-instagram;
     }
     &.social-telegram:hover {
-        background: $social-telegram;
-        border-color: $social-telegram;
+        background: variables.$social-telegram;
+        border-color: variables.$social-telegram;
     }
     &.social-viber:hover {
-        background: $social-viber;
-        border-color: $social-viber;
+        background: variables.$social-viber;
+        border-color: variables.$social-viber;
     }
 }
 
@@ -126,40 +128,40 @@ Other Styles
             background: transparent;
         }
         &.social-facebook:hover {
-            color: $social-facebook;
+            color: variables.$social-facebook;
         }
         &.social-twitter:hover {
-            color: $social-twitter;
+            color: variables.$social-twitter;
         }
         &.social-linkedin:hover {
-            color: $social-linkedin;
+            color: variables.$social-linkedin;
         }
         &.social-email:hover {
-            color: $social-email;
+            color: variables.$social-email;
         }
         &.social-google:hover {
-            color: $social-google;
+            color: variables.$social-google;
         }
         &.social-pinterest:hover {
-            color: $social-pinterest;
+            color: variables.$social-pinterest;
         }
         &.social-reddit:hover {
-            color: $social-reddit;
+            color: variables.$social-reddit;
         }
         &.social-tumblr:hover {
-            color: $social-tumblr;
+            color: variables.$social-tumblr;
         }
         &.social-vk:hover {
-            color: $social-vk;
+            color: variables.$social-vk;
         }
         &.social-whatsapp:hover {
-            color: $social-whatsapp;
+            color: variables.$social-whatsapp;
         }
         &.social-xing:hover {
-            color: $social-xing;
+            color: variables.$social-xing;
         }
         &.social-instagram:hover {
-            color: $social-instagram;
+            color: variables.$social-instagram;
         }
     }
 }

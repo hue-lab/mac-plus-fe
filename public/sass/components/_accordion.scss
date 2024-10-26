@@ -1,3 +1,5 @@
+@use "../config/variables";
+
 /* -------------------------------------------
     Accordion
 ---------------------------------------------- */
@@ -21,10 +23,10 @@
 		position: relative;
 		padding: 1.8rem .5rem;
 		&:hover {
-			color: $primary-color;
+			color: variables.$primary-color;
 
 			&::after {
-				color: $primary-color;
+				color: variables.$primary-color;
 			}
 		}
 		
@@ -44,7 +46,7 @@
 	}
 
 	.expanded {
-		color: $primary-color;
+		color: variables.$primary-color;
 	}
 }
 
@@ -85,7 +87,7 @@
 // Simple
 .accordion-simple {
 	.card {
-		border-top: 1px solid $border-color;
+		border-top: 1px solid variables.$border-color;
 	}
 }
 
@@ -152,9 +154,9 @@
 	.card {
 		border-width: 1px 1px 0;
 		border-style: solid;
-		border-color: $border-color;
+		border-color: variables.$border-color;
 		&:last-child {
-			border-bottom: 1px solid $border-color;
+			border-bottom: 1px solid variables.$border-color;
 		}
 	}
 } 
@@ -225,7 +227,7 @@
 // Set active color when Card is expanded.
 .accordion-color {
 	.collapse {
-		color: $primary-color;
+		color: variables.$primary-color;
 	}
 }
 

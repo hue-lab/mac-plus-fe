@@ -1,6 +1,9 @@
+@use "../config/variables";
+@use "../mixins/breakpoints";
+
 .trade {
   &__hero {
-    background: $primary-color;
+    background: variables.$primary-color;
     padding: 4rem 0;
     &-container {
       display: flex;
@@ -9,7 +12,7 @@
     }
     &-icon {
       height: 10rem;
-      @include mq(lg, max) {
+      @include breakpoints.mq(lg, max) {
         height: 7rem;
       }
     }
@@ -17,26 +20,26 @@
       height: 30rem;
       object-fit: contain;
       margin: 2rem;
-      @include mq(lg, max) {
+      @include breakpoints.mq(lg, max) {
         height: 20rem;
       }
-      @include mq(md, max) {
+      @include breakpoints.mq(md, max) {
         height: 15rem;
       }
     }
     h1 {
       margin: 0;
-      color: $white-color;
+      color: variables.$white-color;
       font-size: 4.5rem;
       text-align: center;
     }
     h2 {
-      color: $white-color;
+      color: variables.$white-color;
       font-size: 2.5rem;
       text-align: center;
     }
     p {
-      color: $white-color;
+      color: variables.$white-color;
       font-size: 2rem;
       max-width: 50rem;
       text-align: center;
@@ -47,14 +50,14 @@
     display: flex;
     flex-direction: column;
     gap: 4rem;
-    @include mq(md, max) {
+    @include breakpoints.mq(md, max) {
       gap: 6rem;
     }
     &-item {
       display: grid;
       grid-template-columns: 7rem 2fr 4fr;
       gap: 4rem;
-      @include mq(md, max) {
+      @include breakpoints.mq(md, max) {
         grid-template-columns: 1fr;
         gap: 2rem;
       }
@@ -63,21 +66,21 @@
           display: flex;
           justify-content: center;
           align-items: flex-start;
-          color: $white-color;
+          color: variables.$white-color;
           line-height: 6rem;
-          text-shadow: -1px -1px 0 $primary-color, 1px -1px 0 $primary-color, -1px 1px 0 #00af66, 1px 1px 0 $primary-color;
+          text-shadow: -1px -1px 0 variables.$primary-color, 1px -1px 0 variables.$primary-color, -1px 1px 0 #00af66, 1px 1px 0 variables.$primary-color;
           font-size: 6rem;
           font-weight: 700;
           padding-top: .4rem;
         }
         &__title {
           font-weight: bold;
-          color: $dark-color;
+          color: variables.$dark-color;
           opacity: .8;
           font-size: 2.2rem;
         }
         &__text {
-          color: $dark-color;
+          color: variables.$dark-color;
           font-size: 1.8rem;
         }
       }

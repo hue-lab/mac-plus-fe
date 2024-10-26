@@ -12,100 +12,100 @@
 */
 
 /* 1. config */
-@import 'config/variables';
+@use 'config/variables';
 
 /* 2. mixins */
-@import 'mixins/breakpoints'; 
-@import 'mixins/core';
-@import 'mixins/buttons';
+@use 'mixins/breakpoints'; 
+@use 'mixins/core';
+@use 'mixins/buttons';
 
 /* 3. plugins */
-@import 'components/slider';
-@import 'components/nouislider';
+@use 'components/slider';
+@use 'components/nouislider';
 
 /* 4. base */
-@import 'base/base';
-@import 'base/helper';
-@import 'base/type';
-@import 'base/layout';
-@import 'base/grid';
-@import 'base/spacing';
+@use 'base/base';
+@use 'base/helper';
+@use 'base/type';
+@use 'base/layout';
+@use 'base/grid';
+@use 'base/spacing';
 
-@import 'demo/demo22_config';
+@use 'demo/demo22_config';
 
 /* 5, components */
-@import 'components/accordion';
-@import 'components/alerts';
-@import 'components/animation';
-@import 'components/banners';
-@import 'components/blog';
-@import 'components/buttons';
-@import 'components/categories';
-@import 'components/comments';
-@import 'components/counter';
-@import 'components/elements';
-@import 'components/forms';
-@import 'components/grid';
-@import 'components/icon-boxes';
-@import 'components/icons';
-@import 'components/input-range';
-@import 'components/instagram';
-@import 'components/lazy-load-image';
-@import 'components/member';
-@import 'components/minipopup';
-@import 'components/overlay';
-@import 'components/page-header';
-@import 'components/pagination';
-@import 'components/popups';
-@import 'components/products';
-@import 'components/product-single';
-@import 'components/quickview';
-@import 'components/social-icons';
-@import 'components/sidebar';
-@import 'components/sidebar-shop';
-@import 'components/skeleton';
-@import 'components/store';
-@import 'components/tabs';
-@import 'components/testimonials';
-@import 'components/toast';
-@import 'components/tooltip';
-@import 'components/titles';
-@import 'components/vendor';
-@import 'components/widgets';
-@import 'components/intro-categories';
+@use 'components/accordion';
+@use 'components/alerts';
+@use 'components/animation';
+@use 'components/banners';
+@use 'components/blog';
+@use 'components/buttons' as buttons2;
+@use 'components/categories';
+@use 'components/comments';
+@use 'components/counter';
+@use 'components/elements';
+@use 'components/forms';
+@use 'components/grid' as grid2;
+@use 'components/icon-boxes';
+@use 'components/icons';
+@use 'components/input-range';
+@use 'components/instagram';
+@use 'components/lazy-load-image';
+@use 'components/member';
+@use 'components/minipopup';
+@use 'components/overlay';
+@use 'components/page-header';
+@use 'components/pagination';
+@use 'components/popups';
+@use 'components/products';
+@use 'components/product-single';
+@use 'components/quickview';
+@use 'components/social-icons';
+@use 'components/sidebar';
+@use 'components/sidebar-shop';
+@use 'components/skeleton';
+@use 'components/store';
+@use 'components/tabs';
+@use 'components/testimonials';
+@use 'components/toast';
+@use 'components/tooltip';
+@use 'components/titles';
+@use 'components/vendor';
+@use 'components/widgets';
+@use 'components/intro-categories';
 
 /* 6. header */
-@import 'base/header/header';
-@import 'base/header/dropdown';
-@import 'base/header/menu';
+@use 'base/header/header';
+@use 'base/header/dropdown';
+@use 'base/header/menu';
 
 /* 7. footer */
-@import 'base/footer/footer';
+@use 'base/footer/footer';
 
 /* 8. Pages */
-@import 'pages/about';  
-@import 'pages/account';   
-@import 'pages/buttons';
-@import 'pages/categories';
-@import 'pages/coming';
-@import 'pages/contact';
-@import 'pages/error';
-@import 'pages/products';
-@import 'pages/cta';
-@import 'pages/instagrams';
-@import 'pages/blog';
-@import 'pages/shop';
-@import 'pages/product-single';
-@import 'pages/post-single';
-@import 'pages/wishlist';
-@import 'pages/cart';
-@import 'pages/checkout';
-@import 'pages/order';
-@import 'pages/icons';
-@import 'pages/faq';
-@import 'pages/trade-in';
+@use 'pages/about';  
+@use 'pages/account';   
+@use 'pages/buttons' as buttons3;
+@use 'pages/categories' as categories2;
+@use 'pages/coming';
+@use 'pages/contact';
+@use 'pages/error';
+@use 'pages/products' as products2;
+@use 'pages/cta';
+@use 'pages/instagrams';
+@use 'pages/blog' as blog2;
+@use 'pages/shop';
+@use 'pages/product-single' as product-single2;
+@use 'pages/post-single';
+@use 'pages/wishlist';
+@use 'pages/cart';
+@use 'pages/checkout';
+@use 'pages/order';
+@use 'pages/icons' as icons2;
+@use 'pages/faq';
+@use 'pages/trade-in';
 
-@import 'demo/demo22_custom';
+@use 'demo/demo22_custom';
 
 .rendered-content {
   li {
@@ -132,7 +132,7 @@
   font-size: 1.6rem;
   font-weight: 600;
   cursor: pointer;
-  color: $primary-color;
+  color: variables.$primary-color;
   svg {
     margin-left: .5rem;
     margin-top: .1rem;

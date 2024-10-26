@@ -1,5 +1,9 @@
+@use "../config/variables";
+@use "../mixins/breakpoints";
+@use "../mixins/core";
+
 /* -------------------------------------------
-    Products 
+    Products
         - Default
         - Classic
         - Slideup
@@ -9,11 +13,11 @@
         - List
             - List
             - Small
-        
+
         - Product Filters
 ---------------------------------------------- */
 // Variables
-@include set-default((product: (font-family: $font-family,
+@include core.set-default((product: (font-family: variables.$font-family,
       font-size: 1.4rem,
       color: #999,
       body: (padding-top: 1.4rem,
@@ -29,11 +33,11 @@
         color: #fff,
         text-transform: uppercase,
         new: (color: false,
-          background: $primary-color ),
+          background: variables.$primary-color ),
         sale: (color: false,
-          background: $secondary-color ),
+          background: variables.$secondary-color ),
         top: (color: false,
-          background: $primary-color ),
+          background: variables.$primary-color ),
         stock: (color: false,
           background: #999)),
       category: (margin-bottom: .5rem,
@@ -54,7 +58,7 @@
         line-height: false,
         letter-spacing: -.01em,
         text-transform: false,
-        color: $body-color,
+        color: variables.$body-color,
         padding-right: 20px),
       price: (display: block,
         align-items: center,
@@ -70,7 +74,7 @@
       rating: (margin-bottom: 1.2rem,
         font-size: 11px,
         letter-spacing: .2em,
-        _star-color: $secondary-color ),
+        _star-color: variables.$secondary-color ),
       variation: (width: 2.6rem,
         height: 2.6rem,
         color: #222,
@@ -80,10 +84,10 @@
         _active-outline: #fff solid 2px,
 
         // custom types
-        _color-border: 1px solid $border-color,
+        _color-border: 1px solid variables.$border-color,
         _image-border: 0,
       ),
-      list-sm: (name: (color: $dark-color,
+      list-sm: (name: (color: variables.$dark-color,
         ),
         _image-width: 10rem))));
 
@@ -135,7 +139,6 @@
 
 .product {
   position: relative;
-  @include print_css(product);
   transition: .3s;
 
   &:hover {
@@ -146,6 +149,7 @@
       opacity: 1;
     }
   }
+  @include core.print_css(product);
 }
 
 .product-media:hover {
@@ -227,7 +231,7 @@
     -webkit-animation: spin 650ms infinite linear;
     animation: spin 650ms infinite linear;
     border-radius: 75%;
-    border: 2px solid $primary-color  !important;
+    border: 2px solid variables.$primary-color  !important;
     border-bottom-color: transparent !important;
     z-index: 3;
   }
@@ -246,22 +250,22 @@
 .product-label {
   display: inline-block;
   text-align: center;
-  @include print_css(product, label);
+  @include core.print_css(product, label);
 
   &.label-new {
-    @include print_css(product, label, new);
+    @include core.print_css(product, label, new);
   }
 
   &.label-sale {
-    @include print_css(product, label, sale);
+    @include core.print_css(product, label, sale);
   }
 
   &.label-top {
-    @include print_css(product, label, top);
+    @include core.print_css(product, label, top);
   }
 
   &.label-stock {
-    @include print_css(product, label, stock);
+    @include core.print_css(product, label, stock);
   }
 }
 
@@ -292,9 +296,9 @@
   }
 
   &:hover {
-    border-color: $primary-color;
+    border-color: variables.$primary-color;
     color: #fff;
-    background-color: $primary-color;
+    background-color: variables.$primary-color;
   }
 
   i {
@@ -321,9 +325,9 @@
   justify-content: center;
   flex: 1;
   padding: 1.14em 0;
-  background-color: $primary-color;
+  background-color: variables.$primary-color;
   color: #fff;
-  font-family: $font-family;
+  font-family: variables.$font-family;
 
   font: {
     size: 1.4rem;
@@ -402,7 +406,7 @@
 // Product Details
 .product-details {
   position: relative;
-  @include print_css(product, body);
+  @include core.print_css(product, body);
 
   >.btn-wishlist {
     position: absolute;
@@ -426,7 +430,7 @@
         transform: rotateY(180deg);
       }
 
-      color: $primary-color;
+      color: variables.$primary-color;
     }
   }
 
@@ -443,24 +447,24 @@
 
 // Product Category
 .product-cat {
-  @include print_css(product, category);
+  @include core.print_css(product, category);
 
   a {
     &:hover {
-      color: $primary-color;
+      color: variables.$primary-color;
     }
   }
 }
 
 // Product Name
 .product-name {
-  @include print_css(product, name);
+  @include core.print_css(product, name);
 
   a {
 
     // transition: color .3s;
     &:hover {
-      color: $primary-color;
+      color: variables.$primary-color;
     }
   }
 }
@@ -470,7 +474,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  @include print_css(product, price);
+  @include core.print_css(product, price);
 
   .old-price {
     color: #aaa;
@@ -488,7 +492,7 @@
   align-items: center;
   margin-left: 1px;
   line-height: 1.1;
-  @include print_css(product, rating);
+  @include core.print_css(product, rating);
 }
 
 .ratings-full {
@@ -529,7 +533,7 @@
 
   &::before {
     content: "\e955 ""\e955 ""\e955 ""\e955 ""\e955";
-    @include css(color, product, rating, _star-color);
+    @include core.css(color, product, rating, _star-color);
     font-family: 'riode';
   }
 }
@@ -545,7 +549,7 @@
   text-transform: capitalize;
 
   &:hover {
-    color: $primary-color;
+    color: variables.$primary-color;
   }
 }
 
@@ -571,14 +575,12 @@
     text-align: center; // issue: if use only button, no need
     vertical-align: middle;
     cursor: pointer;
-    @include print_css(product, variation);
-    @include css(line-height, product-single, variation, height);
-
     &:last-child {
       margin-right: 0;
     }
-
-    border: 1px solid $border-color;
+    border: 1px solid variables.$border-color;
+    @include core.print_css(product, variation);
+    @include core.css(line-height, product-single, variation, height);
   }
 
   .color:not(.active) {
@@ -649,7 +651,7 @@
     }
 
     &:hover {
-      color: $primary-color;
+      color: variables.$primary-color;
     }
   }
 }
@@ -677,7 +679,7 @@
     }
   }
 
-  @include mq(sm, max) {
+  @include breakpoints.mq(sm, max) {
 
     .product-hide-details,
     .product-details {
@@ -857,7 +859,7 @@
 // Gallery
 .product-image-gap {
   padding: .9rem;
-  border: 1px solid $border-color;
+  border: 1px solid variables.$border-color;
   background-color: #fff;
 
   .product-details {
@@ -873,13 +875,13 @@
   }
 }
 
-@include mq(xs, max) {
+@include breakpoints.mq(xs, max) {
   .product-image-gap .product-details {
     padding: 1.8rem 0 1rem;
   }
 }
 
-// List 
+// List
 .product-list {
   display: flex;
   align-items: center;
@@ -931,7 +933,7 @@
     }
 
     letter-spacing: -.025em;
-    color: $dark-color;
+    color: variables.$dark-color;
   }
 
   .product-price {
@@ -942,7 +944,7 @@
   }
 
   .product-short-desc {
-    @include text-block(3);
+    @include core.text-block(3);
     margin-bottom: 2rem;
     text-transform: none;
     font-size: 1.4rem;
@@ -961,15 +963,15 @@
   }
 }
 
-// List 
+// List
 .product-list-sm {
   display: flex;
   align-items: center;
   margin-bottom: 2rem;
 
   .product-media {
-    flex: 0 0 get(product, list-sm, _image-width);
-    @include css(max-width, product, list-sm, _image-width);
+    flex: 0 0 core.get(product, list-sm, _image-width);
+    @include core.css(max-width, product, list-sm, _image-width);
     margin: 0 1rem 0 0;
   }
 
@@ -979,14 +981,14 @@
   }
 
   .product-name {
-    @include text-block();
+    @include core.text-block();
     margin-bottom: .7rem;
     white-space: normal;
     word-break: break-all;
-    @include print_css(product, list-sm, name);
+    @include core.print_css(product, list-sm, name);
 
     &:hover {
-      color: $primary-color;
+      color: variables.$primary-color;
     }
   }
 
@@ -1007,13 +1009,13 @@
     height: 3.3rem;
     max-width: 11.7rem;
     border: 1px solid #d7d7d7;
-    color: $secondary-color;
+    color: variables.$secondary-color;
     background: transparent;
     font-size: 1.2rem;
 
     &:hover {
-      border-color: $secondary-color;
-      background: $secondary-color;
+      border-color: variables.$secondary-color;
+      background: variables.$secondary-color;
     }
   }
 }
@@ -1063,9 +1065,9 @@
       &:hover,
       &:focus,
       &:active {
-        background-color: $primary-color;
-        border-color: $primary-color;
-        color: $white-color;
+        background-color: variables.$primary-color;
+        border-color: variables.$primary-color;
+        color: variables.$white-color;
       }
     }
   }
@@ -1113,7 +1115,7 @@
       transition: background-color .3s, color .3s;
 
       &:hover {
-        background-color: $primary-color;
+        background-color: variables.$primary-color;
         color: #fff;
       }
     }
@@ -1141,12 +1143,12 @@
   &:hover {
     &.product-with-qty .btn-cart {
       background-color: transparent;
-      color: $dark-color;
+      color: variables.$dark-color;
     }
   }
 }
 
-@include mq(sm, max) {
+@include breakpoints.mq(sm, max) {
   .product-list {
     display: block;
 
@@ -1166,7 +1168,7 @@
   }
 }
 
-@include mq(xs, max) {
+@include breakpoints.mq(xs, max) {
 
   .product-details,
   .product-hide-details {
@@ -1273,7 +1275,7 @@
     padding: 1rem 0;
     border-bottom: solid 1px rgba(0, 0, 0, 0.07);
     font-size: 1.5rem;
-    @include mq(lg, max) {
+    @include breakpoints.mq(lg, max) {
       grid-template-columns: 2fr 2fr;
     }
 

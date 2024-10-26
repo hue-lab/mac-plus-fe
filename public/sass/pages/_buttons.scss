@@ -1,3 +1,5 @@
+@use "../mixins/breakpoints";
+
 /* -------------------------------------------
     Element Button Page
 ---------------------------------------------- */
@@ -43,7 +45,7 @@
 
 //Responsive
 
-@include mq(lg) {
+@include breakpoints.mq(lg) {
     .btn-wrapper {
         .btn {
             margin: 1.4rem 0;
@@ -54,7 +56,7 @@
     }
 }
 
-@include mq(xs,max) {
+@include breakpoints.mq(xs,max) {
     .btn {
         font-size: 1.2rem;
     }

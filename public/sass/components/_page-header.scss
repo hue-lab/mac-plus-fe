@@ -1,3 +1,6 @@
+@use "../config/variables";
+@use "../mixins/breakpoints";
+
 /* -------------------------------------------
     Page Header
         - Page Subtitle
@@ -42,7 +45,7 @@ $page-header-background: #C8C3BF !default;
     flex-wrap: wrap;
     align-items: center;
     color: #666;
-    font-family: $font-family;
+    font-family: variables.$font-family;
     font-size: 1.4rem;
     a {
         color: inherit;
@@ -75,7 +78,7 @@ $page-header-background: #C8C3BF !default;
             font-size: 1.2rem;
             font-weight: 600;
             font-family: 'Font Awesome 5 Free';
-            color: $grey-color;
+            color: variables.$grey-color;
         }
     }
     li:last-child {
@@ -128,7 +131,7 @@ $page-header-background: #C8C3BF !default;
     }
 }
 
-@include mq( md, max ) {
+@include breakpoints.mq( md, max ) {
     .page-title {
         font-size: 3.6rem;
     }

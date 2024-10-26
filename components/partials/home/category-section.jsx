@@ -1,17 +1,11 @@
 import React from "react";
 import Reveal from "react-awesome-reveal";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import ALink from "~/components/features/custom-link";
 
-import {
-  fadeIn,
-  fadeInRightShorter,
-  fadeInDownShorter,
-  fadeInLeftShorter,
-  fadeInUpShorter,
-} from "~/utils/data/keyframes";
-import { getImgPath } from "~/utils";
+import {fadeIn,} from "~/utils/data/keyframes";
+import {getImgPath} from "~/utils";
+import Image from "next/image";
 
 export default function CategorySection({ recProducts }) {
   return (
@@ -42,7 +36,7 @@ export default function CategorySection({ recProducts }) {
                       className="category category-group-image"
                     >
                       <figure className="category-media">
-                        <LazyLoadImage
+                        <Image
                           src={getImgPath(item.seo?.seoImage[0]?.imageName)}
                           style={{
                             height: "150px",
@@ -51,9 +45,9 @@ export default function CategorySection({ recProducts }) {
                             padding: "1rem",
                           }}
                           alt={item.seo?.seoImage[0]?.imageAlt || ""}
-                          effect="opacity;"
-                          width="auto"
-                          height={169}
+                          priority
+                          width={150}
+                          height={150}
                         />
                       </figure>
                       <div className="category-content">

@@ -1,3 +1,7 @@
+@use "../config/variables";
+@use "../mixins/breakpoints";
+@use "../mixins/core";
+
 /* -------------------------------------------
     Layout
 ---------------------------------------------- */
@@ -10,7 +14,7 @@
     margin-right: auto;
 }
 
-@include mq(xs, max) {
+@include breakpoints.mq(xs, max) {
     .container,
     .container-fluid {
         padding-left: 15px;
@@ -18,10 +22,10 @@
     }
 }
 .container-fluid {
-    @include css(max-width, base, _container-fluid-width);
+    @include core.css(max-width, base, _container-fluid-width);
 }
 .container {
-    @include css(max-width, base, _container-width);
+    @include core.css(max-width, base, _container-width);
 }
 .divider {
     display: inline-block;
@@ -29,5 +33,5 @@
     margin-right: 1.5rem;
     height: 2.5rem;
     width: 1px;
-    background-color: $border-color;
+    background-color: variables.$border-color;
 }

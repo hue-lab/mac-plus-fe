@@ -1,3 +1,5 @@
+@use "../config/variables";
+
 /* -------------------------------------------
     Alert
         - Default
@@ -50,30 +52,30 @@
 
 // Color types
 .alert-primary {
-    background-color: $primary-color;
-    border-color: $primary-color;
-    color: $primary-color;
+    background-color: variables.$primary-color;
+    border-color: variables.$primary-color;
+    color: variables.$primary-color;
     // .btn-close { color: $primary-color; }
 }
 
 .alert-success {
-    background-color: $success-color;
-    border-color: $success-color;
-    color: $success-color;
+    background-color: variables.$success-color;
+    border-color: variables.$success-color;
+    color: variables.$success-color;
     // .btn-close { color: $success-color; }
 }
 
 .alert-warning {
-    background-color: $secondary-color;
-    border-color: $secondary-color;
-    color: $secondary-color;
+    background-color: variables.$secondary-color;
+    border-color: variables.$secondary-color;
+    color: variables.$secondary-color;
     //.btn-close { color: $secondary-color; }
 }
 
 .alert-danger {
-    background-color: $alert-color;
-    border-color: $alert-color;
-    color: $alert-color;
+    background-color: variables.$alert-color;
+    border-color: variables.$alert-color;
+    color: variables.$alert-color;
     //.btn-close { color: $alert-color; }
 }
 
@@ -168,7 +170,7 @@
         }
         
         a {
-            color: $primary-color;
+            color: variables.$primary-color;
             &:hover {
                 text-decoration: underline;
             }
@@ -220,13 +222,13 @@
     &.alert-light {
         &.alert-warning {
             .btn:not(.btn-close)  {
-                color:  $secondary-color;
+                color:  variables.$secondary-color;
                 background-color: #fff;
                 border-color: #fff;
                 &:hover {
                     color: #fff;
-                    background-color: $secondary-color;
-                    border-color: $secondary-color;
+                    background-color: variables.$secondary-color;
+                    border-color: variables.$secondary-color;
                 }
             }
         }

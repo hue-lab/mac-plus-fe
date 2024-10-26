@@ -1,9 +1,11 @@
+@use "../config/variables";
+
 /* -------------------------------------------
     No UiSlider
 ---------------------------------------------- */
 
 .noUi-target {
-    background: $border-color-light;
+    background: variables.$border-color-light;
     margin: 4px 16px 3rem 9px;
 }
 .noUi-connects {

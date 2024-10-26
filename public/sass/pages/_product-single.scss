@@ -1,3 +1,6 @@
+@use "../config/variables";
+@use "../mixins/breakpoints";
+
 /* -------------------------------------------
     Single Product Page
 ---------------------------------------------- */
@@ -75,7 +78,7 @@
 
   &.row,
   &.product-extended {
-    @include mq(lg, max) {
+    @include breakpoints.mq(lg, max) {
       .product-image-full {
         bottom: 2rem;
       }
@@ -268,7 +271,7 @@
       border-bottom: 1px solid #e9e9e9;
     }
   }
-  @include mq(md) {
+  @include breakpoints.mq(md) {
     .pl-md-6 {
       padding-left: 3rem !important;
     }
@@ -288,7 +291,7 @@
     border-radius: 50%;
     background-color: #222;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    color: $white-color;
+    color: variables.$white-color;
   }
   .icon-box .icon-box-icon {
     font-size: 3rem;
@@ -296,7 +299,7 @@
   }
   .icon-box-content p {
     font-size: 1.3rem;
-    color: $grey-color;
+    color: variables.$grey-color;
   }
   .divider {
     margin: 1.3rem 0 1.3rem;
@@ -407,7 +410,7 @@
     p {
       margin-bottom: 2.5rem;
       font-size: 1.3rem;
-      color: $body-color;
+      color: variables.$body-color;
     }
     .btn {
       padding: 1.2em 2.97em;
@@ -418,7 +421,7 @@
     }
   }
   .ratings::before {
-    color: $body-color;
+    color: variables.$body-color;
   }
   .form-checkbox {
     font-size: 1.3rem;
@@ -428,7 +431,7 @@
 //tabinside
 .product-details {
   .collapse::after {
-    color: $primary-color;
+    color: variables.$primary-color;
   }
 }
 
@@ -449,7 +452,7 @@
   font-size: 1.4rem;
 
   a {
-    color: $grey-color;
+    color: variables.$grey-color;
     text-indent: -9999px;
     letter-spacing: 1px;
     width: 16px;
@@ -471,7 +474,7 @@
   a.active:before,
   a:hover:before {
     content: "\e955\e955\e955\e955\e955";
-    color: $secondary-color;
+    color: variables.$secondary-color;
   }
 
   .star-1 {
@@ -604,7 +607,7 @@ aside {
       padding: 2.2rem 0;
     }
     > :not(:last-child) {
-      border-bottom: 1px solid $border-color;
+      border-bottom: 1px solid variables.$border-color;
     }
 
     i {
@@ -655,7 +658,7 @@ aside {
 }
 
 // Responsive
-@include mq(sm, max) {
+@include breakpoints.mq(sm, max) {
   .product-tab-reviews,
   .card-body {
     .comments {
@@ -674,7 +677,7 @@ aside {
     min-width: 13rem;
   }
 }
-@include mq(sm) {
+@include breakpoints.mq(sm) {
   .product-tab-size-guide {
     display: flex;
     thead th:first-child,
@@ -684,12 +687,12 @@ aside {
   }
 }
 
-@include mq(md) {
+@include breakpoints.mq(md) {
   // .product-gallery.sticky-sidebar {
   //     padding-bottom: 7rem;
   // }
 }
-@include mq(lg) {
+@include breakpoints.mq(lg) {
   .product-form select {
     width: 20rem;
   }
@@ -708,7 +711,7 @@ aside {
   }
 }
 // Product FullWidth
-@include mq(xxl) {
+@include breakpoints.mq(xxl) {
   .container-fluid {
     .product-thumbs.owl-carousel {
       width: calc(100% + 20px);
@@ -761,7 +764,7 @@ aside {
     margin-bottom: 1rem;
   }
 }
-@include mq(lg) {
+@include breakpoints.mq(lg) {
   .product-sticky-both .btn-cart {
     max-width: 100%;
   }
@@ -777,7 +780,7 @@ aside {
     }
   }
 }
-@include mq(lg, max) {
+@include breakpoints.mq(lg, max) {
   .product-tabs {
     .product-tab-description,
     .card-body {
@@ -800,7 +803,7 @@ aside {
   }
 }
 
-@include mq(xs, max) {
+@include breakpoints.mq(xs, max) {
   .product-tab-size-guide .size-table tbody tr > *,
   .card-sizeguide .size-table tbody tr > * {
     padding: 12px 0 12px;

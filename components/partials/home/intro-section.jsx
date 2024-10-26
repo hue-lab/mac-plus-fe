@@ -1,12 +1,12 @@
 import React from "react";
 import Reveal from "react-awesome-reveal";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import ALink from "~/components/features/custom-link";
 import OwlCarousel from "~/components/features/owl-carousel";
-import { introSlider } from "~/utils/data/carousel";
-import { blurIn } from "~/utils/data/keyframes";
-import { getImgPath } from "~/utils";
+import {introSlider} from "~/utils/data/carousel";
+import {blurIn} from "~/utils/data/keyframes";
+import {getImgPath} from "~/utils";
+import Image from "next/image";
 
 function IntroSection({ slides }) {
   return (
@@ -24,11 +24,11 @@ function IntroSection({ slides }) {
                 style={{ backgroundColor: "#101010" }}
               >
                 <figure>
-                  <LazyLoadImage
+                  <Image
                     src={getImgPath(item.media)}
                     alt={item.seo?.seoImageAlt || ""}
                     effect="opacity"
-                    width="auto"
+                    width={1046}
                     height={460}
                     style={{ opacity: 0.3 }}
                   />

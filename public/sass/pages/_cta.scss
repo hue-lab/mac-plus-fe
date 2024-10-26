@@ -1,3 +1,6 @@
+@use "../config/variables";
+@use "../mixins/breakpoints";
+
 /* -------------------------------------------
     Call to Action
 
@@ -21,7 +24,7 @@
         left: 0;
         width: 50%;
         padding-top: 50%;
-        background: linear-gradient( 135deg, #0088cc 0%, $primary-color 50%, transparent 50.1% );
+        background: linear-gradient( 135deg, #0088cc 0%, variables.$primary-color 50%, transparent 50.1% );
     }
     .banner-content { 
         position: relative;
@@ -78,7 +81,7 @@
             top: 0;
             bottom: 0;
             z-index: -1;
-            background: linear-gradient( 90deg, $primary-color, #0088cc , $primary-color );
+            background: linear-gradient( 90deg, variables.$primary-color, #0088cc , variables.$primary-color );
             transition: left .3s;
         }
         &:hover {
@@ -200,7 +203,7 @@
 
 // Expanded Newsletter
 .banner-newsletter {
-    border: 2px solid $primary-color;
+    border: 2px solid variables.$primary-color;
 	.banner-content { padding: 1.8rem 0; }
 	.icon-box { justify-content: flex-start; }
     .icon-box p {
@@ -284,7 +287,7 @@
     }
 }
 // Responsive
-@include mq( lg, max ) {
+@include breakpoints.mq( lg, max ) {
     .cta-simple {
         .banner-content { text-align: center; }
         .banner-header {
@@ -311,12 +314,12 @@
     }
 	.banner-newsletter .icon-box { justify-content: center; }
 }
-@include mq(md,max) {
+@include breakpoints.mq(md,max) {
     .banner-4 .banner-content {
         display: block !important; 
     }
 }
-@include mq( sm, max ) {
+@include breakpoints.mq( sm, max ) {
     .banner { font-size: .9rem; }
     .banner-group .banner { font-size: 1.2rem; }
     .banner-newsletter {
@@ -331,6 +334,6 @@
         .icon-box-content { text-align: center; }
 	}
 }
-@include mq( xs, max ) {
+@include breakpoints.mq( xs, max ) {
     .banner-group .banner { font-size: 1rem; }
 }

@@ -1,3 +1,4 @@
+@use "sass:color";
 // Button Variant Mixin
 @mixin button-variant( $color ) {
     color: #fff;
@@ -7,8 +8,8 @@
     &:active,
     &:focus {
         color: #fff;
-        border-color: lighten( $color , 7% );
-        background-color: lighten( $color , 7% );
+        border-color: color.adjust( $color , $lightness: 7% );
+        background-color: color.adjust( $color , $lightness: 7% );
     }
     &.btn-solid {
         color: $color;

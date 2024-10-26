@@ -1,3 +1,6 @@
+@use "../config/variables";
+@use "../mixins/breakpoints";
+
 /* -------------------------------------------
     Tab
 ---------------------------------------------- */
@@ -97,7 +100,7 @@
   .nav-item.show .nav-link,
   .nav-item .nav-link.active,
   .nav-item:hover .nav-link {
-    border-bottom-color: $primary-color;
+    border-bottom-color: variables.$primary-color;
   }
 }
 
@@ -160,7 +163,7 @@
   .nav-item .nav-link.active,
   .nav-item:hover .nav-link {
     border-color: #ebebeb;
-    border-top-color: $primary-color;
+    border-top-color: variables.$primary-color;
   }
 }
 
@@ -246,16 +249,16 @@
     .nav-item.show .nav-link,
     .nav-item .nav-link.active,
     .nav-item:hover .nav-link {
-      color: $primary-color;
+      color: variables.$primary-color;
       &::after {
-        background-color: $primary-color;
+        background-color: variables.$primary-color;
         transform: translateY(-50%) scale(1);
       }
     }
   }
 }
 
-@include mq(md, max) {
+@include breakpoints.mq(md, max) {
   .tab-vertical {
     flex-flow: column nowrap;
     .tab-content,
@@ -317,7 +320,7 @@
     .nav-item.show .nav-link,
     .nav-item .nav-link.active,
     .nav-item:hover .nav-link {
-      border-top-color: $primary-color;
+      border-top-color: variables.$primary-color;
     }
   }
 }
@@ -332,14 +335,14 @@
   .nav-item .nav-link.active,
   .nav-item:hover .nav-link {
     color: #fff;
-    background-color: $primary-color;
-    border-color: $primary-color;
+    background-color: variables.$primary-color;
+    border-color: variables.$primary-color;
   }
 }
 
 // Responsive
 
-@include mq(md, max) {
+@include breakpoints.mq(md, max) {
   .nav-link {
     font-size: 1.4rem;
   }
@@ -350,7 +353,7 @@
     }
   }
 }
-@include mq(xs, max) {
+@include breakpoints.mq(xs, max) {
   .tab-nav-round {
     .nav-link {
       margin-bottom: 0.5rem;
@@ -377,7 +380,7 @@
   line-height: 1;
   transition: color 0.3s;
   &.active {
-    color: $primary-color;
+    color: variables.$primary-color;
   }
 }
 
@@ -386,14 +389,14 @@
     border-bottom: 1px solid transparent;
     transition: color 0.3s, border-color 0.3s;
     &.active {
-      border-color: $primary-color;
+      border-color: variables.$primary-color;
     }
   }
 }
 
 .product-tabs .nav-item {
   margin-bottom: 1px;
-  @include mq(xs, max) {
+  @include breakpoints.mq(xs, max) {
     span {
       font-size: 1.8rem !important;
     }

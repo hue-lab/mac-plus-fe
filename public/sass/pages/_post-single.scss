@@ -1,3 +1,6 @@
+@use "../config/variables";
+@use "../mixins/breakpoints";
+
 /* -------------------------------------------
     Single Post Page
 ---------------------------------------------- */
@@ -34,7 +37,7 @@
             text-decoration: underline;
             color: #222;
             &:hover {
-                color: $primary-color;
+                color: variables.$primary-color;
             }
         }
         h4 {
@@ -49,14 +52,14 @@
             text-align: justify;
         }
         figcaption {
-            color: $grey-color;
+            color: variables.$grey-color;
             a {
                 color: inherit;
-                border-bottom: 1px solid $grey-color;
+                border-bottom: 1px solid variables.$grey-color;
                 text-decoration: none;
                 transition: border-color .3s, color .3s;
                 &:hover {
-                    border-color: $primary-color;
+                    border-color: variables.$primary-color;
                 }
             }
         }
@@ -137,23 +140,23 @@
             margin: 1rem 0;
             text-decoration: none;
             &:hover {
-                color: $primary-color;
+                color: variables.$primary-color;
             }
         }
     }
     .author-body { flex-grow: 1; }
 }
-@include mq(xl, max) {
+@include breakpoints.mq(xl, max) {
     // .post-single .with-img > div { margin-left: 2rem; }
 }
-@include mq(md, max) {
+@include breakpoints.mq(md, max) {
     // .post-single .with-img {
     //     display: block;
     //     img { width: 100%; }
     //     > div { margin-left: 0;}
     // }
 }
-@include mq(sm, max) {
+@include breakpoints.mq(sm, max) {
     // .post-single blockquote::before { left: 2rem }
     // .post-single blockquote { padding: 3rem 2rem 3rem 7rem; }
     .post-single blockquote {
@@ -176,7 +179,7 @@
         display: inline-block;
         margin: .3rem 2.8rem .3rem 0;
         font-size: 1.5rem;
-        color: $grey-color;
+        color: variables.$grey-color;
         &.social-pinterest {
             margin-right: 1rem;
         }
@@ -192,7 +195,7 @@
 }
 .pager-link {
     position: relative;
-    color: $grey-color;
+    color: variables.$grey-color;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -242,7 +245,7 @@
     }
     &:hover,
     &:focus {   
-        color: $grey-color;
+        color: variables.$grey-color;
         .pager-link-title {
             box-shadow: 0 .2rem 0 #333;
         }
@@ -262,7 +265,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-@include mq(sm, max) {
+@include breakpoints.mq(sm, max) {
     .pager-link-title {
         display: none;
     }
