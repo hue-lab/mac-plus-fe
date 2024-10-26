@@ -1,5 +1,8 @@
 import ALink from "~/components/features/custom-link";
 import { orderCategories } from "~/utils";
+import Image from "next/image";
+import logoShortImage from "~/public/images/home/logo-short.png"
+import paymentsImage from "~/public/images/payment.png"
 
 export default function Footer({ fields, categoryTree, footerNav }) {
   const YEAR = new Date().getFullYear();
@@ -11,11 +14,11 @@ export default function Footer({ fields, categoryTree, footerNav }) {
           <div className="row align-items-center">
             <div className="col-lg-3">
               <ALink href="/" className="logo-footer">
-                <img
-                  src="./images/home/logo-short.png"
+                <Image
+                  src={logoShortImage}
                   alt="logo-footer"
-                  width="100"
-                  height="auto"
+                  width={100}
+                  height={100}
                 />
               </ALink>
             </div>
@@ -94,7 +97,7 @@ export default function Footer({ fields, categoryTree, footerNav }) {
         <div className="footer-bottom">
           <div className="footer-left">
             <figure className="payment">
-              <img src="./images/payment.png" alt="payment" width="auto" height="29" />
+              <Image src={paymentsImage} alt="payment" width={336} height={29} />
             </figure>
           </div>
           <div className="footer-center">
