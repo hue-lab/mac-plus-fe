@@ -20,9 +20,9 @@ export default function Header({categoryTree, fields}) {
       <div className="header-middle sticky-header fix-top sticky-content">
         <div className="container">
           <div className="header-left">
-            <ALink href="#" className="mobile-menu-toggle" onClick={showMobileMenu}>
+            <div className="mobile-menu-toggle" onClick={showMobileMenu}>
               <i className="d-icon-bars2"></i>
-            </ALink>
+            </div>
 
             <ALink href="/" className="logo">
               <Image src={logoImage} alt="Mac Plus" width={200} height={56}/>

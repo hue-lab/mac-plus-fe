@@ -7,6 +7,14 @@ export default class MyDocument extends Document {
     return {...initialProps, helmet: Helmet.renderStatic()}
   }
 
+  get headTitle() {
+    return this.props.helmet.title.toComponent();
+  }
+
+  get headMeta() {
+    return this.props.helmet.meta.toComponent();
+  }
+
   render() {
     return (
       <Html lang="ru">
@@ -94,6 +102,8 @@ export default class MyDocument extends Document {
           <link rel="stylesheet" type="text/css" href="vendor/fontawesome-free/css/all.min.css"/>
           <link rel="stylesheet" type="text/css" href="vendor/owl-carousel/owl.carousel.min.css"/>
           <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+          {this.headTitle}
+          {this.headMeta}
           <meta name="google-site-verification" content="zkGKtNXlNUPH0rhw2sORnyS0J9USz7B6xXI0Gey3NwE"/>
         </Head>
 

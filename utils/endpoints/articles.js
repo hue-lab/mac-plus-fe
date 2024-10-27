@@ -10,7 +10,14 @@ export async function getArticles(page = 1, limit = 8) {
 
 export async function getLatestArticles(limit = 4) {
   const res = await fetch(process.env.API_HOST + `/article?limit=${limit}&hidden=false`);
-  return (await res.json()) || [];
+  let data = (await res.json()) || [];
+  if (data?.data?.length) {
+    data.data.forEach((article) => {
+      delete article.content
+      delete article.description
+    })
+  }
+  return data
 }
 
 export async function getArticleById(id) {

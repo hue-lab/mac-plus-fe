@@ -359,6 +359,7 @@ button {
 
 // ScrollTop
 .scroll-top {
+    cursor: pointer;
     position: fixed;
     text-align: center;
     bottom: 30px;
@@ -376,8 +377,6 @@ button {
     z-index: 999;
     box-shadow: 0 0 20px 0 rgba(0,0,0,0.1);
     line-height: 60px;
-
-    @include core.print_css( base, scroll-top );
     &:hover {
         color: #222;
     }
@@ -385,6 +384,7 @@ button {
         font-weight: 900;
         line-height: inherit;
     }
+    @include core.print_css( base, scroll-top );
 }
 
 // d-loading

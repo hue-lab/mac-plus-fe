@@ -67,7 +67,7 @@ function Layout({ children, closeQuickview, categoryTree, layoutFields, footerNa
         <StickyFooter />
       </div>
 
-      <ALink id="scroll-top" href="#" title="Top" role="button" className="scroll-top" onClick={() => scrollTopHandler(false)}><i className="d-icon-arrow-up"></i></ALink>
+      <div id="scroll-top" title="Top" role="button" className="scroll-top" onClick={() => scrollTopHandler(false)}><i className="d-icon-arrow-up"></i></div>
 
       <MobileMenu categoryTree={categoryTree} />
 

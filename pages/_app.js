@@ -1,6 +1,5 @@
 import {useStore, Provider} from "react-redux";
 import Helmet from "react-helmet";
-
 import {wrapper} from "~/store";
 import Layout from "~/components/layout";
 
@@ -16,6 +15,7 @@ const App = ({Component, pageProps}) => {
 
   return (
     <Provider store={store}>
+      <NextNProgress color="#007945" />
       <Helmet>
         <meta charSet="UTF-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -43,8 +43,6 @@ const App = ({Component, pageProps}) => {
         />
         <meta name="author" content="D-THEMES"/>
       </Helmet>
-
-      <NextNProgress color="#007945" />
       <Layout
         categoryTree={pageProps.categoryTree}
         layoutFields={pageProps.layoutFields}
