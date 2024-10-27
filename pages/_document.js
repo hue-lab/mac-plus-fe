@@ -107,7 +107,7 @@ export default class MyDocument extends Document {
           <meta name="google-site-verification" content="zkGKtNXlNUPH0rhw2sORnyS0J9USz7B6xXI0Gey3NwE"/>
         </Head>
 
-        <body>
+        <body className="loaded">
         <noscript>
           <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KZX7JHJG" height="0" width="0"
                   style={{display: 'none', visibility: 'hidden'}}></iframe>

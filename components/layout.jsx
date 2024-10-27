@@ -1,29 +1,21 @@
-import { useEffect, useLayoutEffect } from 'react';
-import { connect } from 'react-redux';
-import { useRouter } from 'next/router';
+import {useEffect} from 'react';
+import {connect} from 'react-redux';
 import 'react-toastify/dist/ReactToastify.min.css';
 import 'react-image-lightbox/style.css';
 import 'react-input-range/lib/css/index.css';
 
-import ALink from '~/components/features/custom-link';
-
 import Header from '~/components/common/header';
 import Footer from '~/components/common/footer';
 import StickyFooter from '~/components/common/sticky-footer';
-import Quickview from '~/components/features/product/common/quickview-modal';
 import MobileMenu from '~/components/common/partials/mobile-menu';
 
-import { modalActions } from '~/store/modal';
+import {modalActions} from '~/store/modal';
 
-import { showScrollTopHandler, scrollTopHandler, stickyHeaderHandler, stickyFooterHandler } from '~/utils';
+import {scrollTopHandler, showScrollTopHandler, stickyFooterHandler, stickyHeaderHandler} from '~/utils';
 
-function Layout({ children, closeQuickview, categoryTree, layoutFields, footerNav }) {
-  const router = useRouter();
+function Layout({ children, categoryTree, layoutFields, footerNav }) {
 
   if (typeof  window !== 'undefined') {
-    useLayoutEffect(() => {
-      document.querySelector('body').classList.remove('loaded');
-    }, [router.pathname]);
 
     useEffect(() => {
       window.addEventListener('scroll', showScrollTopHandler, true);
@@ -42,19 +34,6 @@ function Layout({ children, closeQuickview, categoryTree, layoutFields, footerNa
     }, [])
   }
 
-  useEffect(() => {
-    closeQuickview();
-
-    let bodyClasses = document.querySelector("body").classList;
-    for (let i = 0; i < bodyClasses.length; i++) {
-      document.querySelector('body').classList.remove(bodyClasses[i]);
-    }
-
-    setTimeout(() => {
-      document.querySelector('body').classList.add('loaded');
-    }, 50);
-  }, [router.pathname])
-
   return (
     <>
       <div className="page-wrapper">
@@ -70,8 +49,6 @@ function Layout({ children, closeQuickview, categoryTree, layoutFields, footerNa
       <div id="scroll-top" title="Top" role="button" className="scroll-top" onClick={() => scrollTopHandler(false)}><i className="d-icon-arrow-up"></i></div>
 
       <MobileMenu categoryTree={categoryTree} />
-
-      <Quickview />
     </>
   )
 }
