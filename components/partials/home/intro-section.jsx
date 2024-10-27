@@ -28,9 +28,10 @@ function IntroSection({ slides }) {
                     src={getImgPath(item.media)}
                     alt={item.seo?.seoImageAlt || ""}
                     effect="opacity"
-                    width={1046}
+                    width={1180}
                     height={460}
-                    style={{ opacity: 0.3 }}
+                    priority
+                    style={{ opacity: 0.3, width: "100%", height: "460px", objectFit: "cover" }}
                   />
                 </figure>
 
