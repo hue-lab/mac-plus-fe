@@ -53,4 +53,4 @@ function Layout({ children, categoryTree, layoutFields, footerNav }) {
   )
 }
 
-export default connect(null, { closeQuickview: modalActions.closeQuickview })(Layout);
+export default Layout;
