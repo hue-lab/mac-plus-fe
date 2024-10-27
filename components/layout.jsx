@@ -1,5 +1,4 @@
 import {useEffect} from 'react';
-import {connect} from 'react-redux';
 import 'react-toastify/dist/ReactToastify.min.css';
 import 'react-image-lightbox/style.css';
 import 'react-input-range/lib/css/index.css';
@@ -8,8 +7,6 @@ import Header from '~/components/common/header';
 import Footer from '~/components/common/footer';
 import StickyFooter from '~/components/common/sticky-footer';
 import MobileMenu from '~/components/common/partials/mobile-menu';
-
-import {modalActions} from '~/store/modal';
 
 import {scrollTopHandler, showScrollTopHandler, stickyFooterHandler, stickyHeaderHandler} from '~/utils';
 
