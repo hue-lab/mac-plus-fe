@@ -47,7 +47,15 @@ export async function getProductsAdvanced(category, id, limit = 6) {
       }
     })
   });
-  return res.json();
+  let data = await res.json();
+  if (data?.data?.length) {
+    data.data.forEach((product) => {
+      delete product.description
+      delete product.brand.description
+      delete product.categoryId
+    })
+  }
+  return data;
 }
 
 export async function getProducts(body) {
