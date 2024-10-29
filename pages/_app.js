@@ -54,25 +54,31 @@ const App = ({Component, pageProps}) => {
 };
 
 App.getInitialProps = async ({Component, ctx}) => {
-  const categoryTree = await getCategoryTree();
-  const footerNav = await getMenuByCode("footer_nav");
-  const layoutFields = await getFieldsObject(
-    "telegram",
-    "viber",
-    "instagram",
-    "phone",
-    "email",
-    "address",
-    "work_time",
-    "copyright",
-    "legal",
-    "nav-sale-title",
-    "nav-sale-link",
-    "nav-sale-image",
-    "main-seo-title",
-    "main-seo-description",
-    "nav-limit"
-  );
+  const [
+    categoryTree,
+    footerNav,
+    layoutFields,
+  ] = await Promise.all([
+    getCategoryTree(),
+    getMenuByCode("footer_nav"),
+    getFieldsObject(
+      "telegram",
+      "viber",
+      "instagram",
+      "phone",
+      "email",
+      "address",
+      "work_time",
+      "copyright",
+      "legal",
+      "nav-sale-title",
+      "nav-sale-link",
+      "nav-sale-image",
+      "main-seo-title",
+      "main-seo-description",
+      "nav-limit"
+    )
+  ]);
   let pageProps = {};
   if (Component.getInitialProps) {
     const pagePropsRes = await Component.getInitialProps(ctx);

@@ -10,9 +10,6 @@ function PostSix(props) {
     adClass = "post-sm",
     isLazy = false,
     isOriginal = false,
-    btnText = "Подробнее",
-    btnAdClass = "btn-dark btn-md",
-    isAuthor = true,
   } = props;
 
   return (
@@ -31,7 +28,7 @@ function PostSix(props) {
                   alt={post.seo?.seoImageAlt || ""}
                   width={380}
                   height={230}
-                  effect="opacity; transform"
+                  loading="lazy"
                   style={{ backgroundColor: "#DEE6E8" }}
                 />
               ) : (

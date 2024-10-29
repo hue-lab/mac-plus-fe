@@ -22,6 +22,7 @@ function BannerSection({tradeInTitle, tradeInSubtitle, tradeInDescription}) {
                 alt="Trade-in"
                 width={60}
                 height={60}
+                loading="lazy"
                 className="banner-icon mb-4"
               />
             </div>

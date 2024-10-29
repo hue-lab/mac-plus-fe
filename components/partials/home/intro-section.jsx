@@ -25,7 +25,6 @@ function IntroSection({ slides }) {
                   <Image
                     src={getImgPath(item.media)}
                     alt={item.seo?.seoImageAlt || ""}
-                    effect="opacity"
                     width={1180}
                     height={460}
                     priority
