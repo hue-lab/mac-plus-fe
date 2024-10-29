@@ -13,7 +13,6 @@ import {getImgPath} from "~/utils";
 export default function MediaFive ( props ) {
     const { product, adClass = '' } = props;
     const [ index, setIndex ] = useState( 0 );
-    const [ mediaIndex, setMediaIndex ] = useState( 0 );
     const [ isOpen, setOpenState ] = useState( false );
     const [ mediaRef, setMediaRef ] = useState( null );
 

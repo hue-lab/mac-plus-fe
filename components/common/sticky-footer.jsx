@@ -1,8 +1,5 @@
 import { useEffect } from 'react';
-
 import ALink from '~/components/features/custom-link';
-
-import FooterSearchBox from '~/components/common/partials/footer-search-box';
 
 export default function StickyFooter() {
   let tmp = 0;

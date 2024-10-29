@@ -45,7 +45,7 @@ export default function CategorySection({ recProducts }) {
                             padding: "1rem",
                           }}
                           alt={item.seo?.seoImage[0]?.imageAlt || ""}
-                          priority
+                          loading="lazy"
                           width={150}
                           height={150}
                         />

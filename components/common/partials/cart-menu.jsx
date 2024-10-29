@@ -42,8 +42,6 @@ function CartMenu(props) {
         {cartList.length > 0 ? (
           <div className="cart-header mb-4">
             <span className="cart-title d-block text-dark">Корзина</span>
-            {/* <ALink href="#" className="btn btn-dark btn-link btn-icon-right btn-close" onClick={ hideCartMenu }>close<i
-                                className="d-icon-arrow-right"></i><span className="sr-only">Cart</span></ALink> */}
           </div>
         ) : (
           ""

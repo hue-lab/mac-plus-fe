@@ -1,5 +1,4 @@
 import React from 'react';
-
 import ALink from '~/components/features/custom-link';
 
 import { toDecimal, getImgPath } from '~/utils';
