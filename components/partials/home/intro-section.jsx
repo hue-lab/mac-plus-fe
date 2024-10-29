@@ -21,7 +21,7 @@ function IntroSection({ slides }) {
                 className="banner banner-fixed intro-slide2"
                 style={{ backgroundColor: "#101010" }}
               >
-                <figure>
+                <picture>
                   <Image
                     src={getImgPath(item.media)}
                     alt={item.seo?.seoImageAlt || ""}
@@ -29,9 +29,10 @@ function IntroSection({ slides }) {
                     width={1180}
                     height={460}
                     priority
+                    loading="eager"
                     style={{ opacity: 0.3, width: "100%", height: "460px", objectFit: "cover" }}
                   />
-                </figure>
+                </picture>
 
                 <div className="banner-content x-50 y-50 text-center">
                   <span className="banner-title ls-l text-white text-uppercase font-weight-bold">

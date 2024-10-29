@@ -1,14 +1,18 @@
 import {useEffect} from 'react';
 import 'react-toastify/dist/ReactToastify.min.css';
 import 'react-image-lightbox/style.css';
-import 'react-input-range/lib/css/index.css';
-
 import Header from '~/components/common/header';
 import Footer from '~/components/common/footer';
 import StickyFooter from '~/components/common/sticky-footer';
 import MobileMenu from '~/components/common/partials/mobile-menu';
 
 import {scrollTopHandler, showScrollTopHandler, stickyFooterHandler, stickyHeaderHandler} from '~/utils';
+import {Poppins} from "next/font/google";
+
+const poppins = Poppins({
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  subsets: ['latin'],
+})
 
 function Layout({ children, categoryTree, layoutFields, footerNav }) {
 
@@ -33,7 +37,7 @@ function Layout({ children, categoryTree, layoutFields, footerNav }) {
 
   return (
     <>
-      <div className="page-wrapper">
+      <div className={`page-wrapper ${poppins.className}`}>
         <Header categoryTree={categoryTree} fields={layoutFields} />
 
         {children}

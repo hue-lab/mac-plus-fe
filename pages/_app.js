@@ -1,14 +1,13 @@
 import {useStore, Provider} from "react-redux";
-import Helmet from "react-helmet";
 import {wrapper} from "~/store";
 import Layout from "~/components/layout";
-
 import "~/public/sass/style.scss";
 import {getCategoryTree} from "~/utils/endpoints/categoryTree";
 import {getFieldsObject} from "~/utils/endpoints/fields";
 import {getMenuByCode} from "~/utils/endpoints/menu";
 import NextNProgress from 'nextjs-progressbar';
 import React from "react";
+import Head from 'next/head'
 
 const App = ({Component, pageProps}) => {
   const store = useStore();
@@ -16,9 +15,9 @@ const App = ({Component, pageProps}) => {
   return (
     <Provider store={store}>
       <NextNProgress color="#007945" />
-      <Helmet>
+      <Head>
         <meta charSet="UTF-8"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
         <title>{pageProps.layoutFields["main-seo-title"] || "Mac Plus"}</title>
@@ -42,7 +41,7 @@ const App = ({Component, pageProps}) => {
           }
         />
         <meta name="author" content="D-THEMES"/>
-      </Helmet>
+      </Head>
       <Layout
         categoryTree={pageProps.categoryTree}
         layoutFields={pageProps.layoutFields}
