@@ -12,25 +12,35 @@ import IntroCategories from "~/components/partials/home/intro-categories";
 import {getSeoByUrl} from "~/utils/endpoints/seo";
 import Head from "next/head";
 
-HomePage.getInitialProps = async (context) => {
-  const articles = await getLatestArticles();
-  const recProducts = await getRecProducts();
-  const slides = await getSlides();
-  const features = await getFieldsObject('features_1', 'features_2', 'features_3', 'features_4');
-  const fields = await getFieldsObject('trade-in-title', 'trade-in-subtitle' ,'trade-in-description', 'main-seo-title', 'main-seo-description');
-  const seoMainMeta = await getSeoByUrl(`/`);
+export const getStaticProps = (async () => {
+  const [
+    articles,
+    recProducts,
+    slides,
+    features,
+    fields,
+    seoMainMeta,
+  ] = await Promise.all([
+    getLatestArticles(),
+    getRecProducts(),
+    getSlides(),
+    getFieldsObject('features_1', 'features_2', 'features_3', 'features_4'),
+    getFieldsObject('trade-in-title', 'trade-in-subtitle' ,'trade-in-description', 'main-seo-title', 'main-seo-description'),
+    getSeoByUrl(`/`),
+  ]);
   return {
-    articles: articles.data,
-    recProducts: recProducts.data,
-    slides: slides.data,
-    fields: fields,
-    features: features,
-    mainSeo: seoMainMeta,
-  };
-}
+    props: {
+      articles: articles.data,
+      recProducts: recProducts.data,
+      slides: slides.data,
+      fields: fields,
+      features: features,
+      mainSeo: seoMainMeta,
+    }
+  }
+})
 
 export default function HomePage({ articles, recProducts, slides, fields, features, categoryTree, mainSeo }) {
-
   return (
     <div className="main home mt-lg-4 homepage">
       <Head>
