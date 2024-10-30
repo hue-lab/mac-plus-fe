@@ -29,15 +29,20 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
   const filterString = pathSegments[1]?.split("/page-is-")[0] || null;
   const filterObject = parseFilterString(filterString);
   const path = pathSegments[0].split("/page-is-")[0];
-  const seoFields = await getFieldsObject(
-    "category-seo-header",
-    "category-seo-title",
-    "category-seo-description",
-    "product-seo-header",
-    "product-seo-title",
-    "product-seo-description",
-  );
-  const seoMainMeta = await getSeoByUrl(`/${fullPath}`);
+  const [
+    seoFields,
+    seoMainMeta,
+  ] = await Promise.all([
+    getFieldsObject(
+      "category-seo-header",
+      "category-seo-title",
+      "category-seo-description",
+      "product-seo-header",
+      "product-seo-title",
+      "product-seo-description",
+    ),
+    getSeoByUrl(`/${fullPath}`)
+  ]);
 
   const item =
     path === "shop"
@@ -61,8 +66,13 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
   }
 
   if (item?.price) {
-    const featuredRes = await getProductsAdvanced(item.category._id, item._id);
-    const deliveryRes = await getDeliveryMethods();
+    const [
+      featuredRes,
+      deliveryRes,
+    ] = await Promise.all([
+      getProductsAdvanced(item.category._id, item._id),
+      getDeliveryMethods(),
+    ]);
     return {
       featured: featuredRes || [],
       deliveryMethods: deliveryRes || [],

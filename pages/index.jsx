@@ -36,7 +36,8 @@ export const getStaticProps = (async () => {
       fields: fields,
       features: features,
       mainSeo: seoMainMeta,
-    }
+    },
+    revalidate: 3600,
   }
 })
 
