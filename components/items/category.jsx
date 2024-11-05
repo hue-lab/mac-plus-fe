@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
-import Helmet from "react-helmet";
 import ALink from "~/components/features/custom-link";
 import SidebarFilterOne from "~/components/partials/shop/sidebar/sidebar-filter-one";
 import ProductListOne from "~/components/partials/shop/product-list/product-list-one";
-import { getImgPath } from "~/utils";
+import {getImgPath} from "~/utils";
+import Head from "next/head";
 
 export default function Category({
   banner,
@@ -71,13 +71,13 @@ export default function Category({
 
   return (
     <main className="main bt-lg-none shop">
-      <Helmet>
+      <Head>
         <title>{interpolatedTitle}</title>
         <meta property="og:title" content={interpolatedTitle}/>
         <meta name="description" content={interpolatedDescription}/>
         <meta property="og:description" content={interpolatedDescription}/>
         <meta name="keywords" content={(mainSeo?.keywords || category.keywords || []).join(", ")}/>
-      </Helmet>
+      </Head>
 
       <script
         type="application/ld+json"

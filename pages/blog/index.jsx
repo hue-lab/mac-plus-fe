@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import Helmet from 'react-helmet';
 import {useRouter} from 'next/router';
 import ALink from '~/components/features/custom-link';
 import PostOne from '~/components/features/post/post-one';
 import {getArticles} from '~/utils/endpoints/articles';
 import BlogPagination from "~/components/features/blog-pagination";
+import Head from "next/head";
 
 Classic.getInitialProps = async ({query}) => {
   const pagination = {
@@ -32,9 +32,9 @@ export default function Classic({posts, page}) {
 
   return (
     <main className="main skeleton-body">
-      <Helmet>
+      <Head>
         <title>Mac Plus | Блог</title>
-      </Helmet>
+      </Head>
 
       <h1 className="d-none">Mac Plus - Блог</h1>
 

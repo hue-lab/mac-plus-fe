@@ -1,17 +1,17 @@
 import React, {useState} from "react";
-import Helmet from "react-helmet";
 
 import ALink from "~/components/features/custom-link";
 import MediaFive from "~/components/partials/product/media/media-five";
 import DetailThree from "~/components/partials/product/detail/detail-three";
 import DescOne from "~/components/partials/product/desc/desc-one";
 import ProductSidebar from "~/components/partials/product/product-sidebar";
-import { getImgPath } from "~/utils";
+import {getImgPath} from "~/utils";
 import Modal from "react-modal";
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import ru from '~/public/labels/ru';
 import {sendMessage} from "~/utils/endpoints/message";
+import Head from "next/head";
 
 export default function ProductItem({ product, featured, deliveryMethods, seoFields, mainSeo }) {
   if (!product) return "";
@@ -85,14 +85,14 @@ export default function ProductItem({ product, featured, deliveryMethods, seoFie
 
   return (
     <main className="main single-product">
-      <Helmet>
+      <Head>
         <title>{interpolatedTitle}</title>
         <meta property="og:title" content={interpolatedTitle} />
         <meta name="description" content={interpolatedDescription} />
         <meta property="og:description" content={interpolatedDescription} />
         <meta name="keywords" content={mainSeo?.keywords || product.seo?.seoKeywords?.join(", ")} />
         {ogImage && <meta property="og:image" content={getImgPath(ogImage.imageName)} />}
-      </Helmet>
+      </Head>
 
       <h1 className="d-none">{interpolatedHeader}</h1>
 

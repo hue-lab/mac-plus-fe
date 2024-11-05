@@ -30,12 +30,6 @@ function DetailThree(props) {
   const [cartActive, setCartActive] = useState(false);
   const [quantity, setQuantity] = useState(1);
 
-  // decide if the product is wishlisted
-  let isWishlisted,
-    colors = [],
-    sizes = [];
-  isWishlisted = wishlist.findIndex((item) => item._id === product._id) > -1 ? true : false;
-
   useEffect(() => {
     setCurIndex(-1);
     resetValueHandler();
@@ -48,22 +42,6 @@ function DetailThree(props) {
       setCartActive(false);
     }
   }, [curColor, curSize, product]);
-
-  const wishlistHandler = (e) => {
-    e.preventDefault();
-
-    if (toggleWishlist && !isWishlisted) {
-      let currentTarget = e.currentTarget;
-      currentTarget.classList.add('load-more-overlay', 'loading');
-      toggleWishlist(product.data);
-
-      setTimeout(() => {
-        currentTarget.classList.remove('load-more-overlay', 'loading');
-      }, 1000);
-    } else {
-      router.push('/pages/wishlist');
-    }
-  };
 
   const toggleColorHandler = (color) => {
     if (!isDisabled(color.name, curSize)) {
