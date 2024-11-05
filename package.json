@@ -23,6 +23,7 @@
     "next-redux-wrapper": "^8.1.0",
     "nextjs-progressbar": "^0.0.16",
     "node-fetch": "^3.0.0",
+    "postcss-flexbugs-fixes": "^5.0.2",
     "react": "^18.3.1",
     "react-awesome-reveal": "^3.8.1",
     "react-bootstrap": "^1.6.7",
@@ -48,5 +49,10 @@
     "rxjs": "^7.8.1",
     "sass": "^1.80.4",
     "supports-color": "^9.0.2"
+  },
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^6.0.0",
+    "@mojojoejo/vite-plugin-purgecss": "^1.1.0",
+    "postcss-preset-env": "^10.0.9"
   }
 }
