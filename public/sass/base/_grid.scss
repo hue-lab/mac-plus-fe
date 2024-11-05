@@ -1,3 +1,6 @@
+@use "../mixins/breakpoints";
+@use "../mixins/core";
+
 /* -------------------------------------------
     Grid
 ---------------------------------------------- */
@@ -6,38 +9,38 @@
 .row {
     display: flex;
     flex-wrap: wrap;
-    margin-left: -#{get(base, _gutter-md)};
-    margin-right: -#{get(base, _gutter-md)};
+    margin-left: -#{core.get(base, _gutter-md)};
+    margin-right: -#{core.get(base, _gutter-md)};
     
     > * {
         position: relative;
         width: 100%;
-        padding-right: #{get(base, _gutter-md)};
-        padding-left: #{get(base, _gutter-md)};
+        padding-right: #{core.get(base, _gutter-md)};
+        padding-left: #{core.get(base, _gutter-md)};
     }    
 }
 .gutter-lg {
-    margin-left: -#{get(base, _gutter-lg)};
-    margin-right: -#{get(base, _gutter-lg)};
+    margin-left: -#{core.get(base, _gutter-lg)};
+    margin-right: -#{core.get(base, _gutter-lg)};
     > * {
-        padding-right: #{get(base, _gutter-lg)};
-        padding-left: #{get(base, _gutter-lg)};
+        padding-right: #{core.get(base, _gutter-lg)};
+        padding-left: #{core.get(base, _gutter-lg)};
     }
 }
 .gutter-sm {
-    margin-left: -#{get(base, _gutter-sm)};
-    margin-right: -#{get(base, _gutter-sm)};
+    margin-left: -#{core.get(base, _gutter-sm)};
+    margin-right: -#{core.get(base, _gutter-sm)};
     > * {
-        padding-right: #{get(base, _gutter-sm)};
-        padding-left: #{get(base, _gutter-sm)};
+        padding-right: #{core.get(base, _gutter-sm)};
+        padding-left: #{core.get(base, _gutter-sm)};
     }
 }
 .gutter-xs {
-    margin-left: -#{get(base, _gutter-xs)};
-    margin-right: -#{get(base, _gutter-xs)};
+    margin-left: -#{core.get(base, _gutter-xs)};
+    margin-right: -#{core.get(base, _gutter-xs)};
     > * {
-        padding-right: #{get(base, _gutter-xs)};
-        padding-left: #{get(base, _gutter-xs)};
+        padding-right: #{core.get(base, _gutter-xs)};
+        padding-left: #{core.get(base, _gutter-xs)};
     }
 }
 .gutter-no {
@@ -50,74 +53,74 @@
 }
 
 @for $i from 1 through 8 {
-    .cols-#{$i} > * { max-width: #{ math.div(round(math.div(100%, $i) * 10000), 10000) }; flex: 0 0 #{ math.div(round(math.div(100%, $i) * 10000), 10000) }; }
+    .cols-#{$i} > * { max-width: #{ math.div(math.round(math.div(100%, $i) * 10000), 10000) }; flex: 0 0 #{ math.div(math.round(math.div(100%, $i) * 10000), 10000) }; }
 }
 
-@include mq(xs) {
+@include breakpoints.mq(xs) {
     @for $i from 1 through 8 {
-        .cols-xs-#{$i} > * { max-width: #{ math.div(round(math.div(100%, $i) * 10000), 10000) }; flex: 0 0 #{ math.div(round(math.div(100%, $i) * 10000), 10000) }; }
+        .cols-xs-#{$i} > * { max-width: #{ math.div(math.round(math.div(100%, $i) * 10000), 10000) }; flex: 0 0 #{ math.div(math.round(math.div(100%, $i) * 10000), 10000) }; }
     }
 }
 
-@include mq(sm) {
+@include breakpoints.mq(sm) {
     @for $i from 1 through 8 {
-        .cols-sm-#{$i} > * { max-width: #{ math.div(round(math.div(100%, $i) * 10000), 10000) }; flex: 0 0 #{ math.div(round(math.div(100%, $i) * 10000), 10000) }; }
+        .cols-sm-#{$i} > * { max-width: #{ math.div(math.round(math.div(100%, $i) * 10000), 10000) }; flex: 0 0 #{ math.div(math.round(math.div(100%, $i) * 10000), 10000) }; }
     }
 }
 
-@include mq(md) {
+@include breakpoints.mq(md) {
     @for $i from 1 through 8 {
-        .cols-md-#{$i} > * { max-width: #{ math.div(round(math.div(100%, $i) * 10000), 10000) }; flex: 0 0 #{ math.div(round(math.div(100%, $i) * 10000), 10000) }; }
+        .cols-md-#{$i} > * { max-width: #{ math.div(math.round(math.div(100%, $i) * 10000), 10000) }; flex: 0 0 #{ math.div(math.round(math.div(100%, $i) * 10000), 10000) }; }
     }
 }
 
-@include mq(lg) {
+@include breakpoints.mq(lg) {
     @for $i from 1 through 8 {
-        .cols-lg-#{$i} > * { max-width: #{ math.div(round(math.div(100%, $i) * 10000), 10000) }; flex: 0 0 #{ math.div(round(math.div(100%, $i) * 10000), 10000) }; }
+        .cols-lg-#{$i} > * { max-width: #{ math.div(math.round(math.div(100%, $i) * 10000), 10000) }; flex: 0 0 #{ math.div(math.round(math.div(100%, $i) * 10000), 10000) }; }
     }
 }
 
-@include mq(xl) {
+@include breakpoints.mq(xl) {
     @for $i from 1 through 8 {
-        .cols-xl-#{$i} > * { max-width: #{ math.div(round(math.div(100%, $i) * 10000), 10000) }; flex: 0 0 #{ math.div(round(math.div(100%, $i) * 10000), 10000) }; }
+        .cols-xl-#{$i} > * { max-width: #{ math.div(math.round(math.div(100%, $i) * 10000), 10000) }; flex: 0 0 #{ math.div(math.round(math.div(100%, $i) * 10000), 10000) }; }
     }
 }
 
 @for $i from 1 through 12 {
-    .col-#{$i} { max-width: #{ math.div(round(math.div(100%, 12) * $i * 10000), 10000) }; flex: 0 0 #{ math.div(round(math.div(100%, 12) * $i * 10000), 10000) }; }
+    .col-#{$i} { max-width: #{ math.div(math.round(math.div(100%, 12) * $i * 10000), 10000) }; flex: 0 0 #{ math.div(math.round(math.div(100%, 12) * $i * 10000), 10000) }; }
 }
 
-@include mq(xs) {
+@include breakpoints.mq(xs) {
     @for $i from 1 through 12 {
-        .col-xs-#{$i} { max-width: #{ math.div(round(math.div(100%, 12) * $i * 10000), 10000) }; flex: 0 0 #{ math.div(round(math.div(100%, 12) * $i * 10000), 10000) }; }
+        .col-xs-#{$i} { max-width: #{ math.div(math.round(math.div(100%, 12) * $i * 10000), 10000) }; flex: 0 0 #{ math.div(math.round(math.div(100%, 12) * $i * 10000), 10000) }; }
     }
 }
 
-@include mq(sm) {
+@include breakpoints.mq(sm) {
     @for $i from 1 through 12 {
-        .col-sm-#{$i} { max-width: #{ math.div(round(math.div(100%, 12) * $i * 10000), 10000) }; flex: 0 0 #{ math.div(round(math.div(100%, 12) * $i * 10000), 10000) }; }
+        .col-sm-#{$i} { max-width: #{ math.div(math.round(math.div(100%, 12) * $i * 10000), 10000) }; flex: 0 0 #{ math.div(math.round(math.div(100%, 12) * $i * 10000), 10000) }; }
     }
 }
 
-@include mq(md) {
+@include breakpoints.mq(md) {
     @for $i from 1 through 12 {
-        .col-md-#{$i} { max-width: #{ math.div(round(math.div(100%, 12) * $i * 10000), 10000) }; flex: 0 0 #{ math.div(round(math.div(100%, 12) * $i * 10000), 10000) }; }
+        .col-md-#{$i} { max-width: #{ math.div(math.round(math.div(100%, 12) * $i * 10000), 10000) }; flex: 0 0 #{ math.div(math.round(math.div(100%, 12) * $i * 10000), 10000) }; }
     }
 }
 
-@include mq(lg) {
+@include breakpoints.mq(lg) {
     @for $i from 1 through 12 {
-        .col-lg-#{$i} { max-width: #{ math.div(round(math.div(100%, 12) * $i * 10000), 10000) }; flex: 0 0 #{ math.div(round(math.div(100%, 12) * $i * 10000), 10000) }; }
+        .col-lg-#{$i} { max-width: #{ math.div(math.round(math.div(100%, 12) * $i * 10000), 10000) }; flex: 0 0 #{ math.div(math.round(math.div(100%, 12) * $i * 10000), 10000) }; }
     }
 }
 
-@include mq(xl) {
+@include breakpoints.mq(xl) {
     @for $i from 1 through 12 {
-        .col-xl-#{$i} { max-width: #{ math.div(round(math.div(100%, 12) * $i * 10000), 10000) }; flex: 0 0 #{ math.div(round(math.div(100%, 12) * $i * 10000), 10000) }; }
+        .col-xl-#{$i} { max-width: #{ math.div(math.round(math.div(100%, 12) * $i * 10000), 10000) }; flex: 0 0 #{ math.div(math.round(math.div(100%, 12) * $i * 10000), 10000) }; }
     }
 }
 
-@include mq(xxl) {
+@include breakpoints.mq(xxl) {
     .col-xxl-10 {
         flex: 0 0 83.3333%;
         max-width: 83.3333%;
@@ -132,7 +135,7 @@
     }
 }
 
-@include mq(xl) {
+@include breakpoints.mq(xl) {
     .col-xl-5col {
         position: relative;
         flex: 0 0 20%;
@@ -163,7 +166,7 @@
     order: 9;
 }
 
-@include mq(sm) {
+@include breakpoints.mq(sm) {
     .order-sm-auto {
         order: 0;
     }
@@ -174,7 +177,7 @@
         order: 9;
     }
 }
-@include mq(md) {
+@include breakpoints.mq(md) {
     .order-md-auto {
         order: 0;
     }
@@ -185,7 +188,7 @@
         order: 9;
     }
 }
-@include mq(lg) {
+@include breakpoints.mq(lg) {
     .order-lg-auto {
         order: 0;
     } 
@@ -258,44 +261,44 @@ $border-bottom-color: #f4f4f4 !default;
         background-color: $border-right-color;
     }
 }
-#{split-line-nthclasses()} {
+#{core.split-line-nthclasses()} {
     &::after { content: none; }
 }
-@include mq('sm') {
-    #{split-line-classes( 'sm-' )} {
+@include breakpoints.mq('sm') {
+    #{core.split-line-classes( 'sm-' )} {
         &::after {
             content: ''
         }
     }
-    #{split-line-nthclasses( 'sm-' )} {
+    #{core.split-line-nthclasses( 'sm-' )} {
         &::after { content: none; }
     }
 }
     
-@include mq('md') {
-    #{split-line-classes( 'md-' )} {
+@include breakpoints.mq('md') {
+    #{core.split-line-classes( 'md-' )} {
         &::after {
             content: '';
         }
     }
-    #{split-line-nthclasses( 'md-' )} {
+    #{core.split-line-nthclasses( 'md-' )} {
         &::after { content: none; }
     }
 }
 
-@include mq('lg') {
-    #{split-line-classes( 'lg-' )} {
+@include breakpoints.mq('lg') {
+    #{core.split-line-classes( 'lg-' )} {
         &::after {
             content: '';
         }
     }
-    #{split-line-nthclasses( 'lg-' )} {
+    #{core.split-line-nthclasses( 'lg-' )} {
         &::after { content: none; }
     }
 }
 
-@include mq('xl') {
-    #{split-line-classes( 'xl-' )},
+@include breakpoints.mq('xl') {
+    #{core.split-line-classes( 'xl-' )},
     .split-line>.col-xl-5col:nth-child(n),
     .split-line>.col-xl-7col:nth-child(n),
     .split-line>.col-xl-8col:nth-child(n) {
@@ -303,7 +306,7 @@ $border-bottom-color: #f4f4f4 !default;
             content: '';
         }
     }
-    #{split-line-nthclasses( 'xl-' )},
+    #{core.split-line-nthclasses( 'xl-' )},
     .split-line>.col-xl-5col:nth-child(5n),
     .split-line>.col-xl-7col:nth-child(7n),
     .split-line>.col-xl-8col:nth-child(8n) {

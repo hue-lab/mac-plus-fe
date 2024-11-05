@@ -1,3 +1,6 @@
+@use "../config/variables";
+@use "../mixins/breakpoints";
+
 /* -------------------------------------------
     Account
 ---------------------------------------------- */
@@ -9,7 +12,7 @@
         letter-spacing: -.035em;
     }
     p {
-        font-family: $font-family;
+        font-family: variables.$font-family;
         line-height: 2.15;
         letter-spacing: -.017em;
         span {
@@ -37,12 +40,12 @@
     }
     .form-control {
         font-size: 1.3rem;
-        font-family: $font-family;
+        font-family: variables.$font-family;
         transition: background-color .3s, border-color .3s;
         color: #999;
         border-radius: .3rem;
         &:focus {
-            border-color: $dark-color;
+            border-color: variables.$dark-color;
         }
     }
     .nav-tabs {
@@ -62,11 +65,11 @@
             text-transform: none;
         }
         &:hover {
-            .nav-link { color: $primary-color; }
+            .nav-link { color: variables.$primary-color; }
         }
         &.show .nav-link,
         .nav-link.active {
-            color: $primary-color;
+            color: variables.$primary-color;
         }
     }
     .tab-pane { 
@@ -94,7 +97,7 @@
         width: 25.9rem;
         font-size: 1.4rem;
         font-weight: 400;
-        color: $body-color;
+        color: variables.$body-color;
     }
 
     fieldset {
@@ -103,14 +106,14 @@
         border: 1px solid #e1e1e1;
     }
     legend {
-        color: $dark-color;
+        color: variables.$dark-color;
     }
     .btn {
         padding: 1em 1.87em;
     }
     
     .order-table {
-        border: 1px solid $border-color-light;
+        border: 1px solid variables.$border-color-light;
     }
 
     .order-action .btn {
@@ -145,7 +148,7 @@
     span {
         display: inline-block;
         padding: .1rem .5rem;
-        background-color: $light-color;
+        background-color: variables.$light-color;
         border-radius: .3rem;
         line-height: 1.9;
     }
@@ -154,13 +157,13 @@
 .card-address {
     p { margin-bottom: 1rem; }
 }
-@include mq(md, max) {
+@include breakpoints.mq(md, max) {
     .account {
         .nav-tabs { width: 100%; }
         .tab-content { padding-left: 1.5rem; }
     }
 }
-@include mq(xs, max) {
+@include breakpoints.mq(xs, max) {
     .order-action, .order-table thead th:last-child {
         display: none;
     }

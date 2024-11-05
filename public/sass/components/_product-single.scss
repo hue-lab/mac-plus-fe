@@ -1,9 +1,14 @@
+@use "sass:color";
+@use "../config/variables";
+@use "../mixins/breakpoints";
+@use "../mixins/core";
+
 /* -------------------------------------------
     @Component - Product Single
 ---------------------------------------------- */
 
 // Variables
-@include set-default(
+@include core.set-default(
   (
     product-single: (
       name: (
@@ -12,7 +17,7 @@
         font-weight: 700,
         letter-spacing: -0.025em,
         white-space: normal,
-        color: $dark-color,
+        color: variables.$dark-color,
       ),
       categories: (
         color: #999,
@@ -21,7 +26,7 @@
         letter-spacing: -0.025em,
       ),
       price: (
-        color: $secondary-color,
+        color: variables.$secondary-color,
         font-size: 3rem,
         font-weight: 700,
         letter-spacing: -0.025em,
@@ -39,7 +44,7 @@
         font-family: false,
       ),
       label: (
-        color: $primary-color-dark,
+        color: variables.$primary-color-dark,
       ),
       variation: (
         width: 3rem,
@@ -66,7 +71,7 @@
 
 .product-single-carousel .owl-nav .owl-prev,
 .product-single-carousel .owl-nav .owl-next {
-  color: $primary-color-dark;
+  color: variables.$primary-color-dark;
   border: 0;
 }
 
@@ -168,7 +173,7 @@
     border: 2px solid transparent;
   }
   &.active::before {
-    border-color: $primary-color;
+    border-color: variables.$primary-color;
   }
 }
 
@@ -190,34 +195,34 @@
   }
   .product-cat {
     margin-bottom: 1.3rem;
-    @include print_css(product-single, categories);
+    @include core.print_css(product-single, categories);
     span {
       margin-right: 0.7rem;
     }
   }
   .product-name {
-    @include print_css(product-single, name);
     display: -webkit-box;
     -webkit-line-clamp: 2;
     line-height: 1.3;
+    @include core.print_css(product-single, name);
   }
   .product-price {
     display: block;
     margin-bottom: 1.1rem;
-    @include css(color, product-single, price, color);
-    @include css(font-size, product-single, price, font-size);
-    @include css(font-weight, product-single, price, font-weight);
-    @include css(letter-spacing, product-single, price, letter-spacing);
     line-height: 1;
+    @include core.css(color, product-single, price, color);
+    @include core.css(font-size, product-single, price, font-size);
+    @include core.css(font-weight, product-single, price, font-weight);
+    @include core.css(letter-spacing, product-single, price, letter-spacing);
   }
   .old-price {
-    @include css(font-size, product-single, old-price, font-size);
-    @include css(font-weight, product-single, old-price, font-weight);
-    @include css(text-decoration, product-single, old-price, text-decoration);
+    @include core.css(font-size, product-single, old-price, font-size);
+    @include core.css(font-weight, product-single, old-price, font-weight);
+    @include core.css(text-decoration, product-single, old-price, text-decoration);
   }
   .rating-reviews {
     &:not(:hover) {
-      @include css(color, product-single, rating, review-color);
+      @include core.css(color, product-single, rating, review-color);
     }
     font-size: 1.2rem;
   }
@@ -229,10 +234,10 @@
     margin-top: -2px;
   }
   .ratings::before {
-    @include css(color, product-single, rating, color);
+    @include core.css(color, product-single, rating, color);
   }
   label {
-    @include css(color, product-single, label, color);
+    @include core.css(color, product-single, label, color);
     font-weight: 600;
     text-transform: uppercase;
   }
@@ -248,7 +253,7 @@
   }
   .social-links {
     //margin-right: 3rem;
-    color: $grey-color;
+    color: variables.$grey-color;
   }
   .social-link {
     border: none;
@@ -289,7 +294,7 @@
       line-height: 0;
     }
     &:hover {
-      color: $primary-color;
+      color: variables.$primary-color;
     }
   }
   .btn-compare {
@@ -365,8 +370,8 @@
   // variation - list box type
   .product-variations {
     > a:not(.size-guide) {
-      @include css(width, product-single, variation, width);
-      @include css(height, product-single, variation, height);
+      @include core.css(width, product-single, variation, width);
+      @include core.css(height, product-single, variation, height);
     }
 
     > .disabled {
@@ -398,8 +403,8 @@
 
 .product-meta {
   margin-bottom: 1.8rem;
-  @include css(color, product-single, product-meta, color);
-  @include css(font-size, product-single, product-meta, font-size);
+  @include core.css(color, product-single, product-meta, color);
+  @include core.css(font-size, product-single, product-meta, font-size);
 
   span {
     margin: 0 1.9rem 0 3px;
@@ -411,10 +416,10 @@
   display: flex;
   align-items: flex-start;
   flex-wrap: nowrap;
-  @if (get(product-single, variation, height)) {
-    line-height: get(product-single, variation, height);
-  } @else if (get(product, variation, height)) {
-    line-height: get(product, variation, height);
+  @if (core.get(product-single, variation, height)) {
+    line-height: core.get(product-single, variation, height);
+  } @else if (core.get(product, variation, height)) {
+    line-height: core.get(product, variation, height);
   }
   margin: 0 0 1rem;
 
@@ -471,16 +476,16 @@
     min-width: 13rem;
     font-size: 1.4rem;
     border-radius: 0.3rem;
-    background-color: $primary-color;
+    background-color: variables.$primary-color;
     color: #fff;
     cursor: pointer;
-    @include css(max-width, product-single, btn-cart, max-width);
-    @include css(height, product-single, btn-cart, height);
+    @include core.css(max-width, product-single, btn-cart, max-width);
+    @include core.css(height, product-single, btn-cart, height);
 
     &.disabled {
       background-color: #e4eaec;
       cursor: not-allowed;
-      color: $grey-color;
+      color: variables.$grey-color;
     }
 
     i {
@@ -494,18 +499,18 @@
       }
     }
     &:hover:not(.disabled) {
-      background-color: darken($primary-color, 7%);
+      background-color: color.adjust(variables.$primary-color, $lightness: -7%);
     }
   }
 
   .btn-cart-fast {
-    color: $dark-color;
+    color: variables.$dark-color;
     background-color: transparent;
-    border: 1px solid $dark-color;
+    border: 1px solid variables.$dark-color;
     &:hover:not(.disabled) {
       background-color: transparent;
-      color: $primary-color;
-      border-color: $primary-color;
+      color: variables.$primary-color;
+      border-color: variables.$primary-color;
     }
   }
 }
@@ -569,7 +574,7 @@
   margin-top: 6.5rem;
 }
 
-@include mq(lg) {
+@include breakpoints.mq(lg) {
   .pg-vertical {
     .product-thumbs-wrap {
       order: -1;
@@ -631,7 +636,7 @@
   font-size: 2rem;
   font-weight: 700;
   text-transform: capitalize;
-  color: $dark-color;
+  color: variables.$dark-color;
   letter-spacing: 0;
 }
 

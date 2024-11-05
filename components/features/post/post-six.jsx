@@ -1,9 +1,8 @@
 import React from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import ALink from "~/components/features/custom-link";
-import { getImgPath } from "~/utils";
-import { getPostDate } from "~/utils";
+import {getImgPath, getPostDate} from "~/utils";
+import Image from "next/image";
 
 function PostSix(props) {
   const {
@@ -11,9 +10,6 @@ function PostSix(props) {
     adClass = "post-sm",
     isLazy = false,
     isOriginal = false,
-    btnText = "Подробнее",
-    btnAdClass = "btn-dark btn-md",
-    isAuthor = true,
   } = props;
 
   return (
@@ -27,16 +23,16 @@ function PostSix(props) {
           {isLazy ? (
             <ALink href={`/blog/${post.seo?.seoUrl || "#"}`}>
               {isOriginal ? (
-                <LazyLoadImage
+                <Image
                   src={getImgPath(post.media)}
                   alt={post.seo?.seoImageAlt || ""}
                   width={380}
                   height={230}
-                  effect="opacity; transform"
+                  loading="lazy"
                   style={{ backgroundColor: "#DEE6E8" }}
                 />
               ) : (
-                <LazyLoadImage
+                <Image
                   src={getImgPath(post.media)}
                   alt={post.seo?.seoImageAlt || ""}
                   width={380}
@@ -49,14 +45,14 @@ function PostSix(props) {
           ) : (
             <ALink href={`/blog/${post.seo?.seoUrl || "#"}`}>
               {isOriginal ? (
-                <img
+                <Image
                   src={getImgPath(post.media)}
                   alt={post.seo?.seoImageAlt || ""}
                   width={300}
                   height={post.large_picture[0].height}
                 />
               ) : (
-                <img
+                <Image
                   src={getImgPath(post.media)}
                   alt={post.seo?.seoImageAlt || ""}
                   width={300}
@@ -70,7 +66,7 @@ function PostSix(props) {
         <figure style={{ borderRadius: "2rem", overflow: "hidden" }} className="post-media">
           {isLazy ? (
             <ALink href={`/blog/${post.seo?.seoUrl || "#"}`}>
-              <LazyLoadImage
+              <Image
                 src={getImgPath(post.media)}
                 alt={post.seo?.seoImageAlt || ""}
                 width={380}
@@ -81,7 +77,7 @@ function PostSix(props) {
             </ALink>
           ) : (
             <ALink href={`/blog/${post.seo?.seoUrl || "#"}`}>
-              <img
+              <Image
                 src={getImgPath(post.media)}
                 alt={post.seo?.seoImageAlt || ""}
                 width={380}

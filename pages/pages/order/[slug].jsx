@@ -1,10 +1,8 @@
-import { connect } from 'react-redux';
-import Helmet from 'react-helmet';
-
+import {connect} from 'react-redux';
 import ALink from '~/components/features/custom-link';
-
-import { toDecimal, getPostDate } from '~/utils';
-import { getOrderByCode } from '~/utils/endpoints/orders';
+import {getPostDate, toDecimal} from '~/utils';
+import {getOrderByCode} from '~/utils/endpoints/orders';
+import Head from "next/head";
 
 Order.getInitialProps = async (context) => {
   const code = context.asPath.split('/').filter(item => !!item).pop();
@@ -18,9 +16,9 @@ function Order(props) {
   const { order } = props;
   return (
     <main className="main order">
-      <Helmet>
+      <Head>
         <title>Mac Plus | Заказ {order.orderCode}</title>
-      </Helmet>
+      </Head>
 
       <h1 className="d-none">Mac Plus - Заказ</h1>
 

@@ -1,3 +1,6 @@
+@use "../config/variables";
+@use "../mixins/breakpoints";
+
 .order {
     .title {
         font-size: 2rem;
@@ -14,7 +17,7 @@
         svg {
             width: 5rem;
             height: 5rem;
-            stroke: $primary-color;
+            stroke: variables.$primary-color;
         }
         .icon-box-title {
             font-size: 1.8rem;
@@ -51,7 +54,7 @@
             text-transform: uppercase;
         }
         strong {
-            color: $dark-color;
+            color: variables.$dark-color;
             font-weight: 600;
             font-size: 2rem;
         }
@@ -71,7 +74,7 @@
 
         p {
             color: #666;
-            font-family: $font-family;
+            font-family: variables.$font-family;
             line-height: 2.15;
         }
     }
@@ -115,7 +118,7 @@
     }
     .summary-subtotal-price { 
         font-weight: 600; 
-        color: $body-color;
+        color: variables.$body-color;
     }
 
     .product-price {
@@ -143,7 +146,7 @@
     }
 }
 
-@include mq(md, 'max') {
+@include breakpoints.mq(md, 'max') {
     .order {
         .order-message {
             font-size: 2rem;
@@ -162,7 +165,7 @@
     }
 }
 
-@include mq(sm, 'max') {
+@include breakpoints.mq(sm, 'max') {
     .order {
         .order-details {
             padding: 0 2rem;
@@ -178,7 +181,7 @@
     }
 }
 
-@include mq(xs, 'max') {
+@include breakpoints.mq(xs, 'max') {
     .order {
         .order-details {
             padding: 0 1.5rem;

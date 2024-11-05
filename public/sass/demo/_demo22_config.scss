@@ -1,7 +1,9 @@
+@use "../mixins/core";
+
 /* 
 Demo 22 Variables
 */
-@include set(
+@include core.set(
 	(
 		base: (
 			title: (

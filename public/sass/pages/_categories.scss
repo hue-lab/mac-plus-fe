@@ -1,3 +1,5 @@
+@use "../mixins/breakpoints";
+
 /* -------------------------------------------
     Element Category Page
 ---------------------------------------------- */
@@ -51,7 +53,7 @@
         }
     }
 }
-@include mq(md, max) {
+@include breakpoints.mq(md, max) {
     section {
         &.masonry-section,
         &.badge-section {

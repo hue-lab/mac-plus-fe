@@ -1,12 +1,10 @@
 import React from "react";
-import Reveal from "react-awesome-reveal";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import ALink from "~/components/features/custom-link";
 import OwlCarousel from "~/components/features/owl-carousel";
-import { introSlider } from "~/utils/data/carousel";
-import { blurIn } from "~/utils/data/keyframes";
-import { getImgPath } from "~/utils";
+import {introSlider} from "~/utils/data/carousel";
+import {getImgPath} from "~/utils";
+import Image from "next/image";
 
 function IntroSection({ slides }) {
   return (
@@ -23,30 +21,30 @@ function IntroSection({ slides }) {
                 className="banner banner-fixed intro-slide2"
                 style={{ backgroundColor: "#101010" }}
               >
-                <figure>
-                  <LazyLoadImage
+                <picture>
+                  <Image
                     src={getImgPath(item.media)}
                     alt={item.seo?.seoImageAlt || ""}
-                    effect="opacity"
-                    width="auto"
+                    width={1180}
                     height={460}
-                    style={{ opacity: 0.3 }}
+                    priority
+                    loading="eager"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 90vw"
+                    style={{ opacity: 0.3, width: "100%", height: "460px", objectFit: "cover" }}
                   />
-                </figure>
+                </picture>
 
                 <div className="banner-content x-50 y-50 text-center">
-                  <Reveal keyframes={blurIn} delay={200} duration={1500}>
-                    <span className="banner-title ls-l text-white text-uppercase font-weight-bold">
+                  <span className="banner-title ls-l text-white text-uppercase font-weight-bold">
                       {item.title}
                     </span>
-                    <p className="ls-l mb-5 text-white font-primary">{item.description}</p>
-                    <ALink
-                      className="btn btn-outline btn-white btn-rounded mb-1"
-                      href={`/blog/${item.seo?.seoUrl || "#"}`}
-                    >
-                      Подробнее
-                    </ALink>
-                  </Reveal>
+                  <p className="ls-l mb-5 text-white font-primary">{item.description}</p>
+                  <ALink
+                    className="btn btn-outline btn-white btn-rounded mb-1"
+                    href={`/blog/${item.seo?.seoUrl || "#"}`}
+                  >
+                    Подробнее
+                  </ALink>
                 </div>
               </div>
             ))}

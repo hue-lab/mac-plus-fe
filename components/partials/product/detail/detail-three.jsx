@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { useRouter } from 'next/router';
-import { Collapse } from 'react-bootstrap';
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import {useRouter} from 'next/router';
 
 import ALink from '~/components/features/custom-link';
-import Countdown from '~/components/features/countdown';
-import Quantity from '~/components/features/quantity';
 
 import ProductNav from '~/components/partials/product/product-nav';
 import DescTwo from '~/components/partials/product/desc/desc-two';
 
-import { wishlistActions } from '~/store/wishlist';
-import { cartActions } from '~/store/cart';
+import {wishlistActions} from '~/store/wishlist';
+import {cartActions} from '~/store/cart';
 
-import { toDecimal } from '~/utils';
+import {toDecimal} from '~/utils';
 
 function DetailThree(props) {
   let router = useRouter();
@@ -33,12 +30,6 @@ function DetailThree(props) {
   const [cartActive, setCartActive] = useState(false);
   const [quantity, setQuantity] = useState(1);
 
-  // decide if the product is wishlisted
-  let isWishlisted,
-    colors = [],
-    sizes = [];
-  isWishlisted = wishlist.findIndex((item) => item._id === product._id) > -1 ? true : false;
-
   useEffect(() => {
     setCurIndex(-1);
     resetValueHandler();
@@ -51,22 +42,6 @@ function DetailThree(props) {
       setCartActive(false);
     }
   }, [curColor, curSize, product]);
-
-  const wishlistHandler = (e) => {
-    e.preventDefault();
-
-    if (toggleWishlist && !isWishlisted) {
-      let currentTarget = e.currentTarget;
-      currentTarget.classList.add('load-more-overlay', 'loading');
-      toggleWishlist(product.data);
-
-      setTimeout(() => {
-        currentTarget.classList.remove('load-more-overlay', 'loading');
-      }, 1000);
-    } else {
-      router.push('/pages/wishlist');
-    }
-  };
 
   const toggleColorHandler = (color) => {
     if (!isDisabled(color.name, curSize)) {

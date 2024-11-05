@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import { useRouter } from 'next/router';
 import SlideToggle from 'react-slide-toggle';
 import ALink from '~/components/features/custom-link';
@@ -9,7 +8,6 @@ import {orderCategories} from "~/utils";
 function MobileMenu({ categoryTree }) {
   const [search, setSearch] = useState("");
   const router = useRouter();
-  const query = router.query;
 
   useEffect(() => {
     window.addEventListener('resize', hideMobileMenuHandler);
@@ -73,17 +71,17 @@ function MobileMenu({ categoryTree }) {
           </button>
         </form>
 
-        <Tabs selectedTabClassName="active" selectedTabPanelClassName="active" className="tab tab-nav-simple tab-nav-boxed form-tab mt-5">
-          <TabList className="nav nav-tabs nav-fill">
-            <Tab className="nav-item">
+        <div className="tab tab-nav-simple tab-nav-boxed form-tab mt-5">
+          <div className="nav nav-tabs nav-fill">
+            <div className="nav-item">
               <span className="nav-link">Навигация</span>
-            </Tab>
-          </TabList>
+            </div>
+          </div>
           <div className="tab-content">
-            <TabPanel>
+            <div>
               <ul className="mobile-menu">
                 <li><ALink href="/">Главная</ALink></li>
-                <li><ALink href="/categories" class="menu-title">Каталог</ALink></li>
+                <li><ALink href="/categories" className="menu-title">Каталог</ALink></li>
                 {categoryTree.sort(orderCategories).map((category, index) => (
                   category.children.length ?
                     <SlideToggle duration={300} collapsed key={index} >
@@ -112,9 +110,9 @@ function MobileMenu({ categoryTree }) {
                     </li>
                 ))}
               </ul>
-            </TabPanel>
+            </div>
           </div>
-        </Tabs>
+        </div>
       </div>
     </div>
   )

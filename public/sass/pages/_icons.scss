@@ -1,3 +1,6 @@
+@use "../config/variables";
+@use "../mixins/breakpoints";
+
 .sample-icons {
     .tab-pane {
         overflow: hidden;
@@ -14,7 +17,7 @@
         height: 64px;
         border-radius: 50%;
         font-size: 30px;
-        background: $primary-color;
+        background: variables.$primary-color;
         color: #fff;
     }
 }
@@ -34,7 +37,7 @@
         text-align: center;
     }
     &:hover {
-        color: $primary-color;
+        color: variables.$primary-color;
         background: #f2f3f5;
         i { font-size: 30px; }
         border-radius: 4px;
@@ -45,7 +48,7 @@
         font-size: 22px;
     }
 }
-@include mq(xl) {
+@include breakpoints.mq(xl) {
     .cols-xl-12 > * {
         flex: 0 0 8.3333%;
         max-width: 8.3333%;

@@ -1,17 +1,16 @@
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import { connect } from 'react-redux';
-import Helmet from 'react-helmet';
-import { Collapse } from 'react-bootstrap';
+import {useEffect, useState} from 'react';
+import {useRouter} from 'next/router';
+import {connect} from 'react-redux';
+import {Collapse} from 'react-bootstrap';
 import ALink from '~/components/features/custom-link';
-import { toDecimal } from '~/utils';
-import { getDeliveryMethods } from '~/utils/endpoints/orders';
-import { getCalculation } from "~/utils/endpoints/calculate";
-import { addOrder } from '~/utils/endpoints/orders';
+import {toDecimal} from '~/utils';
+import {addOrder, getDeliveryMethods} from '~/utils/endpoints/orders';
+import {getCalculation} from "~/utils/endpoints/calculate";
 import {cartActions} from "~/store/cart";
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import ru from '~/public/labels/ru';
+import Head from "next/head";
 
 Checkout.getInitialProps = async (context) => {
   const delivery = await getDeliveryMethods();
@@ -123,9 +122,9 @@ function Checkout(props) {
   return (
 
     <main className="main checkout border-no">
-      <Helmet>
+      <Head>
         <title>Mac Plus | Оформление</title>
-      </Helmet>
+      </Head>
 
       <h1 className="d-none">Mac Plus - Оформление</h1>
 

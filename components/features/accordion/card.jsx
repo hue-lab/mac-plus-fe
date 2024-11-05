@@ -1,6 +1,5 @@
 import React from 'react';
 import SlideToggle from 'react-slide-toggle';
-
 import ALink from '~/components/features/custom-link';
 
 

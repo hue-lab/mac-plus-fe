@@ -1,4 +1,7 @@
-/* 
+@use "../config/variables";
+@use "../mixins/breakpoints";
+
+/*
 Demo 22
 */
 .title.border-1 {
@@ -247,7 +250,7 @@ Demo 22
     left: 0;
     top: 0;
     height: 34%;
-    background-color: $primary-color;
+    background-color: variables.$primary-color;
   }
 }
 // Categories
@@ -290,14 +293,14 @@ Demo 22
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 0 1rem;
+    padding: 5rem 1rem;
     width: 100%;
     .banner-icon {
       height: 60px !important;
       width: 60px !important;
       object-fit: contain !important;
       min-height: auto !important;
-      @include mq(lg, max) {
+      @include breakpoints.mq(lg, max) {
         display: none;
       }
     }
@@ -383,14 +386,14 @@ Demo 22
       margin-bottom: 1rem;
       &:hover,
       &.active {
-        color: $primary-color;
+        color: variables.$primary-color;
       }
     }
     a {
       display: block;
     }
     &.show {
-      color: $primary-color;
+      color: variables.$primary-color;
     }
   }
   .product {
@@ -402,7 +405,7 @@ Demo 22
   .product.product-list {
     flex-direction: row;
   }
-  @include mq(lg, max) {
+  @include breakpoints.mq(lg, max) {
     .product.product-list {
       flex-direction: column;
       .product-media {
@@ -433,7 +436,7 @@ Demo 22
     font-size: 3.6rem;
     height: 40px;
     line-height: 40px;
-    color: $primary-color;
+    color: variables.$primary-color;
   }
   .icon-box-title {
     font-size: 1.5rem;
@@ -487,7 +490,7 @@ Demo 22
 }
 
 // Responsive
-@include mq(xl, max) {
+@include breakpoints.mq(xl, max) {
   .product-wrapper {
     .products-banner {
       border-bottom: 1px solid #eee;
@@ -505,7 +508,7 @@ Demo 22
     }
   }
 }
-@include mq(lg) {
+@include breakpoints.mq(lg) {
   .header-top {
     .currency-dropdown,
     .language-dropdown {
@@ -541,7 +544,7 @@ Demo 22
     text-align: center;
   }
 }
-@include mq(lg, max) {
+@include breakpoints.mq(lg, max) {
   .header-bottom {
     display: none;
   }
@@ -557,7 +560,7 @@ Demo 22
     border-top: 1px solid #ebebeb;
   }
 }
-@include mq(xs, max) {
+@include breakpoints.mq(xs, max) {
   .product-wrapper {
     .category-filters {
       border-right: none;
@@ -589,7 +592,7 @@ Demo 22
   }
 }
 
-@include mq(lg) {
+@include breakpoints.mq(lg) {
   .header-border {
     border-bottom: none;
   }
@@ -604,7 +607,7 @@ Demo 22
 }
 .shop-banner {
   padding: 8.1rem 1.5rem 7.7rem 9.1%;
-  @include mq(md, "max") {
+  @include breakpoints.mq(md, "max") {
     display: none;
   }
   .banner-subtitle {
@@ -636,7 +639,7 @@ Demo 22
   border-top: none;
 }
 
-@include mq(lg) {
+@include breakpoints.mq(lg) {
   .shop .sidebar .sidebar-content {
     top: 75px;
   }
@@ -673,7 +676,7 @@ Demo 22
   background-color: white;
 }
 
-@include mq(lg, max) {
+@include breakpoints.mq(lg, max) {
   input,
   textarea {
     font-size: 16px;
@@ -691,13 +694,13 @@ Demo 22
 .categories-link {
   &-mobile {
     display: none;
-    @include mq(lg, max) {
+    @include breakpoints.mq(lg, max) {
       display: inline;
     }
   }
   &-desktop {
     display: inline;
-    @include mq(lg, max) {
+    @include breakpoints.mq(lg, max) {
       display: none;
     }
   }

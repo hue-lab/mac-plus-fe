@@ -1,3 +1,6 @@
+@use "../config/variables";
+@use "../mixins/breakpoints";
+
 /* -------------------------------------------
     Owl Carousel
 ---------------------------------------------- */
@@ -46,13 +49,13 @@
                     margin: 0;
                 }
             }
-            color: $primary-color;
+            color: variables.$primary-color;
             &:not(.disabled) {    
                 &:hover,
                 &:active
                 &:focus {
-                    background-color: $primary-color;
-                    border-color: $primary-color;
+                    background-color: variables.$primary-color;
+                    border-color: variables.$primary-color;
                     color: #fff;
                 }
             }
@@ -73,8 +76,8 @@
         .owl-dot{
             &.active {
                 span {
-                    background-color: $primary-color;
-                    border-color: $primary-color;
+                    background-color: variables.$primary-color;
+                    border-color: variables.$primary-color;
                 }
             }
 
@@ -85,7 +88,7 @@
     }
 }
 
-@include mq(1300px, max) {
+@include breakpoints.mq(1300px, max) {
     .owl-theme .owl-nav {
         .owl-prev {
             left: 20px;
@@ -116,7 +119,7 @@
             background-color: rgba( 255, 255, 255, .8 );
 
             &:not(.disabled):hover {
-                color: $primary-color;
+                color: variables.$primary-color;
                 background-color: rgba( 255, 255, 255, .8 );
             }
 
@@ -171,7 +174,7 @@
         &:not(.disabled):active,
         &:not(.disabled):focus {
             background-color: transparent;
-            color: $primary-color;
+            color: variables.$primary-color;
         }
         &.disabled {
             color: #aaa;
@@ -482,7 +485,7 @@
     }
 }
 
-@include mq(xs, max) {
+@include breakpoints.mq(xs, max) {
     .rotate-slider {
         .owl-nav .owl-next {
             right: auto;

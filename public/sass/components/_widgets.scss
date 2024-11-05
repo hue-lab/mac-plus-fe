@@ -1,8 +1,11 @@
+@use "../config/variables";
+@use "../mixins/core";
+
 /* -------------------------------------------
 	Widget 
 ------------------------------------------- */
 
-@include set-default(
+@include core.set-default(
     (
         widget: (
             title: (
@@ -12,14 +15,14 @@
                 font-weight: 700,
                 text-transform: uppercase,
                 line-height: 1.2,
-                border-bottom: 1px solid $border-color,
+                border-bottom: 1px solid variables.$border-color,
                 letter-spacing: -.025em,
             )
         )
     )
 );
 .widget-title {
-    @include print_css( widget, title );
+    @include core.print_css( widget, title );
 }
 
 .widget-products {

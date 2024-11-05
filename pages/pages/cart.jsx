@@ -1,12 +1,11 @@
 import { connect } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet';
-
 import ALink from '~/components/features/custom-link';
 import Quantity from '~/components/features/quantity';
 import { cartActions } from '~/store/cart';
 import { toDecimal, getImgPath, useDebounce } from '~/utils';
 import { getCalculation } from "~/utils/endpoints/calculate";
+import Head from "next/head";
 
 function Cart(props) {
   const { cartList, removeFromCart, updateCart } = props;
@@ -38,9 +37,9 @@ function Cart(props) {
 
   return (
     <div className="main cart border-no">
-      <Helmet>
+      <Head>
         <title>Mac Plus | Корзина</title>
-      </Helmet>
+      </Head>
 
       <h1 className="d-none">Mac Plus - Корзина</h1>
 

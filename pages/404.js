@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react';
-import Helmet from 'react-helmet';
-
+import React, {useEffect} from 'react';
 import ALink from '~/components/features/custom-link';
-
-import { parallaxHandler } from '~/utils';
+import {parallaxHandler} from '~/utils';
+import Head from "next/head";
 
 function Error404() {
   useEffect(() => {
@@ -16,9 +14,9 @@ function Error404() {
 
   return (
     <main className="main">
-      <Helmet>
+      <Head>
         <title>Mac Plus | 404</title>
-      </Helmet>
+      </Head>
 
       <h1 className="d-none">Mac Plus - 404</h1>
 

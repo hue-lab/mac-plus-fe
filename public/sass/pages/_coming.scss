@@ -1,3 +1,7 @@
+@use "../config/variables";
+@use "../mixins/breakpoints";
+@use "../mixins/core";
+
 /* -------------------------------------------
     Coming Soon
     - Coming soon countdown
@@ -50,7 +54,7 @@
     .row {
         min-height: 100vh;
 
-        @include only-for-ie() {
+        @include core.only-for-ie() {
             height: 1px;
         }
     }
@@ -79,7 +83,7 @@
         font-size: 1.3rem;
         border-radius: 0;
         &:hover {
-            background: $primary-color;
+            background: variables.$primary-color;
             color: #fff;
         }
     }
@@ -89,7 +93,7 @@
         margin-right: 5px;
     }
 }
-@include mq(xs, max) {
+@include breakpoints.mq(xs, max) {
     .coming-section {
         padding-bottom: 1px;
     }

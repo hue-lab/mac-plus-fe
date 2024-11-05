@@ -1,3 +1,7 @@
+@use "../config/variables";
+@use "../mixins/breakpoints";
+@use "../mixins/core";
+
 /* -------------------------------------------
 	Sidebars
 		- Base
@@ -7,7 +11,7 @@
 		- Tag
 ------------------------------------------- */
 
-@include set-default(
+@include core.set-default(
   (
     sidebar: (
       _page-move: 250px,
@@ -44,22 +48,22 @@
 
 .page-wrapper {
   .sidebar-active & {
-    margin-left: #{if(get(base, page-wrapper, margin-left), get(base, page-wrapper, margin-left), 0) +
-      get(sidebar, _page-move)};
+    margin-left: #{if(core.get(base, page-wrapper, margin-left), core.get(base, page-wrapper, margin-left), 0) +
+      core.get(sidebar, _page-move)};
     margin-right: #{if(
-        get(base, page-wrapper, margin-right),
-        get(base, page-wrapper, margin-right),
+        core.get(base, page-wrapper, margin-right),
+        core.get(base, page-wrapper, margin-right),
         0
-      ) - get(sidebar, _page-move)};
+      ) - core.get(sidebar, _page-move)};
   }
   .right-sidebar-active & {
-    margin-left: #{if(get(base, page-wrapper, margin-left), get(base, page-wrapper, margin-left), 0) -
-      get(right-sidebar, _page-move)};
+    margin-left: #{if(core.get(base, page-wrapper, margin-left), core.get(base, page-wrapper, margin-left), 0) -
+      core.get(right-sidebar, _page-move)};
     margin-right: #{if(
-        get(base, page-wrapper, margin-right),
-        get(base, page-wrapper, margin-right),
+        core.get(base, page-wrapper, margin-right),
+        core.get(base, page-wrapper, margin-right),
         0
-      ) + get(right-sidebar, _page-move)};
+      ) + core.get(right-sidebar, _page-move)};
   }
 }
 
@@ -77,7 +81,7 @@
 // }
 
 .sidebar-fixed {
-  @include mq(lg) {
+  @include breakpoints.mq(lg) {
     &.sidebar,
     &.right-sidebar {
       .sidebar-content {
@@ -101,7 +105,7 @@
   left: 0;
   z-index: 1200;
 }
-@include mq(lg, max) {
+@include breakpoints.mq(lg, max) {
   .blog-sidebar-wrapper {
     z-index: 1200;
   }
@@ -198,8 +202,8 @@
     &:hover,
     &:focus,
     &:active {
-      background-color: $primary-color;
-      border-color: $primary-color;
+      background-color: variables.$primary-color;
+      border-color: variables.$primary-color;
     }
   }
 }
@@ -221,7 +225,7 @@
   }
 }
 
-@include mq(lg, max) {
+@include breakpoints.mq(lg, max) {
   .sidebar-content {
     width: 30rem;
   }
@@ -232,7 +236,7 @@
   }
 }
 
-@include mq(lg) {
+@include breakpoints.mq(lg) {
   // Fixed Sidebar
   .sidebar-fixed {
     .sidebar-toggle,
@@ -253,7 +257,7 @@
   }
 }
 
-@include mq(lg, max) {
+@include breakpoints.mq(lg, max) {
   aside {
     .icon-box-side {
       flex-direction: row;
@@ -280,7 +284,7 @@
   display: inline-block;
   padding: 0.6rem 1.3rem;
   margin: 0.5rem 1rem 0.5rem 0;
-  border: 1px solid $light-color;
+  border: 1px solid variables.$light-color;
   font-size: 1.2rem;
   line-height: 1.35;
   letter-spacing: -0.01em;
@@ -288,14 +292,14 @@
 
   &:hover,
   &.active {
-    color: $primary-color;
-    border-color: $primary-color;
+    color: variables.$primary-color;
+    border-color: variables.$primary-color;
   }
 }
 
 // Blog Sidebar
 .sidebar-content .form-control {
-  border-color: $light-color;
+  border-color: variables.$light-color;
   border-radius: 0.3rem;
 }
 
@@ -380,25 +384,25 @@
   li {
     padding: 13px 3px 13px 30px;
     font-size: 1.3rem;
-    color: $dark-color;
+    color: variables.$dark-color;
   }
 
   > li:not(:last-child) {
-    border-bottom: 1px solid $border-color-light;
+    border-bottom: 1px solid variables.$border-color-light;
   }
 
   a {
     position: relative;
     display: block;
     &:hover {
-      color: $primary-color;
+      color: variables.$primary-color;
     }
   }
   .active > a::before {
     content: "\f00c";
     color: #fff;
-    background-color: $dark-color;
-    border-color: $dark-color;
+    background-color: variables.$dark-color;
+    border-color: variables.$dark-color;
   }
   &.search-ul a {
     &::before {
@@ -435,7 +439,7 @@
   //
   .active a,
   .show > a {
-    color: $primary-color;
+    color: variables.$primary-color;
 
     // i {
     // 	transform: rotate(-180deg);
@@ -460,7 +464,7 @@
       left: 2px;
       top: 4px;
       bottom: 3px;
-      border-left: 1px solid $border-color-light;
+      border-left: 1px solid variables.$border-color-light;
     }
   }
 
@@ -526,7 +530,7 @@
   }
 }
 
-@include mq(lg, max) {
+@include breakpoints.mq(lg, max) {
   .widget-collapsible .widget-title,
   .toolbox-wrap .widget-title {
     border-top: 3px solid #eee !important;

@@ -1,13 +1,14 @@
 import ALink from "~/components/features/custom-link";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 
 import CartMenu from "~/components/common/partials/cart-menu";
 import MainMenu from "~/components/common/partials/main-menu";
 import SearchBox from "~/components/common/partials/search-box";
-import { orderCategories } from "~/utils";
+import {orderCategories} from "~/utils";
+import Image from "next/image";
+import logoImage from "~/public/images/home/logo.png";
 
-export default function Header({ categoryTree, fields }) {
+export default function Header({categoryTree, fields}) {
   const router = useRouter();
 
   const showMobileMenu = () => {
@@ -19,15 +20,15 @@ export default function Header({ categoryTree, fields }) {
       <div className="header-middle sticky-header fix-top sticky-content">
         <div className="container">
           <div className="header-left">
-            <ALink href="#" className="mobile-menu-toggle" onClick={showMobileMenu}>
+            <div className="mobile-menu-toggle" onClick={showMobileMenu}>
               <i className="d-icon-bars2"></i>
-            </ALink>
+            </div>
 
             <ALink href="/" className="logo">
-              <img src="./images/home/logo.png" alt="Mac Plus" width="200" height="auto" />
+              <Image style={{height: "56px", width: 'auto'}} src={logoImage} alt="Mac Plus" width={200} height={56}/>
             </ALink>
 
-            <SearchBox />
+            <SearchBox/>
           </div>
 
           <div className="header-right">
@@ -64,7 +65,7 @@ export default function Header({ categoryTree, fields }) {
 
             <span className="divider"></span>
 
-            <CartMenu />
+            <CartMenu/>
           </div>
         </div>
       </div>
@@ -87,10 +88,10 @@ export default function Header({ categoryTree, fields }) {
 
                 {(categoryTree || []).sort(orderCategories).map((item, index) => (
                   <li key={index} className={item.children?.length ? "submenu" : ""}>
-                    <ALink href={{ pathname: `/${item.handle}` }}>
-                      <span style={{ width: "30px", textAlign: "center", display: "inline-block" }}>
+                    <ALink href={{pathname: `/${item.handle}`}}>
+                      <span style={{width: "30px", textAlign: "center", display: "inline-block"}}>
                         <i
-                          style={{ fontSize: `${item.icon.split("||")[1] || "1.8"}rem` }}
+                          style={{fontSize: `${item.icon.split("||")[1] || "1.8"}rem`}}
                           className={item.icon.split("||")[0] || "d-icon-arrow-right"}
                         ></i>
                       </span>
@@ -100,7 +101,7 @@ export default function Header({ categoryTree, fields }) {
                       <ul>
                         {item.children.sort(orderCategories).map((item, index) => (
                           <li key={index}>
-                            <ALink href={{ pathname: `/${item.handle}` }}>{item.name}</ALink>
+                            <ALink href={{pathname: `/${item.handle}`}}>{item.name}</ALink>
                           </li>
                         ))}
                       </ul>
@@ -111,7 +112,7 @@ export default function Header({ categoryTree, fields }) {
             </div>
           </div>
 
-          <MainMenu layoutFields={fields} categoryTree={categoryTree} />
+          <MainMenu layoutFields={fields} categoryTree={categoryTree}/>
         </div>
       </div>
     </header>

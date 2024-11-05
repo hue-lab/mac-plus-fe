@@ -1,3 +1,5 @@
+@use "../mixins/breakpoints";
+
 /* -------------------------------------------
     Instagram
 ---------------------------------------------- */
@@ -107,7 +109,7 @@
     }
 }
 
-@include mq('359px' ,max) {
+@include breakpoints.mq('359px' ,max) {
     .instagram-info .instagram-content {
         left: 1rem;
         bottom: 1rem;

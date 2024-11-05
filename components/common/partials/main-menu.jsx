@@ -2,9 +2,10 @@ import { useRouter } from "next/router";
 
 import ALink from "~/components/features/custom-link";
 import { getImgPath, orderCategories } from "~/utils";
+import Image from "next/image";
 
 function MainMenu({ router, categoryTree, layoutFields }) {
-  const { pathname, query, asPath, route } = useRouter();
+  const { asPath, route } = useRouter();
   const treeLimit = layoutFields["nav-limit"] - 2; // -2 because of static "Главная" list item
 
   return (
@@ -43,15 +44,14 @@ function MainMenu({ router, categoryTree, layoutFields }) {
                       style={{ minHeight: "520px", width: "350px" }}
                       className="menu-banner menu-banner1 banner banner-fixed"
                     >
-                      <figure>
-                        <img
-                          style={{ objectFit: "cover", objectPosition: "left top" }}
-                          src={getImgPath(layoutFields["nav-sale-image"])}
-                          alt="Menu banner"
-                          width="221"
-                          height="330"
-                        />
-                      </figure>
+                      <Image
+                        style={{ objectFit: "cover", objectPosition: "left top" }}
+                        src={getImgPath(layoutFields["nav-sale-image"])}
+                        alt="Menu banner"
+                        loading="lazy"
+                        width={884}
+                        height={1320}
+                      />
                       <div className="banner-content y-50">
                         <ALink
                           href={layoutFields["nav-sale-link"] || "#"}

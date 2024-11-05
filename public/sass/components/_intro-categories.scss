@@ -1,10 +1,12 @@
+@use "../mixins/breakpoints";
+
 .intro_categories {
   &-sub {
     background-color: rgba(0, 121, 69, 0.1);
   }
   &-wrapper {
     display: none;
-    @include mq(lg, max) {
+    @include breakpoints.mq(lg, max) {
       display: block;
     }
   }

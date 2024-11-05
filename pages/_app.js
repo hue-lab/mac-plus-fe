@@ -1,32 +1,31 @@
-import { useStore, Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import Helmet from "react-helmet";
-
-import { wrapper } from "~/store";
+import {useStore, Provider} from "react-redux";
+import {wrapper} from "~/store";
 import Layout from "~/components/layout";
-
 import "~/public/sass/style.scss";
-import { getCategoryTree } from "~/utils/endpoints/categoryTree";
-import { getFieldsObject } from "~/utils/endpoints/fields";
-import { getMenuByCode } from "~/utils/endpoints/menu";
+import {getCategoryTree} from "~/utils/endpoints/categoryTree";
+import {getFieldsObject} from "~/utils/endpoints/fields";
+import {getMenuByCode} from "~/utils/endpoints/menu";
+import NextNProgress from 'nextjs-progressbar';
 import React from "react";
+import Head from 'next/head'
 
-const App = ({ Component, pageProps }) => {
+const App = ({Component, pageProps}) => {
   const store = useStore();
 
-  return typeof window === "undefined" ? (
+  return (
     <Provider store={store}>
-      <Helmet>
-        <meta charSet="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+      <NextNProgress color="#007945" />
+      <Head>
+        <meta charSet="UTF-8"/>
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
         <title>{pageProps.layoutFields["main-seo-title"] || "Mac Plus"}</title>
         <meta
           property="og:title"
           content={pageProps.layoutFields["main-seo-title"] || "Mac Plus"}
         />
-        <meta name="keywords" content="React Template" />
+        <meta name="keywords" content="React Template"/>
         <meta
           name="description"
           content={
@@ -41,9 +40,8 @@ const App = ({ Component, pageProps }) => {
             "Интернет-магазин электроники в Беларуси"
           }
         />
-        <meta name="author" content="D-THEMES" />
-      </Helmet>
-
+        <meta name="author" content="D-THEMES"/>
+      </Head>
       <Layout
         categoryTree={pageProps.categoryTree}
         layoutFields={pageProps.layoutFields}
@@ -52,63 +50,35 @@ const App = ({ Component, pageProps }) => {
         <Component {...pageProps} />
       </Layout>
     </Provider>
-  ) : (
-    <Provider store={store}>
-      <PersistGate
-        persistor={store.__persistor}
-        loading={
-          <div className="loading-overlay">
-            <div className="bounce-loader">
-              <div className="bounce1"></div>
-              <div className="bounce2"></div>
-              <div className="bounce3"></div>
-              <div className="bounce4"></div>
-            </div>
-          </div>
-        }
-      >
-        <Helmet>
-          <meta charSet="UTF-8" />
-          <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-          <title>Mac Plus</title>
-          <meta name="keywords" content="Apple, Iphone, Mac, Ipad, Watch, AirPods" />
-          <meta name="description" content="Продажа Электроники / Гаджетов в Минске и Беларуси" />
-          <meta name="author" content="Mac Plus" />
-        </Helmet>
-
-        <Layout
-          categoryTree={pageProps.categoryTree}
-          layoutFields={pageProps.layoutFields}
-          footerNav={pageProps.footerNav}
-        >
-          <Component {...pageProps} />
-        </Layout>
-      </PersistGate>
-    </Provider>
-  );
+  )
 };
 
-App.getInitialProps = async ({ Component, ctx }) => {
-  const categoryTree = await getCategoryTree();
-  const footerNav = await getMenuByCode("footer_nav");
-  const layoutFields = await getFieldsObject(
-    "telegram",
-    "viber",
-    "instagram",
-    "phone",
-    "email",
-    "address",
-    "work_time",
-    "copyright",
-    "legal",
-    "nav-sale-title",
-    "nav-sale-link",
-    "nav-sale-image",
-    "main-seo-title",
-    "main-seo-description",
-    "nav-limit"
-  );
+App.getInitialProps = async ({Component, ctx}) => {
+  const [
+    categoryTree,
+    footerNav,
+    layoutFields,
+  ] = await Promise.all([
+    getCategoryTree(),
+    getMenuByCode("footer_nav"),
+    getFieldsObject(
+      "telegram",
+      "viber",
+      "instagram",
+      "phone",
+      "email",
+      "address",
+      "work_time",
+      "copyright",
+      "legal",
+      "nav-sale-title",
+      "nav-sale-link",
+      "nav-sale-image",
+      "main-seo-title",
+      "main-seo-description",
+      "nav-limit"
+    )
+  ]);
   let pageProps = {};
   if (Component.getInitialProps) {
     const pagePropsRes = await Component.getInitialProps(ctx);

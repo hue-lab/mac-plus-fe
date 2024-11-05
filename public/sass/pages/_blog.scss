@@ -1,3 +1,6 @@
+@use "../config/variables";
+@use "../mixins/breakpoints";
+
 /* -------------------------------------------
     Blog Page
 ---------------------------------------------- */
@@ -55,7 +58,7 @@
         &:hover {
             box-shadow: 0px 0px 0px 15px rgba(255,255,255,.2);
             background: #fff;
-            color: $primary-color;
+            color: variables.$primary-color;
         }
     }
     .post.paused,
@@ -134,7 +137,7 @@
 
 
 
-@include mq(xxl) {
+@include breakpoints.mq(xxl) {
     .post-slider {
         .owl-stage-outer {
             padding: 5rem;
@@ -145,7 +148,7 @@
         }
     }
 }
-@include mq(xl) {
+@include breakpoints.mq(xl) {
     .posts .post-list {
         .post-media {
             margin-right: 2rem;
@@ -156,7 +159,7 @@
         }
     }
 }
-@include mq(md, max) {
+@include breakpoints.mq(md, max) {
     .posts .post-list {
         display: block;
         .post-media,
@@ -166,7 +169,7 @@
         }
     }
 }
-@include mq(xs, max) {
+@include breakpoints.mq(xs, max) {
     .post-slider .owl-stage-outer {
         padding: 2rem 1.5rem;
         margin: -2rem -1.5rem;
@@ -176,7 +179,7 @@
 .post-cover-img {
     object-fit: cover !important;
     height: 44rem !important;
-    @include mq(md, max) {
+    @include breakpoints.mq(md, max) {
         height: 26rem !important;
     }
 }

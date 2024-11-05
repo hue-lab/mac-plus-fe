@@ -1,3 +1,7 @@
+@use "../config/variables";
+@use "../mixins/breakpoints";
+@use "../mixins/core";
+
 /* -------------------------------------------
     Blog
         - Default
@@ -10,11 +14,11 @@
 ---------------------------------------------- */
 
 // Variables
-@include set-default(
+@include core.set-default(
 	(
 		post: (
             padding: false,
-            font-family: $font-family,
+            font-family: variables.$font-family,
             detail: (
                 padding: 2.3rem 0 2rem,
             ),
@@ -31,7 +35,7 @@
                 color: #999,
                 info: (
                     font-weight: 600,
-                    color: $dark-color
+                    color: variables.$dark-color
                 )
             ),
 
@@ -65,7 +69,7 @@
                 width: 4.5rem,
                 height: 4.7rem,
                 background: rgba(255,255,255,.8),
-                color: $dark-color,
+                color: variables.$dark-color,
                 border: false,
                 font-weight: 600,
                 line-height: 1,
@@ -88,10 +92,10 @@
 );
 // Default
 .post {
-    @include print_css( post );
+    @include core.print_css( post );
     .btn {
         i {
-            @include css( margin-left, post, btn, _icon-gap );
+            @include core.css( margin-left, post, btn, _icon-gap );
             &::before {
                 margin: 0;
             }
@@ -107,16 +111,16 @@
     justify-content: center;
     flex-direction: column;
     z-index: 2;
-    @include print_css( post, calendar );
+    @include core.print_css( post, calendar );
     .post-day {
         display: block;
         margin-bottom: 1px;
-        @include print_css( post, calendar, day );
+        @include core.print_css( post, calendar, day );
     }
     .post-month {
         display: block;
         margin-left: 2px;
-        @include print_css( post, calendar, month );
+        @include core.print_css( post, calendar, month );
     }
 }
 .post-media {
@@ -147,33 +151,33 @@
                 border-color: #fff;
                 background-color: #fff;
             }
-        } 
+        }
     }
 }
 
 .post-details {
-    @include print_css( post, detail );
+    @include core.print_css( post, detail );
 }
 
 .post-meta {
-    @include print_css( post, meta );
+    @include core.print_css( post, meta );
     a, span {
-        @include print_css( post, meta, info );
+        @include core.print_css( post, meta, info );
     }
     a {
         text-transform: capitalize;
         &:hover {
-            color: $primary-color;
+            color: variables.$primary-color;
         }
     }
     span {
         transition: color .3s;
     }
-    .post-author { 
+    .post-author {
         text-transform: uppercase;
     }
     .post-comment {
-        @include print_css ( post, meta );
+        @include core.print_css ( post, meta );
         &:hover {
             span {
                 color: inherit;
@@ -186,20 +190,22 @@
     // white-space: nowrap;
     // overflow: hidden;
     // text-overflow: ellipsis;
-    @include print_css( post, title );
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    -webkit-line-clamp: 1;
-    word-break: break-all;
+    @include core.print_css( post, title );
+    & {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        -webkit-line-clamp: 1;
+        word-break: break-all;
+    }
 }
 .post-content {
-    @include text-block( #{get(post, content, _row-count)} );
-    @include print_css( post, content );
+    @include core.text-block( #{core.get(post, content, _row-count)} );
+    @include core.print_css( post, content );
 }
 
 
-@include mq('sm') {
+@include breakpoints.mq('sm') {
     .post-classic .post-title {
         font-size: 2.4rem;
     }
@@ -286,14 +292,14 @@
 .post-list {
     margin-bottom: 2rem;
     .post-details {
-        padding: 2rem 0; 
+        padding: 2rem 0;
     }
     img {
         min-height: 20rem;
         object-fit: cover;
     }
 }
-@include mq(sm) {
+@include breakpoints.mq(sm) {
     .post-list {
         display: flex;
         align-items: center;
@@ -323,7 +329,7 @@
         padding: 0;
     }
     .post-title {
-        @include text-block();
+        @include core.text-block();
         margin-bottom: 0;
         text-transform: none;
         font: {
@@ -363,7 +369,7 @@
         a {
             font-size: 1.3rem;
             font-weight: 400;
-            color: $grey-color;
+            color: variables.$grey-color;
         }
     }
     .post-title {
@@ -437,7 +443,7 @@
         transition: transform .4s;
     }
     .post-meta {
-        color: $white-color;
+        color: variables.$white-color;
         a, span {
             color: inherit;
         }
@@ -460,7 +466,7 @@
         opacity: 0;
         transition: opacity .4s;
     }
-    &:hover {    
+    &:hover {
         .post-media {
             a::before {
                 opacity: .1;
@@ -498,7 +504,7 @@ ul.blog-filters {
     text-transform: uppercase;
     font-weight: 700;
     color: #333;
-    border-top: 1px solid $border-color;
+    border-top: 1px solid variables.$border-color;
     li {
         margin-right: 2rem;
         margin-left: 2rem;

@@ -1,3 +1,6 @@
+@use "../config/variables";
+@use "../mixins/breakpoints";
+
 /* -------------------------------------------
     Categories
         Base
@@ -81,17 +84,17 @@
             transform: translateY(0);
             opacity: 1;
         }
-    } 
+    }
 }
 // Default
 .category-default .category-content {
-    background-color: $white-color;
+    background-color: variables.$white-color;
 }
 
 .category-default, .category-light {
     .category-name {
         margin-bottom: 0;
-        color: $dark-color;
+        color: variables.$dark-color;
         letter-spacing: -.025em;
     }
 }
@@ -106,7 +109,7 @@
     }
     &:hover {
         .category-content {
-            background-color: $primary-color;
+            background-color: variables.$primary-color;
             color: #fff;
         }
     }
@@ -141,8 +144,8 @@
         .category-name {
             padding-left: 2.7rem;
             padding-right: 2.7rem;
-            background-color: $primary-color;
-            color: $white-color;
+            background-color: variables.$primary-color;
+            color: variables.$white-color;
             a {
                 padding-right: 2.3rem;
                 &::after {
@@ -162,7 +165,7 @@
     color: #222;
     text-align: center;
     transition: border .3s;
-    border-radius: .3rem; 
+    border-radius: .3rem;
     height: 100%;
     i {
         margin-bottom: 1.3rem;
@@ -219,11 +222,11 @@
     &:hover {
         .category-media,
         .category-name {
-            color: $primary-color;
+            color: variables.$primary-color;
         }
         svg {
-            stroke: $primary-color;
-            fill: $primary-color;
+            stroke: variables.$primary-color;
+            fill: variables.$primary-color;
         }
         i, svg {
             animation: slideUpShorter .6s;
@@ -267,7 +270,7 @@
         letter-spacing: -.025em;
         color: #222;
         &:hover {
-            color: $primary-color;
+            color: variables.$primary-color;
         }
     }
     .category-count {
@@ -318,7 +321,7 @@
     display: flex;
     align-items: center;
     gap: 2rem;
-    border: 1px solid $border-color;
+    border: 1px solid variables.$border-color;
     border-radius: .3rem;
     > * {
         flex: 1;
@@ -332,7 +335,7 @@
     display: grid;
     grid-template-columns: 2fr 3fr;
     gap: 2rem;
-    border: 1px solid $border-color;
+    border: 1px solid variables.$border-color;
     border-radius: .3rem;
     > * {
         flex: 1;
@@ -363,7 +366,7 @@
         text-align: left;
         align-items: flex-start;
     }
-    
+
     .category-name {
         margin-bottom: 1.5rem;
         text-transform: none;
@@ -393,7 +396,7 @@
                 text-decoration: underline;
             }
             &:active {
-                color: $primary-color;
+                color: variables.$primary-color;
             }
         }
     }
@@ -404,7 +407,7 @@
         .category-content {
             background: transparent;
         }
-    } 
+    }
 }
 
 // Icon
@@ -415,7 +418,9 @@
     > * {
         flex: 1;
     }
-    color: #fff;
+    & {
+        color: #fff;
+    }
 
     .category-media {
         text-align: center;
@@ -430,7 +435,7 @@
             color: #fff;
         }
     }
-     
+
     > a {
         padding-right: 1rem;
         &:hover i {
@@ -445,7 +450,7 @@
         text-align: left;
         align-items: flex-start;
     }
-    
+
     .category-name {
         margin-bottom: 0;
         padding: 0 .8rem;
@@ -488,7 +493,7 @@
         .category-content {
             background: transparent;
         }
-    } 
+    }
 }
 
 // Banner Category (Masonry)
@@ -520,7 +525,7 @@
             weight: 700;
             family: inherit;
         }
-        letter-spacing: -.025em; 
+        letter-spacing: -.025em;
     }
     .category-count {
         visibility: visible;
@@ -559,7 +564,7 @@
     .category-name {
         font-weight: 700;
         letter-spacing: .007em;
-        color: $dark-color;
+        color: variables.$dark-color;
     }
 }
 
@@ -578,7 +583,7 @@
     }
     .category-name {
         margin: 0;
-    } 
+    }
     &:hover {
         .category-content {
             padding: 0;
@@ -610,7 +615,7 @@
         text-transform: none;
     }
     &:hover {
-        background-color: $primary-color;
+        background-color: variables.$primary-color;
         .category-name {
             color: #fff;
         }
@@ -624,7 +629,7 @@
     }
 }
 
-@include mq(xs, max) {
+@include breakpoints.mq(xs, max) {
     .category-absolute .btn {
         line-height: 50px;
         padding: 0;

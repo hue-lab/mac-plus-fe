@@ -1,3 +1,7 @@
+@use "../config/variables";
+@use "../mixins/breakpoints";
+@use "../mixins/core";
+
 /* -------------------------------------------
     Shop Page
         - Shop Banner
@@ -46,7 +50,7 @@
     &:hover,
     &:active,
     &:focus {
-      border-color: $white-color;
+      border-color: variables.$white-color;
     }
   }
 }
@@ -145,7 +149,7 @@
   margin-bottom: 1rem;
 
   label {
-    color: $dark-color;
+    color: variables.$dark-color;
   }
 }
 
@@ -187,7 +191,7 @@
   ul::before {
     content: '';
     position: absolute;
-    border: 1px solid $border-color-light;
+    border: 1px solid variables.$border-color-light;
     width: 11px;
   }
 
@@ -308,7 +312,7 @@
     }
   }
 
-  @include mq(lg) {
+  @include breakpoints.mq(lg) {
     .toolbox-left {
       padding-right: 1px;
       margin-right: -1px;
@@ -411,14 +415,14 @@
 
 .filter-price-text {
   font-size: 1.3rem;
-  color: $dark-color;
+  color: variables.$dark-color;
 
 }
 
 .filter-items a::before {
   content: '';
   position: absolute;
-  border: 1px solid $grey-color;
+  border: 1px solid variables.$grey-color;
   width: 18px;
   height: 18px;
   border-radius: 2px;
@@ -432,7 +436,7 @@
   text-indent: 1px; // issue
   line-height: 1.7em;
 
-  @include only-for-retina(1.5) {
+  @include core.only-for-retina(1.5) {
     text-indent: 0;
   }
 }
@@ -448,11 +452,11 @@
 .filter-clean {
   font-size: 1.4rem;
   margin-left: auto;
-  color: $dark-color;
+  color: variables.$dark-color;
   transition: .3s;
 
   &:hover {
-    color: $primary-color;
+    color: variables.$primary-color;
   }
 }
 
@@ -494,7 +498,7 @@
   // }
   // issue : need?
   .btn-outline:not(:hover) {
-    color: $primary-color;
+    color: variables.$primary-color;
     background: #fff;
   }
 
@@ -536,7 +540,7 @@
 // }
 
 // Responsive
-@include mq(lg) {
+@include breakpoints.mq(lg) {
 
   // .shop-sidebar .sidebar-content {
   // 	padding-top: 3rem;
@@ -590,7 +594,7 @@
       transition: .4s;
       left: 0;
 
-      @include only-for-ie() {
+      @include core.only-for-ie() {
         top: 2.7rem;
       }
     }
@@ -649,11 +653,11 @@
   }
 
   .toolbox-wrap .sidebar-content {
-    border-top: 3px solid $border-color-light;
+    border-top: 3px solid variables.$border-color-light;
     transition: border .3s;
 
     &>div {
-      border-bottom: 3px solid $border-color-light;
+      border-bottom: 3px solid variables.$border-color-light;
     }
 
     .widget {
@@ -666,7 +670,7 @@
   }
 }
 
-@include mq(xs, max) {
+@include breakpoints.mq(xs, max) {
   .sticky-toolbox.fixed {
     padding: 1rem 1.5rem 0;
   }
@@ -677,7 +681,7 @@
   }
 }
 
-@include mq(sm, max) {
+@include breakpoints.mq(sm, max) {
   .toolbox-item.select-box {
     margin-right: 0;
   }
@@ -739,7 +743,7 @@
   }
 }
 
-@include mq(sm) {
+@include breakpoints.mq(sm) {
   .toolbox-horizontal {
     .toolbox-left {
       margin-right: auto;
@@ -752,7 +756,7 @@
   }
 }
 
-@include mq(md, max) {
+@include breakpoints.mq(md, max) {
   .toolbox-item {
 
     label,
@@ -772,7 +776,7 @@
   }
 }
 
-@include mq(lg, max) {
+@include breakpoints.mq(lg, max) {
 
   // Shop Sidebar : Mobile
   .toolbox {
@@ -846,7 +850,7 @@
   }
 }
 
-@include mq(lg) {
+@include breakpoints.mq(lg) {
   .toolbox .sidebar-content {
     max-width: none;
   }
@@ -898,7 +902,7 @@
 }
 
 .widget-box-checkbox {
-  border-top: 3px solid $border-color-light;
+  border-top: 3px solid variables.$border-color-light;
   padding: 1rem 0;
 }
 
@@ -921,7 +925,7 @@
   }
 }
 
-@include mq(xl) {
+@include breakpoints.mq(xl) {
   .select-menu:not(:last-child):not(.toolbox-show) {
     margin-right: 2rem;
   }

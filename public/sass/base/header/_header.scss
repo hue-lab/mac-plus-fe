@@ -1,9 +1,13 @@
+@use "../../config/variables";
+@use "../../mixins/breakpoints";
+@use "../../mixins/core";
+
 /* -------------------------------------------
     Header
         -Header
         -Welcome-msg
         -Header Search
-        -Other 
+        -Other
             - Login
             - Call
             - Wishlist
@@ -12,14 +16,14 @@
 ---------------------------------------------- */
 
 // Variables
-@include set-default((header: (font-family: $font-family,
+@include core.set-default((header: (font-family: variables.$font-family,
       letter-spacing: -.025em,
       color: false,
       background: #fff,
       // Link's color
       _link-color: false,
       // Link's color when it is hover or active
-      _link-active-color: $primary-color,
+      _link-active-color: variables.$primary-color,
 
       transparent: (fixed: (background: #222)),
       // Header Top
@@ -27,7 +31,7 @@
         padding-bottom: false,
         color: false,
         background: false,
-        border-bottom: 1px solid $border-color,
+        border-bottom: 1px solid variables.$border-color,
         font-family: false,
         font-size: 1.2rem,
         font-weight: false,
@@ -63,7 +67,7 @@
       // Header Bottom
       bottom: (padding-top: false,
         padding-bottom: 1.5rem,
-        color: $dark-color,
+        color: variables.$dark-color,
         background: #fff,
         border-top: false,
         border-bottom: false,
@@ -106,13 +110,13 @@
         expanded: (width: 65rem,
           height: 4.5rem),
         //Simple Search
-        simple: (color: $primary-color ),
+        simple: (color: variables.$primary-color ),
         // Shape is round
         round: (width: 52.2rem,
           height: false)),
       // Logo
       logo: (max-width: 200px),
-      // Links            
+      // Links
       // Call
       call: (label: (_gap: .9rem,
           font-size: false,
@@ -133,7 +137,7 @@
 
 // Header
 .header {
-  @include print_css(header);
+  @include core.print_css(header);
 
   .container,
   .container-fluid,
@@ -143,7 +147,7 @@
   }
 
   .inner-wrap {
-    @include print_css(header, inner-wrap);
+    @include core.print_css(header, inner-wrap);
     width: 100%;
   }
 }
@@ -157,7 +161,7 @@
   background: transparent;
 
   .fixed {
-    @include css(background, header, transparent, fixed, background);
+    @include core.css(background, header, transparent, fixed, background);
   }
 }
 
@@ -168,7 +172,7 @@
 }
 
 .header-border {
-  border-bottom: 1px solid $border-color;
+  border-bottom: 1px solid variables.$border-color;
 }
 
 .has-center {
@@ -192,7 +196,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  @include mq(lg, 'max') {
+  @include breakpoints.mq(lg, 'max') {
     display: none !important;
   }
 }
@@ -218,11 +222,11 @@
 }
 
 .header-top {
-  @include print_css(header, top);
+  @include core.print_css(header, top);
 
   .header-right {
     >* {
-      @include css(margin-left, header, top, _links-gap);
+      @include core.css(margin-left, header, top, _links-gap);
 
       &:first-child {
         margin-left: 0;
@@ -239,7 +243,7 @@
     line-height: 1;
 
     i {
-      @include print_css(header, contact, icon);
+      @include core.print_css(header, contact, icon);
     }
   }
 
@@ -247,14 +251,14 @@
     line-height: 1;
 
     i {
-      @include print_css(header, help, icon);
+      @include core.print_css(header, help, icon);
     }
   }
 
   .login-link,
   .register-link {
     i {
-      @include print_css(header, top, login, icon);
+      @include core.print_css(header, top, login, icon);
     }
   }
 
@@ -264,10 +268,10 @@
   }
 
   .wishlist {
-    @include print_css (header, top, wishlist);
+    @include core.print_css (header, top, wishlist);
 
     i {
-      @include print_css (header, top, wishlist, icon);
+      @include core.print_css (header, top, wishlist, icon);
     }
   }
 }
@@ -280,41 +284,41 @@
 }
 
 .header-middle {
-  @include print_css(header, middle);
+  @include core.print_css(header, middle);
 
   .login-link {
     display: flex;
     align-items: center;
-    @include css(color, header, _link-color);
-    @include print_css(header, middle, login);
+    @include core.css(color, header, _link-color);
+    @include core.print_css(header, middle, login);
 
     span {
       cursor: pointer;
-      @include print_css(header, middle, login, label);
+      @include core.print_css(header, middle, login, label);
     }
 
     i {
-      @include print_css(header, middle, login, icon);
+      @include core.print_css(header, middle, login, icon);
     }
 
     i+span {
-      @include css(margin-left, header, login, label, _gap);
+      @include core.css(margin-left, header, login, label, _gap);
     }
 
     &:hover {
-      @include css(color, header, _link-active-color);
+      @include core.css(color, header, _link-active-color);
     }
   }
 
   .logo {
-    @include print_css(header, middle, logo);
+    @include core.print_css(header, middle, logo);
   }
 
   .compare {
-    @include print_css(header, middle, compare);
+    @include core.print_css(header, middle, compare);
 
     i {
-      @include print_css(header, middle, compare, icon);
+      @include core.print_css(header, middle, compare, icon);
     }
   }
 
@@ -367,14 +371,14 @@
   p {
     font-size: 1.4rem;
     font-weight: 700;
-    color: $dark-color;
+    color: variables.$dark-color;
     letter-spacing: -.0428em;
     line-height: 1;
   }
 }
 
 .logo {
-  @include print_css(header, logo);
+  @include core.print_css(header, logo);
 
   img {
     display: block;
@@ -382,7 +386,7 @@
 }
 
 .header-bottom {
-  @include print_css(header, bottom);
+  @include core.print_css(header, bottom);
 
   .header-right {
     margin-right: .3rem;
@@ -430,7 +434,7 @@
   .btn-search {
     padding: 0;
     min-width: 40px;
-    background-color: $primary-color;
+    background-color: variables.$primary-color;
     border: 0;
     color: #fff;
     font-size: 2rem;
@@ -447,7 +451,7 @@
 
     select {
       position: relative;
-      @include print_css(header, select);
+      @include core.print_css(header, select);
     }
   }
 
@@ -456,7 +460,7 @@
       position: absolute;
       right: -1.5rem;
       top: 100%;
-      @include css(min-width, header, search, toggle, width);
+      @include core.css(min-width, header, search, toggle, width);
       padding: 1.5rem;
       height: auto;
       background-color: #fff;
@@ -469,7 +473,7 @@
     }
 
     &:hover {
-      color: $primary-color;
+      color: variables.$primary-color;
     }
 
     .form-control {
@@ -492,16 +496,16 @@
   }
 
   &.hs-expanded {
-    @include css(max-width, header, search, expanded, width);
+    @include core.css(max-width, header, search, expanded, width);
     width: 100%;
     margin: 0 auto;
     flex: 1;
 
     .input-wrapper {
       width: 100%;
-      border: 2px solid $primary-color;
+      border: 2px solid variables.$primary-color;
       border-radius: .5rem;
-      @include css(height, header, search, expanded, height);
+      @include core.css(height, header, search, expanded, height);
     }
 
     .select-box {
@@ -547,7 +551,7 @@
       font-size: 1.6rem;
 
       &:hover {
-        color: $primary-color;
+        color: variables.$primary-color;
       }
     }
   }
@@ -562,17 +566,17 @@
   &.hs-simple {
     flex: 1;
     margin-right: 2rem;
-    @include css(max-width, header, search, round, width);
+    @include core.css(max-width, header, search, round, width);
 
     .input-wrapper {
-      @include css(height, header, search, round, height);
+      @include core.css(height, header, search, round, height);
     }
 
     input.form-control {
       padding: 0 5rem 0 1.55rem;
       border-radius: 5px;
       border: 2px solid;
-      @include css(border-color, header, search, simple, color);
+      @include core.css(border-color, header, search, simple, color);
       font-family: inherit;
       background-color: #fff;
       color: #999;
@@ -588,7 +592,7 @@
       right: 0;
 
       &:hover {
-        color: $primary-color;
+        color: variables.$primary-color;
       }
     }
   }
@@ -632,7 +636,7 @@
 .search-toggle {
   display: inline-block;
   vertical-align: middle;
-  @include css(padding, header, search, toggle, padding);
+  @include core.css(padding, header, search, toggle, padding);
   //padding: 1.1rem 0;
   transition: color .3s;
 
@@ -671,7 +675,7 @@
 }
 
 .main-nav {
-  @include print_css(header, main-nav);
+  @include core.print_css(header, main-nav);
 }
 
 // Header search
@@ -727,7 +731,7 @@
   max-height: 350px;
   overflow-y: auto;
   font-weight: 400;
-  border: 2px solid $border-color;
+  border: 2px solid variables.$border-color;
   border-radius: .5rem;
 }
 
@@ -795,7 +799,7 @@
     -webkit-flex: 1;
     -ms-flex: 1;
     flex: 1;
-    color: $primary-color-dark;
+    color: variables.$primary-color-dark;
   }
 
   &:hover {
@@ -811,25 +815,25 @@
 .call {
   display: flex;
   align-items: center;
-  @include css(color, header, _link-color);
-  @include print_css(header, call);
+  @include core.css(color, header, _link-color);
+  @include core.print_css(header, call);
 
   span {
-    @include print_css(header, call, label);
     cursor: pointer;
+    @include core.print_css(header, call, label);
   }
 
   i+span {
-    @include css(margin-left, header, call, label, _gap);
+    @include core.css(margin-left, header, call, label, _gap);
   }
 
   i {
-    @include print_css(header, call, icon);
     cursor: pointer;
+    @include core.print_css(header, call, icon);
   }
 
   &:hover {
-    @include css(color, header, _link-active-color);
+    @include core.css(color, header, _link-active-color);
   }
 }
 
@@ -839,12 +843,12 @@
   margin-right: 1.5rem;
 
   i {
-    @include print_css(header, wishlist, icon);
     cursor: pointer;
+    @include core.print_css(header, wishlist, icon);
   }
 
   &:hover {
-    @include css(color, header, _link-active-color);
+    @include core.css(color, header, _link-active-color);
   }
 }
 
@@ -876,13 +880,13 @@
     position: fixed;
     top: 0;
     width: 100%;
-    @include print_css(header, sticky);
     z-index: 1100;
     animation: fixedTop .4s;
+    @include core.print_css(header, sticky);
   }
 }
 
-@include mq(lg, max) {
+@include breakpoints.mq(lg, max) {
   .sticky-wrapper {
     height: auto !important;
   }
@@ -893,7 +897,7 @@
   display: none;
   margin-right: 2rem;
   font-size: 2.5rem;
-  @include css(color, header, mmenu-toggle, color);
+  @include core.css(color, header, mmenu-toggle, color);
 
   &.menu-bar {
 
@@ -921,7 +925,7 @@
 }
 
 // Responsive
-@include mq('xl', 'max') {
+@include breakpoints.mq('xl', 'max') {
 
   // .main-nav {
   //     .menu {
@@ -932,12 +936,12 @@
   // }
   .header-middle {
     .logo {
-      @include css(margin-right, header, middle, logo, _mobile-margin-right);
+      @include core.css(margin-right, header, middle, logo, _mobile-margin-right);
     }
   }
 }
 
-@include mq(lg, max) {
+@include breakpoints.mq(lg, max) {
   .header .main-nav {
     display: none;
   }
@@ -972,7 +976,7 @@
   }
 }
 
-@include mq(md, max) {
+@include breakpoints.mq(md, max) {
   .header-middle {
     .mobile-search {
       display: block;
@@ -995,7 +999,7 @@
 }
 
 // Welcome message animation.
-@include mq(480px, max) {
+@include breakpoints.mq(480px, max) {
   .header-top {
     .header-left {
       position: relative;
@@ -1105,11 +1109,11 @@
   }
 
   &:hover {
-    color: $primary-color;
+    color: variables.$primary-color;
   }
 }
 
-@include mq(md) {
+@include breakpoints.mq(md) {
   .mobile-link {
     display: none;
   }

@@ -1,3 +1,5 @@
+@use "../mixins/breakpoints";
+
 /* -------------------------------------------
     Pagination
 ---------------------------------------------- */
@@ -77,7 +79,7 @@
 .page-item-total {
     margin-right: .5rem;
 }
-@include mq(sm) {
+@include breakpoints.mq(sm) {
     .page-item-dots,
     .page-item-total {
         margin-right: 2rem;

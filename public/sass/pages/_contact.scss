@@ -1,3 +1,5 @@
+@use "../config/variables";
+
 /* -------------------------------------------
     Contact Page
 ---------------------------------------------- */
@@ -6,7 +8,7 @@
     .breadcrumb { 
         padding: 1.2rem 0 1.1rem; 
         li:last-child {
-            color: $body-color;
+            color: variables.$body-color;
         }
         li:not(:last-child) {
             a, &::after {

@@ -1,3 +1,6 @@
+@use "../config/variables";
+@use "../mixins/breakpoints";
+
 /* -------------------------------------------
     Checkout Page
 ---------------------------------------------- */
@@ -12,7 +15,7 @@
   .alert.card-header {
     padding-top: 1.2rem;
     padding-bottom: 1.3rem;
-    background-color: $white-color;
+    background-color: variables.$white-color;
     border: 1px dashed #cacbcc;
     text-transform: none;
 
@@ -83,36 +86,36 @@
 
   .social-link {
     border-radius: .3rem;
-    color: $white-color;
+    color: variables.$white-color;
 
     &.social-google {
-      background-color: $social-google;
-      border-color: $social-google;
+      background-color: variables.$social-google;
+      border-color: variables.$social-google;
     }
 
     &.social-facebook {
-      background-color: $social-facebook;
-      border-color: $social-facebook;
+      background-color: variables.$social-facebook;
+      border-color: variables.$social-facebook;
     }
 
     &.social-twitter {
-      background-color: $social-twitter;
-      border-color: $social-twitter;
+      background-color: variables.$social-twitter;
+      border-color: variables.$social-twitter;
     }
 
     &.social-telegram {
-      background-color: $social-telegram;
-      border-color: $social-telegram;
+      background-color: variables.$social-telegram;
+      border-color: variables.$social-telegram;
     }
 
     &.social-viber {
-      background-color: $social-viber;
-      border-color: $social-viber;
+      background-color: variables.$social-viber;
+      border-color: variables.$social-viber;
     }
 
     &.social-instagram {
-      background-color: $social-instagram;
-      border-color: $social-instagram;
+      background-color: variables.$social-instagram;
+      border-color: variables.$social-instagram;
     }
   }
 
@@ -150,7 +153,7 @@
     padding-left: 1.5rem;
     padding-right: 1.5rem;
     font-size: 1.3rem;
-    font-family: $font-family;
+    font-family: variables.$font-family;
     transition: background-color .3s, border-color .3s;
     color: #999;
     min-height: 4.1rem;
@@ -274,7 +277,7 @@
     font-size: 1.3rem;
     font-weight: 400;
     letter-spacing: .01em;
-    font-family: $font-family;
+    font-family: variables.$font-family;
   }
 
   .product-quantity {
@@ -297,7 +300,7 @@
       color: #000;
 
       &:hover {
-        color: $primary-color;
+        color: variables.$primary-color;
       }
     }
   }
@@ -361,14 +364,14 @@
 
     label {
       margin-bottom: 2.1rem;
-      color: $body-color;
+      color: variables.$body-color;
       cursor: pointer;
     }
   }
 
   .summary-subtotal {
 
-    border-top: 1px solid $border-color;
+    border-top: 1px solid variables.$border-color;
 
     td:first-child {
       padding: .4rem 0 .3rem;
@@ -399,14 +402,14 @@
 }
 
 .summary-total {
-  border-bottom: 1px solid $border-color;
+  border-bottom: 1px solid variables.$border-color;
 
   .summary-subtitle {
     padding: 2.3rem 0 2.1rem;
   }
 }
 
-@include mq(xs, 'max') {
+@include breakpoints.mq(xs, 'max') {
   .order-table {
     tbody {
 

@@ -1,3 +1,5 @@
+@use "../mixins/breakpoints";
+
 /* -------------------------------------------
     Spacing
 ---------------------------------------------- */
@@ -59,7 +61,7 @@
 	margin-right: auto !important;
 }
 
-@include mq('sm') {
+@include breakpoints.mq('sm') {
 	@for $i from 0 through 10 {
 	    .mt-sm-#{$i} {
 	        margin-top: #{$i*0.5}rem !important;
@@ -109,7 +111,7 @@
 	}
 }
 
-@include mq('md') {
+@include breakpoints.mq('md') {
 	@for $i from 0 through 10 {
 	    .mt-md-#{$i} {
 	        margin-top: #{$i*0.5}rem !important;
@@ -135,7 +137,7 @@
 	}
 }
 
-@include mq('lg') {
+@include breakpoints.mq('lg') {
 	@for $i from 0 through 10 {
 	    .mt-lg-#{$i} {
 	        margin-top: #{$i*0.5}rem !important;
@@ -179,7 +181,7 @@
 	}
 }
 
-@include mq('xl') {
+@include breakpoints.mq('xl') {
 	@for $i from 0 through 10 {
 	    .mt-xl-#{$i} {
 	        margin-top: #{$i*0.5}rem !important;
@@ -204,7 +206,7 @@
 	    }
 	}
 }
-@include mq(lg) {
+@include breakpoints.mq(lg) {
 	.ml-lg-auto {
 		margin-left: auto !important;
 	}

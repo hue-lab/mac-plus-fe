@@ -1,13 +1,17 @@
+@use "../config/variables";
+@use "../mixins/breakpoints";
+@use "../mixins/core";
+
 /* -------------------------------------------
     Form
 ---------------------------------------------- */
 
-@include set-default(
+@include core.set-default(
     (
         form: (
             input-group: (
                 height: 4.5rem,
-                color: $primary-color-dark,
+                color: variables.$primary-color-dark,
                 border-color: #ccc
             )
         )
@@ -91,7 +95,7 @@ textarea {
                 top: 11px;
             }
 
-            @include only-for-ie() {
+            @include core.only-for-ie() {
                 line-height: 14px;
             }
         }
@@ -172,28 +176,28 @@ input::-webkit-inner-spin-button {
 .input-group {
     display: inline-flex;
     width: 11rem;
-    @include css(height, form, input-group, height);
+    @include core.css(height, form, input-group, height);
 
     .form-control {
         flex: 1;
         padding: 0;
         height: inherit;
         font-size: 1.4rem;
-        @if ( get(form, input-group, border-color) ) {
-            border: solid get(form, input-group, border-color);
+        @if ( core.get(form, input-group, border-color) ) {
+            border: solid core.get(form, input-group, border-color);
             border-width: 1px 0;
         }
-        @include css(color, form, input-group, color);
+        @include core.css(color, form, input-group, color);
         text-align: center;
     }
     button {
         padding: 0;
         width: 3.1rem;
-        @if ( get(form, input-group, border-color) ) {
-            border: 1px solid get(form, input-group, border-color);
+        @if ( core.get(form, input-group, border-color) ) {
+            border: 1px solid core.get(form, input-group, border-color);
         }
         font-size: 1.2rem;
-        @include css(color, form, input-group, color);
+        @include core.css(color, form, input-group, color);
         background-color: transparent;
         cursor: pointer;
         -webkit-appearance: none;
@@ -295,7 +299,7 @@ input[type="radio"]:checked ~ label::after {
         }
     }
 }
-@include mq('lg', 'max') {
+@include breakpoints.mq('lg', 'max') {
     .form-wrapper.form-wrapper-inline {
         display: block;
         text-align: center;
@@ -321,7 +325,7 @@ input[type="radio"]:checked ~ label::after {
         right: 0;
         font-size: 1.7rem;
         &:hover {
-            color: $primary-color;
+            color: variables.$primary-color;
         }
         i {
             margin-left: 0;

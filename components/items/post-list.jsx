@@ -1,9 +1,9 @@
-import Helmet from "react-helmet";
 import ALink from "~/components/features/custom-link";
 import React, {useState} from "react";
 import {useRouter} from "next/router";
 import PostOne from "~/components/features/post/post-one";
 import BlogPagination from "~/components/features/blog-pagination";
+import Head from "next/head";
 
 export default function PostList({posts, fullPath}) {
   const router = useRouter();
@@ -15,9 +15,9 @@ export default function PostList({posts, fullPath}) {
 
   return (
     <main className="main skeleton-body">
-      <Helmet>
+      <Head>
         <title>Mac Plus | Блог</title>
-      </Helmet>
+      </Head>
 
       <h1 className="d-none">Mac Plus - Блог</h1>
 

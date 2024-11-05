@@ -1,3 +1,5 @@
+@use "../config/variables";
+
 /* -------------------------------------------
     Banner
         - Default
@@ -107,8 +109,8 @@
             margin-left: 4px;
         }
         &:hover {
-            background-color: $primary-color;
-            border-color: $primary-color;
+            background-color: variables.$primary-color;
+            border-color: variables.$primary-color;
         }
     }
 }

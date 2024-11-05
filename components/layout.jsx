@@ -1,31 +1,22 @@
-import { useState, useEffect, useLayoutEffect } from 'react';
-import { connect } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
-import { useRouter } from 'next/router';
+import {useEffect} from 'react';
 import 'react-toastify/dist/ReactToastify.min.css';
 import 'react-image-lightbox/style.css';
-import 'react-input-range/lib/css/index.css';
-
-import ALink from '~/components/features/custom-link';
-
 import Header from '~/components/common/header';
 import Footer from '~/components/common/footer';
 import StickyFooter from '~/components/common/sticky-footer';
-import Quickview from '~/components/features/product/common/quickview-modal';
-import VideoModal from '~/components/features/modals/video-modal';
 import MobileMenu from '~/components/common/partials/mobile-menu';
 
-import { modalActions } from '~/store/modal';
+import {scrollTopHandler, showScrollTopHandler, stickyFooterHandler, stickyHeaderHandler} from '~/utils';
+import {Poppins} from "next/font/google";
 
-import { showScrollTopHandler, scrollTopHandler, stickyHeaderHandler, stickyFooterHandler } from '~/utils';
+const poppins = Poppins({
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  subsets: ['latin'],
+})
 
-function Layout({ children, closeQuickview, categoryTree, layoutFields, footerNav }) {
-  const router = useRouter();
+function Layout({ children, categoryTree, layoutFields, footerNav }) {
 
   if (typeof  window !== 'undefined') {
-    useLayoutEffect(() => {
-      document.querySelector('body').classList.remove('loaded');
-    }, [router.pathname]);
 
     useEffect(() => {
       window.addEventListener('scroll', showScrollTopHandler, true);
@@ -44,22 +35,9 @@ function Layout({ children, closeQuickview, categoryTree, layoutFields, footerNa
     }, [])
   }
 
-  useEffect(() => {
-    closeQuickview();
-
-    let bodyClasses = document.querySelector("body").classList;
-    for (let i = 0; i < bodyClasses.length; i++) {
-      document.querySelector('body').classList.remove(bodyClasses[i]);
-    }
-
-    setTimeout(() => {
-      document.querySelector('body').classList.add('loaded');
-    }, 50);
-  }, [router.pathname])
-
   return (
     <>
-      <div className="page-wrapper">
+      <div className={`page-wrapper ${poppins.className}`}>
         <Header categoryTree={categoryTree} fields={layoutFields} />
 
         {children}
@@ -69,26 +47,11 @@ function Layout({ children, closeQuickview, categoryTree, layoutFields, footerNa
         <StickyFooter />
       </div>
 
-      <ALink id="scroll-top" href="#" title="Top" role="button" className="scroll-top" onClick={() => scrollTopHandler(false)}><i className="d-icon-arrow-up"></i></ALink>
+      <div id="scroll-top" title="Top" role="button" className="scroll-top" onClick={() => scrollTopHandler(false)}><i className="d-icon-arrow-up"></i></div>
 
       <MobileMenu categoryTree={categoryTree} />
-
-      <ToastContainer
-        autoClose={3000}
-        duration={300}
-        newestOnTo={true}
-        className="toast-container"
-        position="bottom-left"
-        closeButton={false}
-        hideProgressBar={true}
-        newestOnTop={true}
-      />
-
-      <Quickview />
-
-      <VideoModal />
     </>
   )
 }
 
-export default connect(null, { closeQuickview: modalActions.closeQuickview })(Layout);
+export default Layout;

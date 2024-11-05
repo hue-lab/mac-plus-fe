@@ -6,7 +6,13 @@ export async function getSlides() {
         isSlide: true,
       })
   );
-  return (await res.json()) || [];
+  let data = (await res.json()) || [];
+  if (data?.data?.length) {
+    data.data.forEach((slide) => {
+      delete slide.content
+    })
+  }
+  return data;
 }
 
 export async function getBannerSlide() {

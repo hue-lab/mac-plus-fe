@@ -1,3 +1,5 @@
+@use "../mixins/breakpoints";
+
 /* -------------------------------------------
     Toast
 ---------------------------------------------- */
@@ -48,7 +50,7 @@
     padding: 0;
 }
 
-@include mq(xs, max) {
+@include breakpoints.mq(xs, max) {
     .toast-container.Toastify__toast-container {
         left: 1rem;
     }

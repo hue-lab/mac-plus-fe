@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react';
-import Helmet from 'react-helmet';
+import React, {useEffect} from 'react';
 import CountUp from 'react-countup';
 import Reveal from 'react-awesome-reveal';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-
+import {LazyLoadImage} from 'react-lazy-load-image-component';
 import ALink from '~/components/features/custom-link';
 import OwlCarousel from '~/components/features/owl-carousel';
-
-import { fadeIn, fadeInLeftShorter } from '~/utils/data/keyframes';
-import { mainSlider16 } from '~/utils/data/carousel';
+import {fadeIn, fadeInLeftShorter} from '~/utils/data/keyframes';
+import {mainSlider16} from '~/utils/data/carousel';
+import Head from "next/head";
 
 function AboutUs () {
     useEffect( () => {
@@ -34,9 +32,9 @@ function AboutUs () {
 
     return (
         <main className="main about-us">
-            <Helmet>
+            <Head>
                 <title>Riode React eCommerce Template | About Us</title>
-            </Helmet>
+            </Head>
 
             <h1 className="d-none">Riode React eCommerce Template - About Us</h1>
 

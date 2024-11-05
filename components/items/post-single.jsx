@@ -1,9 +1,9 @@
-import Helmet from "react-helmet";
 import {getImgPath, getPostDate} from "~/utils";
 import ALink from "~/components/features/custom-link";
 import React from "react";
+import Head from "next/head";
 
-export default function PostSingle({ post, seoFields }) {
+export default function PostSingle({post, seoFields}) {
   const loading = false;
   const ogImage = post.media;
   const titleString = `${post.seo?.seoTitle || post.title || "Mac Plus"}`;
@@ -14,15 +14,15 @@ export default function PostSingle({ post, seoFields }) {
 
   return (
     <main className="main skeleton-body">
-      <Helmet>
+      <Head>
         <title>{interpolatedTitle}</title>
         <meta property="og:title" content={interpolatedTitle}/>
         <meta name="description" content={interpolatedDescription}/>
         <meta property="og:description" content={interpolatedDescription}/>
         <meta name="keywords" content={post.seo?.seoKeywords?.join(", ")}/>
         <meta name="author" content={post.seo?.seoAuthor || "Mac Plus"}/>
-        {ogImage && <meta property="og:image" content={getImgPath(ogImage)} />}
-      </Helmet>
+        {ogImage && <meta property="og:image" content={getImgPath(ogImage)}/>}
+      </Head>
 
       <nav className="breadcrumb-nav">
         <div className="container">

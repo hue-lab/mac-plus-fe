@@ -1,33 +1,10 @@
 import React from "react";
-import { connect } from "react-redux";
-import { Tabs, Tab, TabList, TabPanel } from "react-tabs";
+import {connect} from "react-redux";
+import {Tab, TabList, TabPanel, Tabs} from "react-tabs";
+import {modalActions} from "~/store/modal";
 
-import ALink from "~/components/features/custom-link";
-
-import { modalActions } from "~/store/modal";
-
-import { toDecimal } from "~/utils";
 function DescOne(props) {
   const { product, isGuide = true, isDivider = true, openModal, mainSeo } = props;
-
-  let colors = [],
-    sizes = [];
-
-  // if (product.variants.length > 0) {
-  //   if (product.variants[0].size)
-  //     product.variants.forEach(item => {
-  //       if (sizes.findIndex(size => size.name === item.size.name) === -1) {
-  //         sizes.push({ name: item.size.name, value: item.size.size });
-  //       }
-  //     });
-
-  //   if (product.variants[0].color) {
-  //     product.variants.forEach(item => {
-  //       if (colors.findIndex(color => color.name === item.color.name) === -1)
-  //         colors.push({ name: item.color.name, value: item.color.color });
-  //     });
-  //   }
-  // }
 
   const setRating = (e) => {
     e.preventDefault();

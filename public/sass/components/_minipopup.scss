@@ -1,9 +1,13 @@
+@use "../config/variables";
+@use "../mixins/breakpoints";
+@use "../mixins/core";
+
 /* -------------------------------------------
     Mini Popup
 ---------------------------------------------- */
 
 
-@include set-default(
+@include core.set-default(
     (
         minipopup: (
             area: (
@@ -17,7 +21,7 @@
 
 .minipopup-area {
     // position: fixed;
-    @include print_css( minipopup, area );
+    @include core.print_css( minipopup, area );
 }
 .minipopup-box {
     // position: absolute;
@@ -76,7 +80,7 @@
             letter-spacing: -.025em;
 
             &:hover {
-                color: $primary-color;
+                color: variables.$primary-color;
             }
         }
         .product-price {
@@ -117,7 +121,7 @@
     }
 
     .product-price {
-        color: $primary-color;
+        color: variables.$primary-color;
         margin-bottom: 3px;
     }
 
@@ -151,11 +155,11 @@
 }
 
 .purchased-time {
-    color: $primary-color;
+    color: variables.$primary-color;
     font-size: 1.2rem;
 }
 
-@include mq('xs', 'max') {
+@include breakpoints.mq('xs', 'max') {
     .minipopup-area {
         left: 9px;
     }

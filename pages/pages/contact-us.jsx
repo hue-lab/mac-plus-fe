@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import Helmet from 'react-helmet';
 import Reveal from 'react-awesome-reveal';
 
 import ALink from '~/components/features/custom-link';
@@ -7,6 +6,7 @@ import { fadeIn } from '~/utils/data/keyframes';
 
 import { getFieldsObject } from '~/utils/endpoints/fields';
 import {sendMessage} from "~/utils/endpoints/message";
+import Head from "next/head";
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
@@ -44,9 +44,9 @@ export default function ContactUs({ fields }) {
 
   return (
     <main className="main contact-us">
-      <Helmet>
+      <Head>
         <title>Mac Plus | Контакты</title>
-      </Helmet>
+      </Head>
 
       <h1 className="d-none">Mac Plus - Контакты</h1>
 

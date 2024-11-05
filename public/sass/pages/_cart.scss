@@ -1,3 +1,6 @@
+@use "../config/variables";
+@use "../mixins/breakpoints";
+
 /* -------------------------------------------
     Cart Page
 ---------------------------------------------- */
@@ -15,7 +18,7 @@
   }
 
   .accordion {
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid variables.$border-color;
   }
 
   .card-header {
@@ -32,7 +35,7 @@
   }
 
   .form-control {
-    font-family: $font-family;
+    font-family: variables.$font-family;
   }
 
   // .input-coupon {
@@ -62,7 +65,7 @@
     .title {
       margin-bottom: 1rem;
       padding-bottom: 1.8rem;
-      border-bottom: 1px solid $border-color;
+      border-bottom: 1px solid variables.$border-color;
     }
   }
 
@@ -91,7 +94,7 @@
       padding: 0.2rem 0 1.8rem;
       font-size: 1.3rem;
       font-weight: 700;
-      color: $grey-color;
+      color: variables.$grey-color;
       line-height: 1;
       letter-spacing: -.025em;
     }
@@ -121,10 +124,10 @@
     font-size: 1.2rem;
     width: 2.3rem;
     height: 2.3rem;
-    border: 1px solid $light-color;
+    border: 1px solid variables.$light-color;
     border-radius: 50%;
     background-color: #fff;
-    color: $dark-color;
+    color: variables.$dark-color;
   }
 
   .shipping {
@@ -157,7 +160,7 @@
     font-size: 2rem;
     text-transform: uppercase;
     font-weight: 700;
-    color: $body-color;
+    color: variables.$body-color;
     letter-spacing: -0.5px;
     padding: .4rem 0;
 
@@ -173,21 +176,21 @@
       font-weight: 700;
       font-size: 1.7rem;
       background-color: #fff;
-      color: $light-color;
+      color: variables.$light-color;
     }
 
     &.visited {
       ~.active {
         &::before {
-          color: $dark-color;
+          color: variables.$dark-color;
         }
       }
 
-      color: $dark-color;
+      color: variables.$dark-color;
     }
 
     &.active {
-      color: $primary-color;
+      color: variables.$primary-color;
     }
 
     &:first-child {
@@ -228,7 +231,7 @@
   font-size: 1.8rem;
   font-weight: 700;
   letter-spacing: -.01em;
-  color: $dark-color;
+  color: variables.$dark-color;
   text-transform: uppercase;
   padding-bottom: 1.9rem;
   margin-bottom: 0;
@@ -245,7 +248,7 @@
   font-size: 1.6rem;
   font-weight: 600;
   letter-spacing: -.01em;
-  color: $dark-color;
+  color: variables.$dark-color;
   margin-bottom: 0;
   padding: 2rem 0;
 }
@@ -253,20 +256,20 @@
 .summary-subtotal-price {
   font-size: 1.4rem;
   font-weight: 600;
-  color: $dark-color;
+  color: variables.$dark-color;
   margin-bottom: 0;
-  font-family: $font-family;
+  font-family: variables.$font-family;
 }
 
 .summary-total-price {
   font-size: 2rem;
   letter-spacing: -0.025em;
   font-weight: 700;
-  color: $dark-color;
+  color: variables.$dark-color;
   // padding: 10px 0;
   text-align: right;
   margin-bottom: 0;
-  font-family: $font-family;
+  font-family: variables.$font-family;
 
 }
 
@@ -294,7 +297,7 @@
   }
 }
 
-@include mq(md, max) {
+@include breakpoints.mq(md, max) {
   .summary {
     padding-left: 2rem;
     padding-right: 2rem;
@@ -359,7 +362,7 @@
     .form-control {
       padding: 1rem 1.4rem .8rem;
       font-size: 1.4rem;
-      color: $body-color;
+      color: variables.$body-color;
     }
 
     &::before {
@@ -381,7 +384,7 @@
 
   td,
   th {
-    border-top: 1px solid $border-color;
+    border-top: 1px solid variables.$border-color;
   }
 }
 
@@ -399,7 +402,7 @@
 .order-total {
   font-size: 1.6rem;
   font-weight: 600;
-  color: $primary-color;
+  color: variables.$primary-color;
 
   td,
   th {
@@ -410,7 +413,7 @@
 .cart-table {
   .product-name {
     font-weight: 600;
-    color: $dark-color;
+    color: variables.$dark-color;
     line-height: 1.86;
   }
 
@@ -424,14 +427,14 @@
 
   .product-subtotal {
     width: 85px;
-    color: $dark-color;
+    color: variables.$dark-color;
   }
 
   .input-group {
 
     button,
     input {
-      border-color: $border-color-light;
+      border-color: variables.$border-color-light;
     }
 
     .quantity-minus {
@@ -463,10 +466,10 @@
     padding: 1.07em 2.23em;
 
     &.btn-disabled {
-      border-color: $dark-color  !important;
+      border-color: variables.$dark-color  !important;
       background-color: transparent !important;
       border-width: 1px;
-      color: $dark-color  !important;
+      color: variables.$dark-color  !important;
       opacity: .4;
       cursor: default;
     }
@@ -490,12 +493,12 @@
   padding-right: 1.6rem;
   font-size: 1.3rem;
   border: none;
-  border-bottom: 1px solid $border-color;
+  border-bottom: 1px solid variables.$border-color;
   transition: border-color .3s;
   border-radius: 0;
 }
 
-@include mq('lg') {
+@include breakpoints.mq('lg') {
   .cart.main {
     .product-thumbnail {
       width: 12rem;

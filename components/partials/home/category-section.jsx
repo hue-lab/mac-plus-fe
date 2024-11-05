@@ -1,17 +1,11 @@
 import React from "react";
 import Reveal from "react-awesome-reveal";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import ALink from "~/components/features/custom-link";
 
-import {
-  fadeIn,
-  fadeInRightShorter,
-  fadeInDownShorter,
-  fadeInLeftShorter,
-  fadeInUpShorter,
-} from "~/utils/data/keyframes";
-import { getImgPath } from "~/utils";
+import {fadeIn,} from "~/utils/data/keyframes";
+import {getImgPath} from "~/utils";
+import Image from "next/image";
 
 export default function CategorySection({ recProducts }) {
   return (
@@ -30,81 +24,73 @@ export default function CategorySection({ recProducts }) {
                 }`}
               >
                 <div style={{ height: "100%" }}>
-                  <Reveal
-                    style={{ height: "100%" }}
-                    keyframes={fadeIn}
-                    delay={200}
-                    duration={1200}
-                    triggerOnce
+                  <div
+                    style={{cursor: "pointer", height: "100%"}}
+                    className="category category-group-image"
                   >
-                    <div
-                      style={{ cursor: "pointer", height: "100%" }}
-                      className="category category-group-image"
-                    >
-                      <figure className="category-media">
-                        <LazyLoadImage
-                          src={getImgPath(item.seo?.seoImage[0]?.imageName)}
-                          style={{
-                            height: "150px",
-                            width: "100%",
-                            objectFit: "contain",
-                            padding: "1rem",
-                          }}
-                          alt={item.seo?.seoImage[0]?.imageAlt || ""}
-                          effect="opacity;"
-                          width="auto"
-                          height={169}
-                        />
-                      </figure>
-                      <div className="category-content">
-                        <span className="category-name">{item.name}</span>
-                        <ul className="category-list">
-                          <li>Бренд: {item.brand.name}</li>
-                          {item.isStock ? (
-                            <li style={{ color: "var(--toastify-color-success)" }}>В наличии</li>
-                          ) : (
-                            <li style={{ color: "var(--toastify-color-error)" }}>Под заказ</li>
-                          )}
-                          <div className="spacer-div"></div>
-                          <li>
-                            {item.discount > 0 ? (
-                              <span>
+                    <figure className="category-media">
+                      <Image
+                        src={getImgPath(item.seo?.seoImage[0]?.imageName)}
+                        style={{
+                          height: "150px",
+                          width: "100%",
+                          objectFit: "contain",
+                          padding: "1rem",
+                        }}
+                        alt={item.seo?.seoImage[0]?.imageAlt || ""}
+                        loading="lazy"
+                        width={150}
+                        height={150}
+                      />
+                    </figure>
+                    <div className="category-content">
+                      <span className="category-name">{item.name}</span>
+                      <ul className="category-list">
+                        <li>Бренд: {item.brand.name}</li>
+                        {item.isStock ? (
+                          <li style={{color: "var(--toastify-color-success)"}}>В наличии</li>
+                        ) : (
+                          <li style={{color: "var(--toastify-color-error)"}}>Под заказ</li>
+                        )}
+                        <div className="spacer-div"></div>
+                        <li>
+                          {item.discount > 0 ? (
+                            <span>
                                 <span
-                                  style={{ fontSize: "1.6rem", color: "black", fontWeight: "500" }}
+                                  style={{fontSize: "1.6rem", color: "black", fontWeight: "500"}}
                                 >
                                   от
                                 </span>
                                 <s>{item.price} BYN</s>
-                                <br />
+                                <br/>
                                 <span
-                                  style={{ fontSize: "1.6rem", color: "black", fontWeight: "500" }}
+                                  style={{fontSize: "1.6rem", color: "black", fontWeight: "500"}}
                                 >
                                   {" "}
                                   {item.totalPrice} BYN
                                 </span>
                               </span>
-                            ) : (
-                              <span>
+                          ) : (
+                            <span>
                                 <span
-                                  style={{ fontSize: "1.6rem", color: "black", fontWeight: "500" }}
+                                  style={{fontSize: "1.6rem", color: "black", fontWeight: "500"}}
                                 >
                                   от
                                 </span>
                                 <span
-                                  style={{ fontSize: "1.6rem", color: "black", fontWeight: "500" }}
+                                  style={{fontSize: "1.6rem", color: "black", fontWeight: "500"}}
                                 >
                                   {" "}
                                   {item.totalPrice} BYN
                                 </span>
-                                <br />
-                                <br />
+                                <br/>
+                                <br/>
                               </span>
-                            )}
-                          </li>
-                        </ul>
-                      </div>
+                          )}
+                        </li>
+                      </ul>
                     </div>
-                  </Reveal>
+                  </div>
                 </div>
               </ALink>
             ))}

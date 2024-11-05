@@ -1,3 +1,7 @@
+@use "sass:list";
+@use "../config/variables";
+@use "../mixins/breakpoints";
+
 /* -------------------------------------------
     Element List
 ---------------------------------------------- */
@@ -24,7 +28,7 @@ $elements : (accordian, banner, blog, button, cta, icon-box, portfolio, category
             display: block;
         }
         @for $i from 1 through 15 {
-            .element-#{ nth( $elements, $i ) } {
+            .element-#{ list.nth( $elements, $i ) } {
                 .element-img {
                     background-position: calc(-180px * ( #{$i} - 1 )) 0;
                 }
@@ -48,13 +52,13 @@ $elements : (accordian, banner, blog, button, cta, icon-box, portfolio, category
     align-items: center;
     justify-content: center;
     padding: 3.4rem 0 2.6rem;
-    background-color: $white-color;
+    background-color: variables.$white-color;
     border-radius: 1rem;
     box-shadow: 0 2rem 3rem rgba(0,0,0,0.05), 0 0 5px rgba(0,0,0,0.05);
     transition: transform .3s;
 
     svg {
-        fill: $body-color;
+        fill: variables.$body-color;
     }
 
     &.element-icon svg {
@@ -107,7 +111,7 @@ $elements : (accordian, banner, blog, button, cta, icon-box, portfolio, category
     }
 }
 
-@include mq(sm,max) {
+@include breakpoints.mq(sm,max) {
     .element-section .element-type {
         max-width: 30rem;
         margin: 0 auto;

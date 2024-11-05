@@ -1,14 +1,17 @@
+@use "../config/variables";
+@use "../mixins/breakpoints";
+
 /* -------------------------------------------
     Wishlist Page
 ---------------------------------------------- */
 .shop-table {
     text-align: left;
     tbody {
-        border-bottom: 1px solid $border-color;
+        border-bottom: 1px solid variables.$border-color;
     }
     td {
         padding: 1.5rem 1rem 1.5rem 0;
-        border-top: 1px solid $border-color;
+        border-top: 1px solid variables.$border-color;
         font-size: 1.4rem;
     }
     th {
@@ -35,7 +38,7 @@
         height: 2.3rem;
         font-size: 1.2rem;
         color: #222;
-        border: 1px solid $light-color;
+        border: 1px solid variables.$light-color;
         border-radius: 50%;
     }
     .product-name { 
@@ -60,23 +63,23 @@
         height: auto;
         margin-right: 2.8rem;
         &.social-facebook {
-            color: $social-facebook;
+            color: variables.$social-facebook;
         }
         &.social-twitter {
-            color: $social-twitter;
+            color: variables.$social-twitter;
         }
         &.social-pinterest {
-            color: $social-pinterest;
+            color: variables.$social-pinterest;
         }
         &.social-email {
-            color: $social-email;
+            color: variables.$social-email;
         }
         &.social-whatsapp {
-            color: $social-whatsapp;
+            color: variables.$social-whatsapp;
         }
         &.social-icon:hover {
             background-color: transparent;
-            color: $primary-color;
+            color: variables.$primary-color;
         }
     }
 }
@@ -87,7 +90,7 @@
     margin-bottom: 2rem;
 }
 
-@include mq('md') {
+@include breakpoints.mq('md') {
     .wishlist-table {
         // td.product-price {
         //     width: 130px;
@@ -97,7 +100,7 @@
         }
     }
 }
-@include mq('lg') {
+@include breakpoints.mq('lg') {
     .wishlist-table {
         // td.product-price {
         //     width: 107px;
@@ -110,19 +113,19 @@
         }
     }
 }
-@include mq(md, max) {
+@include breakpoints.mq(md, max) {
     .shop-table {
         text-align: center;
         thead { display: none; }
         tbody, tr, td { display: block; }
         tbody {
-            border: 1px solid $border-color;
+            border: 1px solid variables.$border-color;
         }
         tr {
             position: relative;
             padding: 4rem 1rem 4rem;
             & + tr {
-                border-top: 1px solid $border-color;
+                border-top: 1px solid variables.$border-color;
             }
         }
         td {
@@ -167,8 +170,8 @@
         padding-left: 2px;
         width: 120px;
     }
-    .wishlist-out-stock { color: $secondary-color; }
-    .wishlist-in-stock { color: $primary-color; }
+    .wishlist-out-stock { color: variables.$secondary-color; }
+    .wishlist-in-stock { color: variables.$primary-color; }
     .btn-product {
         padding: 1.4rem;
         white-space: nowrap;
@@ -178,7 +181,7 @@
         transition: color .3s, background-color .3s;
         &:hover {
             color: #fff;
-            background-color: $primary-color;
+            background-color: variables.$primary-color;
         }
         &.btn-disabled {
             border-color: #f2f3f5 !important;
