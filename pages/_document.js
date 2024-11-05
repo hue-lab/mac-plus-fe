@@ -94,6 +94,8 @@ export default class MyDocument extends Document {
           }} />
           <base href="/"></base>
           <link rel="icon" href="images/icons/favicon.ico"/>
+          <link rel="stylesheet" type="text/css" href="vendor/riode-fonts/riode-fonts.css"/>
+          <link rel="stylesheet" type="text/css" href="vendor/fontawesome-free/css/all.min.css"/>
           <link rel="stylesheet" type="text/css" href="vendor/owl-carousel/owl.carousel.min.css"/>
           <Script strategy="beforeInteractive" src="https://code.jquery.com/jquery-3.2.1.slim.min.js" />
           {this.headTitle}
