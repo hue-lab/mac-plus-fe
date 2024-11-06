@@ -21,7 +21,8 @@ module.exports = {
           './components/**/*.{js,jsx,ts,tsx}'
         ],
         defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
-        safelist: ["html", "body", "input", "textarea", "/^owl-prev$/", "/^PhoneInput$/"]
+        safelist: ["html", "body", "input", "textarea", "/^owl-prev$/", "/^PhoneInput$/"],
+        whitelistPatterns: [/react-phone-number-input/, /PhoneInput/],
       }
     ],
   ]
