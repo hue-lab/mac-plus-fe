@@ -107,6 +107,8 @@
 
 @use 'demo/demo22_custom';
 
+@use 'react-phone-input';
+
 .rendered-content {
   li {
     list-style-position: inside;

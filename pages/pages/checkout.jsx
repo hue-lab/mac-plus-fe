@@ -7,7 +7,6 @@ import {toDecimal} from '~/utils';
 import {addOrder, getDeliveryMethods} from '~/utils/endpoints/orders';
 import {getCalculation} from "~/utils/endpoints/calculate";
 import {cartActions} from "~/store/cart";
-import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import ru from '~/public/labels/ru';
 import Head from "next/head";
