@@ -1,6 +1,6 @@
-@use "../../config/variables";
-@use "../../mixins/breakpoints";
-@use "../../mixins/core";
+@use '../../config/variables';
+@use '../../mixins/breakpoints';
+@use '../../mixins/core';
 
 /* -------------------------------------------
     Header
@@ -16,8 +16,11 @@
 ---------------------------------------------- */
 
 // Variables
-@include core.set-default((header: (font-family: variables.$font-family,
-      letter-spacing: -.025em,
+@include core.set-default(
+  (
+    header: (
+      font-family: variables.$font-family,
+      letter-spacing: -0.025em,
       color: false,
       background: #fff,
       // Link's color
@@ -25,115 +28,180 @@
       // Link's color when it is hover or active
       _link-active-color: variables.$primary-color,
 
-      transparent: (fixed: (background: #222)),
+      transparent: (
+        fixed: (
+          background: #222,
+        ),
+      ),
       // Header Top
-      top: (padding-top: false,
-        padding-bottom: false,
-        color: false,
-        background: false,
-        border-bottom: 1px solid variables.$border-color,
-        font-family: false,
-        font-size: 1.2rem,
-        font-weight: false,
-        letter-spacing: -0.025em,
-        text-transform: false,
-        _links-gap: 2.3rem,
-        wishlist: (margin-right: 2rem,
-          icon: (margin-right: .6rem,
-            font-size: 1.7rem)),
-        login: (icon: (margin-right: .9rem,
-            font-size: 1.5rem,
-          ))),
+      top:
+        (
+          padding-top: false,
+          padding-bottom: false,
+          color: false,
+          background: false,
+          border-bottom: 1px solid variables.$border-color,
+          font-family: false,
+          font-size: 1.2rem,
+          font-weight: false,
+          letter-spacing: -0.025em,
+          text-transform: false,
+          _links-gap: 2.3rem,
+          wishlist: (
+            margin-right: 2rem,
+            icon: (
+              margin-right: 0.6rem,
+              font-size: 1.7rem,
+            ),
+          ),
+          login: (
+            icon: (
+              margin-right: 0.9rem,
+              font-size: 1.5rem,
+            ),
+          ),
+        ),
       // Header Middle
-      middle: (padding-top: 2.7rem,
-        padding-bottom: 2.7rem,
-        color: #222,
-        background: #fff,
-        border-bottom: false,
-        font-family: false,
-        font-size: 1.2rem,
-        font-weight: 700,
-        letter-spacing: false,
-        text-transform: false,
-        logo: (margin-right: 8rem,
-          margin-bottom: .1rem,
-          _mobile-margin-right: 2rem),
-        login: (margin-right: 2rem,
-          padding-bottom: .2rem,
-          icon: (font-size: 2.3rem)),
-        compare: (margin-right: 3.5rem,
-          icon: (font-size: 3.2rem,
-            margin-bottom: .1rem))),
+      middle:
+        (
+          padding-top: 2.7rem,
+          padding-bottom: 2.7rem,
+          color: #222,
+          background: #fff,
+          border-bottom: false,
+          font-family: false,
+          font-size: 1.2rem,
+          font-weight: 700,
+          letter-spacing: false,
+          text-transform: false,
+          logo: (
+            margin-right: 8rem,
+            margin-bottom: 0.1rem,
+            _mobile-margin-right: 2rem,
+          ),
+          login: (
+            margin-right: 2rem,
+            padding-bottom: 0.2rem,
+            icon: (
+              font-size: 2.3rem,
+            ),
+          ),
+          compare: (
+            margin-right: 3.5rem,
+            icon: (
+              font-size: 3.2rem,
+              margin-bottom: 0.1rem,
+            ),
+          ),
+        ),
       // Header Bottom
-      bottom: (padding-top: false,
-        padding-bottom: 1.5rem,
-        color: variables.$dark-color,
-        background: #fff,
-        border-top: false,
-        border-bottom: false,
-        font-family: false,
-        font-size: 1.4rem,
-        font-weight: 700,
-        letter-spacing: false,
-        text-transform: false,
-      ),
+      bottom:
+        (
+          padding-top: false,
+          padding-bottom: 1.5rem,
+          color: variables.$dark-color,
+          background: #fff,
+          border-top: false,
+          border-bottom: false,
+          font-family: false,
+          font-size: 1.4rem,
+          font-weight: 700,
+          letter-spacing: false,
+          text-transform: false,
+        ),
       // Inner Wrap ( child of header container or header container-fluid )
-      inner-wrap: (padding: false),
+      inner-wrap:
+        (
+          padding: false,
+        ),
       // Sticky Header
-      sticky: (padding-top: 1.5rem,
-        padding-bottom: 1.4rem,
-        background: false,
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1),
-        color: false),
+      sticky:
+        (
+          padding-top: 1.5rem,
+          padding-bottom: 1.4rem,
+          background: false,
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1),
+          color: false,
+        ),
       // MainMenu
-      main-nav: (margin: 0 0 0 .3rem,
-        padding: false,
-        background: false),
+      main-nav:
+        (
+          margin: 0 0 0 0.3rem,
+          padding: false,
+          background: false,
+        ),
       // MobileMenu Toggle
-      mmenu-toggle: (color: #222,
-      ),
+      mmenu-toggle:
+        (
+          color: #222,
+        ),
       //Select box
-      select: (max-width: false,
-        padding-left: 1.1rem,
-        padding-right: 3rem,
-        border: 0,
-        font-weight: 400,
-        font-size: 1.3rem,
-        letter-spacing: 0,
-        z-index: 1,
-      ),
+      select:
+        (
+          max-width: false,
+          padding-left: 1.1rem,
+          padding-right: 3rem,
+          border: 0,
+          font-weight: 400,
+          font-size: 1.3rem,
+          letter-spacing: 0,
+          z-index: 1,
+        ),
       // Header Search
-      search: ( // Toggle Search
-        toggle: (padding: 1.1rem 0,
-          width: 31rem),
-        // Expanded Search
-        expanded: (width: 65rem,
-          height: 4.5rem),
-        //Simple Search
-        simple: (color: variables.$primary-color ),
-        // Shape is round
-        round: (width: 52.2rem,
-          height: false)),
+      search:
+        (
+          // Toggle Search
+          toggle: (padding: 1.1rem 0, width: 31rem),
+          // Expanded Search
+          expanded: (width: 65rem, height: 4.5rem),
+          //Simple Search
+          simple: (color: variables.$primary-color),
+          // Shape is round
+          round: (width: 52.2rem, height: false),
+        ),
       // Logo
-      logo: (max-width: 200px),
+      logo:
+        (
+          max-width: 200px,
+        ),
       // Links
       // Call
-      call: (label: (_gap: .9rem,
-          font-size: false,
-          font-weight: inherit,
-          line-height: false,
-          text-transform: uppercase,
+      call:
+        (
+          label: (
+            _gap: 0.9rem,
+            font-size: false,
+            font-weight: inherit,
+            line-height: false,
+            text-transform: uppercase,
+          ),
+          icon: (
+            margin: 0 0.2rem 0.2rem 0,
+            font-size: 1.8rem,
+          ),
         ),
-        icon: (margin: 0 .2rem .2rem 0,
-          font-size: 1.8rem)),
       // Wishlist
-      wishlist: (icon: (font-size: 2.8rem)),
-      contact: (icon: (margin-right: .7rem,
+      wishlist:
+        (
+          icon: (
+            font-size: 2.8rem,
+          ),
+        ),
+      contact: (
+        icon: (
+          margin-right: 0.7rem,
           font-size: 1.7rem,
-        )),
-      help: (icon: (margin-right: .7rem,
+        ),
+      ),
+      help: (
+        icon: (
+          margin-right: 0.7rem,
           font-size: 1.7rem,
-        )))));
+        ),
+      ),
+    ),
+  )
+);
 
 // Header
 .header {
@@ -176,7 +244,6 @@
 }
 
 .has-center {
-
   .header-left,
   .header-right {
     flex: 1;
@@ -225,7 +292,7 @@
   @include core.print_css(header, top);
 
   .header-right {
-    >* {
+    > * {
       @include core.css(margin-left, header, top, _links-gap);
 
       &:first-child {
@@ -235,11 +302,11 @@
   }
 
   .divider {
-    margin: 0 -.3rem 0 2rem;
+    margin: 0 -0.3rem 0 2rem;
   }
 
   .contact {
-    margin-right: .2rem;
+    margin-right: 0.2rem;
     line-height: 1;
 
     i {
@@ -263,15 +330,15 @@
   }
 
   .delimiter {
-    margin: 0 .5rem;
+    margin: 0 0.5rem;
     color: #aaa;
   }
 
   .wishlist {
-    @include core.print_css (header, top, wishlist);
+    @include core.print_css(header, top, wishlist);
 
     i {
-      @include core.print_css (header, top, wishlist, icon);
+      @include core.print_css(header, top, wishlist, icon);
     }
   }
 }
@@ -301,7 +368,7 @@
       @include core.print_css(header, middle, login, icon);
     }
 
-    i+span {
+    i + span {
       @include core.css(margin-left, header, login, label, _gap);
     }
 
@@ -327,18 +394,17 @@
   }
 
   .header-right .cart-dropdown {
-    >a::after {
+    > a::after {
       content: none;
     }
   }
 
   .icon-box {
     margin-right: 1.8rem;
-    padding-bottom: .1rem;
+    padding-bottom: 0.1rem;
     transition: none;
 
     &:hover {
-
       .icon-box-icon,
       p,
       .icon-box-title {
@@ -350,7 +416,7 @@
   .icon-box-icon,
   p,
   .icon-box-title {
-    transition: color .3s;
+    transition: color 0.3s;
   }
 
   .icon-box-icon {
@@ -360,19 +426,19 @@
   }
 
   .icon-box-title {
-    margin-bottom: .5rem;
+    margin-bottom: 0.5rem;
     font-size: 1.1rem;
     font-weight: 400;
     text-transform: capitalize;
     line-height: 1;
-    letter-spacing: -.027em;
+    letter-spacing: -0.027em;
   }
 
   p {
     font-size: 1.4rem;
     font-weight: 700;
     color: variables.$dark-color;
-    letter-spacing: -.0428em;
+    letter-spacing: -0.0428em;
     line-height: 1;
   }
 }
@@ -389,7 +455,7 @@
   @include core.print_css(header, bottom);
 
   .header-right {
-    margin-right: .3rem;
+    margin-right: 0.3rem;
 
     i {
       margin-right: 1rem;
@@ -406,7 +472,7 @@
   font-size: inherit;
   font-weight: inherit;
   font-family: inherit;
-  letter-spacing: -.0125em;
+  letter-spacing: -0.0125em;
   line-height: 1.5;
   white-space: nowrap;
 }
@@ -440,7 +506,7 @@
     font-size: 2rem;
 
     i {
-      margin: 0 .1rem .6rem 0;
+      margin: 0 0.1rem 0.6rem 0;
       vertical-align: middle;
       font-size: 2rem;
     }
@@ -469,7 +535,7 @@
       opacity: 0;
       transform: translate3d(0, -10px, 0);
       z-index: 100;
-      transition: transform .4s .2s, visibility .4s .2s, opacity .4s .2s;
+      transition: transform 0.4s 0.2s, visibility 0.4s 0.2s, opacity 0.4s 0.2s;
     }
 
     &:hover {
@@ -489,7 +555,7 @@
       border-radius: 0;
 
       i {
-        margin-bottom: .4rem;
+        margin-bottom: 0.4rem;
         font-size: inherit;
       }
     }
@@ -504,13 +570,13 @@
     .input-wrapper {
       width: 100%;
       border: 2px solid variables.$primary-color;
-      border-radius: .5rem;
+      border-radius: 0.5rem;
       @include core.css(height, header, search, expanded, height);
     }
 
     .select-box {
       width: 13.2rem;
-      border-radius: .5rem 0 0 .5rem;
+      border-radius: 0.5rem 0 0 0.5rem;
       color: #666;
 
       &,
@@ -603,7 +669,7 @@
   .input-wrapper {
     transform: translate3d(0, 0, 0);
     visibility: visible;
-    transition: transform .4s;
+    transition: transform 0.4s;
     opacity: 1;
   }
 }
@@ -638,7 +704,7 @@
   vertical-align: middle;
   @include core.css(padding, header, search, toggle, padding);
   //padding: 1.1rem 0;
-  transition: color .3s;
+  transition: color 0.3s;
 
   span {
     cursor: pointer;
@@ -650,7 +716,7 @@
       weight: 400;
     }
 
-    line-height: .9;
+    line-height: 0.9;
   }
 
   &.with-label {
@@ -665,7 +731,7 @@
     }
 
     span {
-      margin-left: .5rem;
+      margin-left: 0.5rem;
       cursor: pointer;
       font-weight: inherit;
       letter-spacing: inherit;
@@ -732,7 +798,7 @@
   overflow-y: auto;
   font-weight: 400;
   border: 2px solid variables.$border-color;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
 }
 
 .autocomplete-suggestions {
@@ -747,12 +813,12 @@
   overflow-y: auto;
 
   &::-webkit-scrollbar {
-    width: 5px
+    width: 5px;
   }
 
   &::-webkit-scrollbar-thumb {
     border-radius: 0;
-    background: rgba(204, 204, 204, 0.5)
+    background: rgba(204, 204, 204, 0.5);
   }
 }
 
@@ -767,12 +833,12 @@
   cursor: pointer;
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   white-space: normal;
-  transition: background-color .3s;
+  transition: background-color 0.3s;
 
   .search-price {
     color: #222529;
     font-weight: 600;
-    padding-left: .5rem;
+    padding-left: 0.5rem;
   }
 
   img {
@@ -782,12 +848,12 @@
     margin-right: 10px;
     object-fit: cover;
 
-    &[lazy=loading] {
+    &[lazy='loading'] {
       padding-top: 40px !important;
     }
   }
 
-  img+.search-name {
+  img + .search-name {
     padding-left: 0.5em;
     font-size: 1.4rem;
     white-space: nowrap;
@@ -823,7 +889,7 @@
     @include core.print_css(header, call, label);
   }
 
-  i+span {
+  i + span {
     @include core.css(margin-left, header, call, label, _gap);
   }
 
@@ -874,14 +940,13 @@
 }
 
 .sticky-header {
-
   // transition: .4s;
   &.fixed {
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 1100;
-    animation: fixedTop .4s;
+    animation: fixedTop 0.4s;
     @include core.print_css(header, sticky);
   }
 }
@@ -900,7 +965,6 @@
   @include core.css(color, header, mmenu-toggle, color);
 
   &.menu-bar {
-
     &::before,
     &::after {
       content: '';
@@ -926,7 +990,6 @@
 
 // Responsive
 @include breakpoints.mq('xl', 'max') {
-
   // .main-nav {
   //     .menu {
   //         > li {
@@ -988,7 +1051,6 @@
   }
 
   .header-top {
-
     .login-link,
     .register-link,
     .divider,
@@ -1062,8 +1124,8 @@
     display: block;
   }
 
-  i+span {
-    margin-top: .7rem;
+  i + span {
+    margin-top: 0.7rem;
   }
 }
 
@@ -1073,7 +1135,7 @@
   }
 
   .cart-name {
-    margin-bottom: .5rem;
+    margin-bottom: 0.5rem;
     font-size: 1.1rem;
     font-weight: 400;
     text-transform: capitalize;
@@ -1086,7 +1148,7 @@
   .cart-price {
     font-size: 1.4rem;
     font-weight: 700;
-    letter-spacing: -.05em;
+    letter-spacing: -0.05em;
   }
 
   &.cart-toggle i {
@@ -1104,7 +1166,7 @@
     font-size: 2.4rem;
   }
 
-  &+.mobile-link {
+  & + .mobile-link {
     margin-left: 2rem;
   }
 
