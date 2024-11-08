@@ -155,28 +155,18 @@ export const stickyHeaderHandler = function () {
     height = stickyHeader.offsetHeight;
   }
 
-  if (window.pageYOffset >= top && window.innerWidth >= 992) {
-    if (stickyHeader) {
-      stickyHeader.classList.add('fixed');
-      if (!document.querySelector('.sticky-wrapper')) {
-        let newNode = document.createElement('div');
-        newNode.className = 'sticky-wrapper';
-        stickyHeader.parentNode.insertBefore(newNode, stickyHeader);
-        document.querySelector('.sticky-wrapper').insertAdjacentElement('beforeend', stickyHeader);
-        document.querySelector('.sticky-wrapper').setAttribute('style', 'height: ' + height + 'px');
-      }
-
-      if (!document.querySelector('.sticky-wrapper').getAttribute('style')) {
-        document.querySelector('.sticky-wrapper').setAttribute('style', 'height: ' + height + 'px');
-      }
-    }
-  } else {
-    if (stickyHeader) {
-      stickyHeader.classList.remove('fixed');
+  if (stickyHeader) {
+    stickyHeader.classList.add('fixed');
+    if (!document.querySelector('.sticky-wrapper')) {
+      let newNode = document.createElement('div');
+      newNode.className = 'sticky-wrapper';
+      stickyHeader.parentNode.insertBefore(newNode, stickyHeader);
+      document.querySelector('.sticky-wrapper').insertAdjacentElement('beforeend', stickyHeader);
+      document.querySelector('.sticky-wrapper').setAttribute('style', 'height: ' + height + 'px');
     }
 
-    if (document.querySelector('.sticky-wrapper')) {
-      document.querySelector('.sticky-wrapper').removeAttribute('style');
+    if (!document.querySelector('.sticky-wrapper').getAttribute('style')) {
+      document.querySelector('.sticky-wrapper').setAttribute('style', 'height: ' + height + 'px');
     }
   }
 
@@ -192,8 +182,7 @@ export const resizeHandler = function (width = 992, attri = 'right-sidebar-activ
   let bodyClasses = document.querySelector('body') && document.querySelector('body').classList;
   bodyClasses = bodyClasses.value.split(' ').filter((item) => item !== 'home' && item !== 'loaded');
   for (let i = 0; i < bodyClasses.length; i++) {
-    document.querySelector('body') &&
-      document.querySelector('body').classList.remove(bodyClasses[i]);
+    document.querySelector('body') && document.querySelector('body').classList.remove(bodyClasses[i]);
   }
 };
 
@@ -217,14 +206,10 @@ export const stickyFooterHandler = function () {
         let newNode = document.createElement('div');
         newNode.className = 'sticky-content-wrapper';
         stickyFooter.parentNode.insertBefore(newNode, stickyFooter);
-        document
-          .querySelector('.sticky-content-wrapper')
-          .insertAdjacentElement('beforeend', stickyFooter);
+        document.querySelector('.sticky-content-wrapper').insertAdjacentElement('beforeend', stickyFooter);
       }
 
-      document
-        .querySelector('.sticky-content-wrapper')
-        .setAttribute('style', 'height: ' + height + 'px');
+      document.querySelector('.sticky-content-wrapper').setAttribute('style', 'height: ' + height + 'px');
     }
   } else {
     if (stickyFooter) {
@@ -258,8 +243,7 @@ export const parallaxHandler = function () {
         parallaxSpeed = parseInt(parseOptions(parallax.getAttribute('data-option')).speed);
       }
 
-      yPos =
-        ((parallax.offsetTop - window.pageYOffset) * 50 * parallaxSpeed) / parallax.offsetTop + 50;
+      yPos = ((parallax.offsetTop - window.pageYOffset) * 50 * parallaxSpeed) / parallax.offsetTop + 50;
 
       parallax.style.backgroundPosition = '50% ' + yPos + '%';
     }
@@ -385,11 +369,5 @@ export function getPostDate(date) {
 }
 
 export function normalizeString(string) {
-  return string
-    .replace('"', '&quot;')
-    .replace('&', '&amp;')
-    .replace('>', '&gt;')
-    .replace('<', '&lt;')
-    .replace("'", '&apos;')
-    .trim();
+  return string.replace('"', '&quot;').replace('&', '&amp;').replace('>', '&gt;').replace('<', '&lt;').replace("'", '&apos;').trim();
 }
