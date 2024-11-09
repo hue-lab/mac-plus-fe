@@ -6,7 +6,7 @@ import ALink from '~/components/features/custom-link';
 import SidebarFilterThree from '~/components/partials/shop/sidebar/sidebar-filter-three';
 
 export default function ToolBox(props) {
-  const { type = "left" } = props;
+  const { type = 'left' } = props;
   const router = useRouter();
   const { catalogue, ...query } = router.query;
   const catalogueUrl = catalogue.join('/');
@@ -19,12 +19,12 @@ export default function ToolBox(props) {
 
     return () => {
       window.removeEventListener('scroll', stickyToolboxHandler);
-    }
-  }, [])
+    };
+  }, []);
 
   const getPathname = () => {
     return (typeof catalogueUrl === 'string' ? router.pathname.replace('[...catalogue]', catalogueUrl) : router.pathname)?.split('/page-is-')[0];
-  }
+  };
 
   const onChangeAttri = (e, attri) => {
     e.preventDefault();
@@ -35,15 +35,15 @@ export default function ToolBox(props) {
     }
     url = url + '?' + arr.join('&');
     router.push(url);
-  }
+  };
 
   const showSidebar = () => {
-    if (type === "navigation" && window.innerWidth > 991) {
+    if (type === 'navigation' && window.innerWidth > 991) {
       document.querySelector('.navigation-toggle-btn').click();
     } else {
-      document.querySelector('body').classList.add(`${type === "left" || type === "off-canvas" || type === "navigation" || type === "horizontal" ? "sidebar-active" : "right-sidebar-active"}`);
+      document.querySelector('body').classList.add(`${type === 'left' || type === 'off-canvas' || type === 'navigation' || type === 'horizontal' ? 'sidebar-active' : 'right-sidebar-active'}`);
     }
-  }
+  };
   const stickyToolboxHandler = (e) => {
     let top = 600;
     let stickyToolbox = document.querySelector('.sticky-toolbox');
@@ -57,15 +57,15 @@ export default function ToolBox(props) {
       if (stickyToolbox) {
         stickyToolbox.classList.add('fixed');
         if (!document.querySelector('.sticky-toolbox-wrapper')) {
-          let newNode = document.createElement("div");
-          newNode.className = "sticky-toolbox-wrapper";
+          let newNode = document.createElement('div');
+          newNode.className = 'sticky-toolbox-wrapper';
           stickyToolbox.parentNode.insertBefore(newNode, stickyToolbox);
           document.querySelector('.sticky-toolbox-wrapper').insertAdjacentElement('beforeend', stickyToolbox);
-          document.querySelector('.sticky-toolbox-wrapper').setAttribute("style", "height: " + height + "px");
+          document.querySelector('.sticky-toolbox-wrapper').setAttribute('style', 'height: ' + height + 'px');
         }
 
-        if (!document.querySelector('.sticky-toolbox-wrapper').getAttribute("style")) {
-          document.querySelector('.sticky-toolbox-wrapper').setAttribute("style", "height: " + height + "px");
+        if (!document.querySelector('.sticky-toolbox-wrapper').getAttribute('style')) {
+          document.querySelector('.sticky-toolbox-wrapper').setAttribute('style', 'height: ' + height + 'px');
         }
       }
     } else {
@@ -74,7 +74,7 @@ export default function ToolBox(props) {
       }
 
       if (document.querySelector('.sticky-toolbox-wrapper')) {
-        document.querySelector('.sticky-toolbox-wrapper').removeAttribute("style");
+        document.querySelector('.sticky-toolbox-wrapper').removeAttribute('style');
       }
     }
 
@@ -83,32 +83,25 @@ export default function ToolBox(props) {
     }
 
     tmp = e.currentTarget.scrollY;
-  }
+  };
 
   return (
-    <nav className={`toolbox sticky-toolbox sticky-content fix-top ${type === "horizontal" ? 'toolbox-horizontal' : ''}`}>
-      {
-        type === "horizontal" ? <SidebarFilterThree /> : ''
-      }
+    <nav className={`toolbox sticky-toolbox sticky-content fix-top ${type === 'horizontal' ? 'toolbox-horizontal' : ''}`}>
+      {type === 'horizontal' ? <SidebarFilterThree /> : ''}
       <div className="toolbox-left">
-        {
-          type === "left" || type === "off-canvas" || type === "navigation" || type === "horizontal" ?
-            <ALink href="#" className={`toolbox-item left-sidebar-toggle btn btn-outline btn-primary btn-rounded ${type === "navigation" ? "btn-icon-left btn-sm" : "btn-sm btn-icon-right"} ${type === "off-canvas" || type === "navigation" ? '' : "d-lg-none"}`} onClick={showSidebar}>
-              {
-                type === "navigation" ? <i className="d-icon-filter-2"></i> : ''
-              }
-              Filter
-              {
-                type === "navigation" ? '' : <i className="d-icon-arrow-right"></i>
-              }
-            </ALink> : ''
-        }
+        {type === 'left' || type === 'off-canvas' || type === 'navigation' || type === 'horizontal' ? (
+          <ALink href="#" className={`toolbox-item left-sidebar-toggle btn btn-outline btn-primary btn-rounded ${type === 'navigation' ? 'btn-icon-left btn-sm' : 'btn-sm btn-icon-right'} ${type === 'off-canvas' || type === 'navigation' ? '' : 'd-lg-none'}`} onClick={showSidebar}>
+            {type === 'navigation' ? <i className="d-icon-filter-2"></i> : ''}
+            Filter
+            {type === 'navigation' ? '' : <i className="d-icon-arrow-right"></i>}
+          </ALink>
+        ) : (
+          ''
+        )}
 
-        <div className={`toolbox-item toolbox-sort ${type === "boxed" || type === "banner" ? "select-box text-dark" : "select-menu"}`}>
-          {
-            type === "boxed" || type === "banner" || type === "left" ? <label>Сортировка :</label> : ''
-          }
-          <select name="orderby" className="form-control" defaultValue={query.sortby ? query.sortby : 'default'} onChange={e => onChangeAttri(e, 'sortby')}>
+        <div className={`toolbox-item toolbox-sort ${type === 'boxed' || type === 'banner' ? 'select-box text-dark' : 'select-menu'}`}>
+          {type === 'boxed' || type === 'banner' || type === 'left' ? <label>Сортировка :</label> : ''}
+          <select name="orderby" className="form-control" defaultValue={query.sortby ? query.sortby : 'default'} onChange={(e) => onChangeAttri(e, 'sortby')}>
             <option value="default">Обычная</option>
             <option value="price-low">По возрастанию цены</option>
             <option value="price-high">По убыванию цены</option>
@@ -118,22 +111,25 @@ export default function ToolBox(props) {
       <div className="toolbox-right">
         <div className="toolbox-item toolbox-show select-box text-dark">
           <label>Вид :</label>
-          <select name="count" className="form-control" defaultValue={perPage} onChange={e => onChangeAttri(e, 'per_page')}>
+          <select name="count" className="form-control" defaultValue={perPage} onChange={(e) => onChangeAttri(e, 'per_page')}>
             <option value="12">12</option>
             <option value="24">24</option>
             <option value="36">36</option>
           </select>
         </div>
-        <div className={`toolbox-item toolbox-layout ${type === "right" ? "mr-lg-0" : ''}`}>
-          <ALink href={{ pathname: getPathname(), query: { ...query, type: "list" } }} scroll={false} className={`d-icon-mode-list btn-layout ${gridType === 'list' ? 'active' : ''}`}></ALink>
-          <ALink href={{ pathname: getPathname(), query: { ...query, type: "grid" } }} scroll={false} className={`d-icon-mode-grid btn-layout ${gridType !== 'list' ? 'active' : ''}`}></ALink>
+        <div className={`toolbox-item toolbox-layout ${type === 'right' ? 'mr-lg-0' : ''}`}>
+          <ALink href={{ pathname: getPathname(), query: { ...query, type: 'list' } }} scroll={false} className={`d-icon-mode-list btn-layout ${gridType === 'list' ? 'active' : ''}`}></ALink>
+          <ALink href={{ pathname: getPathname(), query: { ...query, type: 'grid' } }} scroll={false} className={`d-icon-mode-grid btn-layout ${gridType !== 'list' ? 'active' : ''}`}></ALink>
         </div>
 
-        {
-          type === "right" ?
-            <ALink href="#" className="toolbox-item right-sidebar-toggle btn btn-sm btn-outline btn-primary btn-rounded btn-icon-right d-lg-none" onClick={showSidebar}>Filter<i className="d-icon-arrow-left"></i></ALink> : ''
-        }
+        {type === 'right' ? (
+          <ALink href="#" className="toolbox-item right-sidebar-toggle btn btn-sm btn-outline btn-primary btn-rounded btn-icon-right d-lg-none" onClick={showSidebar}>
+            Filter<i className="d-icon-arrow-left"></i>
+          </ALink>
+        ) : (
+          ''
+        )}
       </div>
     </nav>
-  )
+  );
 }
