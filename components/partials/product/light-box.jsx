@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import Lightbox from 'react-image-lightbox';
-import 'react-image-lightbox/style.css';
 import {getImgPath} from "~/utils";
 
 function MediaLightBox( props ) {

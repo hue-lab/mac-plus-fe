@@ -15,7 +15,7 @@
 @use 'config/variables';
 
 /* 2. mixins */
-@use 'mixins/breakpoints'; 
+@use 'mixins/breakpoints';
 @use 'mixins/core';
 @use 'mixins/buttons';
 
@@ -83,8 +83,8 @@
 @use 'base/footer/footer';
 
 /* 8. Pages */
-@use 'pages/about';  
-@use 'pages/account';   
+@use 'pages/about';
+@use 'pages/account';
 @use 'pages/buttons' as buttons3;
 @use 'pages/categories' as categories2;
 @use 'pages/coming';
@@ -108,6 +108,7 @@
 @use 'demo/demo22_custom';
 
 @use 'react-phone-input';
+@use 'react-image-lightbox';
 
 .rendered-content {
   li {
