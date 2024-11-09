@@ -155,7 +155,7 @@ export const stickyHeaderHandler = function () {
     height = stickyHeader.offsetHeight;
   }
 
-  if (stickyHeader) {
+  if (stickyHeader && window.pageYOffset >= top) {
     stickyHeader.classList.add('fixed');
     if (!document.querySelector('.sticky-wrapper')) {
       let newNode = document.createElement('div');
@@ -167,6 +167,10 @@ export const stickyHeaderHandler = function () {
 
     if (!document.querySelector('.sticky-wrapper').getAttribute('style')) {
       document.querySelector('.sticky-wrapper').setAttribute('style', 'height: ' + height + 'px');
+    }
+  } else {
+    if (stickyHeader) {
+      stickyHeader.classList.remove('fixed');
     }
   }
 
