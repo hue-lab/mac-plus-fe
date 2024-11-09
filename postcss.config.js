@@ -23,7 +23,7 @@ module.exports = {
         defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
         safelist: {
           standard: ["html", "body"],
-          greedy: [/^react-phone-number-input/],
+          greedy: [/^react-phone-number-input/, /^react-image-lightbox/],
         },
       }
     ],

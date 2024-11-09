@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Magnifier, MOUSE_ACTIVATION, TOUCH_ACTIVATION } from 'react-image-magnifiers';
-
-import ALink from '~/components/features/custom-link';
 import OwlCarousel from '~/components/features/owl-carousel';
 
 import ThumbTwo from '~/components/partials/product/thumb/thumb-two';
@@ -94,7 +92,7 @@ export default function MediaFive ( props ) {
                     ) }
             </OwlCarousel>
 
-            <ALink href="#" className="product-image-full" onClick={ openLightBox }><i className="d-icon-zoom"></i></ALink>
+            <div className="product-image-full" onClick={ openLightBox }><i className="d-icon-zoom"></i></div>
 
             <ThumbTwo product={ product } index={ index } onChangeIndex={ setIndexHandler } />
 
