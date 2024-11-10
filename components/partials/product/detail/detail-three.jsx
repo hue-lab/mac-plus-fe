@@ -1,28 +1,20 @@
-import React, {useEffect, useState} from 'react';
-import {connect} from 'react-redux';
-import {useRouter} from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { useRouter } from 'next/router';
 
 import ALink from '~/components/features/custom-link';
 
 import ProductNav from '~/components/partials/product/product-nav';
 import DescTwo from '~/components/partials/product/desc/desc-two';
 
-import {wishlistActions} from '~/store/wishlist';
-import {cartActions} from '~/store/cart';
+import { wishlistActions } from '~/store/wishlist';
+import { cartActions } from '~/store/cart';
 
-import {toDecimal} from '~/utils';
+import { toDecimal } from '~/utils';
 
 function DetailThree(props) {
   let router = useRouter();
-  const {
-    product,
-    isSticky = false,
-    isDesc = false,
-    adClass = '',
-    isSizeGuide = true,
-    isNav = true,
-    openModal,
-  } = props;
+  const { product, isSticky = false, isDesc = false, adClass = '', isSizeGuide = true, isNav = true, openModal, productName } = props;
   const { toggleWishlist, addToCart, wishlist } = props;
   const [curColor, setCurColor] = useState('null');
   const [curSize, setCurSize] = useState('null');
@@ -115,7 +107,9 @@ function DetailThree(props) {
         ''
       )}
 
-      <span className="product-name" itemProp="name">{product.name}</span>
+      <h1 className="product-name" itemProp="name">
+        {productName}
+      </h1>
 
       <div className="product-meta">
         Категория: <span className="product-brand">{product.category.name}</span>
@@ -130,14 +124,16 @@ function DetailThree(props) {
           </>
         ) : (
           <>
-            <meta itemProp="price" content={product.price}/>
+            <meta itemProp="price" content={product.price} />
             <ins className="new-price">от {toDecimal(product.price)} BYN</ins>
           </>
         )}
         <meta itemProp="priceCurrency" content="BYN" />
       </div>
 
-      <p className="product-short-desc" itemProp="description">{product.description}</p>
+      <p className="product-short-desc" itemProp="description">
+        {product.description}
+      </p>
 
       <hr className="product-divider"></hr>
 
@@ -152,30 +148,17 @@ function DetailThree(props) {
               {/*  onChangeQty={changeQty}*/}
               {/*  isStock={product.isStock}*/}
               {/*/>*/}
-              <button
-                className={`btn-product btn-cart btn-cart-fast text-normal ls-normal font-weight-semi-bold ${
-                  cartActive ? '' : 'disabled'
-                }`}
-                onClick={addToCartHandler}
-              >
+              <button className={`btn-product btn-cart btn-cart-fast text-normal ls-normal font-weight-semi-bold ${cartActive ? '' : 'disabled'}`} onClick={addToCartHandler}>
                 <i className="d-icon-bag"></i>В корзину
               </button>
-              <button
-                className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold ${
-                  cartActive ? '' : 'disabled'
-                }`}
-                onClick={() => openModal(true)}
-              >
+              <button className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold ${cartActive ? '' : 'disabled'}`} onClick={() => openModal(true)}>
                 Купить сразу
               </button>
             </>
           ) : (
             <>
               <span>Под заказ</span>
-              <button
-                className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold`}
-                onClick={() => openModal(true)}
-              >
+              <button className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold`} onClick={() => openModal(true)}>
                 Заказать
               </button>
             </>
