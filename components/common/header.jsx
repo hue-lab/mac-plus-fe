@@ -1,18 +1,18 @@
-import ALink from "~/components/features/custom-link";
-import {useRouter} from "next/router";
+import ALink from '~/components/features/custom-link';
+import { useRouter } from 'next/router';
 
-import CartMenu from "~/components/common/partials/cart-menu";
-import MainMenu from "~/components/common/partials/main-menu";
-import SearchBox from "~/components/common/partials/search-box";
-import {orderCategories} from "~/utils";
-import Image from "next/image";
-import logoImage from "~/public/images/home/logo.png";
+import CartMenu from '~/components/common/partials/cart-menu';
+import MainMenu from '~/components/common/partials/main-menu';
+import SearchBox from '~/components/common/partials/search-box';
+import { orderCategories } from '~/utils';
+import Image from 'next/image';
+import logoImage from '~/public/images/home/logo.png';
 
-export default function Header({categoryTree, fields}) {
+export default function Header({ categoryTree, fields }) {
   const router = useRouter();
 
   const showMobileMenu = () => {
-    document.querySelector("body").classList.add("mmenu-active");
+    document.querySelector('body').classList.add('mmenu-active');
   };
 
   return (
@@ -25,10 +25,10 @@ export default function Header({categoryTree, fields}) {
             </div>
 
             <ALink href="/" className="logo">
-              <Image style={{height: "56px", width: 'auto'}} src={logoImage} alt="Mac Plus" width={200} height={56}/>
+              <Image style={{ height: '56px', width: 'auto' }} src={logoImage} alt="Mac Plus" width={200} height={56} />
             </ALink>
 
-            <SearchBox/>
+            <SearchBox />
           </div>
 
           <div className="header-right">
@@ -44,28 +44,13 @@ export default function Header({categoryTree, fields}) {
 
             <span className="divider"></span>
 
-            {fields.telegram && (
-              <ALink
-                href={fields.telegram}
-                className="social-link social-link-header social-telegram fab fa-telegram-plane"
-              ></ALink>
-            )}
-            {fields.viber && (
-              <ALink
-                href={`viber://chat?number=${fields.viber}`}
-                className="social-link social-link-header social-viber fab fa-viber"
-              ></ALink>
-            )}
-            {fields.instagram && (
-              <ALink
-                href={fields.instagram}
-                className="social-link social-link-header social-instagram fab fa-instagram"
-              ></ALink>
-            )}
+            {fields.telegram && <ALink rel="nofollow" href={fields.telegram} className="social-link social-link-header social-telegram fab fa-telegram-plane"></ALink>}
+            {fields.viber && <ALink rel="nofollow" href={`viber://chat?number=${fields.viber}`} className="social-link social-link-header social-viber fab fa-viber"></ALink>}
+            {fields.instagram && <ALink rel="nofollow" href={fields.instagram} className="social-link social-link-header social-instagram fab fa-instagram"></ALink>}
 
             <span className="divider"></span>
 
-            <CartMenu/>
+            <CartMenu />
           </div>
         </div>
       </div>
@@ -87,13 +72,10 @@ export default function Header({categoryTree, fields}) {
                 </li>
 
                 {(categoryTree || []).sort(orderCategories).map((item, index) => (
-                  <li key={index} className={item.children?.length ? "submenu" : ""}>
-                    <ALink href={{pathname: `/${item.handle}`}}>
-                      <span style={{width: "30px", textAlign: "center", display: "inline-block"}}>
-                        <i
-                          style={{fontSize: `${item.icon.split("||")[1] || "1.8"}rem`}}
-                          className={item.icon.split("||")[0] || "d-icon-arrow-right"}
-                        ></i>
+                  <li key={index} className={item.children?.length ? 'submenu' : ''}>
+                    <ALink href={{ pathname: `/${item.handle}` }}>
+                      <span style={{ width: '30px', textAlign: 'center', display: 'inline-block' }}>
+                        <i style={{ fontSize: `${item.icon.split('||')[1] || '1.8'}rem` }} className={item.icon.split('||')[0] || 'd-icon-arrow-right'}></i>
                       </span>
                       {item.name}
                     </ALink>
@@ -101,7 +83,7 @@ export default function Header({categoryTree, fields}) {
                       <ul>
                         {item.children.sort(orderCategories).map((item, index) => (
                           <li key={index}>
-                            <ALink href={{pathname: `/${item.handle}`}}>{item.name}</ALink>
+                            <ALink href={{ pathname: `/${item.handle}` }}>{item.name}</ALink>
                           </li>
                         ))}
                       </ul>
@@ -112,7 +94,7 @@ export default function Header({categoryTree, fields}) {
             </div>
           </div>
 
-          <MainMenu layoutFields={fields} categoryTree={categoryTree}/>
+          <MainMenu layoutFields={fields} categoryTree={categoryTree} />
         </div>
       </div>
     </header>

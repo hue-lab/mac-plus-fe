@@ -1,8 +1,8 @@
-import ALink from "~/components/features/custom-link";
-import { orderCategories } from "~/utils";
-import Image from "next/image";
-import logoShortImage from "~/public/images/home/logo-short.png"
-import paymentsImage from "~/public/images/payment.png"
+import ALink from '~/components/features/custom-link';
+import { orderCategories } from '~/utils';
+import Image from 'next/image';
+import logoShortImage from '~/public/images/home/logo-short.png';
+import paymentsImage from '~/public/images/payment.png';
 
 export default function Footer({ fields, categoryTree, footerNav }) {
   const YEAR = new Date().getFullYear();
@@ -14,12 +14,7 @@ export default function Footer({ fields, categoryTree, footerNav }) {
           <div className="row align-items-center">
             <div className="col-lg-3">
               <ALink href="/" className="logo-footer">
-                <Image
-                  src={logoShortImage}
-                  alt="logo-footer"
-                  width={100}
-                  height={100}
-                />
+                <Image src={logoShortImage} alt="logo-footer" width={100} height={100} />
               </ALink>
             </div>
           </div>
@@ -42,7 +37,7 @@ export default function Footer({ fields, categoryTree, footerNav }) {
                   </li>
                   <li>
                     <label>Адрес: </label>
-                    <a href={`http://maps.google.com/?q=${fields.address}`} target="_blank">
+                    <a rel="nofollow" href={`http://maps.google.com/?q=${fields.address}`} target="_blank">
                       {fields.address}
                     </a>
                   </li>
@@ -56,7 +51,7 @@ export default function Footer({ fields, categoryTree, footerNav }) {
                     <label>Реквизиты компании: </label>
                   </li>
                   <li>
-                    <div style={{ whiteSpace: "pre-wrap" }}>{fields.legal}</div>
+                    <div style={{ whiteSpace: 'pre-wrap' }}>{fields.legal}</div>
                   </li>
                 </ul>
               </div>
@@ -72,7 +67,7 @@ export default function Footer({ fields, categoryTree, footerNav }) {
                           <ALink href={item.handle}>{item.name}</ALink>
                         </li>
                       ))
-                    : ""}
+                    : ''}
                 </ul>
               </div>
             </div>
@@ -101,30 +96,13 @@ export default function Footer({ fields, categoryTree, footerNav }) {
             </figure>
           </div>
           <div className="footer-center">
-            <p className="copyright">
-              Mac Plus &copy; 2023{YEAR > 2023 ? ` - ${YEAR}` : ""}. Все права защищены.
-            </p>
+            <p className="copyright">Mac Plus &copy; 2023{YEAR > 2023 ? ` - ${YEAR}` : ''}. Все права защищены.</p>
           </div>
           <div className="footer-right">
             <div className="social-links">
-              {fields.telegram && (
-                <ALink
-                  href={fields.telegram}
-                  className="social-link social-telegram fab fa-telegram-plane"
-                ></ALink>
-              )}
-              {fields.viber && (
-                <ALink
-                  href={`viber://chat?number=${fields.viber}`}
-                  className="social-link social-viber fab fa-viber"
-                ></ALink>
-              )}
-              {fields.instagram && (
-                <ALink
-                  href={fields.instagram}
-                  className="social-link social-instagram fab fa-instagram"
-                ></ALink>
-              )}
+              {fields.telegram && <ALink rel="nofollow" href={fields.telegram} className="social-link social-telegram fab fa-telegram-plane"></ALink>}
+              {fields.viber && <ALink rel="nofollow" href={`viber://chat?number=${fields.viber}`} className="social-link social-viber fab fa-viber"></ALink>}
+              {fields.instagram && <ALink rel="nofollow" href={fields.instagram} className="social-link social-instagram fab fa-instagram"></ALink>}
             </div>
           </div>
         </div>
