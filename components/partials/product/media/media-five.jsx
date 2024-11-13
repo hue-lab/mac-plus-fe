@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Magnifier, MOUSE_ACTIVATION, TOUCH_ACTIVATION } from 'react-image-magnifiers';
+import Image from "next/image";
 import OwlCarousel from '~/components/features/owl-carousel';
 
 import ThumbTwo from '~/components/partials/product/thumb/thumb-two';
@@ -80,13 +80,14 @@ export default function MediaFive ( props ) {
                 {
                     lgImages.map( ( image, index ) =>
                         <div key={ image.imageName + '-' + index }>
-                            <Magnifier
-                                imageSrc={ getImgPath(image.imageName) }
-                                imageAlt={image.imageAlt || product.name || ''}
-                                className="product-image large-image"
-                                touchActivation={TOUCH_ACTIVATION.LONG_TOUCH}
-                                mouseActivation={MOUSE_ACTIVATION.DOUBLE_CLICK}
-                                cursorStyle="default"
+                            <Image
+                              width={800}
+                              height={540}
+                              itemprop="image"
+                              src={getImgPath(image.imageName)}
+                              alt={`${image.imageAlt || product.name || ''}-${index}`}
+                              title={`${image.imageAlt || product.name || ''}-${index}`}
+                              className="product-image large-image"
                             />
                         </div>
                     ) }

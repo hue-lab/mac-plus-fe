@@ -1,73 +1,63 @@
-import React, {useEffect, useState} from "react";
-import ALink from "~/components/features/custom-link";
-import SidebarFilterOne from "~/components/partials/shop/sidebar/sidebar-filter-one";
-import ProductListOne from "~/components/partials/shop/product-list/product-list-one";
-import {getImgPath} from "~/utils";
-import Head from "next/head";
+import React, { useEffect, useState } from 'react';
+import ALink from '~/components/features/custom-link';
+import SidebarFilterOne from '~/components/partials/shop/sidebar/sidebar-filter-one';
+import ProductListOne from '~/components/partials/shop/product-list/product-list-one';
+import { getImgPath } from '~/utils';
+import Head from 'next/head';
 
-export default function Category({
-  banner,
-  products,
-  filters,
-  category,
-  page,
-  filterObject,
-  filtersPairs,
-  fullPath,
-  mainSeo,
-  seoFields,
-}) {
+export default function Category({ banner, products, filters, category, page, filterObject, filtersPairs, fullPath, mainSeo, seoFields }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }, [page, filters]);
   const filtersString = Object.entries(filterObject)
-    .map(
-      (filter) =>
-        `${filtersPairs[filter[0]].name} - ${filter[1]
-          .map((option) => `${filtersPairs[filter[0]].valuesPairs[option]}`)
-          .join(", ")}`
-    )
-    .join("; ");
+    .map((filter) => `${filtersPairs[filter[0]].name} - ${filter[1].map((option) => `${filtersPairs[filter[0]].valuesPairs[option]}`).join(', ')}`)
+    .join('; ');
 
   const collapseContent = () => {
     setIsCollapsed(!isCollapsed);
-  }
+  };
 
-  const categoryString = `${category.title || category.name || ""}`;
+  const categoryString = `${category.title || category.name || ''}`;
 
-  const titleString = `${category.title || category.name || "Каталог"}${
-    filtersString.length ? `: ${filtersString}` : ""
-  }`;
+  const titleString = `${category.title || category.name || 'Каталог'}${filtersString.length ? `: ${filtersString}` : ''}`;
 
   const descriptionString = `${categoryString}${filtersString.length ? `: ${filtersString}` : ``}`;
 
-  const headerString = `${category.title}${filtersString.length ? `: ${filtersString}` : ""}${
-    page > 1 ? `; Страница №${page}` : ""
-  }`;
+  const headerString = `${category.title}${filtersString.length ? `: ${filtersString}` : ''}${page > 1 ? `; Страница №${page}` : ''}`;
 
-  const interpolatedTitle = mainSeo?.title || seoFields["category-seo-title"].replaceAll("{TITLE}", titleString);
-  const interpolatedDescription = mainSeo?.description || seoFields["category-seo-description"].replaceAll("{TITLE}", descriptionString);
-  const interpolatedHeader = mainSeo?.tag || seoFields["category-seo-header"].replaceAll("{TITLE}", headerString);
+  const interpolatedTitle = mainSeo?.title || seoFields['category-seo-title'].replaceAll('{TITLE}', titleString);
+  const interpolatedDescription = mainSeo?.description || seoFields['category-seo-description'].replaceAll('{TITLE}', descriptionString);
+  const interpolatedHeader = mainSeo?.tag || seoFields['category-seo-header'].replaceAll('{TITLE}', headerString);
 
   const jsonLd = {
-    "@context": "https://schema.org/",
-    "@type": "OfferCatalog",
-    "name": category.name,
-    "description": interpolatedDescription,
-    "itemListElement": (products?.data || []).map((item) => ({
-      "@type": "Offer",
-      "name": item.name,
-      "description": item.description,
-      "url": `${process.env.NEXT_PUBLIC_HOST || 'https://macplus.by'}/${item.categoryHandle ? item.categoryHandle + "/" : ""}${item.seo?.seoUrl || "#"}`,
-      "price": item.discount > 0 ? item.totalPrice : item.price,
-      "priceCurrency": "BYN",
-      "image": item.seo?.seoImage[0]?.imageName ? getImgPath(item.seo?.seoImage[0]?.imageName) : undefined,
-      "availability": item.isStock ? 'In stock' : 'Pre-order'
-    }))
-  }
+    '@context': 'https://schema.org/',
+    '@type': 'OfferCatalog',
+    name: category.name,
+    description: interpolatedDescription,
+    itemListElement: (products?.data || []).map((item) => ({
+      '@type': 'Offer',
+      name: item.name,
+      description: item.description,
+      url: `${process.env.NEXT_PUBLIC_HOST || 'https://macplus.by'}/${item.categoryHandle ? item.categoryHandle + '/' : ''}${item.seo?.seoUrl || '#'}`,
+      price: item.discount > 0 ? item.totalPrice : item.price,
+      priceCurrency: 'BYN',
+      image: item.seo?.seoImage[0]?.imageName ? getImgPath(item.seo?.seoImage[0]?.imageName) : undefined,
+      availability: item.isStock ? 'In stock' : 'Pre-order',
+    })),
+  };
+
+  const isNotFirstPage = page <= 1;
+
+  const isFilterApplied = () => {
+    return Object.values(filterObject).some((value) => Array.isArray(value) && value.length > 0);
+  };
+
+  useEffect(() => {
+    isFilterApplied();
+  }, [filterObject]);
 
   return (
     <main className="main bt-lg-none shop">
@@ -76,13 +66,9 @@ export default function Category({
         <meta property="og:title" content={interpolatedTitle}/>
         <meta name="description" content={interpolatedDescription}/>
         <meta property="og:description" content={interpolatedDescription}/>
-        <meta name="keywords" content={(mainSeo?.keywords || category.keywords || []).join(", ")}/>
+        <meta name="keywords" content={(mainSeo?.keywords || category.keywords || []).join(', ')}/>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(jsonLd)}}/>
       </Head>
-
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{__html: JSON.stringify(jsonLd)}}
-      />
 
       <h1 className="d-none">{interpolatedHeader}</h1>
 
@@ -95,60 +81,53 @@ export default function Category({
               </ALink>
             </li>
             <li>
-              <ALink className="categories-link-desktop" href="/shop">Каталог</ALink>
-              <ALink className="categories-link-mobile" href="/categories">Каталог</ALink>
+              <ALink className="categories-link-desktop" href="/shop">
+                Каталог
+              </ALink>
+              <ALink className="categories-link-mobile" href="/categories">
+                Каталог
+              </ALink>
             </li>
             {category?.name && <li itemProp="name">{category.name}</li>}
           </ul>
 
           <div className="row gutter-lg main-content-wrap">
-            <SidebarFilterOne filters={filters} type="banner" filterObject={filterObject}/>
+            <SidebarFilterOne filters={filters} type="banner" filterObject={filterObject} />
 
             <div className="col-lg-9 main-content">
               {banner && (
                 <div
                   className="shop-banner banner"
-                  title={banner.seo?.seoImageAlt || ""}
+                  title={banner.seo?.seoImageAlt || ''}
                   style={{
                     backgroundImage: `url('${getImgPath(banner.media)}')`,
-                    backgroundColor: "#f2f2f3",
+                    backgroundColor: '#f2f2f3',
                   }}
                 >
                   <div className="banner-content">
-                    <h4
-                      className="banner-subtitle d-inline-block mb-2 text-uppercase ls-normal bg-dark"
-                      style={{color: "white", padding: ".5rem 1rem"}}
-                    >
+                    <h4 className="banner-subtitle d-inline-block mb-2 text-uppercase ls-normal bg-dark" style={{ color: 'white', padding: '.5rem 1rem' }}>
                       {banner.description}
                     </h4>
-                    <h1 className="banner-title font-weight-bold ls-normal text-uppercase">
-                      {banner.title}
-                    </h1>
-                    <ALink
-                      href={`/blog/${banner.seo?.seoUrl || "#"}`}
-                      className="btn btn-outline btn-dark btn-rounded"
-                    >
+                    <h1 className="banner-title font-weight-bold ls-normal text-uppercase">{banner.title}</h1>
+                    <ALink href={`/blog/${banner.seo?.seoUrl || '#'}`} className="btn btn-outline btn-dark btn-rounded">
                       Подробнее
                     </ALink>
                   </div>
                 </div>
               )}
 
-              <ProductListOne products={products} type="banner" fullPath={fullPath}/>
-              <div
-                className={`rendered-content ${!isCollapsed ? 'collapsed-content' : ''}`}
-                dangerouslySetInnerHTML={{__html: mainSeo?.content || category.content || ''}}
-              ></div>
-              <div onClick={collapseContent} className="collapsed-btn">
-                <div>
-                  {isCollapsed ? 'Скрыть' : 'Читать дальше'}
-                </div>
-                <svg style={{transform: isCollapsed ? 'rotateX(180deg)' : 'none'}} xmlns="http://www.w3.org/2000/svg"
-                     fill="none" viewBox="0 0 24 24" strokeWidth="3"
-                     stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3"/>
-                </svg>
-              </div>
+              <ProductListOne products={products} type="banner" fullPath={fullPath} />
+              {!isFilterApplied() && isNotFirstPage && (
+                <>
+                  <div className={`rendered-content ${!isCollapsed ? 'collapsed-content' : ''}`} dangerouslySetInnerHTML={{ __html: mainSeo?.content || category.content || '' }}></div>
+                  <div onClick={collapseContent} className="collapsed-btn">
+                    <div>{isCollapsed ? 'Скрыть' : 'Читать дальше'}</div>
+                    <svg style={{ transform: isCollapsed ? 'rotateX(180deg)' : 'none' }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
+                    </svg>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
