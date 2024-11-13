@@ -108,7 +108,7 @@ function DetailThree(props) {
       )}
 
       <h1 className="product-name" itemProp="name">
-        {productName}
+        {productName || product.name}
       </h1>
 
       <div className="product-meta">
