@@ -22,6 +22,6 @@ Disallow: /*?per_page=
 Disallow: /*?type=list
 Disallow: /*?type=grid
 
-Host: https://www.macplus.by
+Host: https://macplus.by
 
 Sitemap: https://macplus.by/sitemap.xml
