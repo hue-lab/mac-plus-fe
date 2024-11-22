@@ -34,7 +34,7 @@ function generateYmlFeed({ categories, products, fields }) {
           ${(products?.data || [])
             .map((item) => {
               return `
-              <offer id="${item._id}">
+              <offer id="${item._id}" available="${item.isStock}">
                 <delivery>${fields['yml-feed-delivery']}</delivery>
                 <name>${normalizeString(item.name || '')}</name>
                 <vendor>${normalizeString(item.brand?.name || '')}</vendor>
