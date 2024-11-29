@@ -63,11 +63,11 @@ export default function Category({ banner, products, filters, category, page, fi
     <main className="main bt-lg-none shop">
       <Head>
         <title>{interpolatedTitle}</title>
-        <meta property="og:title" content={interpolatedTitle}/>
-        <meta name="description" content={interpolatedDescription}/>
-        <meta property="og:description" content={interpolatedDescription}/>
-        <meta name="keywords" content={(mainSeo?.keywords || category.keywords || []).join(', ')}/>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(jsonLd)}}/>
+        <meta property="og:title" content={interpolatedTitle} />
+        <meta name="description" content={interpolatedDescription} />
+        <meta property="og:description" content={interpolatedDescription} />
+        <meta name="keywords" content={(mainSeo?.keywords || category.keywords || []).join(', ')} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </Head>
 
       <h1 className="d-none">{interpolatedHeader}</h1>

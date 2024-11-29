@@ -25,7 +25,7 @@ export default function Header({ categoryTree, fields }) {
             </div>
 
             <ALink href="/" className="logo">
-              <Image style={{ height: '56px', width: 'auto' }} src={logoImage} alt="Mac Plus" width={200} height={56} />
+              <Image style={{ height: '56px', width: 'auto' }} src={logoImage} alt={fields['main-seo-title']} title={fields['main-seo-title']} width={200} height={56} />
             </ALink>
 
             <SearchBox />

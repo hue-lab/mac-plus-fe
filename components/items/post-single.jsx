@@ -1,27 +1,27 @@
-import {getImgPath, getPostDate} from "~/utils";
-import ALink from "~/components/features/custom-link";
-import React from "react";
-import Head from "next/head";
+import { getImgPath, getPostDate } from '~/utils';
+import ALink from '~/components/features/custom-link';
+import React from 'react';
+import Head from 'next/head';
 
-export default function PostSingle({post, seoFields}) {
+export default function PostSingle({ post, seoFields }) {
   const loading = false;
   const ogImage = post.media;
-  const titleString = `${post.seo?.seoTitle || post.title || "Mac Plus"}`;
-  const descriptionString = `${post.seo?.seoTitle || post.title || ""}`;
+  const titleString = `${post.seo?.seoTitle || post.title || 'Mac Plus'}`;
+  const descriptionString = `${post.seo?.seoTitle || post.title || ''}`;
 
-  const interpolatedTitle = seoFields["blog-seo-title"].replaceAll("{TITLE}", titleString);
-  const interpolatedDescription = seoFields["blog-seo-description"].replaceAll("{TITLE}", descriptionString);
+  const interpolatedTitle = seoFields['blog-seo-title'].replaceAll('{TITLE}', titleString);
+  const interpolatedDescription = seoFields['blog-seo-description'].replaceAll('{TITLE}', descriptionString);
 
   return (
     <main className="main skeleton-body">
       <Head>
         <title>{interpolatedTitle}</title>
-        <meta property="og:title" content={interpolatedTitle}/>
-        <meta name="description" content={interpolatedDescription}/>
-        <meta property="og:description" content={interpolatedDescription}/>
-        <meta name="keywords" content={post.seo?.seoKeywords?.join(", ")}/>
-        <meta name="author" content={post.seo?.seoAuthor || "Mac Plus"}/>
-        {ogImage && <meta property="og:image" content={getImgPath(ogImage)}/>}
+        <meta property="og:title" content={interpolatedTitle} />
+        <meta name="description" content={interpolatedDescription} />
+        <meta property="og:description" content={interpolatedDescription} />
+        <meta name="keywords" content={post.seo?.seoKeywords?.join(', ')} />
+        <meta name="author" content={post.seo?.seoAuthor || 'Mac Plus'} />
+        {ogImage && <meta property="og:image" content={getImgPath(ogImage)} />}
       </Head>
 
       <nav className="breadcrumb-nav">
@@ -53,12 +53,13 @@ export default function PostSingle({post, seoFields}) {
                   <figure className="post-media">
                     <img
                       src={getImgPath(post.media)}
-                      alt={post.seo?.seoImageAlt || post.title || ""}
+                      alt={post.seo?.seoImageAlt || post.title || ''}
+                      title={post.seo?.seoTitle || post.title || ''}
                       style={{
-                        backgroundColor: "#DEE6E8",
+                        backgroundColor: '#DEE6E8',
                         width: 900,
                         height: 500,
-                        objectFit: "cover",
+                        objectFit: 'cover',
                       }}
                     />
                   </figure>
@@ -69,10 +70,7 @@ export default function PostSingle({post, seoFields}) {
                       </ALink>
                     </div>
                     <h1 className="post-title">{post.title}</h1>
-                    <div
-                      className="post-body mb-7"
-                      dangerouslySetInnerHTML={{__html: post.content}}
-                    ></div>
+                    <div className="post-body mb-7" dangerouslySetInnerHTML={{ __html: post.content }}></div>
                   </div>
                 </div>
               )}
