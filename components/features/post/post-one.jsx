@@ -6,6 +6,7 @@ import OwlCarousel from '~/components/features/owl-carousel';
 
 import { videoHandler, getPostDate, getImgPath } from '~/utils';
 import { mainSlider20 } from '~/utils/data/carousel';
+import Image from "next/image";
 
 function PostOne(props) {
   const { post, adClass = 'mb-7', isLazy = false, isOriginal = false, btnText = 'Подробнее', btnAdClass = '', isButton = true } = props;
@@ -14,11 +15,11 @@ function PostOne(props) {
       <figure style={{ borderRadius: '2rem', overflow: 'hidden' }} className={`post-media ${post.type === 'image' ? 'overlay-zoom' : ''}`}>
         {isLazy ? (
           <ALink href={`/blog/${post.seo?.seoUrl || '#'}`}>
-            <LazyLoadImage src={getImgPath(post.media)} alt={post.seo?.seoImageAlt || post.title || ''} title={post.seo?.seoTitle || post.title || ''} effect="opacity; transform" style={{ backgroundColor: '#DEE6E8' }} className="post-cover-img" />
+            <Image priority src={getImgPath(post.media)} alt={post.seo?.seoImageAlt || post.title || ''} title={post.seo?.seoTitle || post.title || ''} style={{ backgroundColor: '#DEE6E8' }} className="post-cover-img" />
           </ALink>
         ) : (
           <ALink href={`/blog/${post.seo?.seoUrl || '#'}`}>
-            <img src={getImgPath(post.media)} alt={post.seo?.seoImageAlt || post.title || ''} title={post.seo?.seoTitle || post.title || ''} style={{ backgroundColor: '#DEE6E8' }} className="post-cover-img" />
+            <Image priority src={getImgPath(post.media)} alt={post.seo?.seoImageAlt || post.title || ''} title={post.seo?.seoTitle || post.title || ''} style={{ backgroundColor: '#DEE6E8' }} className="post-cover-img" />
           </ALink>
         )}
       </figure>

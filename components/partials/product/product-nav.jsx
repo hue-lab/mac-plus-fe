@@ -1,5 +1,6 @@
 import ALink from '~/components/features/custom-link';
 import { useRouter } from 'next/router';
+import Image from "next/image";
 
 export default function ProductNav(props) {
   const { product } = props;
@@ -13,7 +14,7 @@ export default function ProductNav(props) {
           <ALink href={{ pathname: router.pathname, query: { slug: product.prev.slug } }} scroll={false}>
             <i className="d-icon-arrow-left"></i> Prev
             <span className="product-nav-popup">
-              <img src={process.env.NEXT_PUBLIC_ASSET_URI + product.prev.pictures[0].url} alt={(product.seo?.seoImage[index]?.imageAlt || product.name) + '-' + (index + 1)} title={(product.seo?.seoTitle || product.name) + '-' + (index + 1)} width="110" height="123" />
+              <Image src={process.env.NEXT_PUBLIC_ASSET_URI + product.prev.pictures[0].url} alt={(product.seo?.seoImage[index]?.imageAlt || product.name) + '-' + (index + 1)} title={(product.seo?.seoTitle || product.name) + '-' + (index + 1)} width={110} height={123} />
               <span className="product-name">{product.prev.name}</span>
             </span>
           </ALink>

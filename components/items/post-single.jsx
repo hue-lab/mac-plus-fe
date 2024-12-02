@@ -2,6 +2,7 @@ import { getImgPath, getPostDate } from '~/utils';
 import ALink from '~/components/features/custom-link';
 import React from 'react';
 import Head from 'next/head';
+import Image from "next/image";
 
 export default function PostSingle({ post, seoFields }) {
   const loading = false;
@@ -51,10 +52,12 @@ export default function PostSingle({ post, seoFields }) {
               ) : (
                 <div className={`post post-single`}>
                   <figure className="post-media">
-                    <img
+                    <Image
                       src={getImgPath(post.media)}
                       alt={post.seo?.seoImageAlt || post.title || ''}
                       title={post.seo?.seoTitle || post.title || ''}
+                      width={900}
+                      height={500}
                       style={{
                         backgroundColor: '#DEE6E8',
                         width: 900,

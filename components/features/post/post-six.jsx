@@ -15,15 +15,9 @@ function PostSix(props) {
         </figure>
       ) : (
         <figure style={{ borderRadius: '2rem', overflow: 'hidden' }} className="post-media">
-          {isLazy ? (
-            <ALink href={`/blog/${post.seo?.seoUrl || '#'}`}>
-              <Image src={getImgPath(post.media)} alt={post.seo?.seoImageAlt || post.title} title={post.seo?.seoTitle || post.title} width={380} height={230} effect="opacity; transform" style={{ backgroundColor: '#DEE6E8' }} />
-            </ALink>
-          ) : (
-            <ALink href={`/blog/${post.seo?.seoUrl || '#'}`}>
-              <Image src={getImgPath(post.media)} alt={post.seo?.seoImageAlt || post.title} title={post.seo?.seoTitle || post.title} width={380} height={230} />
-            </ALink>
-          )}
+          <ALink href={`/blog/${post.seo?.seoUrl || '#'}`}>
+            <Image src={getImgPath(post.media)} alt={post.seo?.seoImageAlt || post.title} title={post.seo?.seoTitle || post.title} loading="lazy" width={760} height={460} style={{ backgroundColor: '#DEE6E8' }} />
+          </ALink>
         </figure>
       )}
 

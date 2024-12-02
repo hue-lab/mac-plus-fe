@@ -4,6 +4,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import ALink from '~/components/features/custom-link';
 
 import { toDecimal, getImgPath } from '~/utils';
+import Image from "next/image";
 
 function SmallProduct(props) {
   const { product, adClass, isReviewCount = true } = props;
