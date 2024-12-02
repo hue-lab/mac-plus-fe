@@ -1,22 +1,21 @@
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
-import ALink from "~/components/features/custom-link";
+import ALink from '~/components/features/custom-link';
 
-import { cartActions } from "~/store/cart";
+import { cartActions } from '~/store/cart';
 
-import { getTotalPrice, getCartCount, toDecimal, getImgPath } from "~/utils";
+import { getTotalPrice, getCartCount, toDecimal, getImgPath } from '~/utils';
 
 function CartMenu(props) {
   const { cartList, removeFromCart } = props;
 
   const showCartMenu = (e) => {
     e.preventDefault();
-    e.currentTarget.closest(".cart-dropdown").classList.add("opened");
+    e.currentTarget.closest('.cart-dropdown').classList.add('opened');
   };
 
   const hideCartMenu = () => {
-    if (document.querySelector(".cart-dropdown").classList.contains("opened"))
-      document.querySelector(".cart-dropdown").classList.remove("opened");
+    if (document.querySelector('.cart-dropdown').classList.contains('opened')) document.querySelector('.cart-dropdown').classList.remove('opened');
   };
 
   const removeCart = (item) => {
@@ -35,30 +34,22 @@ function CartMenu(props) {
         </i>
       </a>
       <div className="cart-overlay" onClick={hideCartMenu}></div>
-      <div
-        style={{ zIndex: 10000 }}
-        className={`dropdown-box ${cartList.length > 0 ? "" : "pl-0 pr-0 pt-2 pb-2"}`}
-      >
+      <div style={{ zIndex: 10000 }} className={`dropdown-box ${cartList.length > 0 ? '' : 'pl-0 pr-0 pt-2 pb-2'}`}>
         {cartList.length > 0 ? (
           <div className="cart-header mb-4">
             <span className="cart-title d-block text-dark">Корзина</span>
           </div>
         ) : (
-          ""
+          ''
         )}
         {cartList.length > 0 ? (
           <>
             <div className="products scrollable">
               {cartList.map((item, index) => (
-                <div className="product product-cart" key={"cart-menu-product-" + index}>
+                <div className="product product-cart" key={'cart-menu-product-' + index}>
                   <figure className="product-media pure-media">
-                    <ALink
-                      href={`/${item.category.handle ? item.category.handle + "/" : ""}${
-                        item.seo?.seoUrl || "#"
-                      }`}
-                      onClick={hideCartMenu}
-                    >
-                      <img src={getImgPath(item.media[0])} alt="product" width="70" height="70" />
+                    <ALink href={`/${item.category.handle ? item.category.handle + '/' : ''}${item.seo?.seoUrl || '#'}`} onClick={hideCartMenu}>
+                      <img src={getImgPath(item.media[0])} alt={item.seo?.seoImage[0]?.imageAlt || item.name || ''} title={item.seo?.seoTitle || item.name || ''} width="70" height="70" />
                     </ALink>
                     <button
                       className="btn btn-link btn-close"
@@ -71,13 +62,7 @@ function CartMenu(props) {
                     </button>
                   </figure>
                   <div className="product-detail">
-                    <ALink
-                      href={`/${item.category.handle ? item.category.handle + "/" : ""}${
-                        item.seo?.seoUrl || "#"
-                      }`}
-                      className="product-name"
-                      onClick={hideCartMenu}
-                    >
+                    <ALink href={`/${item.category.handle ? item.category.handle + '/' : ''}${item.seo?.seoUrl || '#'}`} className="product-name" onClick={hideCartMenu}>
                       {item.name}
                     </ALink>
                     <div className="price-box">
@@ -104,9 +89,7 @@ function CartMenu(props) {
             </div>
           </>
         ) : (
-          <p className="mt-4 text-center font-weight-semi-bold ls-normal text-body">
-            Корзина пуста.
-          </p>
+          <p className="mt-4 text-center font-weight-semi-bold ls-normal text-body">Корзина пуста.</p>
         )}
       </div>
     </div>

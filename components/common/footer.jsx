@@ -14,7 +14,7 @@ export default function Footer({ fields, categoryTree, footerNav }) {
           <div className="row align-items-center">
             <div className="col-lg-3">
               <ALink href="/" className="logo-footer">
-                <Image src={logoShortImage} alt="logo-footer" width={100} height={100} />
+                <Image src={logoShortImage} alt={fields['main-seo-title']} title={fields['main-seo-title']} width={100} height={100} />
               </ALink>
             </div>
           </div>
@@ -92,7 +92,7 @@ export default function Footer({ fields, categoryTree, footerNav }) {
         <div className="footer-bottom">
           <div className="footer-left">
             <figure className="payment">
-              <Image src={paymentsImage} alt="payment" width={336} height={29} />
+              <Image src={paymentsImage} alt="payment" title="payment" width={336} height={29} />
             </figure>
           </div>
           <div className="footer-center">
