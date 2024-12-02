@@ -123,7 +123,7 @@ export default function SidebarFilterOne({ type = 'left', isFeatured = false, fi
 
   return (
     <>
-      <Head>{isMultipleFilters && <meta name="robots" content="noindex,nofollow" />}</Head>
+      <Head>{isMultipleFilters && <meta name="robots" content="noindex" />}</Head>
       <aside className={`col-lg-3 shop-sidebar skeleton-body ${type === 'off-canvas' ? '' : 'sidebar-fixed sticky-sidebar-wrapper'} ${type === 'off-canvas' || type === 'boxed' ? '' : 'sidebar-toggle-remain'} ${type === 'left' || type === 'off-canvas' || type === 'boxed' || type === 'banner' ? 'sidebar' : 'right-sidebar'}`}>
         <div className="sidebar-overlay" onClick={hideSidebar}></div>
         {type === 'boxed' || type === 'banner' ? (

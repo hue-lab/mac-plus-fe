@@ -23,7 +23,7 @@ export default function ProductListOne({ itemsPerRow = 3, type = 'left', isToolb
 
   return (
     <>
-      <Head>{productsData && products?.metadata?.total === 0 && <meta name="robots" content="noindex,nofollow" />}</Head>
+      <Head>{productsData && products?.metadata?.total === 0 && <meta name="robots" content="noindex" />}</Head>
       {isToolbox ? <ToolBox type={type} /> : ''}
       {loading ? (
         gridType === 'grid' ? (
