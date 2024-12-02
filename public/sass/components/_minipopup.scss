@@ -24,9 +24,6 @@
     @include core.print_css( minipopup, area );
 }
 .minipopup-box {
-    @media only screen and (max-width : 480px) {
-        width: 100vw;
-    }
     width: 303px;
     padding: 2rem;
     background-color: #fff;
@@ -79,7 +76,7 @@
             font-size: 1.4rem;
             font-weight: 600;
             color: #222;
-            
+
             &::after {
                 margin: 0 0 -.2rem .7rem;
                 font-size: 1.2rem;
@@ -124,6 +121,10 @@
     .btn.btn-outline {
         margin-right: .7rem;
         padding: .92em 2.2em;
+    }
+
+    @media only screen and (max-width : 480px) {
+        width: 100vw;
     }
 }
 

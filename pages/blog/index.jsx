@@ -6,18 +6,21 @@ import {getArticles} from '~/utils/endpoints/articles';
 import BlogPagination from "~/components/features/blog-pagination";
 import Head from "next/head";
 
-Classic.getInitialProps = async ({query}) => {
+export const getStaticProps = async () => {
   const pagination = {
     page: 1,
     limit: 8,
   };
   const posts = await getArticles(pagination.page, pagination.limit);
   return {
-    posts: posts,
+    props: {
+      posts: posts,
+    },
+    revalidate: 3600,
   }
 }
 
-export default function Classic({posts, page}) {
+export default function Classic({posts}) {
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.scrollTo({top: 0, behavior: "smooth"});
@@ -62,7 +65,7 @@ export default function Classic({posts, page}) {
                     posts ?
                       posts.data.slice(0, posts.length).map((post, index) => (
                         <React.Fragment key={"post-one" + index}>
-                          <PostOne post={post}/>
+                          <PostOne isFirst={index === 0} post={post}/>
                         </React.Fragment>
                       )) :
                       <div className="info-box with-icon"><p className="mt-4">No blogs were found matching your

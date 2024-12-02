@@ -45,7 +45,7 @@ export default function PostList({posts, fullPath}) {
                     posts ?
                       posts.data.slice(0, posts.length).map((post, index) => (
                         <React.Fragment key={"post-one" + index}>
-                          <PostOne post={post}/>
+                          <PostOne isFirst={index === 0} post={post}/>
                         </React.Fragment>
                       )) :
                       <div className="info-box with-icon"><p className="mt-4">No blogs were found matching your
