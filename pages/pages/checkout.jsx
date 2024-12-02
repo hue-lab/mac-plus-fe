@@ -41,7 +41,7 @@ function Checkout(props) {
   const [isTerms, setIsTerms] = useState(false);
   const [isPending, setIsPending] = useState(false);
   const [orderError, setOrderError] = useState('');
-  const [phoneValue, setPhoneValue] = useState();
+  const [phoneValue, setPhoneValue] = useState('+375');
 
   const router = useRouter();
 
@@ -162,6 +162,7 @@ function Checkout(props) {
                           <label>Телефон *</label>
                           {/*<input type="text" className="form-control" name="phone" required />*/}
                           <PhoneInput
+                            defaultCountry="BY"
                             country="RU"
                             labels={ru}
                             className="form-control"
