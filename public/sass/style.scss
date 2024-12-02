@@ -67,7 +67,6 @@
 @use 'components/store';
 @use 'components/tabs';
 @use 'components/testimonials';
-@use 'components/toast';
 @use 'components/tooltip';
 @use 'components/titles';
 @use 'components/vendor';
@@ -109,6 +108,7 @@
 
 @use 'react-phone-input';
 @use 'react-image-lightbox';
+@use 'react-toastify';
 
 .rendered-content {
   li {

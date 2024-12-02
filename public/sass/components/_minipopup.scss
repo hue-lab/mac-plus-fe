@@ -24,25 +24,12 @@
     @include core.print_css( minipopup, area );
 }
 .minipopup-box {
-    // position: absolute;
-    left: -8rem;
+    @media only screen and (max-width : 480px) {
+        width: 100vw;
+    }
     width: 303px;
     padding: 2rem;
     background-color: #fff;
-    box-shadow: 0 5px 20px rgba(0,0,0,.1);
-    // transform: translateY(-100%);
-    opacity: 0;
-    transition: opacity .3s, left .3s ease-out, transform .3s;
-    z-index: 9999;
-
-    &.show {
-        opacity: 1;
-        left: 0;
-    }
-
-    &.focus {
-        transform: scale(.98) translateY(-100%);
-    }
 
     .product.product-cart {
         margin-top: 0;
@@ -145,7 +132,7 @@
     color: #222;
     font-size: 1.5rem;
     font-weight: 700;
-    text-align: center;
+    text-align: start;
     letter-spacing: -.035em;
     line-height: 1;
 
@@ -157,6 +144,18 @@
 .purchased-time {
     color: variables.$primary-color;
     font-size: 1.2rem;
+}
+
+.minipopup-card-btn {
+    display: flex;
+    flex: 1 1 0%;
+    justify-content: center;
+}
+
+.minipopup-order-btn {
+    display: flex;
+    flex: 1 1 0%;
+    justify-content: center;
 }
 
 @include breakpoints.mq('xs', 'max') {

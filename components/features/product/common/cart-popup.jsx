@@ -7,7 +7,7 @@ export default function CartPopup(props) {
   const { product } = props;
 
   return (
-    <div className="minipopup-area">
+    <div>
       <div className="minipopup-box show" style={{ top: '0' }}>
         <p className="minipopup-title">Добавлено в корзину:</p>
 
@@ -29,10 +29,10 @@ export default function CartPopup(props) {
         </div>
 
         <div className="action-group d-flex">
-          <ALink href="/pages/cart" className="btn btn-sm btn-outline btn-primary btn-rounded">
+          <ALink href="/pages/cart" className="btn btn-sm btn-outline btn-primary btn-rounded minipopup-card-btn">
             Корзина
           </ALink>
-          <ALink href="/pages/checkout" className="btn btn-sm btn-primary btn-rounded">
+          <ALink href="/pages/checkout" className="btn btn-sm btn-primary btn-rounded minipopup-order-btn">
             Оформить
           </ALink>
         </div>

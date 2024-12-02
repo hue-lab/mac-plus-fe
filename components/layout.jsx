@@ -1,13 +1,14 @@
 import {useEffect} from 'react';
-import 'react-toastify/dist/ReactToastify.min.css';
 import 'react-image-lightbox/style.css';
 import Header from '~/components/common/header';
 import Footer from '~/components/common/footer';
 import StickyFooter from '~/components/common/sticky-footer';
 import MobileMenu from '~/components/common/partials/mobile-menu';
+import 'react-toastify/dist/ReactToastify.css';
 
 import {scrollTopHandler, showScrollTopHandler, stickyFooterHandler, stickyHeaderHandler} from '~/utils';
 import {Poppins} from "next/font/google";
+import {ToastContainer} from "react-toastify";
 
 const poppins = Poppins({
   weight: ['300', '400', '500', '600', '700', '800', '900'],
@@ -50,6 +51,13 @@ function Layout({ children, categoryTree, layoutFields, footerNav }) {
       <div id="scroll-top" title="Top" role="button" className="scroll-top" onClick={() => scrollTopHandler(false)}><i className="d-icon-arrow-up"></i></div>
 
       <MobileMenu categoryTree={categoryTree} />
+
+      <ToastContainer
+        pauseOnHover={false}
+        stacked
+        position="bottom-left"
+        hideProgressBar
+      />
     </>
   )
 }

@@ -65,7 +65,7 @@ export default function MediaFive(props) {
       <OwlCarousel adClass="product-single-carousel owl-theme owl-nav-inner" options={mainSlider3} onChangeIndex={setIndexHandler} onChangeRef={changeRefHandler} events={events}>
         {lgImages.map((image, index) => (
           <div key={image.imageName + '-' + index}>
-            <Image width={800} height={540} itemprop="image" src={getImgPath(image.imageName)} alt={`${image.imageAlt || product.name || ''}-${index}`} title={`${image.imageAlt || product.name || ''}-${index}`} className="product-image large-image" />
+            <Image width={800} height={540} itemProp="image" src={getImgPath(image.imageName)} alt={`${image.imageAlt || product.name || ''}-${index}`} title={`${image.imageAlt || product.name || ''}-${index}`} className="product-image large-image" />
           </div>
         ))}
       </OwlCarousel>
