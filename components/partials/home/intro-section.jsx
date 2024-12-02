@@ -15,7 +15,7 @@ function IntroSection({ slides }) {
             {(slides || []).map((item, index) => (
               <div key={index} className="banner banner-fixed intro-slide2" style={{ backgroundColor: '#101010' }}>
                 <picture>
-                  <Image src={getImgPath(item.media)} alt={item.seo?.imageAlt || item.title} title={item.seo?.seoTitle || item.title} width={1180} height={460} priority loading="eager" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 90vw" style={{ opacity: 0.3, width: '100%', height: '460px', objectFit: 'cover' }} />
+                  <Image className="intro-section-carousel-img" src={getImgPath(item.media)} alt={item.seo?.imageAlt || item.title} title={item.seo?.seoTitle || item.title} width={1180} height={460} priority loading="eager" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 90vw" />
                 </picture>
 
                 <div className="banner-content x-50 y-50 text-center">

@@ -53,18 +53,13 @@ export default function PostSingle({ post, seoFields }) {
                 <div className={`post post-single`}>
                   <figure className="post-media">
                     <Image
+                      className="post-cover"
                       priority
                       src={getImgPath(post.media)}
                       alt={post.seo?.seoImageAlt || post.title || ''}
                       title={post.seo?.seoTitle || post.title || ''}
                       width={1800}
                       height={1000}
-                      style={{
-                        backgroundColor: '#DEE6E8',
-                        width: 900,
-                        height: 500,
-                        objectFit: 'cover',
-                      }}
                     />
                   </figure>
                   <div className="post-details">

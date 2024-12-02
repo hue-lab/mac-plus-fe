@@ -130,10 +130,10 @@
     overflow: hidden;
     border-radius: 3px;
     img {
-        display: block;
-        width: 100%;
-        height: auto;
-        transition: transform .3s;
+        background-color: #DEE6E8;
+        aspect-ratio: 9 / 5;
+        object-fit: cover;
+        border-radius: 2rem;
     }
     .post-calendar {
         position: absolute;

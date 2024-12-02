@@ -152,8 +152,14 @@ Demo 22
   overflow: hidden;
   border-radius: 2rem;
   .banner img {
-    height: 46rem;
+    opacity: .3;
+    width: 100%;
+    aspect-ratio: 5 / 2;
     object-fit: cover;
+    @media only screen and (max-width : 480px) {
+      aspect-ratio: 1 / 1;
+    }
+
   }
   .banner-subtitle {
     font-size: 2em;
