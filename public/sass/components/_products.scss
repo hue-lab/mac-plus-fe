@@ -168,13 +168,6 @@
   position: relative;
   margin-bottom: 0;
 
-  &:not(.pure-media)::before {
-    content: '';
-    display: block;
-    padding-top: 103%;
-    background-color: transparent;
-  }
-
   img {
     display: block;
     width: 100%;

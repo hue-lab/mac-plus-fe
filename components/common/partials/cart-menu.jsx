@@ -6,6 +6,8 @@ import { cartActions } from '~/store/cart';
 
 import { getTotalPrice, getCartCount, toDecimal, getImgPath } from '~/utils';
 
+import Image from 'next/image';
+
 function CartMenu(props) {
   const { cartList, removeFromCart } = props;
 
@@ -49,7 +51,7 @@ function CartMenu(props) {
                 <div className="product product-cart" key={'cart-menu-product-' + index}>
                   <figure className="product-media pure-media">
                     <ALink href={`/${item.category.handle ? item.category.handle + '/' : ''}${item.seo?.seoUrl || '#'}`} onClick={hideCartMenu}>
-                      <img src={getImgPath(item.media[0])} alt={item.seo?.seoImage[0]?.imageAlt || item.name || ''} title={item.seo?.seoTitle || item.name || ''} width="70" height="70" />
+                      <Image src={getImgPath(item.media[0])} alt={item.seo?.seoImage[0]?.imageAlt || item.name || ''} title={item.seo?.seoTitle || item.name || ''} width={70} height={70} />
                     </ALink>
                     <button
                       className="btn btn-link btn-close"

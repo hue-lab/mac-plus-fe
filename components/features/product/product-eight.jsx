@@ -9,6 +9,7 @@ import { modalActions } from '~/store/modal';
 import { wishlistActions } from '~/store/wishlist';
 
 import { getImgPath, toDecimal } from '~/utils';
+import Image from "next/image";
 
 function ProductEight(props) {
   const { product, adClass, addToCart } = props;
@@ -17,7 +18,17 @@ function ProductEight(props) {
     <div itemProp="itemListElement" itemScope itemType="https://schema.org/Offer" className={`product product-list ${adClass}`}>
       <figure className="product-media">
         <ALink href={`/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`}>
-          <LazyLoadImage itemProp="image" alt={product.seo?.seoImage[0]?.imageAlt || product.name || ''} title={product.seo?.seoTitle || product.name || ''} src={getImgPath(product.seo?.seoImage[0]?.imageName)} threshold={500} effect="opacity" width="300" height="338" wrapperProps={{ style: { height: '100%', padding: '1rem' } }} style={{ objectFit: 'contain', height: '100%', objectPosition: 'center' }} />
+          <div style={{padding: '1rem', aspectRatio: 'square'}}>
+            <Image
+              itemProp="image"
+              alt={product.seo?.seoImage[0]?.imageAlt || product.name || ''}
+              title={product.seo?.seoTitle || product.name || ''}
+              src={getImgPath(product.seo?.seoImage[0]?.imageName)}
+              width="300"
+              height="338"
+              style={{ objectFit: 'contain', height: '100%', objectPosition: 'center' }}
+            />
+          </div>
         </ALink>
 
         <div className="product-label-group">

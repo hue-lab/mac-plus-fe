@@ -6,6 +6,7 @@ import { cartActions } from '~/store/cart';
 import { toDecimal, getImgPath, useDebounce } from '~/utils';
 import { getCalculation } from '~/utils/endpoints/calculate';
 import Head from 'next/head';
+import Image from "next/image";
 
 function Cart(props) {
   const { cartList, removeFromCart, updateCart } = props;
@@ -81,7 +82,7 @@ function Cart(props) {
                           <td className="product-thumbnail">
                             <figure>
                               <ALink href={`/${item.category.handle ? item.category.handle + '/' : ''}${item.seo?.seoUrl || '#'}`}>
-                                <img alt={item.seo?.seoImage[0]?.imageAlt || item.name} title={item.seo?.seoTitle || item.name} src={getImgPath(item.media[0])} width="100" height="100" />
+                                <Image alt={item.seo?.seoImage[0]?.imageAlt || item.name} title={item.seo?.seoTitle || item.name} src={getImgPath(item.media[0])} width="100" height="100" />
                               </ALink>
                             </figure>
                           </td>

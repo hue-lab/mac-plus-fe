@@ -1,16 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { useRouter } from 'next/router';
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import {useRouter} from 'next/router';
 
-import ALink from '~/components/features/custom-link';
+import {wishlistActions} from '~/store/wishlist';
+import {cartActions} from '~/store/cart';
 
-import ProductNav from '~/components/partials/product/product-nav';
-import DescTwo from '~/components/partials/product/desc/desc-two';
-
-import { wishlistActions } from '~/store/wishlist';
-import { cartActions } from '~/store/cart';
-
-import { toDecimal } from '~/utils';
+import {toDecimal} from '~/utils';
 
 function DetailThree(props) {
   let router = useRouter();
@@ -85,28 +80,6 @@ function DetailThree(props) {
 
   return (
     <div className={`product-details ${isSticky ? 'sticky' : ''} ${adClass}`}>
-      {isNav ? (
-        <div className="product-navigation pt-0">
-          <ul className="breadcrumb breadcrumb-lg">
-            <li>
-              <ALink href="/">
-                <i className="d-icon-home"></i>
-              </ALink>
-            </li>
-            <li>
-              <ALink href="#" className="active">
-                Products
-              </ALink>
-            </li>
-            <li>Detail</li>
-          </ul>
-
-          <ProductNav product={product} />
-        </div>
-      ) : (
-        ''
-      )}
-
       <h1 className="product-name" itemProp="name">
         {productName || product.name}
       </h1>
@@ -142,12 +115,6 @@ function DetailThree(props) {
         <div className="product-form-group">
           {product.isStock ? (
             <>
-              {/*<Quantity*/}
-              {/*  max={1000}*/}
-              {/*  product={product}*/}
-              {/*  onChangeQty={changeQty}*/}
-              {/*  isStock={product.isStock}*/}
-              {/*/>*/}
               <button className={`btn-product btn-cart btn-cart-fast text-normal ls-normal font-weight-semi-bold ${cartActive ? '' : 'disabled'}`} onClick={addToCartHandler}>
                 <i className="d-icon-bag"></i>В корзину
               </button>
@@ -169,8 +136,6 @@ function DetailThree(props) {
       <hr className="product-divider mb-3"></hr>
 
       <div className="product-footer"></div>
-
-      {isDesc ? <DescTwo product={product.data} adClass={adClass} isSizeGuide={isSizeGuide} /> : ''}
     </div>
   );
 }
