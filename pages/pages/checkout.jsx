@@ -198,7 +198,7 @@ function Checkout(props) {
                                   <tr key={'checkout-' + item.name}>
                                     <td className="product-name">{item.name} <span
                                       className="product-quantity">×&nbsp;{item.qty}</span></td>
-                                    <td className="product-total text-body">{toDecimal(item.price * item.qty)} BYN</td>
+                                    <td className="product-total text-body" style={{width: '120px'}}>{toDecimal(item.price * item.qty)} BYN</td>
                                   </tr>
                                 )
                               }
@@ -210,13 +210,15 @@ function Checkout(props) {
                                 <td className="summary-subtotal-price pb-0 pt-0">{toDecimal(subTotalPrice)} BYN
                                 </td>
                               </tr>
-                              <tr className="summary-subtotal">
-                                <td>
-                                  <h4 className="summary-subtitle">Скидка</h4>
-                                </td>
-                                <td className="summary-subtotal-price pb-0 pt-0">{toDecimal(discount)} BYN
-                                </td>
-                              </tr>
+                              { !!discount && (
+                                <tr className="summary-subtotal">
+                                  <td>
+                                    <h4 className="summary-subtitle">Скидка</h4>
+                                  </td>
+                                  <td className="summary-subtotal-price pb-0 pt-0">{toDecimal(discount)} BYN
+                                  </td>
+                                </tr>
+                              )}
                               <tr className="sumnary-shipping shipping-row-last">
                                 <td colSpan="2">
                                   <h4 className="summary-subtitle">Способ доставки</h4>
@@ -244,7 +246,7 @@ function Checkout(props) {
                                 <td className="pb-0">
                                   <h4 className="summary-subtitle">Всего</h4>
                                 </td>
-                                <td style={{width: '40  %'}} className="pt-0 pb-0">
+                                <td className="pt-0 pb-0">
                                   <p className="summary-total-price ls-s text-primary">{toDecimal(totalPrice)} BYN</p>
                                 </td>
                               </tr>
