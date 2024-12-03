@@ -1,54 +1,60 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useRef} from 'react';
+import {getImgPath} from '~/utils';
+import {Navigation} from "swiper/modules";
+import {Swiper, SwiperSlide} from "swiper/react";
+import Image from "next/image";
+import clsx from "clsx";
 
-import OwlCarousel from '~/components/features/owl-carousel';
-
-import { mainSlider15 } from '~/utils/data/carousel';
-import { getImgPath } from '~/utils';
-
-function ThumbTwo(props) {
-  const { product, index = 0 } = props;
+function ThumbTwo({
+  product,
+  length = 0,
+  currIndex = 0,
+  onChangeIndex
+}) {
   let thumbs = product.media;
-  const [thumbRef, setThumbRef] = useState(null);
+
+  const swiperRef = useRef(null);
 
   useEffect(() => {
-    if (thumbRef !== null && index >= 0) {
-      thumbRef.current.$car.to(index, 300, true);
-
-      if (document.querySelector('.product-thumbs')) {
-        document.querySelector('.product-thumbs .owl-stage').querySelector('.product-thumb.active') && document.querySelector('.product-thumbs .owl-stage').querySelector('.product-thumb.active').classList.remove('active');
-        document.querySelector('.product-thumbs .owl-stage').querySelectorAll('.owl-item')[index] && document.querySelector('.product-thumbs .owl-stage').querySelectorAll('.owl-item')[index] && document.querySelector('.product-thumbs .owl-stage').querySelectorAll('.owl-item')[index].querySelector('.product-thumb').classList.add('active');
-      }
+    if (currIndex !== swiperRef.current?.realIndex) {
+      swiperRef.current?.slideTo(currIndex);
     }
-  }, [index]);
-
-  const thumbActiveHandler = (e, thumbIndex) => {
-    props.onChangeIndex(thumbIndex);
-    document.querySelector('.product-thumbs') && document.querySelector('.product-thumbs .owl-stage').querySelector('.product-thumb.active').classList.remove('active');
-    e.currentTarget.classList.add('active');
-    // window.jQuery( '.quickview-modal .product-single-carousel' ).trigger( 'to.owl.carousel', [ thumbIndex, 100, true ] );
-  };
-
-  const changeRefHandler = (carRef) => {
-    if (carRef.current !== undefined && thumbRef === null) {
-      setThumbRef(carRef);
-    }
-  };
+  }, [currIndex]);
 
   return (
-    <div className="product-thumbs-wrap product-thumbs-two">
-      <OwlCarousel adClass="product-thumbs product-thumb-carousel" options={mainSlider15} onChangeRef={changeRefHandler}>
+    <div className="mp-thumbs-wrapper">
+      <Swiper
+        pagination={{
+          clickable: true,
+        }}
+        onSwiper={(swiper) => swiperRef.current = swiper}
+        modules={[Navigation]}
+        spaceBetween={2}
+        slidesPerView={4}
+        scrollbar={{draggable: true}}
+      >
         {thumbs.map((thumb, index) => (
-          <div
-            className={`product-thumb ${index === 0 ? 'active' : ''}`}
-            onClick={(e) => {
-              thumbActiveHandler(e, index);
-            }}
+          <SwiperSlide
             key={thumb + '-2-' + index}
           >
-            <img src={getImgPath(thumb)} alt={`${product.seo?.seoImage[index]?.imageAlt || product.name}-${index + 1}`} title={`${product.seo?.seoTitle || product.name}-${index + 1}`} width="137" height="137" />
-          </div>
+            <div
+              className={clsx('mp-thumbs-item', {
+                'mp-thumbs-item-active': index === currIndex
+              })}
+              onClick={() => onChangeIndex(index)}
+            >
+              <Image
+                className="mp-thumbs-image"
+                src={getImgPath(thumb)}
+                alt={`${product.seo?.seoImage[index]?.imageAlt || product.name}-${index + 1}`}
+                title={`${product.seo?.seoTitle || product.name}-${index + 1}`}
+                width={137}
+                height={137}
+              />
+            </div>
+          </SwiperSlide>
         ))}
-      </OwlCarousel>
+      </Swiper>
     </div>
   );
 }

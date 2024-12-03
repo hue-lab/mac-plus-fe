@@ -109,6 +109,8 @@
 @use 'react-phone-input';
 @use 'react-image-lightbox';
 @use 'react-toastify';
+@use 'react-swiper';
+@use 'react-swiper-navigation';
 
 .rendered-content {
   li {
@@ -147,5 +149,100 @@
 @media (max-width: 991px) {
   input, textarea {
     font-size: 16px !important;
+  }
+}
+
+.mp-carousel-wrapper {
+  aspect-ratio: 8 / 5;
+  width: 100%;
+  position: relative;
+}
+
+.mp-carousel {
+  &-product-single {
+    margin: 2rem 0;
+  }
+  &-navigation {
+    z-index: 10;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    padding: 0 1rem;
+    justify-content: space-between;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    &-item {
+      background: rgba(255,255,255, 0.5);
+      backdrop-filter: blur(10px);
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 3rem;
+      border: 1px solid #ebebeb;
+      transition: ease-in-out 0.1s;
+      &:hover {
+        border: 1px solid transparent;
+        background: #007945;
+        .mp-carousel-navigation-icon {
+          color: #fff;
+        }
+      }
+      &-disabled {
+        pointer-events: none;
+        opacity: 30%;
+        &:hover {
+          border: 1px solid #ebebeb;
+          background: rgba(255,255,255, 0.5);
+          .mp-carousel-navigation-icon {
+            color: #007945;
+          }
+        }
+      }
+    }
+
+    &-icon {
+      transition: ease-in-out 0.1s;
+      color: #007945;
+      width: 2rem;
+      height: 2rem;
+      &-left {
+        transform: translateX(-1px);
+      }
+      &-right {
+        transform: translateX(1px);
+      }
+    }
+
+    @media only screen and (max-width : 430px) {
+      display: none;
+    }
+  }
+}
+
+.mp-thumbs {
+  &-wrapper {
+    width: 100%;
+    position: relative;
+  }
+  &-item {
+    cursor: pointer;
+    aspect-ratio: 1 / 1;
+    border: 2px solid transparent;
+    box-sizing: border-box;
+    margin-right: 2px;
+    &-active {
+      border: 2px solid #007945;
+    }
+  }
+  &-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
   }
 }

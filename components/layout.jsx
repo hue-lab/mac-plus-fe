@@ -56,7 +56,7 @@ function Layout({ children, categoryTree, layoutFields, footerNav }) {
         pauseOnHover={false}
         stacked
         position="bottom-left"
-        hideProgressBar
+        hideProgressBar={true}
       />
     </>
   )
