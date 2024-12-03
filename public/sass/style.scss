@@ -111,6 +111,7 @@
 @use 'react-toastify';
 @use 'react-swiper';
 @use 'react-swiper-navigation';
+@use 'react-swiper-pagination';
 
 .rendered-content {
   li {
@@ -172,7 +173,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
+    &-outside {
+      width: calc(100% + 10rem);
+    }
     &-item {
       background: rgba(255,255,255, 0.5);
       backdrop-filter: blur(10px);

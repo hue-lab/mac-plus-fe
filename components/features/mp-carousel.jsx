@@ -1,16 +1,20 @@
 import {Swiper} from "swiper/react";
 import clsx from "clsx";
 import {useEffect, useRef} from "react";
-import {Navigation} from "swiper/modules";
+import {Navigation, Pagination} from "swiper/modules";
 import InlineSVG from "react-inlinesvg";
 import {chevronBackOutlineIcon} from "~/icons/chevron-back-outline";
 import {chevronForwardOutlineIcon} from "~/icons/chevron-forward-outline";
+import 'swiper/css/pagination';
 
 export default function MpCarousel({
   className,
+  navOutside,
   children,
   hasNavigation = false,
+  hasPagination = false,
   onSlideChange,
+  spaceBetween = 30,
   length = 0,
   currIndex = 0
 }) {
@@ -26,8 +30,11 @@ export default function MpCarousel({
     <div className={clsx('mp-carousel-wrapper', className)}>
       <Swiper
         onSwiper={(swiper) => swiperRef.current = swiper}
-        modules={[Navigation]}
-        spaceBetween={30}
+        modules={[Navigation, Pagination]}
+        pagination={hasPagination ? {
+          clickable: true
+        } : undefined}
+        spaceBetween={spaceBetween}
         slidesPerView={1}
         scrollbar={{draggable: true}}
         onSlideChange={onSlideChange}
@@ -35,7 +42,9 @@ export default function MpCarousel({
         {children}
       </Swiper>
       { (hasNavigation && length > 1) && (
-        <div className="mp-carousel-navigation">
+        <div className={clsx('mp-carousel-navigation', {
+          'mp-carousel-navigation-outside': navOutside
+        })}>
           <button
             onClick={() => swiperRef.current?.slidePrev()}
             className={clsx('mp-carousel-navigation-item', {
