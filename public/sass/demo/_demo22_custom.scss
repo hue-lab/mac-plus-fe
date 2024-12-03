@@ -62,7 +62,9 @@ Demo 22
 }
 .category-dropdown {
   min-width: 28rem;
+  height: 100%;
   > a {
+    height: 100%;
     span {
       flex: 1;
       font-weight: 500;

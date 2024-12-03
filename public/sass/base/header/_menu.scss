@@ -11,8 +11,8 @@
             - MenuBanner
             - Tips
 
-        - MobileMenu 
-        
+        - MobileMenu
+
             - MobileMenuWrapper
             - MobileMenuContainer
             - MobileMenu
@@ -102,7 +102,7 @@
                 padding: 1.3rem .6rem 1.3rem 1rem
             ),
             // Active
-            active: ( 
+            active: (
                 background: false,
                 color: false,
                 border: false
@@ -239,7 +239,7 @@
         > a {
             position: relative;
             @include core.print_css( menu, ancestor );
-            &::after { 
+            &::after {
                 margin-left: .8rem;
             }
         }
@@ -275,14 +275,10 @@
     }
     > .submenu {
         > a {
-            // display: flex;
-            // align-items: center;
+            display: flex;
+            align-items: center;
+            gap: .5rem;
             z-index: 1001;
-            &::after {
-                position: static;
-                content: '\f078';
-                margin-top: 0;
-            }
         }
         // &::after {
         //     content: '';
@@ -299,33 +295,6 @@
         //     cursor: pointer;
         // }
     }
-    &.no-arrow {
-        > li {
-            > a {
-                &::after {
-                    content: none;
-                }
-            }
-        }
-    }
-}
-.submenu {
-    > a {
-        &::after {
-            display: inline-block;
-            position: absolute;
-            margin-top: 2px;
-            right: .5rem;
-            top: 50%;
-            line-height: 0;
-            vertical-align: middle;
-            font-family: 'Font Awesome 5 Free';
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: inherit;
-            content: '\f054';
-        }
-    }
 }
 
 // Vertical Menu
@@ -337,7 +306,7 @@
         padding: 0 2rem;
         > ul,
         .megamenu {
-            transform: translate3d(-15px,0,0); 
+            transform: translate3d(-15px,0,0);
         }
         > a {
             display: inline-block;
@@ -361,7 +330,7 @@
         }
         &:hover,
         &.show {
-            &::after {    
+            &::after {
                 top: 50%;
                 left: calc(100% - 20px);
                 transform: translate3d(0, -50%, 0);
@@ -437,11 +406,11 @@
     }
 
     &.expanded:not(.parse-content)::before {
-        transform: rotate(630deg);       
+        transform: rotate(630deg);
     }
 
     &.collapsed:not(.parse-content)::before {
-        transform: rotate(0deg);       
+        transform: rotate(0deg);
     }
 
     &.expanding:not(.parse-content)::before {
@@ -491,7 +460,7 @@
     ul {
         padding: 0;
     }
-    .row { 
+    .row {
         flex: 1;
         padding: 0 1rem;
         > * {
@@ -706,7 +675,7 @@
             vertical-align: middle;
         }
         // List Padding
-        li { 
+        li {
             a {
                 padding-left: 2.4rem;
             }
@@ -786,7 +755,7 @@
         margin-left: #{core.get( mobile-menu, container, max-width )};
 
         margin-right: -#{
-            core.get( mobile-menu, container, max-width ) - 
+            core.get( mobile-menu, container, max-width ) -
             if( core.get( base, page-wrapper, margin-left ), core.get( base, page-wrapper, margin-left ), 0 )
         };
     }
@@ -828,11 +797,11 @@
             }
         }
     }
-    i { 
+    i {
         vertical-align: middle;
         line-height: 0;
         @include core.print_css( category-menu, icon );
-        
+
     }
     > li {
         > a {
@@ -852,13 +821,10 @@
                 i {
                     color: inherit;
                 }
-            }   
+            }
         }
     }
     .submenu {
-        > a::after {
-            font-size: 1rem;
-        }
         .megamenu {
             min-width: 68.5rem;
             padding: 0 0 0 .9rem;
