@@ -1,11 +1,8 @@
 import React from 'react';
-import {LazyLoadImage} from 'react-lazy-load-image-component';
 
 import ALink from '~/components/features/custom-link';
-import OwlCarousel from '~/components/features/owl-carousel';
 
-import {videoHandler, getPostDate, getImgPath} from '~/utils';
-import {mainSlider20} from '~/utils/data/carousel';
+import {getImgPath, getPostDate} from '~/utils';
 import Image from "next/image";
 
 function PostOne(props) {
