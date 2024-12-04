@@ -143,8 +143,11 @@ textarea {
     }
 
     &::before {
-        content: '\f078';
-        font-family: 'Font Awesome 5 Free';
+        background-size: contain;
+        background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M112 184l144 144 144-144'/></svg>") no-repeat center;
+        content: '';
+        width: 12px;
+        height: 12px;
         position: absolute;
         font-weight: 900;
         font-size: 9px;

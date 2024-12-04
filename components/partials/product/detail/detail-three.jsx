@@ -6,6 +6,8 @@ import {wishlistActions} from '~/store/wishlist';
 import {cartActions} from '~/store/cart';
 
 import {toDecimal} from '~/utils';
+import InlineSVG from "react-inlinesvg";
+import {bagOutlineIcon} from "~/icons/bag-outline";
 
 function DetailThree(props) {
   let router = useRouter();
@@ -116,7 +118,10 @@ function DetailThree(props) {
           {product.isStock ? (
             <>
               <button className={`btn-product btn-cart btn-cart-fast text-normal ls-normal font-weight-semi-bold ${cartActive ? '' : 'disabled'}`} onClick={addToCartHandler}>
-                <i className="d-icon-bag"></i>В корзину
+                <div className="btn-content" style={{gap: '1rem'}}>
+                  <InlineSVG className="icon-20" src={bagOutlineIcon} />
+                  <span>В корзину</span>
+                </div>
               </button>
               <button className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold ${cartActive ? '' : 'disabled'}`} onClick={() => openModal(true)}>
                 Купить сразу

@@ -124,7 +124,7 @@ export default function Category({ banner, products, filters, category, page, fi
               )}
 
               <ProductListOne products={products} type="banner" fullPath={fullPath} />
-              {!isFilterApplied() && isNotFirstPage && (
+              {!isFilterApplied() && isNotFirstPage && !!(mainSeo?.content || category.content) && (
                 <>
                   <div className={`rendered-content ${!isCollapsed ? 'collapsed-content' : ''}`} dangerouslySetInnerHTML={{ __html: mainSeo?.content || category.content || '' }}></div>
                   <div onClick={collapseContent} className="collapsed-btn">
