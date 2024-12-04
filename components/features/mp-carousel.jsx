@@ -29,6 +29,7 @@ export default function MpCarousel({
   return (
     <div className={clsx('mp-carousel-wrapper', className)}>
       <Swiper
+        className="mp-carousel-swiper"
         onSwiper={(swiper) => swiperRef.current = swiper}
         modules={[Navigation, Pagination]}
         pagination={hasPagination ? {

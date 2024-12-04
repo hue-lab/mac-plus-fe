@@ -162,6 +162,11 @@
 .mp-carousel {
   &-product-single {
     margin: 2rem 0;
+    aspect-ratio: 8 / 5 !important;
+  }
+  &-swiper {
+    width: 100%;
+    height: 100%;
   }
   &-navigation {
     z-index: 10;
@@ -251,6 +256,62 @@
 }
 
 .menu-arrow-down {
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.menu-catalog-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.menu-category-icon {
+  color: #666;
+  width: 18px;
+  height: 18px;
+  &-toggle {
+    color: white;
+  }
+}
+
+.mobile-menu-toggle-icon {
+  width: 36px;
+  height: 36px;
+}
+
+.nav-sale-icon {
+  margin-left: .5rem;
+  transform: translateY(2px);
+  width: 18px;
+  height: 18px;
+}
+
+.icon-24 {
+  width: 24px;
+  height: 24px;
+}
+
+.menu-item {
+  display: flex !important;
+  gap: .5rem !important;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0 !important;
+  &-toggle {
+    padding: 1.2rem .5rem !important;
+  }
+  &-left {
+    display: flex !important;
+    gap: 1rem !important;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &-arrow {
+    width: 15px;
+    height: 15px;
+    transition: .2s ease-in-out;
+    &-expanded {
+      transform: rotate(90deg);
+    }
+  }
 }

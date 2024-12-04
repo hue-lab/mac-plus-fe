@@ -7,6 +7,8 @@ import { cartActions } from '~/store/cart';
 import { getTotalPrice, getCartCount, toDecimal, getImgPath } from '~/utils';
 
 import Image from 'next/image';
+import {bagOutlineIcon} from "~/icons/bag-outline";
+import InlineSVG from "react-inlinesvg";
 
 function CartMenu(props) {
   const { cartList, removeFromCart } = props;
@@ -31,9 +33,10 @@ function CartMenu(props) {
           <span className="cart-name ls-m">Корзина:</span>
           <span className="cart-price">{toDecimal(getTotalPrice(cartList))} BYN</span>
         </span>
-        <i className="d-icon-bag">
+        <div>
           <span className="cart-count">{getCartCount(cartList)}</span>
-        </i>
+          <InlineSVG className="cart-count-icon" src={bagOutlineIcon} />
+        </div>
       </a>
       <div className="cart-overlay" onClick={hideCartMenu}></div>
       <div style={{ zIndex: 10000 }} className={`dropdown-box ${cartList.length > 0 ? '' : 'pl-0 pr-0 pt-2 pb-2'}`}>

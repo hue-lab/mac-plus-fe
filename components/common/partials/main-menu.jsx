@@ -5,6 +5,7 @@ import { getImgPath, orderCategories } from "~/utils";
 import Image from "next/image";
 import InlineSVG from "react-inlinesvg";
 import {chevronDownOutlineIcon} from "~/icons/chevron-down-outline";
+import {chevronForwardOutlineIcon} from "~/icons/chevron-forward-outline";
 
 function MainMenu({ router, categoryTree, layoutFields }) {
   const { asPath, route } = useRouter();
@@ -63,8 +64,8 @@ function MainMenu({ router, categoryTree, layoutFields }) {
                           className="btn btn-link btn-underline"
                           style={{ fontWeight: "600", fontSize: "1.7rem" }}
                         >
-                          {layoutFields["nav-sale-title"] || "Купить"}
-                          <i className="d-icon-arrow-right"></i>
+                          <span>{layoutFields["nav-sale-title"] || "Купить"}</span>
+                          <InlineSVG className="nav-sale-icon" src={chevronForwardOutlineIcon} />
                         </ALink>
                       </div>
                     </div>

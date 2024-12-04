@@ -55,8 +55,8 @@ export default function MediaFive(props) {
         {lgImages.map((image, index) => (
           <SwiperSlide key={image.imageName + '-' + index}>
             <Image
-              width={800}
-              height={540}
+              width={1600}
+              height={1080}
               itemProp="image"
               src={getImgPath(image.imageName)}
               alt={`${image.imageAlt || product.name || ''}-${index}`}
