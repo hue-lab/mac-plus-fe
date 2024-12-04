@@ -5,6 +5,8 @@ import OwlCarousel from "~/components/features/owl-carousel";
 
 import { serviceSlider } from "~/utils/data/carousel";
 import { zoomInLeft } from "~/utils/data/keyframes";
+import InlineSVG from "react-inlinesvg";
+import {servicesIcons} from "~/utils/data/services-icons";
 
 function ServiceBox({ fields }) {
   return (
@@ -14,10 +16,7 @@ function ServiceBox({ fields }) {
           {Object.values(fields).map((feature) => (
             <Reveal keyframes={zoomInLeft} delay={200} duration={1200} triggerOnce key={feature}>
               <div className="icon-box text-center">
-                <i
-                  className={`icon-box-icon ${feature.split("||")[1]}`}
-                  style={{ fontSize: `${feature.split("||")[2] || "3.5"}rem` }}
-                ></i>
+                <InlineSVG className="services-icon" src={servicesIcons[feature.split("||")[1]?.trim()]?.src} />
                 <div className="icon-box-content">
                   <span className="icon-box-title text-dark">{feature.split("||")[0]}</span>
                 </div>

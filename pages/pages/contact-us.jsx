@@ -7,10 +7,11 @@ import { fadeIn } from '~/utils/data/keyframes';
 import { getFieldsObject } from '~/utils/endpoints/fields';
 import { sendMessage } from '~/utils/endpoints/message';
 import Head from 'next/head';
+import InlineSVG from "react-inlinesvg";
+import {homeOutlineIcon} from "~/icons/home-outline";
+import {chevronForwardOutlineIcon} from "~/icons/chevron-forward-outline";
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
-
-ContactUs.getInitialProps = async (context) => {
+ContactUs.getInitialProps = async () => {
   const fields = await getFieldsObject('phone', 'email', 'address');
   return {
     fields: fields,
@@ -57,18 +58,24 @@ export default function ContactUs({ fields }) {
 
       <nav className="breadcrumb-nav">
         <div className="container">
-          <ul className="breadcrumb">
+          <ul className="breadcrumb breadcrumb-sm">
             <li>
               <ALink href="/">
-                <i className="d-icon-home"></i>
+                <InlineSVG className="icon-16" src={homeOutlineIcon}/>
+              </ALink>
+              <InlineSVG className="breadcrumb-arrow" src={chevronForwardOutlineIcon}/>
+            </li>
+            <li>
+              <ALink href="/blog" className="active">
+                Контакты
               </ALink>
             </li>
-            <li>Контакты</li>
           </ul>
         </div>
       </nav>
 
-      <div className="page-header" style={{ backgroundImage: 'url(./images/page-header/contact-us.png)', backgroundColor: '#92918f' }}>
+      <div className="page-header"
+           style={{backgroundImage: 'url(./images/page-header/contact-us.png)', backgroundColor: '#92918f'}}>
         <h1 className="page-title font-weight-bold text-capitalize ls-l">Контакты</h1>
       </div>
 

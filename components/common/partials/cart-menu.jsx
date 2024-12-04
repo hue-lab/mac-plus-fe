@@ -9,6 +9,7 @@ import { getTotalPrice, getCartCount, toDecimal, getImgPath } from '~/utils';
 import Image from 'next/image';
 import {bagOutlineIcon} from "~/icons/bag-outline";
 import InlineSVG from "react-inlinesvg";
+import {closeOutlineIcon} from "~/icons/close-outline";
 
 function CartMenu(props) {
   const { cartList, removeFromCart } = props;
@@ -62,8 +63,7 @@ function CartMenu(props) {
                         removeCart(item);
                       }}
                     >
-                      <i className="fas fa-times"></i>
-                      <span className="sr-only">Закрыть</span>
+                      <InlineSVG className="icon-16" src={closeOutlineIcon} />
                     </button>
                   </figure>
                   <div className="product-detail">

@@ -1,11 +1,11 @@
 import React from 'react';
 import Reveal from 'react-awesome-reveal';
 import recycleImage from '~/public/images/recycle.png';
-
 import ALink from '~/components/features/custom-link';
-
-import { fadeIn } from '~/utils/data/keyframes';
+import {fadeIn} from '~/utils/data/keyframes';
 import Image from 'next/image';
+import InlineSVG from "react-inlinesvg";
+import {chevronForwardOutlineIcon} from "~/icons/chevron-forward-outline";
 
 function BannerSection({ tradeInTitle, tradeInSubtitle, tradeInDescription }) {
   return (
@@ -21,10 +21,16 @@ function BannerSection({ tradeInTitle, tradeInSubtitle, tradeInDescription }) {
             <p className="mb-7 text-white">{tradeInDescription}</p>
             <div className="banner-links">
               <ALink href="/pages/trade-in" className="btn btn-link btn-white btn-underline font-weight-bold">
-                Подробнее<i className="fas fa-angle-right"></i>
+                <div className="btn-content">
+                  <span>Подробнее</span>
+                  <InlineSVG className="icon-18 btn-content-icon" src={chevronForwardOutlineIcon}/>
+                </div>
               </ALink>
               <ALink href="/pages/contact-us" className="btn btn-link btn-white btn-underline font-weight-bold">
-                Связаться<i className="fas fa-angle-right"></i>
+                <div className="btn-content">
+                  <span>Связаться</span>
+                  <InlineSVG className="icon-18 btn-content-icon" src={chevronForwardOutlineIcon}/>
+                </div>
               </ALink>
             </div>
           </div>

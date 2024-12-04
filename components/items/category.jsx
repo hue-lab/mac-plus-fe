@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import ALink from '~/components/features/custom-link';
 import SidebarFilterOne from '~/components/partials/shop/sidebar/sidebar-filter-one';
 import ProductListOne from '~/components/partials/shop/product-list/product-list-one';
-import { getImgPath } from '~/utils';
+import {getImgPath} from '~/utils';
 import Head from 'next/head';
+import InlineSVG from "react-inlinesvg";
+import {chevronForwardOutlineIcon} from "~/icons/chevron-forward-outline";
+import {homeOutlineIcon} from "~/icons/home-outline";
 
 export default function Category({ banner, products, filters, category, page, filterObject, filtersPairs, fullPath, mainSeo, seoFields }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -77,8 +80,9 @@ export default function Category({ banner, products, filters, category, page, fi
           <ul className="breadcrumb breadcrumb-sm">
             <li>
               <ALink href="/">
-                <i className="d-icon-home"></i>
+                <InlineSVG className="icon-16" src={homeOutlineIcon} />
               </ALink>
+              <InlineSVG className="breadcrumb-arrow" src={chevronForwardOutlineIcon} />
             </li>
             <li>
               <ALink className="categories-link-desktop" href="/shop">
@@ -87,8 +91,11 @@ export default function Category({ banner, products, filters, category, page, fi
               <ALink className="categories-link-mobile" href="/categories">
                 Каталог
               </ALink>
+              <InlineSVG className="breadcrumb-arrow" src={chevronForwardOutlineIcon} />
             </li>
-            {category?.name && <li itemProp="name">{category.name}</li>}
+            {category?.name && <li itemProp="name">
+              <span className="breadcrumb-latest">{category.name}</span>
+            </li>}
           </ul>
 
           <div className="row gutter-lg main-content-wrap">

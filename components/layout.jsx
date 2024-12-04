@@ -9,6 +9,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import {scrollTopHandler, showScrollTopHandler, stickyFooterHandler, stickyHeaderHandler} from '~/utils';
 import {Poppins} from "next/font/google";
 import {ToastContainer} from "react-toastify";
+import InlineSVG from "react-inlinesvg";
+import {arrowUpOutlineIcon} from "~/icons/arrow-up-outline";
 
 const poppins = Poppins({
   weight: ['300', '400', '500', '600', '700', '800', '900'],
@@ -48,7 +50,9 @@ function Layout({ children, categoryTree, layoutFields, footerNav }) {
         <StickyFooter />
       </div>
 
-      <div id="scroll-top" title="Top" role="button" className="scroll-top" onClick={() => scrollTopHandler(false)}><i className="d-icon-arrow-up"></i></div>
+      <div id="scroll-top" title="Top" role="button" className="scroll-top" onClick={() => scrollTopHandler(false)}>
+        <InlineSVG className="scroll-top-icon" src={arrowUpOutlineIcon} />
+      </div>
 
       <MobileMenu categoryTree={categoryTree} />
 

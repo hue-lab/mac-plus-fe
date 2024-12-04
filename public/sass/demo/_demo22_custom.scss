@@ -701,15 +701,15 @@ Demo 22
 
 .categories-link {
   &-mobile {
-    display: none;
+    display: none !important;
     @include breakpoints.mq(lg, max) {
-      display: inline;
+      display: inline !important ;
     }
   }
   &-desktop {
-    display: inline;
+    display: inline !important;
     @include breakpoints.mq(lg, max) {
-      display: none;
+      display: none !important;
     }
   }
 }

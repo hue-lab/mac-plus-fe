@@ -3,6 +3,10 @@ import { orderCategories } from '~/utils';
 import Image from 'next/image';
 import logoShortImage from '~/public/images/home/logo-short.png';
 import paymentsImage from '~/public/images/payment.png';
+import InlineSVG from "react-inlinesvg";
+import {telegramIcon} from "~/icons/telegram";
+import {viberIcon} from "~/icons/viber";
+import {instagramIcon} from "~/icons/instagram";
 
 export default function Footer({ fields, categoryTree, footerNav }) {
   const YEAR = new Date().getFullYear();
@@ -100,9 +104,15 @@ export default function Footer({ fields, categoryTree, footerNav }) {
           </div>
           <div className="footer-right">
             <div className="social-links">
-              {fields.telegram && <ALink rel="nofollow" href={fields.telegram} className="social-link social-telegram fab fa-telegram-plane"></ALink>}
-              {fields.viber && <ALink rel="nofollow" href={`viber://chat?number=${fields.viber}`} className="social-link social-viber fab fa-viber"></ALink>}
-              {fields.instagram && <ALink rel="nofollow" href={fields.instagram} className="social-link social-instagram fab fa-instagram"></ALink>}
+              {fields.telegram && <ALink rel="nofollow" href={fields.telegram} className="social-link social-link-footer social-telegram">
+                <InlineSVG className="social-link-icon" src={telegramIcon} />
+              </ALink>}
+              {fields.viber && <ALink rel="nofollow" href={`viber://chat?number=${fields.viber}`} className="social-link social-link-footer social-viber">
+                <InlineSVG className="social-link-icon" src={viberIcon} />
+              </ALink>}
+              {fields.instagram && <ALink rel="nofollow" href={fields.instagram} className="social-link social-link-footer social-instagram">
+                <InlineSVG className="social-link-icon" src={instagramIcon} />
+              </ALink>}
             </div>
           </div>
         </div>

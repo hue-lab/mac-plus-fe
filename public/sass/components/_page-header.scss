@@ -45,23 +45,34 @@ $page-header-background: #C8C3BF !default;
     flex-wrap: wrap;
     align-items: center;
     color: #666;
+    fill: #666;
     font-family: variables.$font-family;
     font-size: 1.4rem;
     a {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
         color: inherit;
         &:hover {
             color: #222;
         }
     }
     li {
+        display: flex;
+        align-items: center;
         &:not(:last-child) a {
             color: #999;
+            fill: #999;
             transition: color .3s;
         }
         &:hover {
             &:not(:last-child) a {
                 color: #222;
+                fill: #222;
             }
+        }
+        .breadcrumb-arrow {
+            display: none;
         }
     }
     .delimiter {
@@ -69,20 +80,17 @@ $page-header-background: #C8C3BF !default;
         font-size: 1.19rem;
         opacity: .5;
     }
-    li:not(:last-child){
-        // padding-right: .8rem;
-        &::after {
-            content: '\f105';
-            position: relative;
-            margin: 0 .6em;
-            font-size: 1.2rem;
-            font-weight: 600;
-            font-family: 'Font Awesome 5 Free';
-            color: variables.$grey-color;
+    li:not(:last-child) {
+        .breadcrumb-arrow {
+            display: block;
+            width: 14px;
+            height: 14px;
+            color: #999;
+            margin: 0 .2em;
         }
     }
     li:last-child {
-        color: #222;
+        color: #222 !important;
     }
 }
 

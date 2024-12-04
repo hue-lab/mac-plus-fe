@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
 import ALink from '~/components/features/custom-link';
 import MediaFive from '~/components/partials/product/media/media-five';
 import DetailThree from '~/components/partials/product/detail/detail-three';
 import DescOne from '~/components/partials/product/desc/desc-one';
 import ProductSidebar from '~/components/partials/product/product-sidebar';
-import { getImgPath } from '~/utils';
+import {getImgPath} from '~/utils';
 import Modal from 'react-modal';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import ru from '~/public/labels/ru';
-import { sendMessage } from '~/utils/endpoints/message';
+import {sendMessage} from '~/utils/endpoints/message';
 import Head from 'next/head';
+import InlineSVG from "react-inlinesvg";
+import {chevronForwardOutlineIcon} from "~/icons/chevron-forward-outline";
+import {homeOutlineIcon} from "~/icons/home-outline";
 
 export default function ProductItem({ product, featured, deliveryMethods, seoFields, mainSeo }) {
   if (!product) return '';
@@ -101,41 +104,50 @@ export default function ProductItem({ product, featured, deliveryMethods, seoFie
         <div itemScope itemType="https://schema.org/Product" className={`page-content mb-8`}>
           <div className="container skeleton-body">
             <div className="product-navigation">
-              <ul className="breadcrumb breadcrumb-lg">
+              <ul className="breadcrumb breadcrumb-sm">
                 <li>
                   <ALink href="/">
-                    <i className="d-icon-home"></i>
+                    <InlineSVG className="icon-16" src={homeOutlineIcon}/>
                   </ALink>
+                  <InlineSVG className="breadcrumb-arrow" src={chevronForwardOutlineIcon}/>
                 </li>
                 <li>
-                  <ALink href="/shop" className="active">
+                  <ALink className="categories-link-desktop" href="/shop">
                     Каталог
                   </ALink>
+                  <ALink className="categories-link-mobile" href="/categories">
+                    Каталог
+                  </ALink>
+                  <InlineSVG className="breadcrumb-arrow" src={chevronForwardOutlineIcon}/>
                 </li>
                 <li>
                   <ALink href={`/${product.category.handle}/`} className="active">
                     {product.category.name}
                   </ALink>
+                  <InlineSVG className="breadcrumb-arrow" src={chevronForwardOutlineIcon}/>
                 </li>
-                <li>{product.name}</li>
+                {product.name && <li itemProp="name">
+                  <span className="breadcrumb-latest">{product.name}</span>
+                </li>}
               </ul>
             </div>
 
             <div className="row gutter-lg">
-              <ProductSidebar featured={featured?.data || []} deliveryMethods={deliveryMethods || []} />
+              <ProductSidebar featured={featured?.data || []} deliveryMethods={deliveryMethods || []}/>
 
               <div className="col-lg-9">
                 <div className="product product-single row">
                   <div className="col-md-6">
-                    <MediaFive product={product} adClass="pb-0" />
+                    <MediaFive product={product} adClass="pb-0"/>
                   </div>
 
                   <div className="col-md-6">
-                    <DetailThree openModal={setModalState} productName={interpolatedHeader} product={product} isNav={false} />
+                    <DetailThree openModal={setModalState} productName={interpolatedHeader} product={product}
+                                 isNav={false}/>
                   </div>
                 </div>
 
-                <DescOne mainSeo={mainSeo} product={product} isDivider={false} className="mt-2 m-4" isGuide={false} />
+                <DescOne mainSeo={mainSeo} product={product} isDivider={false} className="mt-2 m-4" isGuide={false}/>
               </div>
             </div>
           </div>

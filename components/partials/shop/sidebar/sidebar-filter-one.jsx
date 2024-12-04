@@ -63,9 +63,6 @@ export default function SidebarFilterOne({ type = 'left', isFeatured = false, fi
     if (filterPrice?.max) {
       arr.push(`max_price=${filterPrice.max}`);
     }
-    // for (let key in query) {
-    //   if (key !== 'min_price' && key !== 'max_price' && key !== 'page' && key !== 'grid') arr.push(key + '=' + query[key]);
-    // }
     url = url + (arr.length ? '?' : '') + arr.join('&');
     router.push(url);
   };
@@ -158,7 +155,7 @@ export default function SidebarFilterOne({ type = 'left', isFeatured = false, fi
               <div className="widget widget-collapsible">
                 <Card title={`<div style="color: #222;" class='widget-title'>Цена<span class='toggle-btn p-0 parse-content'></span></div>`} type="parse" expanded={true}>
                   <div className="widget-body">
-                    <form action="#">
+                    <form>
                       <div className="widget-body filter-items">
                         <CustomPriceInput postfix="BYN" min={query.min_price} max={query.max_price} onChange={filterByPrice}></CustomPriceInput>
                       </div>

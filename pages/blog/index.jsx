@@ -5,6 +5,9 @@ import PostOne from '~/components/features/post/post-one';
 import {getArticles} from '~/utils/endpoints/articles';
 import BlogPagination from "~/components/features/blog-pagination";
 import Head from "next/head";
+import InlineSVG from "react-inlinesvg";
+import {homeOutlineIcon} from "~/icons/home-outline";
+import {chevronForwardOutlineIcon} from "~/icons/chevron-forward-outline";
 
 export const getStaticProps = async () => {
   const pagination = {
@@ -43,9 +46,18 @@ export default function Classic({posts}) {
 
       <nav className="breadcrumb-nav">
         <div className="container">
-          <ul className="breadcrumb">
-            <li><ALink href="/"><i className="d-icon-home"></i></ALink></li>
-            <li><ALink href="#" className="active">Блог</ALink></li>
+          <ul className="breadcrumb breadcrumb-sm">
+            <li>
+              <ALink href="/">
+                <InlineSVG className="icon-16" src={homeOutlineIcon}/>
+              </ALink>
+              <InlineSVG className="breadcrumb-arrow" src={chevronForwardOutlineIcon}/>
+            </li>
+            <li>
+              <ALink href="/blog" className="active">
+                Блог
+              </ALink>
+            </li>
           </ul>
         </div>
       </nav>
