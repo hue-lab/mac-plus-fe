@@ -1,11 +1,10 @@
 import {Swiper} from "swiper/react";
 import clsx from "clsx";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef} from "react";
 import {Navigation, Pagination} from "swiper/modules";
 import InlineSVG from "react-inlinesvg";
 import {chevronBackOutlineIcon} from "~/icons/chevron-back-outline";
 import {chevronForwardOutlineIcon} from "~/icons/chevron-forward-outline";
-import 'swiper/css/pagination';
 
 export default function MpCarousel({
   className,
@@ -22,19 +21,11 @@ export default function MpCarousel({
 }) {
   const swiperRef = useRef(null);
 
-  const [innerIndex, setInnerIndex] = useState(swiperRef.current?.realIndex || 0);
-
   useEffect(() => {
     if (currIndex !== swiperRef.current?.realIndex) {
       swiperRef.current?.slideTo(currIndex);
-      setInnerIndex(currIndex);
     }
   }, [currIndex]);
-
-  function handleSlideChange (e) {
-    setInnerIndex(e.realIndex || 0)
-    onSlideChange?.(e.realIndex || 0)
-  }
 
   return (
     <div className={clsx('mp-carousel-wrapper', className)}>
@@ -50,7 +41,7 @@ export default function MpCarousel({
         spaceBetween={spaceBetween}
         slidesPerView={slidesPerView}
         scrollbar={{draggable: true}}
-        onSlideChange={handleSlideChange}
+        onSlideChange={onSlideChange}
       >
         {children}
       </Swiper>
@@ -61,7 +52,7 @@ export default function MpCarousel({
           <button
             onClick={() => swiperRef.current?.slidePrev()}
             className={clsx('mp-carousel-navigation-item', {
-              'mp-carousel-navigation-item-disabled': innerIndex <= 0
+              'mp-carousel-navigation-item-disabled': swiperRef.current?.realIndex <= 0
             })}
           >
             <InlineSVG
@@ -72,7 +63,7 @@ export default function MpCarousel({
           <button
             onClick={() => swiperRef.current?.slideNext()}
             className={clsx('mp-carousel-navigation-item', {
-              'mp-carousel-navigation-item-disabled': innerIndex >= length - 1
+              'mp-carousel-navigation-item-disabled': swiperRef.current?.realIndex >= length - 1
             })}
           >
             <InlineSVG
