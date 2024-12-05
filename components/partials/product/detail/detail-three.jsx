@@ -2,27 +2,16 @@ import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {useRouter} from 'next/router';
 
-import ALink from '~/components/features/custom-link';
-
-import ProductNav from '~/components/partials/product/product-nav';
-import DescTwo from '~/components/partials/product/desc/desc-two';
-
 import {wishlistActions} from '~/store/wishlist';
 import {cartActions} from '~/store/cart';
 
 import {toDecimal} from '~/utils';
+import InlineSVG from "react-inlinesvg";
+import {bagOutlineIcon} from "~/icons/bag-outline";
 
 function DetailThree(props) {
   let router = useRouter();
-  const {
-    product,
-    isSticky = false,
-    isDesc = false,
-    adClass = '',
-    isSizeGuide = true,
-    isNav = true,
-    openModal,
-  } = props;
+  const { product, isSticky = false, isDesc = false, adClass = '', isSizeGuide = true, isNav = true, openModal, productName } = props;
   const { toggleWishlist, addToCart, wishlist } = props;
   const [curColor, setCurColor] = useState('null');
   const [curSize, setCurSize] = useState('null');
@@ -93,29 +82,9 @@ function DetailThree(props) {
 
   return (
     <div className={`product-details ${isSticky ? 'sticky' : ''} ${adClass}`}>
-      {isNav ? (
-        <div className="product-navigation pt-0">
-          <ul className="breadcrumb breadcrumb-lg">
-            <li>
-              <ALink href="/">
-                <i className="d-icon-home"></i>
-              </ALink>
-            </li>
-            <li>
-              <ALink href="#" className="active">
-                Products
-              </ALink>
-            </li>
-            <li>Detail</li>
-          </ul>
-
-          <ProductNav product={product} />
-        </div>
-      ) : (
-        ''
-      )}
-
-      <span className="product-name" itemProp="name">{product.name}</span>
+      <h1 className="product-name" itemProp="name">
+        {productName || product.name}
+      </h1>
 
       <div className="product-meta">
         Категория: <span className="product-brand">{product.category.name}</span>
@@ -130,14 +99,16 @@ function DetailThree(props) {
           </>
         ) : (
           <>
-            <meta itemProp="price" content={product.price}/>
+            <meta itemProp="price" content={product.price} />
             <ins className="new-price">от {toDecimal(product.price)} BYN</ins>
           </>
         )}
         <meta itemProp="priceCurrency" content="BYN" />
       </div>
 
-      <p className="product-short-desc" itemProp="description">{product.description}</p>
+      <p className="product-short-desc" itemProp="description">
+        {product.description}
+      </p>
 
       <hr className="product-divider"></hr>
 
@@ -146,36 +117,20 @@ function DetailThree(props) {
         <div className="product-form-group">
           {product.isStock ? (
             <>
-              {/*<Quantity*/}
-              {/*  max={1000}*/}
-              {/*  product={product}*/}
-              {/*  onChangeQty={changeQty}*/}
-              {/*  isStock={product.isStock}*/}
-              {/*/>*/}
-              <button
-                className={`btn-product btn-cart btn-cart-fast text-normal ls-normal font-weight-semi-bold ${
-                  cartActive ? '' : 'disabled'
-                }`}
-                onClick={addToCartHandler}
-              >
-                <i className="d-icon-bag"></i>В корзину
+              <button className={`btn-product btn-cart btn-cart-fast text-normal ls-normal font-weight-semi-bold ${cartActive ? '' : 'disabled'}`} onClick={addToCartHandler}>
+                <div className="btn-content" style={{gap: '1rem'}}>
+                  <InlineSVG className="icon-20" src={bagOutlineIcon} />
+                  <span>В корзину</span>
+                </div>
               </button>
-              <button
-                className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold ${
-                  cartActive ? '' : 'disabled'
-                }`}
-                onClick={() => openModal(true)}
-              >
+              <button className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold ${cartActive ? '' : 'disabled'}`} onClick={() => openModal(true)}>
                 Купить сразу
               </button>
             </>
           ) : (
             <>
               <span>Под заказ</span>
-              <button
-                className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold`}
-                onClick={() => openModal(true)}
-              >
+              <button className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold`} onClick={() => openModal(true)}>
                 Заказать
               </button>
             </>
@@ -186,8 +141,6 @@ function DetailThree(props) {
       <hr className="product-divider mb-3"></hr>
 
       <div className="product-footer"></div>
-
-      {isDesc ? <DescTwo product={product.data} adClass={adClass} isSizeGuide={isSizeGuide} /> : ''}
     </div>
   );
 }

@@ -18,17 +18,23 @@
 
 .social-link {
     margin: 2px 8px 2px 0;
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     line-height: 28px;
     font-size: 1.5rem;
     border-radius: 50%;
-    border: 2px solid #ccc;
+    border: 1px solid #ccc;
     color: inherit;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     transition: color .4s, border .4s, background .4s;
     text-align: center;
     &:last-child { margin-right: 0; }
-
+    &-icon {
+        width: 20px !important;
+        height: 20px !important;
+    }
     i {
         letter-spacing: -.001em;
         line-height: 1;

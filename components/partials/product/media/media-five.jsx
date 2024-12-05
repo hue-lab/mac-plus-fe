@@ -1,102 +1,87 @@
-import { useState, useEffect } from 'react';
-import { Magnifier, MOUSE_ACTIVATION, TOUCH_ACTIVATION } from 'react-image-magnifiers';
-import OwlCarousel from '~/components/features/owl-carousel';
+import {useEffect, useState} from 'react';
+import Image from 'next/image';
 
 import ThumbTwo from '~/components/partials/product/thumb/thumb-two';
 import MediaLightBox from '~/components/partials/product/light-box';
+import {getImgPath} from '~/utils';
+import {SwiperSlide} from "swiper/react";
+import MpCarousel from "~/components/features/mp-carousel";
+import InlineSVG from "react-inlinesvg";
+import {expandOutlineIcon} from "~/icons/expand-outline";
 
-import { mainSlider3 } from '~/utils/data/carousel';
-import {getImgPath} from "~/utils";
+export default function MediaFive(props) {
+  const { product, adClass = '' } = props;
+  const [index, setIndex] = useState(0);
+  const [isOpen, setOpenState] = useState(false);
+  const [mediaRef, setMediaRef] = useState(null);
 
-export default function MediaFive ( props ) {
-    const { product, adClass = '' } = props;
-    const [ index, setIndex ] = useState( 0 );
-    const [ isOpen, setOpenState ] = useState( false );
-    const [ mediaRef, setMediaRef ] = useState( null );
+  let lgImages = product.seo?.seoImage || [];
 
-    let lgImages = product.seo?.seoImage || [];
-
-    useEffect( () => {
-        if ( mediaRef !== null && mediaRef.current !== null && index >= 0 ) {
-            mediaRef.current.$car.to( index, 300, true );
-        }
-    }, [ index ] )
-
-    const setIndexHandler = ( mediaIndex ) => {
-        if ( mediaIndex !== index ) {
-            setIndex( mediaIndex );
-        }
+  useEffect(() => {
+    if (mediaRef !== null && mediaRef.current !== null && index >= 0) {
+      mediaRef.current.$car.to(index, 300, true);
     }
+  }, [index]);
 
-    const changeRefHandler = ( carRef ) => {
-        if ( carRef.current !== undefined ) {
-            setMediaRef( carRef );
-        }
+  const setIndexHandler = (mediaIndex) => {
+    if (mediaIndex !== index) {
+      setIndex(mediaIndex);
     }
+  };
 
-    const changeOpenState = openState => {
-        setOpenState( openState );
-    }
+  const changeOpenState = (openState) => {
+    setOpenState(openState);
+  };
 
-    const openLightBox = () => {
-        setOpenState( true );
-    }
+  const openLightBox = () => {
+    setOpenState(true);
+  };
 
-    let events = {
-        onTranslate: function ( e ) {
-            if ( !e.target ) return;
-            if ( document.querySelector( '.product-thumbs' ) ) {
-                document.querySelector( '.product-thumbs' ).querySelector( '.product-thumb.active' ).classList.remove( 'active' );
-                document.querySelector( '.product-thumbs' ).querySelectorAll( '.product-thumb' )[ e.item.index ].classList.add( 'active' );
-            }
-        }
-    }
+  return (
+    <div className={`product-gallery product-gallery-vertical product-gallery-sticky ${adClass}`}>
+      <div className="product-label-group">
+        {product.isRec ? <label className="product-label label-top">Хит</label> : ''}
 
-    return (
-        <div className={ `product-gallery product-gallery-vertical product-gallery-sticky ${ adClass }` }>
-            <div className="product-label-group">
-                {
-                    product.isRec ?
-                        <label className="product-label label-top">Хит</label> : ""
-                }
+        {product.isNew ? <label className="product-label label-new">Новинка</label> : ''}
 
-                {
-                    product.isNew ?
-                        <label className="product-label label-new">Новинка</label> : ""
-                }
+        {product.discount ? <label className="product-label label-sale">-{product.discount}%</label> : ''}
+      </div>
 
-                {
-                    product.discount ?
-                        <label className="product-label label-sale">-{ product.discount }%</label> : ""
-                }
-            </div>
+      <MpCarousel
+        currIndex={index}
+        length={lgImages?.length || 0}
+        onSlideChange={(e) => setIndexHandler(e.realIndex || 0)}
+        className="mp-carousel-product-single"
+        hasNavigation={true}
+      >
+        {lgImages.map((image, index) => (
+          <SwiperSlide key={image.imageName + '-' + index}>
+            <Image
+              width={1600}
+              height={1080}
+              itemProp="image"
+              src={getImgPath(image.imageName)}
+              alt={`${image.imageAlt || product.name || ''}-${index}`}
+              title={`${image.imageAlt || product.name || ''}-${index}`}
+              className="product-image large-image"
+            />
+          </SwiperSlide>
+        ))}
+      </MpCarousel>
 
-            <OwlCarousel adClass="product-single-carousel owl-theme owl-nav-inner"
-                options={ mainSlider3 }
-                onChangeIndex={ setIndexHandler }
-                onChangeRef={ changeRefHandler }
-                events={ events }
-            >
-                {
-                    lgImages.map( ( image, index ) =>
-                        <div key={ image.imageName + '-' + index }>
-                            <Magnifier
-                                imageSrc={ getImgPath(image.imageName) }
-                                imageAlt={image.imageAlt || product.name || ''}
-                                className="product-image large-image"
-                                touchActivation={TOUCH_ACTIVATION.LONG_TOUCH}
-                                mouseActivation={MOUSE_ACTIVATION.DOUBLE_CLICK}
-                                cursorStyle="default"
-                            />
-                        </div>
-                    ) }
-            </OwlCarousel>
 
-            <div className="product-image-full" onClick={ openLightBox }><i className="d-icon-zoom"></i></div>
+      <div className="product-image-full" onClick={openLightBox}>
+        <InlineSVG className="icon-24" src={expandOutlineIcon} />
+      </div>
 
-            <ThumbTwo product={ product } index={ index } onChangeIndex={ setIndexHandler } />
+      <ThumbTwo
+        product={product}
+        onChangeIndex={setIndexHandler}
+        currIndex={index}
+        length={lgImages?.length || 0}
+      />
 
-            <MediaLightBox images={ lgImages } isOpen={ isOpen } changeOpenState={ changeOpenState } index={ index } product={ product } />
-        </div>
-    )
+      <MediaLightBox images={lgImages} isOpen={isOpen} changeOpenState={changeOpenState} index={index} product={product} />
+    </div>
+  );
 }

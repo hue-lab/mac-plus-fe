@@ -6,6 +6,11 @@ import { cartActions } from '~/store/cart';
 import { toDecimal, getImgPath, useDebounce } from '~/utils';
 import { getCalculation } from '~/utils/endpoints/calculate';
 import Head from 'next/head';
+import Image from "next/image";
+import InlineSVG from "react-inlinesvg";
+import {chevronForwardOutlineIcon} from "~/icons/chevron-forward-outline";
+import clsx from "clsx";
+import {closeOutlineIcon} from "~/icons/close-outline";
 
 function Cart(props) {
   const { cartList, removeFromCart, updateCart } = props;
@@ -47,9 +52,11 @@ function Cart(props) {
         <div className="step-by pr-4 pl-4">
           <h3 className="title title-simple title-step active">
             <ALink href="#">1. Корзина</ALink>
+            <InlineSVG className="step-by-icon" src={chevronForwardOutlineIcon} />
           </h3>
           <h3 className="title title-simple title-step">
             <ALink href="/pages/checkout">2. Оформление</ALink>
+            <InlineSVG className="step-by-icon" src={chevronForwardOutlineIcon} />
           </h3>
           <h3 className="title title-simple title-step">3. Подтверждение</h3>
         </div>
@@ -81,7 +88,7 @@ function Cart(props) {
                           <td className="product-thumbnail">
                             <figure>
                               <ALink href={`/${item.category.handle ? item.category.handle + '/' : ''}${item.seo?.seoUrl || '#'}`}>
-                                <img src={getImgPath(item.media[0])} width="100" height="100" alt="product" />
+                                <Image alt={item.seo?.seoImage[0]?.imageAlt || item.name} title={item.seo?.seoTitle || item.name} src={getImgPath(item.media[0])} width="100" height="100" />
                               </ALink>
                             </figure>
                           </td>
@@ -101,7 +108,7 @@ function Cart(props) {
                           </td>
                           <td className="product-close">
                             <ALink href="#" className="product-remove" title="Remove this product" onClick={() => removeFromCart(item)}>
-                              <i className="fas fa-times"></i>
+                              <InlineSVG className="icon-16" src={closeOutlineIcon} />
                             </ALink>
                           </td>
                         </tr>
@@ -114,7 +121,9 @@ function Cart(props) {
                     <div className="summary mb-4">
                       <table className="shipping">
                         <tbody>
-                          <tr>
+                          <tr className={clsx({
+                            'summary-subtotal': !discount
+                          })}>
                             <td>
                               <h4 className="summary-subtitle">Сумма</h4>
                             </td>
@@ -122,23 +131,25 @@ function Cart(props) {
                               <p className="summary-subtotal-price">{toDecimal(subTotalPrice)} BYN</p>
                             </td>
                           </tr>
-                          <tr className="summary-subtotal">
-                            <td>
-                              <h4 className="summary-subtitle">Скидка</h4>
-                            </td>
-                            <td>
-                              <p className="summary-subtotal-price">{toDecimal(discount)} BYN</p>
-                            </td>
-                          </tr>
+                          { !!discount && (
+                            <tr className="summary-subtotal">
+                              <td>
+                                <h4 className="summary-subtitle">Скидка</h4>
+                              </td>
+                              <td>
+                                <p className="summary-subtotal-price">{toDecimal(discount)} BYN</p>
+                              </td>
+                            </tr>
+                          )}
                         </tbody>
                       </table>
                       <table className="total">
                         <tbody>
-                          <tr className="summary-subtotal">
-                            <td>
-                              <h4 className="summary-subtitle">Всего</h4>
-                            </td>
-                            <td>
+                        <tr className="summary-subtotal">
+                          <td>
+                            <h4 className="summary-subtitle">Всего</h4>
+                          </td>
+                          <td>
                               <p className="summary-total-price ls-s">{toDecimal(totalPrice)} BYN</p>
                             </td>
                           </tr>

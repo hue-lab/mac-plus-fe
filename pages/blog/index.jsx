@@ -5,19 +5,25 @@ import PostOne from '~/components/features/post/post-one';
 import {getArticles} from '~/utils/endpoints/articles';
 import BlogPagination from "~/components/features/blog-pagination";
 import Head from "next/head";
+import InlineSVG from "react-inlinesvg";
+import {homeOutlineIcon} from "~/icons/home-outline";
+import {chevronForwardOutlineIcon} from "~/icons/chevron-forward-outline";
 
-Classic.getInitialProps = async ({query}) => {
+export const getStaticProps = async () => {
   const pagination = {
     page: 1,
     limit: 8,
   };
   const posts = await getArticles(pagination.page, pagination.limit);
   return {
-    posts: posts,
+    props: {
+      posts: posts,
+    },
+    revalidate: 3600,
   }
 }
 
-export default function Classic({posts, page}) {
+export default function Classic({posts}) {
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.scrollTo({top: 0, behavior: "smooth"});
@@ -40,9 +46,18 @@ export default function Classic({posts, page}) {
 
       <nav className="breadcrumb-nav">
         <div className="container">
-          <ul className="breadcrumb">
-            <li><ALink href="/"><i className="d-icon-home"></i></ALink></li>
-            <li><ALink href="#" className="active">Блог</ALink></li>
+          <ul className="breadcrumb breadcrumb-sm">
+            <li>
+              <ALink href="/">
+                <InlineSVG className="icon-16" src={homeOutlineIcon}/>
+              </ALink>
+              <InlineSVG className="breadcrumb-arrow" src={chevronForwardOutlineIcon}/>
+            </li>
+            <li>
+              <ALink href="/blog" className="active">
+                Блог
+              </ALink>
+            </li>
           </ul>
         </div>
       </nav>
@@ -62,7 +77,7 @@ export default function Classic({posts, page}) {
                     posts ?
                       posts.data.slice(0, posts.length).map((post, index) => (
                         <React.Fragment key={"post-one" + index}>
-                          <PostOne post={post}/>
+                          <PostOne isFirst={index === 0} post={post}/>
                         </React.Fragment>
                       )) :
                       <div className="info-box with-icon"><p className="mt-4">No blogs were found matching your

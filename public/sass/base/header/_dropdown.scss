@@ -408,6 +408,10 @@
             background-color: variables.$primary-color;
             color:  #fff;
             z-index: 1;
+            &-icon {
+                width: 34px !important;
+                height: 34px !important;
+            }
         }
         .label-block .cart-count {
             width: 1.9rem;

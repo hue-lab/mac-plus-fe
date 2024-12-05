@@ -36,7 +36,7 @@ function BlogPagination(props) {
                                     <span className="page-item dots">...</span>
                                     <li className={`page-item ${page === item ? 'active' : ''}`} >
                                         <ALink className="page-link" href={page === item ? '#' : {pathname: pagedPathname(props.fullPath, item) }} scroll={false}>
-                                            {item}{page === item && <span className="sr-only">(current)</span>}
+                                            {item}
                                         </ALink>
                                     </li>
                                 </React.Fragment> :
@@ -44,7 +44,7 @@ function BlogPagination(props) {
                                     <React.Fragment key={`page-${index}`}>
                                         <li className={`page-item ${page === item ? 'active' : ''}`}>
                                             <ALink className="page-link" href={page === item ? '#' : {pathname: pagedPathname(props.fullPath, item) }} scroll={false}>
-                                                {item}{page === item && <span className="sr-only">(current)</span>}
+                                                {item}
                                             </ALink>
                                         </li>
                                         <span className="page-item dots">...</span>
@@ -52,7 +52,7 @@ function BlogPagination(props) {
                                     :
                                     <li className={`page-item ${page === item ? 'active' : ''}`} key={`page-${index}`}>
                                         <ALink className="page-link" href={page === item ? '#' : {pathname: pagedPathname(props.fullPath, item) }} scroll={false}>
-                                            {item}{page === item && <span className="sr-only">(current)</span>}
+                                            {item}
                                         </ALink>
                                     </li>
 

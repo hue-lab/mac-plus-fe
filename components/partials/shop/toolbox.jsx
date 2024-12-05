@@ -4,6 +4,9 @@ import { useEffect } from 'react';
 import ALink from '~/components/features/custom-link';
 
 import SidebarFilterThree from '~/components/partials/shop/sidebar/sidebar-filter-three';
+import InlineSVG from "react-inlinesvg";
+import {listModeOutlineIcon} from "~/icons/list-mode-outline";
+import {gridModeOutlineIcon} from "~/icons/grid-mode-outline";
 
 export default function ToolBox(props) {
   const { type = 'left' } = props;
@@ -118,12 +121,21 @@ export default function ToolBox(props) {
           </select>
         </div>
         <div className={`toolbox-item toolbox-layout ${type === 'right' ? 'mr-lg-0' : ''}`}>
-          <ALink href={{ pathname: getPathname(), query: { ...query, type: 'list' } }} scroll={false} className={`d-icon-mode-list btn-layout ${gridType === 'list' ? 'active' : ''}`}></ALink>
-          <ALink href={{ pathname: getPathname(), query: { ...query, type: 'grid' } }} scroll={false} className={`d-icon-mode-grid btn-layout ${gridType !== 'list' ? 'active' : ''}`}></ALink>
+          <ALink href={{ pathname: getPathname(), query: { ...query, type: 'list' } }} scroll={false} className={`btn-layout ${gridType === 'list' ? 'active' : ''}`}>
+            <div className="btn-content">
+              <InlineSVG className="icon-24" src={listModeOutlineIcon} />
+            </div>
+          </ALink>
+          <ALink href={{pathname: getPathname(), query: {...query, type: 'grid'}}} scroll={false} className={`btn-layout ${gridType !== 'list' ? 'active' : ''}`}>
+            <div className="btn-content">
+              <InlineSVG className="icon-24" src={gridModeOutlineIcon}/>
+            </div>
+          </ALink>
         </div>
 
         {type === 'right' ? (
-          <ALink href="#" className="toolbox-item right-sidebar-toggle btn btn-sm btn-outline btn-primary btn-rounded btn-icon-right d-lg-none" onClick={showSidebar}>
+          <ALink href="#"
+                 className="toolbox-item right-sidebar-toggle btn btn-sm btn-outline btn-primary btn-rounded btn-icon-right d-lg-none" onClick={showSidebar}>
             Filter<i className="d-icon-arrow-left"></i>
           </ALink>
         ) : (

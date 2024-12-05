@@ -3,6 +3,11 @@ import { useRouter } from 'next/router';
 import SlideToggle from 'react-slide-toggle';
 import ALink from '~/components/features/custom-link';
 import {orderCategories} from "~/utils";
+import InlineSVG from "react-inlinesvg";
+import {categoriesIcons} from "~/utils/data/categories-icons";
+import {chevronForwardOutlineIcon} from "~/icons/chevron-forward-outline";
+import {searchOutlineIcon} from "~/icons/search-outline";
+import clsx from "clsx";
 
 
 function MobileMenu({ categoryTree }) {
@@ -67,7 +72,7 @@ function MobileMenu({ categoryTree }) {
           <input type="text" className="form-control" name="search" autoComplete="off" value={search} onChange={onSearchChange}
             placeholder="Поиск..." required />
           <button className="btn btn-search" type="submit">
-            <i className="d-icon-search"></i>
+            <InlineSVG className="icon-24" src={searchOutlineIcon} />
           </button>
         </form>
 
@@ -87,15 +92,24 @@ function MobileMenu({ categoryTree }) {
                     <SlideToggle duration={300} collapsed key={index} >
                       {({ onToggle, setCollapsibleElement, toggleState }) => (
                         <li className={`submenu ${toggleState === 'EXPANDED' ? 'show' : ''}`}>
-                          <div onClick={e => { e.stopPropagation(); e.preventDefault(); onToggle(); }} className="toggle-div">
-                            <i style={{ fontSize: `${category.icon.split('||')[1] || '1.8'}rem` }} className={category.icon.split('||')[0] || 'd-icon-arrow-right'}></i>{category.name}
-                            <span className={`toggle-btn ${toggleState.toLowerCase()}`}></span>
+                          <div onClick={e => { e.stopPropagation(); e.preventDefault(); onToggle(); }} className="toggle-div menu-item menu-item-toggle">
+                            <div className="menu-item-left">
+                              <InlineSVG className="menu-category-icon menu-category-icon-toggle" src={categoriesIcons[category.icon?.split('||')[0]]?.src || categoriesIcons['default']?.src} />
+                              {category.name}
+                            </div>
+                            {(!!category.children?.length) && (
+                              <div>
+                                <InlineSVG className={clsx('menu-item-arrow', {
+                                  'menu-item-arrow-expanded': toggleState === 'EXPANDED'
+                                })} src={chevronForwardOutlineIcon}/>
+                              </div>
+                            )}
                           </div>
 
                           <div ref={setCollapsibleElement} style={{ overflow: 'hidden' }}>
-                            <ul style={{ display: "block", background: "#232323" }}>
+                            <ul style={{ display: "block", paddingLeft: '1rem' }}>
                               {category.children.sort(orderCategories).map((item, index) => (
-                                <li key={index}><ALink href={{ pathname: `/${item.handle}` }} scroll={false}>{item.name}</ALink></li>
+                                <li key={index}><ALink style={{fontWeight: 400}} href={{ pathname: `/${item.handle}` }} scroll={false}>{item.name}</ALink></li>
                               ))}
                             </ul>
                           </div>
@@ -104,8 +118,16 @@ function MobileMenu({ categoryTree }) {
                     </SlideToggle>
                     :
                     <li key={index}>
-                      <ALink href={{ pathname: `/${category.handle}` }}>
-                        <i style={{ fontSize: `${category.icon.split('||')[1] || '1.8'}rem` }} className={category.icon.split('||')[0] || 'd-icon-arrow-right'}></i>{category.name}
+                      <ALink className="menu-item menu-item-toggle" href={{ pathname: `/${category.handle}` }}>
+                        <div className="menu-item-left">
+                          <InlineSVG className="menu-category-icon menu-category-icon-toggle" src={categoriesIcons[category.icon?.split('||')[0]]?.src || categoriesIcons['default']?.src} />
+                          {category.name}
+                        </div>
+                        {(!!category.children?.length) && (
+                          <div>
+                            <InlineSVG className="menu-item-arrow" src={chevronForwardOutlineIcon}/>
+                          </div>
+                        )}
                       </ALink>
                     </li>
                 ))}

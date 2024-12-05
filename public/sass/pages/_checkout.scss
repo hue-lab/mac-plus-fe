@@ -188,6 +188,7 @@
     font-size: 1.4rem;
     letter-spacing: 0;
     white-space: normal;
+    line-height: 1.4;
   }
 
   .btn-order {
@@ -412,11 +413,14 @@
 @include breakpoints.mq(xs, 'max') {
   .order-table {
     tbody {
+      .product-name {
+        padding-right: .5rem;
+      }
 
       .product-name,
       .product-total {
         padding-bottom: 2rem;
-        line-height: 1.2;
+        line-height: 1.4;
       }
 
       >tr:nth-child(2) td {

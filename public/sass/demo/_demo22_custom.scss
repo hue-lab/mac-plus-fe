@@ -62,7 +62,9 @@ Demo 22
 }
 .category-dropdown {
   min-width: 28rem;
+  height: 100%;
   > a {
+    height: 100%;
     span {
       flex: 1;
       font-weight: 500;
@@ -152,8 +154,13 @@ Demo 22
   overflow: hidden;
   border-radius: 2rem;
   .banner img {
-    height: 46rem;
+    width: 100%;
+    aspect-ratio: 5 / 2;
     object-fit: cover;
+    @media only screen and (max-width : 480px) {
+      aspect-ratio: 1 / 1;
+    }
+
   }
   .banner-subtitle {
     font-size: 2em;
@@ -603,7 +610,7 @@ Demo 22
 
 // Shop page
 .breadcrumb-sm {
-  padding: 1.7rem 0 1.6rem;
+  padding: 1.6rem 0;
 }
 .shop-banner {
   padding: 8.1rem 1.5rem 7.7rem 9.1%;
@@ -647,7 +654,7 @@ Demo 22
 
 // Product page
 .product-navigation {
-  padding: 1.2rem 2px 0.3rem;
+  padding: 0 2px 0.3rem;
 }
 
 .single-product .product-wrapper .owl-carousel {
@@ -693,15 +700,15 @@ Demo 22
 
 .categories-link {
   &-mobile {
-    display: none;
+    display: none !important;
     @include breakpoints.mq(lg, max) {
-      display: inline;
+      display: inline !important ;
     }
   }
   &-desktop {
-    display: inline;
+    display: inline !important;
     @include breakpoints.mq(lg, max) {
-      display: none;
+      display: none !important;
     }
   }
 }

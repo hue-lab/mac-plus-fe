@@ -1,7 +1,6 @@
 import { persistReducer } from "redux-persist";
 import storage from 'redux-persist/lib/storage';
 import { toast } from 'react-toastify';
-import { takeEvery } from 'redux-saga/effects';
 
 import CartPopup from '~/components/features/product/common/cart-popup';
 
@@ -62,16 +61,13 @@ function cartReducer( state = initialState, action ) {
 }
 
 export const cartActions = {
-    addToCart: product => ( { type: actionTypes.ADD_TO_CART, payload: { product } } ),
+    addToCart: product => {
+        toast( <CartPopup product={ product } /> );
+        return { type: actionTypes.ADD_TO_CART, payload: { product } }
+    },
     removeFromCart: product => ( { type: actionTypes.REMOVE_FROM_CART, payload: { product } } ),
     updateCart: products => ( { type: actionTypes.UPDATE_CART, payload: { products } } )
 };
-
-export function* cartSaga() {
-    yield takeEvery( actionTypes.ADD_TO_CART, function* saga( e ) {
-        toast( <CartPopup product={ e.payload.product } /> );
-    } )
-}
 
 const persistConfig = {
     keyPrefix: "riode-",

@@ -18,7 +18,7 @@ export const orderCategories = (a, b) => {
 
 export const pagedPathname = (path, page) => {
   const pageSegment = page > 1 ? `page-is-${page}` : '';
-  return `/${path.split('/page-is-')[0]}/${pageSegment}`;
+  return `${path.split('/page-is-')[0]}/${pageSegment}`.replace('//', '/');
 };
 
 export const parseFilterString = (str) => {
