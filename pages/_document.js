@@ -79,8 +79,6 @@ export default function Document() {
         }}/>
         <base href="/"></base>
         <link rel="icon" href="images/icons/favicon.ico"/>
-        <link rel="stylesheet" type="text/css" href="vendor/owl-carousel/owl.carousel.min.css"/>
-        <Script strategy="beforeInteractive" src="js/jquery-3.2.1.slim.min.js"/>
         <meta name="google-site-verification" content="zkGKtNXlNUPH0rhw2sORnyS0J9USz7B6xXI0Gey3NwE"/>
       </Head>
 

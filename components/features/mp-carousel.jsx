@@ -16,7 +16,9 @@ export default function MpCarousel({
   onSlideChange,
   spaceBetween = 30,
   length = 0,
-  currIndex = 0
+  currIndex = 0,
+  breakpoints = undefined,
+  slidesPerView = 1
 }) {
   const swiperRef = useRef(null);
 
@@ -44,8 +46,9 @@ export default function MpCarousel({
           clickable: true,
           horizontalClass: 'mp-carousel-pagination',
         } : undefined}
+        breakpoints={breakpoints}
         spaceBetween={spaceBetween}
-        slidesPerView={1}
+        slidesPerView={slidesPerView}
         scrollbar={{draggable: true}}
         onSlideChange={handleSlideChange}
       >

@@ -977,8 +977,8 @@
     @include core.text-block();
     white-space: normal;
     word-break: break-all;
-    @include core.print_css(product, list-sm, name);
     padding-right: 0 !important;
+    @include core.print_css(product, list-sm, name);
 
     &:hover {
       color: variables.$primary-color;
