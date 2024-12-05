@@ -3,6 +3,7 @@ module.exports = {
         silenceDeprecations: ['legacy-js-api'],
     },
     images: {
+        minimumCacheTTL: 31536000,
         remotePatterns: [
             {
                 protocol: 'https',
