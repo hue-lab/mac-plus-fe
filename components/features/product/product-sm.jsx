@@ -12,9 +12,7 @@ function SmallProduct(props) {
     <div className={`product product-list-sm ${adClass}`}>
       <figure className="product-media">
         <ALink href={`/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`}>
-          <Image alt={product.seo?.seoImage[0]?.imageAlt || product.name || ''} title={product.seo?.seoTitle || product.name || ''} src={getImgPath(product.media[0])} width="100" height="100" style={{ objectFit: 'contain', padding: '0.75rem 1.25rem 1.25rem' }} />
-
-          {product.media.length >= 2 ? <Image alt={product.seo?.seoImage[0]?.imageAlt || product.name || ''} title={product.seo?.seoTitle || product.name || ''} src={getImgPath(product.media[1])} width="100" height="100" style={{ objectFit: 'contain', padding: '0.75rem 1.25rem 1.25rem' }} /> : ''}
+          <Image alt={product.seo?.seoImage[0]?.imageAlt || product.name || ''} title={product.seo?.seoTitle || product.name || ''} src={getImgPath(product.media[0])} width="100" height="100" style={{ objectFit: 'contain', padding: '0.2rem' }} />
         </ALink>
       </figure>
 

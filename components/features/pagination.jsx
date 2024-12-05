@@ -37,7 +37,7 @@ function Pagination(props) {
                                     <span className="page-item dots">...</span>
                                     <li className={`page-item ${page === item ? 'active' : ''}`} >
                                         <ALink className="page-link" href={page === item ? '#' : {pathname: pagedPathname(props.fullPath, item), query: { ...query } }} scroll={false}>
-                                            {item}{page === item && <span className="sr-only">(current)</span>}
+                                            {item}
                                         </ALink>
                                     </li>
                                 </React.Fragment> :
@@ -45,7 +45,7 @@ function Pagination(props) {
                                     <React.Fragment key={`page-${index}`}>
                                         <li className={`page-item ${page === item ? 'active' : ''}`}>
                                             <ALink className="page-link" href={page === item ? '#' : {pathname: pagedPathname(props.fullPath, item), query: { ...query } }} scroll={false}>
-                                                {item}{page === item && <span className="sr-only">(current)</span>}
+                                                {item}
                                             </ALink>
                                         </li>
                                         <span className="page-item dots">...</span>
@@ -53,7 +53,7 @@ function Pagination(props) {
                                     :
                                     <li className={`page-item ${page === item ? 'active' : ''}`} key={`page-${index}`}>
                                         <ALink className="page-link" href={page === item ? '#' : {pathname: pagedPathname(props.fullPath, item), query: { ...query } }} scroll={false}>
-                                            {item}{page === item && <span className="sr-only">(current)</span>}
+                                            {item}
                                         </ALink>
                                     </li>
 

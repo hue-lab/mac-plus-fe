@@ -36,7 +36,7 @@ export default function ProductItem({ product, featured, deliveryMethods, seoFie
   const categoryString = `${product.category.name}`;
   const headerString = `${product.name}`;
   const [modalState, setModalState] = useState(false);
-  const [phoneValue, setPhoneValue] = useState();
+  const [phoneValue, setPhoneValue] = useState('+375');
   const [checkboxValue, setCheckboxValue] = useState(false);
   const [btn, setBtn] = useState('Отправить');
   const [fastFormDone, setFastFormDone] = useState(false);
@@ -205,7 +205,7 @@ export default function ProductItem({ product, featured, deliveryMethods, seoFie
                   <input type="text" className="form-control name" name="name" placeholder="Ваше имя" />
                 </div>
                 <div className="input-wrapper input-wrapper-inline input-wrapper-round">
-                  <PhoneInput country="RU" labels={ru} placeholder="Номер телефона" name="phone" className="form-control phone" value={phoneValue} onChange={setPhoneValue} />
+                  <PhoneInput country="RU" labels={ru} placeholder="Номер телефона" name="phone" defaultCountry="BY" className="form-control phone" value={phoneValue} onChange={setPhoneValue} />
                 </div>
                 <div className="form-checkbox justify-content-center">
                   <input type="checkbox" value={checkboxValue} onChange={handleCheckboxChange} className="custom-checkbox" id="hide-newsletter-popup" name="agreement" required />

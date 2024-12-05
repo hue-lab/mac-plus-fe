@@ -1,5 +1,10 @@
-import { useEffect } from 'react';
+import {useEffect} from 'react';
 import ALink from '~/components/features/custom-link';
+import InlineSVG from "react-inlinesvg";
+import {homeOutlineBaseIcon} from "~/icons/home-outline-base";
+import {listOutlineIcon} from "~/icons/list-outline";
+import {bagOutlineIcon} from "~/icons/bag-outline";
+import {bookOutlineIcon} from "~/icons/book-outline";
 
 export default function StickyFooter() {
   let tmp = 0;
@@ -59,20 +64,20 @@ export default function StickyFooter() {
 
   return (
     <div className="sticky-footer sticky-content fix-bottom">
-      <ALink href="/" className="sticky-link active">
-        <i className="d-icon-home"></i>
+      <ALink href="/" className="sticky-link">
+        <InlineSVG className="icon-24" src={homeOutlineBaseIcon} />
         <span>Главная</span>
       </ALink>
       <ALink href="/categories" className="sticky-link">
-        <i className="d-icon-bars"></i>
+        <InlineSVG style={{transform: 'scale(1.2)'}} className="icon-24" src={listOutlineIcon} />
         <span>Каталог</span>
       </ALink>
       <ALink href="/blog" className="sticky-link">
-        <i className="d-icon-star"></i>
+        <InlineSVG className="icon-24" src={bookOutlineIcon} />
         <span>Блог</span>
       </ALink>
       <ALink href="/pages/cart" className="sticky-link">
-        <i className="d-icon-bag"></i>
+        <InlineSVG style={{transform: 'scale(1.1)'}} className="icon-24" src={bagOutlineIcon} />
         <span>Корзина</span>
       </ALink>
     </div>

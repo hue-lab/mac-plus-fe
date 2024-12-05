@@ -36,9 +36,9 @@ export default function Quantity({ qty = 1, ...props }) {
 
   return (
     <div className={adClass}>
-      <button className='quantity-minus d-icon-minus' onClick={minusQuantity}></button>
+      <button className='quantity-minus' style={{fontSize: '1.6rem'}} onClick={minusQuantity}>-</button>
       <input className='quantity form-control' type='number' min="1" max={props.max} value={quantity} onChange={changeQty} />
-      <button className='quantity-plus d-icon-plus' onClick={plusQuantity}></button>
+      <button className='quantity-plus' style={{fontSize: '1.6rem'}} onClick={plusQuantity}>+</button>
     </div>
   )
 }

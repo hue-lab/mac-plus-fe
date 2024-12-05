@@ -66,9 +66,9 @@ export default function ContactUs({ fields }) {
               <InlineSVG className="breadcrumb-arrow" src={chevronForwardOutlineIcon}/>
             </li>
             <li>
-              <ALink href="/blog" className="active">
+              <span className="active">
                 Контакты
-              </ALink>
+              </span>
             </li>
           </ul>
         </div>

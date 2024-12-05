@@ -6,6 +6,8 @@ import MediaLightBox from '~/components/partials/product/light-box';
 import {getImgPath} from '~/utils';
 import {SwiperSlide} from "swiper/react";
 import MpCarousel from "~/components/features/mp-carousel";
+import InlineSVG from "react-inlinesvg";
+import {expandOutlineIcon} from "~/icons/expand-outline";
 
 export default function MediaFive(props) {
   const { product, adClass = '' } = props;
@@ -69,7 +71,7 @@ export default function MediaFive(props) {
 
 
       <div className="product-image-full" onClick={openLightBox}>
-        <i className="d-icon-zoom"></i>
+        <InlineSVG className="icon-24" src={expandOutlineIcon} />
       </div>
 
       <ThumbTwo
