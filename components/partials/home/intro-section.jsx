@@ -26,6 +26,10 @@ function IntroSection({ slides }) {
             hasNavigation={true}
             hasPagination={true}
             navOutside={true}
+            autoplay={{
+              delay: 5000,
+              pauseOnMouseEnter: true
+            }}
           >
             {(slides || []).map((item, index) => (
               <SwiperSlide key={index}>

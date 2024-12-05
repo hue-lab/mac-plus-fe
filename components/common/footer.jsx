@@ -80,13 +80,11 @@ export default function Footer({ fields, categoryTree, footerNav }) {
               <div className="widget ml-lg-4">
                 <span className="widget-title">Категории</span>
                 <ul className="widget-body">
-                  {categoryTree.sort(orderCategories).map((item, index) => {
-                    return (
-                      <li key={item._id}>
-                        <ALink href={`/shop/?category=${item._id}`}>{item.name}</ALink>
-                      </li>
-                    );
-                  })}
+                  {categoryTree.sort(orderCategories).map((item, index) => (
+                    <li key={index}>
+                      <ALink href={`/${item.handle}`}>{item.name}</ALink>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>

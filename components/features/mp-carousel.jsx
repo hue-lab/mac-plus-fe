@@ -1,7 +1,7 @@
 import {Swiper} from "swiper/react";
 import clsx from "clsx";
 import {useEffect, useRef} from "react";
-import {Navigation, Pagination} from "swiper/modules";
+import {Navigation, Pagination, Autoplay} from "swiper/modules";
 import InlineSVG from "react-inlinesvg";
 import {chevronBackOutlineIcon} from "~/icons/chevron-back-outline";
 import {chevronForwardOutlineIcon} from "~/icons/chevron-forward-outline";
@@ -17,7 +17,8 @@ export default function MpCarousel({
   length = 0,
   currIndex = 0,
   breakpoints = undefined,
-  slidesPerView = 1
+  slidesPerView = 1,
+  autoplay = undefined
 }) {
   const swiperRef = useRef(null);
 
@@ -32,7 +33,7 @@ export default function MpCarousel({
       <Swiper
         className="mp-carousel-swiper"
         onSwiper={(swiper) => swiperRef.current = swiper}
-        modules={[Navigation, Pagination]}
+        modules={[Autoplay, Navigation, Pagination]}
         pagination={hasPagination ? {
           clickable: true,
           horizontalClass: 'mp-carousel-pagination',
@@ -42,6 +43,7 @@ export default function MpCarousel({
         slidesPerView={slidesPerView}
         scrollbar={{draggable: true}}
         onSlideChange={onSlideChange}
+        autoplay={autoplay}
       >
         {children}
       </Swiper>

@@ -11,7 +11,7 @@ export const categoriesIcons = {
   ' d-icon-tcard': flashIcon,
   'd-icon-mobile': phoneIcon,
   'd-icon-laptop': laptopIcon,
-  'fas fa-tablet-alt': tabletIcon,
+  'fa-tablet-alt': tabletIcon,
   'd-icon-watch-round': watchIcon,
   ' d-icon-headphone': headsetIcon,
   'd-icon-play-circle': tvIcon,
