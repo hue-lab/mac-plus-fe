@@ -1,6 +1,6 @@
 import {Swiper} from "swiper/react";
 import clsx from "clsx";
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import {Navigation, Pagination} from "swiper/modules";
 import InlineSVG from "react-inlinesvg";
 import {chevronBackOutlineIcon} from "~/icons/chevron-back-outline";
@@ -20,11 +20,19 @@ export default function MpCarousel({
 }) {
   const swiperRef = useRef(null);
 
+  const [innerIndex, setInnerIndex] = useState(swiperRef.current?.realIndex || 0);
+
   useEffect(() => {
     if (currIndex !== swiperRef.current?.realIndex) {
       swiperRef.current?.slideTo(currIndex);
+      setInnerIndex(currIndex);
     }
   }, [currIndex]);
+
+  function handleSlideChange (e) {
+    setInnerIndex(e.realIndex || 0)
+    onSlideChange?.(e.realIndex || 0)
+  }
 
   return (
     <div className={clsx('mp-carousel-wrapper', className)}>
@@ -33,12 +41,13 @@ export default function MpCarousel({
         onSwiper={(swiper) => swiperRef.current = swiper}
         modules={[Navigation, Pagination]}
         pagination={hasPagination ? {
-          clickable: true
+          clickable: true,
+          horizontalClass: 'mp-carousel-pagination',
         } : undefined}
         spaceBetween={spaceBetween}
         slidesPerView={1}
         scrollbar={{draggable: true}}
-        onSlideChange={onSlideChange}
+        onSlideChange={handleSlideChange}
       >
         {children}
       </Swiper>
@@ -49,7 +58,7 @@ export default function MpCarousel({
           <button
             onClick={() => swiperRef.current?.slidePrev()}
             className={clsx('mp-carousel-navigation-item', {
-              'mp-carousel-navigation-item-disabled': currIndex <= 0
+              'mp-carousel-navigation-item-disabled': innerIndex <= 0
             })}
           >
             <InlineSVG
@@ -60,7 +69,7 @@ export default function MpCarousel({
           <button
             onClick={() => swiperRef.current?.slideNext()}
             className={clsx('mp-carousel-navigation-item', {
-              'mp-carousel-navigation-item-disabled': currIndex >= length - 1
+              'mp-carousel-navigation-item-disabled': innerIndex >= length - 1
             })}
           >
             <InlineSVG
