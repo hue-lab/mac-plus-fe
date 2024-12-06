@@ -16,5 +16,15 @@ module.exports = {
     trailingSlash: true,
     env: {
         API_HOST: 'https://api.macplus.by',
-    }
+    },
+    redirects: async () => {
+        return [
+            {
+                source: '/:path*',
+                has: [{ type: 'header', key: 'host', value: 'www.macplus.by' }],
+                destination: 'https://macplus.by/:path*',
+                permanent: true,
+            },
+        ];
+    },
 }

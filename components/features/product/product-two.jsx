@@ -19,12 +19,11 @@ function ProductTwo(props) {
   };
 
   return (
-    <div itemProp="itemListElement" itemScope itemType="https://schema.org/Offer" className={`product ${adClass}`}>
+    <div className={`product ${adClass}`}>
       <figure className="product-media">
         <ALink href={`/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`}>
           <div style={{padding: '1rem', aspectRatio: 'square'}}>
             <Image
-              itemProp="image"
               alt={product.seo?.seoImage[0]?.imageAlt || product.name || ''}
               title={product.seo?.seoTitle || product.name || ''}
               src={getImgPath(product.seo?.seoImage[0]?.imageName)}
@@ -42,15 +41,15 @@ function ProductTwo(props) {
         </div>
 
         <div className="product-action">
-          <ALink href={`/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`} className="btn-product btn-quickview" title="Quick View">
+          <ALink href={`https://macplus.by/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`} className="btn-product btn-quickview" title="Quick View">
             Подробнее
           </ALink>
         </div>
       </figure>
 
       <div className="product-details" style={{ paddingBottom: '1rem' }}>
-        <span itemProp="name" className="product-name">
-          <ALink itemProp="url" href={`/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`}>
+        <span className="product-name">
+          <ALink href={`/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`}>
             {product.name}
           </ALink>
         </span>
@@ -58,17 +57,14 @@ function ProductTwo(props) {
         <div className="product-price shop-price">
           {product.discount > 0 ? (
             <>
-              <meta itemProp="price" content={product.totalPrice} />
               <ins className="new-price">от {toDecimal(product.totalPrice)} BYN</ins>
               <del className="old-price">{toDecimal(product.price)} BYN</del>
             </>
           ) : (
             <>
-              <meta itemProp="price" content={product.price} />
               <ins className="new-price">от {toDecimal(product.price)} BYN</ins>
             </>
           )}
-          <meta itemProp="priceCurrency" content="BYN" />
         </div>
       </div>
     </div>

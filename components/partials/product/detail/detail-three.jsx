@@ -82,7 +82,7 @@ function DetailThree(props) {
 
   return (
     <div className={`product-details ${isSticky ? 'sticky' : ''} ${adClass}`}>
-      <h1 className="product-name" itemProp="name">
+      <h1 className="product-name">
         {productName || product.name}
       </h1>
 
@@ -90,23 +90,20 @@ function DetailThree(props) {
         Категория: <span className="product-brand">{product.category.name}</span>
       </div>
 
-      <div itemProp="offers" itemScope itemType="https://schema.org/Offer" className="product-price">
+      <div className="product-price">
         {product.discount > 0 ? (
           <>
-            <meta itemProp="price" content={product.totalPrice} />
             <ins className="new-price">от {toDecimal(product.totalPrice)} BYN</ins>
             <del className="old-price">{toDecimal(product.price)} BYN</del>
           </>
         ) : (
           <>
-            <meta itemProp="price" content={product.price} />
             <ins className="new-price">от {toDecimal(product.price)} BYN</ins>
           </>
         )}
-        <meta itemProp="priceCurrency" content="BYN" />
       </div>
 
-      <p className="product-short-desc" itemProp="description">
+      <p className="product-short-desc">
         {product.description}
       </p>
 

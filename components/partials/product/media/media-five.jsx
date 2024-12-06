@@ -59,7 +59,6 @@ export default function MediaFive(props) {
             <Image
               width={1600}
               height={1080}
-              itemProp="image"
               src={getImgPath(image.imageName)}
               alt={`${image.imageAlt || product.name || ''}-${index}`}
               title={`${image.imageAlt || product.name || ''}-${index}`}
