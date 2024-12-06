@@ -37,18 +37,11 @@ export default function Category({ banner, products, filters, category, page, fi
 
   const jsonLd = {
     '@context': 'https://schema.org/',
-    '@type': 'OfferCatalog',
-    name: category.name,
-    description: interpolatedDescription,
-    itemListElement: (products?.data || []).map((item) => ({
-      '@type': 'Offer',
-      name: item.name,
-      description: item.description,
+    '@type': 'ItemList',
+    itemListElement: (products?.data || []).map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
       url: `${process.env.NEXT_PUBLIC_HOST || 'https://macplus.by'}/${item.categoryHandle ? item.categoryHandle + '/' : ''}${item.seo?.seoUrl || '#'}`,
-      price: item.discount > 0 ? item.totalPrice : item.price,
-      priceCurrency: 'BYN',
-      image: item.seo?.seoImage[0]?.imageName ? getImgPath(item.seo?.seoImage[0]?.imageName) : undefined,
-      availability: item.isStock ? 'In stock' : 'Pre-order',
     })),
   };
 
@@ -75,7 +68,7 @@ export default function Category({ banner, products, filters, category, page, fi
 
       <h1 className="d-none">{interpolatedHeader}</h1>
 
-      <div itemScope itemType="https://schema.org/OfferCatalog" className="page-content mb-10 pb-2">
+      <div className="page-content mb-10 pb-2">
         <div className="container">
           <ul className="breadcrumb breadcrumb-sm">
             <li>
@@ -93,7 +86,7 @@ export default function Category({ banner, products, filters, category, page, fi
               </ALink>
               <InlineSVG className="breadcrumb-arrow" src={chevronForwardOutlineIcon} />
             </li>
-            {category?.name && <li itemProp="name">
+            {category?.name && <li>
               <span className="breadcrumb-latest">{category.name}</span>
             </li>}
           </ul>

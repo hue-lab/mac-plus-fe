@@ -89,19 +89,39 @@ export default function ProductItem({ product, featured, deliveryMethods, seoFie
       });
   };
 
+  const jsonLd = {
+    '@context': 'https://schema.org/',
+    '@type': 'Product',
+    'name': product?.name,
+    'image': ogImage && getImgPath(ogImage.imageName),
+    'description': interpolatedDescription,
+    'offers': {
+      '@type': 'Offer',
+      'url': product && `https://macplus.by/${product.category?.handle ? product.category?.handle + '/' : ''}${product.seo?.seoUrl || '#'}`,
+      'price': product?.totalPrice || product?.price,
+      'priceCurrency': 'BYN',
+      'availability': 'https://schema.org/InStock',
+      "seller": {
+        "@type": "Organization",
+        "name": "Интернет - магазин техники Apple"
+      },
+    }
+  };
+
   return (
     <main className="main single-product">
       <Head>
         <title>{interpolatedTitle}</title>
-        <meta property="og:title" content={interpolatedTitle} />
-        <meta name="description" content={interpolatedDescription} />
-        <meta property="og:description" content={interpolatedDescription} />
-        <meta name="keywords" content={mainSeo?.keywords || product.seo?.seoKeywords?.join(', ')} />
-        {ogImage && <meta property="og:image" content={getImgPath(ogImage.imageName)} />}
+        <meta property="og:title" content={interpolatedTitle}/>
+        <meta name="description" content={interpolatedDescription}/>
+        <meta property="og:description" content={interpolatedDescription}/>
+        <meta name="keywords" content={mainSeo?.keywords || product.seo?.seoKeywords?.join(', ')}/>
+        {ogImage && <meta property="og:image" content={getImgPath(ogImage.imageName)}/>}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(jsonLd)}}/>
       </Head>
 
       {!!product ? (
-        <div itemScope itemType="https://schema.org/Product" className={`page-content mb-8`}>
+        <div className={`page-content mb-8`}>
           <div className="container skeleton-body">
             <div className="product-navigation">
               <ul className="breadcrumb breadcrumb-sm">
@@ -126,7 +146,7 @@ export default function ProductItem({ product, featured, deliveryMethods, seoFie
                   </ALink>
                   <InlineSVG className="breadcrumb-arrow" src={chevronForwardOutlineIcon}/>
                 </li>
-                {product.name && <li itemProp="name">
+                {product.name && <li>
                   <span className="breadcrumb-latest">{product.name}</span>
                 </li>}
               </ul>

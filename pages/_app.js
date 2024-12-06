@@ -11,6 +11,73 @@ import Head from 'next/head'
 
 const App = ({Component, pageProps}) => {
   const store = useStore();
+  const layoutFields = pageProps?.layoutFields;
+
+  const jsonLd = [
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "url": "https://macplus.by/",
+      "potentialAction":
+        {
+          "@type": "SearchAction",
+          "target": "https://macplus.by/shop/?search={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+    },
+    {
+      "@context": "http://schema.org",
+      "@type": "Organization",
+      "url": "https://macplus.by/",
+      "logo": "https://macplus.by/images/home/logo.png",
+      "name": "Интернет - магазин техники Apple",
+      "email": `${layoutFields?.email}`,
+      "address":
+        {
+          "addressLocality": `${layoutFields?.address}`
+        },
+      "contactPoint": [{
+        "@type": "ContactPoint",
+        "telephone": `${layoutFields?.phone}`,
+        "contactType": "customer service"
+      },
+      {
+        "@type": "ContactPoint",
+        "telephone": `${layoutFields?.phone}`,
+        "contactType": "customer service"
+      }],
+      "sameAs" : [
+        `${layoutFields?.instagram}`
+      ]
+    },
+    {
+      "@context": "http://schema.org",
+      "@type": "Store",
+      "name": "Интернет - магазин техники Apple",
+      "image": "https://macplus.by/images/home/logo.png",
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Понедельник",
+            "Вторник",
+            "Среда",
+            "Четверг",
+            "Пятница",
+            "Суббота",
+          ],
+          "opens": "09:00",
+          "closes": "20:00"
+        }
+      ],
+      "telephone": `${layoutFields?.phone}`,
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Минск",
+        "addressCountry": "Беларусь"
+      }
+    }
+  ];
 
   return (
     <Provider store={store}>
@@ -40,7 +107,8 @@ const App = ({Component, pageProps}) => {
             "Интернет-магазин электроники в Беларуси"
           }
         />
-        <meta name="author" content="D-THEMES"/>
+        <meta name="author" content="Macplus"/>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(jsonLd)}}/>
       </Head>
       <Layout
         categoryTree={pageProps.categoryTree}
