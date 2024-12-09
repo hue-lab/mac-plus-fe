@@ -44,7 +44,7 @@ function IntroSection({ slides }) {
                       height={920}
                       priority={index === 0}
                       loading={index === 0 ? 'eager' : 'lazy'}
-                      sizes="(max-width: 768px) 120vw, (max-width: 1200px) 90vw, 90vw"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1400px"
                       quality={100}
                     />
                   </div>
