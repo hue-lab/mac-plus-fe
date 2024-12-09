@@ -44,6 +44,8 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
     getSeoByUrl(`/${fullPath}`)
   ]);
 
+  const searchValue = (path === "shop" && search) ? search : null
+
   const item =
     path === "shop"
       ? {
@@ -187,6 +189,7 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
     fullPath: fullPath,
     mainSeo: seoMainMeta,
     seoFields,
+    searchValue,
   };
 };
 
@@ -204,6 +207,7 @@ export default function GenericCatalogueItem({
   fullPath,
   mainSeo,
   seoFields,
+  searchValue,
 }) {
   return type === "product" ? (
     <ProductItem
@@ -215,6 +219,7 @@ export default function GenericCatalogueItem({
     />
   ) : (
     <Category
+      searchValue={searchValue}
       page={page}
       banner={banner}
       filters={filters}

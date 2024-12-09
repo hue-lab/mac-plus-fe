@@ -16,11 +16,9 @@ function MobileMenu({ categoryTree }) {
 
   useEffect(() => {
     window.addEventListener('resize', hideMobileMenuHandler);
-    document.querySelector("body").addEventListener("click", onBodyClick);
 
     return () => {
       window.removeEventListener('resize', hideMobileMenuHandler);
-      document.querySelector("body").removeEventListener("click", onBodyClick);
     }
   }, [])
 
@@ -41,13 +39,6 @@ function MobileMenu({ categoryTree }) {
 
   function onSearchChange(e) {
     setSearch(e.target.value);
-  }
-
-  function onBodyClick(e) {
-    if (e.target.closest('.header-search')) return e.target.closest('.header-search').classList.contains('show-results') || e.target.closest('.header-search').classList.add('show-results');
-
-    document.querySelector('.header-search.show') && document.querySelector('.header-search.show').classList.remove('show');
-    document.querySelector('.header-search.show-results') && document.querySelector('.header-search.show-results').classList.remove('show-results');
   }
 
   function onSubmitSearchForm(e) {

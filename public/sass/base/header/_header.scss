@@ -746,13 +746,15 @@
 
 // Header search
 .live-search-list {
-  display: none;
+  display: block;
   left: 0;
   right: 0;
   width: auto;
   position: absolute;
   top: 110%;
   min-width: 200px;
+  max-height: 70dvh;
+  overflow-y: scroll;
   z-index: 1024;
   box-shadow: 7px 7px 20px 2px rgba(0, 0, 0, 0.1);
 
@@ -792,11 +794,11 @@
   }
 }
 
-.header-search.show-results .live-search-list {
+.header-search .live-search-list {
   display: block;
   max-height: 350px;
   overflow-y: auto;
-  font-weight: 400;
+  font-weight: 400 !important;
   border: 2px solid variables.$border-color;
   border-radius: 0.5rem;
 }
