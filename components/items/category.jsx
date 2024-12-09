@@ -116,11 +116,13 @@ export default function Category({ banner, products, filters, category, page, fi
                 </div>
               )}
 
-              <div className="search-results-value-title">
-                <span>Результаты по запросу <b>"{searchValue}"</b></span>
-              </div>
+              { searchValue && (
+                <div className="search-results-value-title">
+                  <span>Результаты по запросу <b>"{searchValue}"</b></span>
+                </div>
+              )}
 
-              <ProductListOne products={products} type="banner" fullPath={fullPath} />
+              <ProductListOne products={products} type="banner" fullPath={fullPath}/>
               {!isFilterApplied() && isNotFirstPage && !!(mainSeo?.content || category.content) && (
                 <>
                   <div className={`rendered-content ${!isCollapsed ? 'collapsed-content' : ''}`} dangerouslySetInnerHTML={{ __html: mainSeo?.content || category.content || '' }}></div>
