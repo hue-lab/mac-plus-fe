@@ -48,6 +48,9 @@ Demo 22
 
   &.hs-simple .btn-search {
     right: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 

@@ -1,20 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { debounceTime, Subject } from "rxjs";
+import React, {useEffect, useRef, useState} from "react";
+import {useRouter} from "next/router";
+import {debounceTime, Subject} from "rxjs";
 
 import ALink from "~/components/features/custom-link";
-import { autocomplete } from "~/utils/endpoints/autocomplete";
+import {autocomplete} from "~/utils/endpoints/autocomplete";
+import InlineSVG from "react-inlinesvg";
+import {searchOutlineIcon} from "~/icons/search-outline";
 
 export default function SearchForm() {
   const router = useRouter();
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
+  const [isFocused, setIsFocused] = useState(false);
   const onSearch = new Subject();
+  const inputRef = useRef(null);
 
   onSearch.pipe(debounceTime(400)).subscribe((res) => {
     searchProducts(res).then((searchRes) => {
       setSearchResult(searchRes);
-      setSearch(res);
     });
   });
 
@@ -26,59 +29,15 @@ export default function SearchForm() {
   }
 
   useEffect(() => {
-    document.querySelector("body").addEventListener("click", onBodyClick);
-
-    return () => {
-      document.querySelector("body").removeEventListener("click", onBodyClick);
-    };
-  }, []);
-
-  useEffect(() => {
-    document.querySelector(".header-search.show-results") &&
-      document.querySelector(".header-search.show-results").classList.remove("show-results");
+    setIsFocused(false);
+    if (inputRef.current) {
+      inputRef.current.value = '';
+      setSearch('');
+    }
   }, [router.pathname]);
 
-  function removeXSSAttacks(html) {
-    const SCRIPT_REGEX = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
-
-    // Removing the <script> tags
-    while (SCRIPT_REGEX.test(html)) {
-      html = html.replace(SCRIPT_REGEX, "");
-    }
-
-    // Removing all events from tags...
-    html = html.replace(/ on\w+="[^"]*"/g, "");
-
-    return {
-      __html: html,
-    };
-  }
-
-  function matchEmphasize(name) {
-    let regExp = new RegExp(search, "i");
-    return name.replace(regExp, (match) => "<span class='search-bar-bold'>" + match + "</span>");
-  }
-
-  function showSearchBox(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    e.currentTarget.closest(".header-search").classList.toggle("show");
-  }
-
-  function onBodyClick(e) {
-    if (e.target.closest(".header-search"))
-      return (
-        e.target.closest(".header-search").classList.contains("show-results") ||
-        e.target.closest(".header-search").classList.add("show-results")
-      );
-
-    document.querySelector(".header-search.show") &&
-      document.querySelector(".header-search.show").classList.remove("show");
-    document.querySelector(".header-search.show-results") &&
-      document.querySelector(".header-search.show-results").classList.remove("show-results");
-  }
-
   function onSearchChange(e) {
+    setSearch(e.target.value);
     onSearch.next(e.target.value);
   }
 
@@ -92,10 +51,22 @@ export default function SearchForm() {
     });
   }
 
+  function onBlur() {
+    setTimeout(() => {
+      setIsFocused(false);
+    }, 100)
+  }
+
   return (
     <div className="header-search hs-simple">
-      <form action="#" method="get" onSubmit={onSubmitSearchForm} className="input-wrapper">
+      <form
+        onFocus={() => setIsFocused(true)}
+        onBlur={onBlur}
+        onSubmit={onSubmitSearchForm}
+        className="input-wrapper"
+      >
         <input
+          ref={inputRef}
           type="text"
           className="form-control"
           name="search"
@@ -103,14 +74,13 @@ export default function SearchForm() {
           onChange={(e) => onSearchChange(e)}
           placeholder="Поиск..."
           required
-          onClick={showSearchBox}
         />
 
         <button className="btn btn-search" type="submit">
-          <i className="d-icon-search"></i>
+          <InlineSVG className="icon-24" src={searchOutlineIcon} />
         </button>
 
-        {!!searchResult?.length && (
+        {(!!searchResult?.length && isFocused && !!search?.length) && (
           <div className="live-search-list scrollable bg-white">
             {searchResult &&
               searchResult.map((product, index) => (
@@ -121,10 +91,9 @@ export default function SearchForm() {
                   className="autocomplete-suggestion"
                   key={`search-result-${index}`}
                 >
-                  <div
-                    className="search-name"
-                    dangerouslySetInnerHTML={removeXSSAttacks(matchEmphasize(product.name))}
-                  ></div>
+                  <div className="search-name">
+                    {product.name}
+                  </div>
                 </ALink>
               ))}
           </div>

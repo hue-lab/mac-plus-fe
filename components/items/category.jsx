@@ -8,7 +8,7 @@ import InlineSVG from "react-inlinesvg";
 import {chevronForwardOutlineIcon} from "~/icons/chevron-forward-outline";
 import {homeOutlineIcon} from "~/icons/home-outline";
 
-export default function Category({ banner, products, filters, category, page, filterObject, filtersPairs, fullPath, mainSeo, seoFields }) {
+export default function Category({ banner, products, filters, category, page, filterObject, filtersPairs, fullPath, mainSeo, seoFields, searchValue }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -115,6 +115,10 @@ export default function Category({ banner, products, filters, category, page, fi
                   </div>
                 </div>
               )}
+
+              <div className="search-results-value-title">
+                <span>Результаты по запросу <b>"{searchValue}"</b></span>
+              </div>
 
               <ProductListOne products={products} type="banner" fullPath={fullPath} />
               {!isFilterApplied() && isNotFirstPage && !!(mainSeo?.content || category.content) && (
