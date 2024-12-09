@@ -40,12 +40,11 @@ function IntroSection({ slides }) {
                       src={getImgPath(item.media)}
                       alt={item.seo?.imageAlt || item.title}
                       title={item.seo?.seoTitle || item.title}
-                      width={2360}
-                      height={920}
+                      width={1400}
+                      height={546}
                       priority={index === 0}
                       loading={index === 0 ? 'eager' : 'lazy'}
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1400px"
-                      quality={100}
                     />
                   </div>
                 </Link>
