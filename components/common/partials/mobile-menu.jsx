@@ -78,50 +78,62 @@ function MobileMenu({ categoryTree }) {
               <ul className="mobile-menu">
                 <li><ALink href="/">Главная</ALink></li>
                 <li><ALink href="/categories" className="menu-title">Каталог</ALink></li>
-                {categoryTree.sort(orderCategories).map((category, index) => (
-                  category.children.length ?
-                    <SlideToggle duration={300} collapsed key={index} >
-                      {({ onToggle, setCollapsibleElement, toggleState }) => (
-                        <li className={`submenu ${toggleState === 'EXPANDED' ? 'show' : ''}`}>
-                          <div onClick={e => { e.stopPropagation(); e.preventDefault(); onToggle(); }} className="toggle-div menu-item menu-item-toggle">
-                            <div className="menu-item-left">
-                              <InlineSVG className="menu-category-icon menu-category-icon-toggle" src={categoriesIcons[category.icon?.split('||')[0]]?.src || categoriesIcons['default']?.src} />
-                              {category.name}
-                            </div>
-                            {(!!category.children?.length) && (
-                              <div>
-                                <InlineSVG className={clsx('menu-item-arrow', {
-                                  'menu-item-arrow-expanded': toggleState === 'EXPANDED'
-                                })} src={chevronForwardOutlineIcon}/>
+                {categoryTree.sort(orderCategories).map((category, index) => {
+                  const iconKey = category.icon?.split('||')[0];
+                  const catIcon = categoriesIcons[iconKey]?.src;
+                  return (
+                    category.children.length ?
+                      <SlideToggle duration={300} collapsed key={index} >
+                        {({ onToggle, setCollapsibleElement, toggleState }) => (
+                          <li className={`submenu ${toggleState === 'EXPANDED' ? 'show' : ''}`}>
+                            <div onClick={e => { e.stopPropagation(); e.preventDefault(); onToggle(); }} className="toggle-div menu-item menu-item-toggle">
+                              <div className="menu-item-left">
+                                { catIcon ? (
+                                  <InlineSVG className="menu-category-icon menu-category-icon-toggle" src={catIcon}/>
+                                ) : (
+                                  <ion-icon class="menu-category-icon menu-category-icon-toggle" name={iconKey}></ion-icon>
+                                )}
+                                {category.name}
                               </div>
-                            )}
-                          </div>
+                              {(!!category.children?.length) && (
+                                <div>
+                                  <InlineSVG className={clsx('menu-item-arrow', {
+                                    'menu-item-arrow-expanded': toggleState === 'EXPANDED'
+                                  })} src={chevronForwardOutlineIcon}/>
+                                </div>
+                              )}
+                            </div>
 
-                          <div ref={setCollapsibleElement} style={{ overflow: 'hidden' }}>
-                            <ul style={{ display: "block", paddingLeft: '1rem' }}>
-                              {category.children.sort(orderCategories).map((item, index) => (
-                                <li key={index}><ALink style={{fontWeight: 400}} href={{ pathname: `/${item.handle}` }} scroll={false}>{item.name}</ALink></li>
-                              ))}
-                            </ul>
-                          </div>
-                        </li>
-                      )}
-                    </SlideToggle>
-                    :
-                    <li key={index}>
-                      <ALink className="menu-item menu-item-toggle" href={{ pathname: `/${category.handle}` }}>
-                        <div className="menu-item-left">
-                          <InlineSVG className="menu-category-icon menu-category-icon-toggle" src={categoriesIcons[category.icon?.split('||')[0]]?.src || categoriesIcons['default']?.src} />
-                          {category.name}
-                        </div>
-                        {(!!category.children?.length) && (
-                          <div>
-                            <InlineSVG className="menu-item-arrow" src={chevronForwardOutlineIcon}/>
-                          </div>
+                            <div ref={setCollapsibleElement} style={{ overflow: 'hidden' }}>
+                              <ul style={{ display: "block", paddingLeft: '1rem' }}>
+                                {category.children.sort(orderCategories).map((item, index) => (
+                                  <li key={index}><ALink style={{fontWeight: 400}} href={{ pathname: `/${item.handle}` }} scroll={false}>{item.name}</ALink></li>
+                                ))}
+                              </ul>
+                            </div>
+                          </li>
                         )}
-                      </ALink>
-                    </li>
-                ))}
+                      </SlideToggle>
+                      :
+                      <li key={index}>
+                        <ALink className="menu-item menu-item-toggle" href={{ pathname: `/${category.handle}` }}>
+                          <div className="menu-item-left">
+                            { catIcon ? (
+                              <InlineSVG className="menu-category-icon menu-category-icon-toggle" src={catIcon}/>
+                            ) : (
+                              <ion-icon class="menu-category-icon menu-category-icon-toggle" name={iconKey}></ion-icon>
+                            )}
+                            {category.name}
+                          </div>
+                          {(!!category.children?.length) && (
+                            <div>
+                              <InlineSVG className="menu-item-arrow" src={chevronForwardOutlineIcon}/>
+                            </div>
+                          )}
+                        </ALink>
+                      </li>
+                  )
+                })}
               </ul>
             </div>
           </div>

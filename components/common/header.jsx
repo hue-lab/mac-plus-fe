@@ -86,35 +86,43 @@ export default function Header({ categoryTree, fields }) {
                   </div>
                 </li>
 
-                {(categoryTree || []).sort(orderCategories).map((item, index) => (
-                  <li key={index} className={item.children?.length ? 'submenu' : ''}>
-                    <ALink className="menu-item" href={{ pathname: `/${item.handle}` }}>
-                      <div className="menu-item-left">
-                        <InlineSVG className="menu-category-icon" src={categoriesIcons[item.icon?.split('||')[0]]?.src || categoriesIcons['default']?.src} />
-                        {item.name}
-                      </div>
-                      {(!!item.children?.length) && (
-                        <div>
-                          <InlineSVG className="menu-item-arrow" src={chevronForwardOutlineIcon}/>
+                {(categoryTree || []).sort(orderCategories).map((item, index) => {
+                  const iconKey = item.icon?.split('||')[0];
+                  const catIcon = categoriesIcons[iconKey]?.src;
+                  return (
+                    <li key={index} className={item.children?.length ? 'submenu' : ''}>
+                      <ALink className="menu-item" href={{pathname: `/${item.handle}`}}>
+                        <div className="menu-item-left">
+                          { catIcon ? (
+                            <InlineSVG className="menu-category-icon" src={catIcon}/>
+                          ) : (
+                            <ion-icon class="menu-category-icon" name={iconKey}></ion-icon>
+                          )}
+                          {item.name}
                         </div>
+                        {(!!item.children?.length) && (
+                          <div>
+                            <InlineSVG className="menu-item-arrow" src={chevronForwardOutlineIcon}/>
+                          </div>
+                        )}
+                      </ALink>
+                      {item.children?.length > 0 && (
+                        <ul>
+                          {item.children.sort(orderCategories).map((item, index) => (
+                            <li key={index}>
+                              <ALink href={{pathname: `/${item.handle}`}}>{item.name}</ALink>
+                            </li>
+                          ))}
+                        </ul>
                       )}
-                    </ALink>
-                    {item.children?.length > 0 && (
-                      <ul>
-                      {item.children.sort(orderCategories).map((item, index) => (
-                          <li key={index}>
-                            <ALink href={{ pathname: `/${item.handle}` }}>{item.name}</ALink>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </li>
-                ))}
+                    </li>
+                  )
+                })}
               </ul>
             </div>
           </div>
 
-          <MainMenu layoutFields={fields} categoryTree={categoryTree} />
+          <MainMenu layoutFields={fields} categoryTree={categoryTree}/>
         </div>
       </div>
     </header>
