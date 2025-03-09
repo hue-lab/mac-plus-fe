@@ -31,7 +31,7 @@ function MainMenu({ router, categoryTree, layoutFields }) {
               </ALink>
 
               {route.children?.length ? (
-                <div className="megamenu" style={{ marginLeft: index > 2 ? "-370px" : "-19px" }}>
+                <div className="megamenu" style={{ marginLeft: index > 2 ? "-370px" : "-19px", borderRadius: "1rem" }}>
                   <div style={{ flexDirection: index > 2 ? "row-reverse" : "row" }} className="row">
                     <div style={{ width: "calc(100% - 350px)" }}>
                       <ul>
@@ -47,11 +47,11 @@ function MainMenu({ router, categoryTree, layoutFields }) {
                     </div>
 
                     <div
-                      style={{ minHeight: "520px", width: "350px" }}
+                      style={{ height: "500px", width: "350px" }}
                       className="menu-banner menu-banner1 banner banner-fixed"
                     >
                       <Image
-                        style={{ objectFit: "cover", objectPosition: "left top" }}
+                        style={{ objectFit: "cover", objectPosition: "left top", borderRadius: ".6rem" }}
                         src={getImgPath(layoutFields["nav-sale-image"])}
                         alt="Menu banner"
                         loading="lazy"
