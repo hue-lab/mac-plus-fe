@@ -23,8 +23,8 @@
     line-height: 28px;
     font-size: 1.5rem;
     border-radius: 50%;
-    border: 1px solid #ccc;
-    color: inherit;
+    border: none !important;
+    color: #fff !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -88,15 +88,15 @@
         background: variables.$social-xing;
         border-color: variables.$social-xing;
     }
-    &.social-instagram:hover {
+    &.social-instagram {
         background: variables.$social-instagram;
         border-color: variables.$social-instagram;
     }
-    &.social-telegram:hover {
+    &.social-telegram {
         background: variables.$social-telegram;
         border-color: variables.$social-telegram;
     }
-    &.social-viber:hover {
+    &.social-viber {
         background: variables.$social-viber;
         border-color: variables.$social-viber;
     }
