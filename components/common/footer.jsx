@@ -15,13 +15,7 @@ export default function Footer({ fields, categoryTree, footerNav }) {
     <footer className="footer">
       <div className="container">
         <div className="footer-top">
-          <div className="row align-items-center">
-            <div className="col-lg-3">
-              <ALink href="/" className="logo-footer">
-                <Image src={logoShortImage} alt={fields['main-seo-title']} title={fields['main-seo-title']} width={100} height={100} />
-              </ALink>
-            </div>
-          </div>
+
         </div>
 
         <div className="footer-middle">

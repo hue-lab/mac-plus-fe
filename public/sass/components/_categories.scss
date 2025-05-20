@@ -336,7 +336,7 @@
     grid-template-columns: 2fr 3fr;
     gap: 2rem;
     border: 1px solid variables.$border-color;
-    border-radius: .3rem;
+    border-radius: 2rem;
     > * {
         flex: 1;
     }
