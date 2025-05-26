@@ -4,6 +4,10 @@ import { getDeliveryMethods } from '~/utils/endpoints/orders';
 import { getImgPath, normalizeString } from '~/utils';
 
 function generateMerchantFeed({ products, fields, deliveryMethods }) {
+  const avDate = new Date();
+  const newDate = new Date(avDate.getTime() + 14 * 24 * 60 * 60 * 1000);
+  const isoDate = newDate.toISOString();
+
   return `<?xml version="1.0" encoding="UTF-8"?>
     <rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
       <channel>
@@ -24,6 +28,7 @@ function generateMerchantFeed({ products, fields, deliveryMethods }) {
             }</g:image_link>
             <g:condition>new</g:condition>
             <g:availability>${product.isStock ? 'in_stock' : 'backorder'}</g:availability>
+            ${!product.isStock ? `<g:availability_date>${isoDate}</g:availability_date>` : ''}
             <g:price>${product.totalPrice} BYN</g:price>
             ${deliveryMethods.map(
               (method) =>
