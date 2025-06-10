@@ -72,7 +72,7 @@ export default function Header({ categoryTree, fields }) {
       <div className="header-bottom has-dropdown pb-0">
         <div className="container d-flex align-items-center">
           <div className="dropdown category-dropdown has-border">
-            <ALink href="/shop" className="text-white font-weight-semi-bold category-toggle">
+            <ALink href="/shop" className="header-catalog text-white font-weight-semi-bold category-toggle">
               <i className="d-icon-bars2"></i>
               <InlineSVG className="menu-catalog-icon" src={menuOutlineIcon} />
               <span className="menu-catalog-text">Каталог</span>

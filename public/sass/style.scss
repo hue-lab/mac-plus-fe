@@ -447,3 +447,35 @@
   font-size: 1.6rem;
   color: #222 !important;
 }
+
+.header-bottom {
+  background: transparent !important;
+  color: #222 !important;
+  .menu li:hover > a:not(.menu-title), .menu .active > a:not(.menu-title) {
+    color: #007945 !important;
+  }
+  .menu > li > a {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+  .header-catalog {
+    border-radius: 10rem;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    background: transparent !important;
+    border: 1px solid #007945 !important;
+    color: #007945 !important;
+  }
+}
+
+.header-search.hs-simple input.form-control {
+  border-radius: 10rem;
+}
+
+.category-dropdown.has-border .dropdown-box {
+  border-radius: 2rem;
+}
+
+.menu li > ul {
+  border-radius: 2rem;
+}
