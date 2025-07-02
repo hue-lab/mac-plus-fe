@@ -211,7 +211,7 @@
   }
   .product-price {
     display: block;
-    margin-bottom: 1.1rem;
+    margin-bottom: 2rem;
     line-height: 1;
     @include core.css(color, product-single, price, color);
     @include core.css(font-size, product-single, price, font-size);
@@ -362,8 +362,8 @@
   }
 
   .product-label-group {
-    top: 2rem;
-    left: 2.5rem;
+    top: 0;
+    left: 0;
     z-index: 2;
   }
   .product-label {

@@ -92,6 +92,10 @@ function DetailThree(props) {
           Категория: <span className="product-brand">{product.category.name}</span>
         </div>
 
+        <p className="product-short-desc">
+          {product.description}
+        </p>
+
         <div className="product-price">
           {product.discount > 0 ? (
             <>
@@ -105,14 +109,7 @@ function DetailThree(props) {
           )}
         </div>
 
-        <p className="product-short-desc">
-          {product.description}
-        </p>
-
-        <hr className="product-divider"></hr>
-
         <div className="product-form product-qty pb-0">
-          <label className="d-none">QTY:</label>
           <div className="product-form-group">
             {product.isStock ? (
               <>
