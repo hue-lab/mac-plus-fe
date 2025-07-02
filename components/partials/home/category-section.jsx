@@ -12,7 +12,7 @@ export default function CategorySection({ recProducts }) {
     !!recProducts.length && (
       <Reveal keyframes={fadeIn} delay={200} duration={1200} triggerOnce>
         <section className="categories container mt-10">
-          <span className="title title-line title-underline border-1 mb-4">Рекомендуем</span>
+          <span className="title mb-1">Рекомендуем</span>
 
           <div className="row">
             {recProducts.map((item, index) => (

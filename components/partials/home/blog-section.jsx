@@ -8,7 +8,7 @@ function BlogSection(props) {
 
   return (
     <section className="blog container mt-10 pt-3 mb-10">
-      <span className="title title-underline title-line mb-4">Наш блог</span>
+      <span className="title mb-1">Наш блог</span>
       { posts && (
         <MpCarousel
           length={posts?.length || 0}
