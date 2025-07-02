@@ -64,7 +64,7 @@ p {
 	line-height: 1.86;
 }
 blockquote {
-	margin: 0;  
+	margin: 0;
 }
 
 // List
@@ -91,7 +91,7 @@ blockquote {
 			top: 2px;
 			font-family: "riode";
 			content: '\e960';
-			font-weight: 700;
+			font-weight: 600;
 			font-size: 1.2rem;
 			color: #222;
 		}
@@ -128,7 +128,7 @@ blockquote {
 			visibility: hidden;
 			font-family: "riode";
 			font-size: 1.4rem;
-			transition: opacity .3s, visibility .3s; 
+			transition: opacity .3s, visibility .3s;
 		}
 		&:hover,
 		&.show {

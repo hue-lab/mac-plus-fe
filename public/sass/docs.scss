@@ -14,8 +14,8 @@
 /* 1. config */
 @import 'config/variables';
 
-/* 2. mixins */ 
-@import 'mixins/breakpoints'; 
+/* 2. mixins */
+@import 'mixins/breakpoints';
 @import 'mixins/core';
 @import 'mixins/buttons';
 
@@ -121,7 +121,7 @@ code + code {
 }
 mark {
     background: yellow;
-    font-weight: 700;
+    font-weight: 600;
 }
 pre {
     max-height: 30rem;

@@ -154,7 +154,7 @@
 
     .alert-title {
         margin-bottom: .5rem;
-        font-weight: 700;
+        font-weight: 600;
         line-height: 1.7;
     }
 
@@ -168,7 +168,7 @@
         p {
             color: #666;
         }
-        
+
         a {
             color: variables.$primary-color;
             &:hover {
@@ -183,7 +183,7 @@
         display: inline-block;
         margin: 0 .8rem 0 0 ;
     }
-    p { 
+    p {
         display: inline;
     }
 }
@@ -191,7 +191,7 @@
 .alert-btn {
     &:not(.alert-message) {
         padding: .9rem 3.9rem .9rem .9rem;
-    } 
+    }
 
     .btn:not(.btn-close) {
         margin-right: 1rem;

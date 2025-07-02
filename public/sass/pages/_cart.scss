@@ -93,7 +93,7 @@
     th {
       padding: 0.2rem 0 1.8rem;
       font-size: 1.3rem;
-      font-weight: 700;
+      font-weight: 600;
       color: variables.$grey-color;
       line-height: 1;
       letter-spacing: -.025em;
@@ -112,7 +112,7 @@
     }
 
     .quantity.form-control {
-      font-weight: 700;
+      font-weight: 600;
     }
   }
 
@@ -162,7 +162,7 @@
     margin: 0 .5rem;
     font-size: 2rem;
     text-transform: uppercase;
-    font-weight: 700;
+    font-weight: 600;
     color: variables.$body-color;
     letter-spacing: -0.5px;
     padding: .4rem 0;
@@ -217,7 +217,7 @@
 
 .summary-title {
   font-size: 1.8rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -.01em;
   color: variables.$dark-color;
   text-transform: uppercase;
@@ -252,7 +252,7 @@
 .summary-total-price {
   font-size: 1.6rem;
   letter-spacing: -0.025em;
-  font-weight: 700;
+  font-weight: 600;
   color: variables.$dark-color;
   // padding: 10px 0;
   text-align: right;

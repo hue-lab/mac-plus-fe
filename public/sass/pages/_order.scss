@@ -12,7 +12,7 @@
         box-shadow: 0 5px 20px 0 rgba(0,0,0,0.1);
         border-radius: 1rem;
         .icon-box-icon {
-            margin-right: 3.2rem;   
+            margin-right: 3.2rem;
         }
         svg {
             width: 5rem;
@@ -68,9 +68,9 @@
     .summary-subtotal:last-child {
         border-bottom: none;
     }
-    
+
     .address-info {
-        border-bottom: 1px solid #e1e1e1;   
+        border-bottom: 1px solid #e1e1e1;
 
         p {
             color: #666;
@@ -99,7 +99,7 @@
             font-size: 1rem;
         }
         span {
-            font-weight: 700;
+            font-weight: 600;
             color: #222;
         }
     }
@@ -116,8 +116,8 @@
     .summary-subtotal-price, .product-price {
         text-align: right;
     }
-    .summary-subtotal-price { 
-        font-weight: 600; 
+    .summary-subtotal-price {
+        font-weight: 600;
         color: variables.$body-color;
     }
 
@@ -136,7 +136,7 @@
     }
 
     tbody tr:first-child {
-        td { 
+        td {
             padding-top: 3.2rem;
 
             &.product-price {
@@ -196,7 +196,7 @@
         }
     }
 
-    .step-by .title.title-step { 
+    .step-by .title.title-step {
         font-size: 1.8rem;
 
         &::after {

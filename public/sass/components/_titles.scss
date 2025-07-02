@@ -20,7 +20,7 @@
                 margin-bottom: 2.6rem,
                 text-transform: capitalize,
                 font-size: 2.4rem,
-                font-weight: 700,
+                font-weight: 600,
                 line-height: 1,
                 letter-spacing: -.0125em,
                 color: #222,
@@ -90,7 +90,7 @@
 //Title Underline
 .title-underline {
     display: block;
-    //position: relative; 
+    //position: relative;
     // line-height: 1;
     text-align: left;
     &:after {
@@ -112,7 +112,7 @@
             display: block;
             width: 100%;
             height: 2px;
-            bottom: 0; 
+            bottom: 0;
             @include core.css( background-color, base, title, border, _active-color );
         }
     }
@@ -162,7 +162,7 @@
     &::after {
         content: none;
     }
-} 
+}
 
 .title-white {
     &::before,
@@ -218,7 +218,7 @@
         display: inline-flex;
         align-items: center;
         margin-left: auto;
-        font-weight: 700;
+        font-weight: 600;
         font-size: 13px;
         line-height: 2.05em;
         text-transform: uppercase;

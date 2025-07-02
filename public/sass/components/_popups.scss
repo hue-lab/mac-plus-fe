@@ -169,7 +169,7 @@ button.mfp-close {
     height: 18px;
     opacity: 1;
 
-    &:hover, 
+    &:hover,
     &:focus {
         transform: rotateZ(135deg) scale(1.5);
     }
@@ -264,7 +264,7 @@ button.mfp-close {
         opacity: 1 !important;
     }
 }
-    
+
 
 .ReactModal__Content {
     transition: .3s;
@@ -272,7 +272,7 @@ button.mfp-close {
 
     &.newsletter-popup {
         transform: translateY(-20px) perspective(600px) rotateX(20deg);
-    
+
         &.ReactModal__Content--after-open {
             transform: translateY(0) perspective(600px) rotateX(0)
         }
@@ -283,7 +283,7 @@ button.mfp-close {
     &.video-modal {
         opacity: 0;
         transform: translateY(30px);
-    
+
         &.ReactModal__Content--after-open {
             transform: translateY(0);
             opacity: 1;
@@ -325,7 +325,7 @@ button.mfp-close {
         padding: 0 0 1px;
         color: variables.$grey-color;
         font-size: 1.8rem;
-        font-weight: 700;
+        font-weight: 600;
         letter-spacing: -.025em;
         line-height: 2.43;
         transition: font-size .3s, color .3s;
@@ -348,13 +348,13 @@ button.mfp-close {
     //     .nav-link.active {
     //         color: #222;;
     //         border-bottom-color: transparent;
-    //     }    
+    //     }
     // }
 
     .delimiter {
         margin: 0 .8rem;
     }
-    
+
     .tab-pane {
         padding: 0;
     }
@@ -362,7 +362,7 @@ button.mfp-close {
     form {
         margin-bottom: 2.2rem;
     }
-    
+
     .form-group {
         margin-bottom: 1.8rem;
 
@@ -534,7 +534,7 @@ button.mfp-close {
             border-radius: .3rem;
         }
         .btn {
-            border-radius: 0 .3rem .3rem 0; 
+            border-radius: 0 .3rem .3rem 0;
         }
     }
     .custom-checkbox + label {
@@ -626,14 +626,14 @@ button.mfp-close {
 
 // Popup Zoom, Flip effect
 .mfp-ready.mfp-zoom-popup .mfp-content{
-    transform: scale(1); 
+    transform: scale(1);
 }
 .mfp-zoom-popup .mfp-content, .mfp-removing.mfp-zoom-popup .mfp-content {
-    transition: .2s ease-in-out; 
-    transform: scale(0.8); 
+    transition: .2s ease-in-out;
+    transform: scale(0.8);
 }
 .mfp-ready.mfp-flip-popup .mfp-content {
-    transform: translateY(0) perspective( 600px ) rotateX( 0 ); 
+    transform: translateY(0) perspective( 600px ) rotateX( 0 );
 }
 .mfp-flip-popup .mfp-content, .mfp-removing.mfp-flip-popup .mfp-content {
     transition: .3s ease-out;
@@ -695,7 +695,7 @@ button.mfp-close {
             padding-right: 1.5rem !important;
         }
     }
-    
+
     .quickview-modal.product.product-single .product-details {
         position: absolute;
         overflow-y: auto;

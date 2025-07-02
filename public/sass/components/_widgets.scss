@@ -2,7 +2,7 @@
 @use "../mixins/core";
 
 /* -------------------------------------------
-	Widget 
+	Widget
 ------------------------------------------- */
 
 @include core.set-default(
@@ -12,7 +12,7 @@
                 margin-bottom: 2rem,
                 padding: 1.1rem 0,
                 font-size: 1.6rem,
-                font-weight: 700,
+                font-weight: 600,
                 text-transform: uppercase,
                 line-height: 1.2,
                 border-bottom: 1px solid variables.$border-color,

@@ -1,6 +1,6 @@
 @use "../mixins/core";
 
-/* 
+/*
 Demo 22 Variables
 */
 @include core.set(
@@ -8,7 +8,7 @@ Demo 22 Variables
 		base: (
 			title: (
 				font-size: 2rem,
-				font-weight: 700,
+				font-weight: 600,
 				padding-bottom: 1.8rem,
 				text-transform: none,
 				letter-spacing: 0,
@@ -65,7 +65,7 @@ Demo 22 Variables
 				padding: 0.7rem 0rem 0.7rem,
 				margin-left: 2px
 			),
-            ancestor: ( 
+            ancestor: (
                 _split-line: 1px solid #e4e5e5,
                 padding: 1.6rem 2px 1.5rem 0rem,
                 min-height: 4.4rem,
