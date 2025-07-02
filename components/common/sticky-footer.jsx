@@ -1,85 +1,69 @@
-import {useEffect} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import ALink from '~/components/features/custom-link';
 import InlineSVG from "react-inlinesvg";
 import {homeOutlineBaseIcon} from "~/icons/home-outline-base";
 import {listOutlineIcon} from "~/icons/list-outline";
 import {bagOutlineIcon} from "~/icons/bag-outline";
-import {bookOutlineIcon} from "~/icons/book-outline";
+import {callOutlineIcon} from "~/icons/call-outline";
 
-export default function StickyFooter() {
-  let tmp = 0;
+export default function StickyFooter({phone}) {
+  const footerRef = useRef(null);
+  const scrollPos = useRef(0);
+  const [isSticky, setSticky] = useState(false);
+
+  const LINKS = [
+    { href: '/', icon: homeOutlineBaseIcon, label: 'Главная', scale: 1 },
+    { href: '/categories', icon: listOutlineIcon, label: 'Каталог', scale: 1.2 },
+    { href: `tel:${phone}`, icon: callOutlineIcon, label: 'Позвонить', scale: 1 },
+  { href: '/pages/cart', icon: bagOutlineIcon, label: 'Корзина', scale: 1.1 }
+];
 
   useEffect(() => {
-    window.addEventListener('scroll', stickyFooterHandler);
+    const handleScroll = () => {
+      const currentY = window.pageYOffset;
+      const scrollingDown = currentY > scrollPos.current;
+      scrollPos.current = currentY;
 
-    return () => {
-      window.removeEventListener('scroll', stickyFooterHandler);
-    }
-  }, [])
+      const contentEl = document.querySelector('.page-content');
+      const headerEl = document.querySelector('header');
+      const contentTop = contentEl?.offsetTop ?? 0;
+      const headerHeight = headerEl?.offsetHeight ?? 0;
 
-  const stickyFooterHandler = (e) => {
-    let top = document.querySelector('.page-content') ? document.querySelector('.page-content').offsetTop + document.querySelector('header').offsetHeight + 100 : 600;
-    let stickyFooter = document.querySelector('.sticky-footer.sticky-content');
-    let height = 0;
-
-    if (stickyFooter) {
-      height = stickyFooter.offsetHeight;
-    }
-
-    const limitHeight = document.body.scrollHeight - window.innerHeight - 100;
-
-    if (window.pageYOffset >= top && window.innerWidth < 768 && e.currentTarget.scrollY >= tmp) {
-      if (stickyFooter) {
-        stickyFooter.classList.add('fixed');
-        stickyFooter.setAttribute('style', "margin-bottom: 0")
-        if (!document.querySelector('.sticky-content-wrapper')) {
-          let newNode = document.createElement("div");
-          newNode.className = "sticky-content-wrapper";
-          stickyFooter.parentNode.insertBefore(newNode, stickyFooter);
-          document.querySelector('.sticky-content-wrapper').insertAdjacentElement('beforeend', stickyFooter);
-          document.querySelector('.sticky-content-wrapper').setAttribute("style", "height: " + height + "px");
+      if (window.innerWidth < 768) {
+        if (currentY >= contentTop + headerHeight + 100 && scrollingDown) {
+          setSticky(true);
+        } else {
+          setSticky(false);
         }
-
-        if (!document.querySelector('.sticky-content-wrapper').getAttribute("style")) {
-          document.querySelector('.sticky-content-wrapper').setAttribute("style", "height: " + height + "px");
-        }
+      } else {
+        setSticky(false);
       }
-    } else if (e.currentTarget.scrollY < limitHeight) {
-      if (stickyFooter) {
-        stickyFooter.classList.remove('fixed');
-        stickyFooter.setAttribute('style', `margin-bottom: -${height}px`)
-      }
+    };
 
-      if (document.querySelector('.sticky-content-wrapper')) {
-        document.querySelector('.sticky-content-wrapper').removeAttribute("style");
-      }
-    }
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-    if (window.innerWidth > 767 && document.querySelector('.sticky-content-wrapper')) {
-      document.querySelector('.sticky-content-wrapper').style.height = 'auto';
-    }
-
-    tmp = e.currentTarget.scrollY;
-  }
+  const footerStyle = footerRef.current
+    ? { marginBottom: isSticky ? 0 : `-${footerRef.current.offsetHeight}px` }
+    : {};
 
   return (
-    <div className="sticky-footer sticky-content fix-bottom">
-      <ALink href="/" className="sticky-link">
-        <InlineSVG className="icon-24" src={homeOutlineBaseIcon} />
-        <span>Главная</span>
-      </ALink>
-      <ALink href="/categories" className="sticky-link">
-        <InlineSVG style={{transform: 'scale(1.2)'}} className="icon-24" src={listOutlineIcon} />
-        <span>Каталог</span>
-      </ALink>
-      <ALink href="/blog" className="sticky-link">
-        <InlineSVG className="icon-24" src={bookOutlineIcon} />
-        <span>Блог</span>
-      </ALink>
-      <ALink href="/pages/cart" className="sticky-link">
-        <InlineSVG style={{transform: 'scale(1.1)'}} className="icon-24" src={bagOutlineIcon} />
-        <span>Корзина</span>
-      </ALink>
+    <div
+      ref={footerRef}
+      className={`sticky-footer sticky-content fix-bottom ${isSticky ? 'fixed' : ''}`}
+      style={footerStyle}
+    >
+      {LINKS.map(({ href, icon, label, scale }) => (
+        <ALink key={href} href={href} className="sticky-link">
+          <InlineSVG
+            className="icon-24"
+            src={icon}
+            style={{ transform: `scale(${scale})` }}
+          />
+          <span>{label}</span>
+        </ALink>
+      ))}
     </div>
-  )
+  );
 }

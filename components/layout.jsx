@@ -47,7 +47,7 @@ function Layout({ children, categoryTree, layoutFields, footerNav }) {
 
         <Footer categoryTree={categoryTree} fields={layoutFields} footerNav={footerNav} />
 
-        <StickyFooter />
+        <StickyFooter phone={layoutFields.phone} />
       </div>
 
       <div id="scroll-top" title="Top" role="button" className="scroll-top" onClick={() => scrollTopHandler(false)}>

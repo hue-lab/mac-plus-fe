@@ -16,7 +16,7 @@ import InlineSVG from "react-inlinesvg";
 import {chevronForwardOutlineIcon} from "~/icons/chevron-forward-outline";
 import {homeOutlineIcon} from "~/icons/home-outline";
 
-export default function ProductItem({ product, featured, deliveryMethods, seoFields, mainSeo }) {
+export default function ProductItem({product, featured, deliveryMethods, seoFields, mainSeo}) {
   if (!product) return '';
   const modalStyles = {
     content: {
@@ -175,7 +175,8 @@ export default function ProductItem({ product, featured, deliveryMethods, seoFie
       ) : (
         ''
       )}
-      <Modal isOpen={modalState} style={modalStyles} onRequestClose={closeModal} shouldReturnFocusAfterClose={false} overlayClassName="newsletter-modal-overlay" className="newsletter-popup bg-img">
+      <Modal isOpen={modalState} style={modalStyles} onRequestClose={closeModal} shouldReturnFocusAfterClose={false}
+             overlayClassName="newsletter-modal-overlay" className="newsletter-popup bg-img">
         <div className="newsletter-popup" id="newsletter-popup">
           <div className="newsletter-content">
             <span className="newsletter-content_title">Заказ в 1 клик</span>
@@ -185,7 +186,9 @@ export default function ProductItem({ product, featured, deliveryMethods, seoFie
               <div className="mr-auto ml-auto">
                 <div>
                   <div>
-                    <svg className="fast-done_icon" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 50 50" enableBackground="new 0 0 50 50" xmlSpace="preserve">
+                    <svg className="fast-done_icon" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                         xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 50 50"
+                         enableBackground="new 0 0 50 50" xmlSpace="preserve">
                       <g>
                         <path
                           fill="none"
@@ -222,13 +225,15 @@ export default function ProductItem({ product, featured, deliveryMethods, seoFie
             ) : (
               <form id="fast-form" onSubmit={submitHandler}>
                 <div className="input-wrapper input-wrapper-inline input-wrapper-round">
-                  <input type="text" className="form-control name" name="name" placeholder="Ваше имя" />
+                  <input type="text" className="form-control name" name="name" placeholder="Ваше имя"/>
                 </div>
                 <div className="input-wrapper input-wrapper-inline input-wrapper-round">
-                  <PhoneInput country="RU" labels={ru} placeholder="Номер телефона" name="phone" defaultCountry="BY" className="form-control phone" value={phoneValue} onChange={setPhoneValue} />
+                  <PhoneInput country="RU" labels={ru} placeholder="Номер телефона" name="phone" defaultCountry="BY"
+                              className="form-control phone" value={phoneValue} onChange={setPhoneValue}/>
                 </div>
                 <div className="form-checkbox justify-content-center">
-                  <input type="checkbox" value={checkboxValue} onChange={handleCheckboxChange} className="custom-checkbox" id="hide-newsletter-popup" name="agreement" required />
+                  <input type="checkbox" value={checkboxValue} onChange={handleCheckboxChange}
+                         className="custom-checkbox" id="hide-newsletter-popup" name="agreement" required/>
                   <label htmlFor="hide-newsletter-popup">
                     Я прочитал(а){' '}
                     <ALink href="/pages/privacy/">
