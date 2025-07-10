@@ -71,7 +71,7 @@
           border-bottom: false,
           font-family: false,
           font-size: 1.2rem,
-          font-weight: 600,
+          font-weight: 400,
           letter-spacing: false,
           text-transform: false,
           logo: (
@@ -105,7 +105,7 @@
           border-bottom: false,
           font-family: false,
           font-size: 1.4rem,
-          font-weight: 600,
+          font-weight: 400,
           letter-spacing: false,
           text-transform: false,
         ),
@@ -212,6 +212,9 @@
   .inner-wrap {
     display: flex;
     align-items: center;
+  }
+  .container {
+    gap: 2rem;
   }
 
   .inner-wrap {

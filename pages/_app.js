@@ -133,6 +133,7 @@ App.getInitialProps = async ({Component, ctx}) => {
       "telegram",
       "viber",
       "instagram",
+      "whatsapp",
       "phone",
       "email",
       "address",

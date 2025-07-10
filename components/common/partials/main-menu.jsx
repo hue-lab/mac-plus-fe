@@ -14,14 +14,14 @@ function MainMenu({ router, categoryTree, layoutFields }) {
   return (
     <nav className="main-nav ml-4">
       <ul className="menu">
-        <li className={`${asPath === "/" ? "active" : ""}`}>
+        <li className={`${asPath === "/" ? "active" : ""} header-bottom-menu-custom`}>
           <ALink href="/">Главная</ALink>
         </li>
         {categoryTree.sort(orderCategories).map((route, index) => {
           return (
             <li
-              className={`${route.children?.length ? "submenu" : ""} ${
-                asPath.includes(route._id) ? "active" : ""
+              className={`${route.children?.length ? "submenu" : ""} header-bottom-menu-custom ${
+                asPath.includes(route.handle) ? "active" : ""
               } ${index > treeLimit ? "d-none" : ""}`}
               key={route.name + index}
             >
