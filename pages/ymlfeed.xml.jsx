@@ -43,7 +43,7 @@ function generateYmlFeed({ categories, products, fields }) {
                 <oldprice>${item.price || 0}</oldprice>
                 <enable_auto_discounts>true</enable_auto_discounts>
                 <currencyId>BYN</currencyId>
-                <categoryId>${item.categoryId[0]._id}</categoryId>
+                ${item.categoryId[0] ? `<categoryId>${item.categoryId[0]?._id}</categoryId>` : ''}
                 <picture>${item.media?.length ? getImgPath(item.media[0]) : undefined}</picture>
                 <description>${normalizeString(item.description || '')}</description>       
               </offer>
