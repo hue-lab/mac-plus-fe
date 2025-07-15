@@ -10,11 +10,11 @@ import logoImage from '~/public/images/home/logo.png';
 import InlineSVG from "react-inlinesvg";
 import {menuOutlineIcon} from "~/icons/menu-outline";
 import {callOutlineIcon} from "~/icons/call-outline";
-import {instagramIcon} from "~/icons/instagram";
 import {viberIcon} from "~/icons/viber";
 import {telegramIcon} from "~/icons/telegram";
 import {chevronForwardOutlineIcon} from "~/icons/chevron-forward-outline";
 import {categoriesIcons} from "~/utils/data/categories-icons";
+import {whatsappIcon} from "~/icons/whatsapp";
 
 export default function Header({ categoryTree, fields }) {
   const router = useRouter();
@@ -58,8 +58,8 @@ export default function Header({ categoryTree, fields }) {
             {fields.viber && <ALink rel="nofollow" href={`viber://chat?number=${fields.viber}`} className="social-link social-link-header social-viber">
               <InlineSVG className="social-link-icon" src={viberIcon} />
             </ALink>}
-            {fields.instagram && <ALink rel="nofollow" href={fields.instagram} className="social-link social-link-header social-instagram">
-              <InlineSVG className="social-link-icon" src={instagramIcon} />
+            {fields.instagram && <ALink rel="nofollow" href={fields.whatsapp} className="social-link social-link-header social-whatsapp">
+              <InlineSVG className="social-link-icon" src={whatsappIcon} />
             </ALink>}
 
             <span className="divider"></span>
