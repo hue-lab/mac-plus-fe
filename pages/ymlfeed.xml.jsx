@@ -5,7 +5,7 @@ import { getImgPath, normalizeString } from '~/utils';
 
 const host = process.env.NEXT_PUBLIC_HOST || 'https://macplus.by';
 
-function generateYmlFeed({ categories, products, fields }) {
+function generateYmlFeed({ categories, products, fields, categoriesKeys }) {
   const date = new Date();
   return `<?xml version="1.0" encoding="UTF-8"?>
     <yml_catalog date="${date.toISOString()}">
@@ -16,11 +16,11 @@ function generateYmlFeed({ categories, products, fields }) {
         <categories>
           ${(categories || [])
             .reduce((acc, item) => {
-              acc.push(`<category id="${item._id}">${item.name || ''}</category>`);
+              acc.push(`<category id="${categoriesKeys[item._id]}">${item.name || ''}</category>`);
               if (item.children?.length) {
                 item.children.forEach((child) => {
                   acc.push(
-                    `<category id="${child._id}" parentId="${item._id}">${
+                    `<category id="${categoriesKeys[child._id]}" parentId="${categoriesKeys[item._id]}">${
                       child.name || ''
                     }</category>`
                   );
@@ -43,7 +43,7 @@ function generateYmlFeed({ categories, products, fields }) {
                 <oldprice>${item.price || 0}</oldprice>
                 <enable_auto_discounts>true</enable_auto_discounts>
                 <currencyId>BYN</currencyId>
-                ${item.categoryId[0] ? `<categoryId>${item.categoryId[0]?._id}</categoryId>` : ''}
+                ${item.categoryId[0] ? `<categoryId>${categoriesKeys[item.categoryId[0]?._id]}</categoryId>` : ''}
                 <picture>${item.media?.length ? getImgPath(item.media[0]) : undefined}</picture>
                 <description>${normalizeString(item.description || '')}</description>       
               </offer>
@@ -61,6 +61,13 @@ function YmlFeed() {}
 export async function getServerSideProps({ res }) {
   const categoriesRoot = await getCategoryTree();
   const categories = categoriesRoot?.children;
+  const categoriesKeys = categories.reduce((acc, item) => {
+    acc[item._id] = item.numberId
+    item.children.forEach((child) => {
+      acc[child._id] = child.numberId
+    })
+    return acc;
+  }, {})
   const fields = await getFieldsObject('yml-feed-name', 'yml-feed-company', 'yml-feed-delivery');
   const products = await getProducts({
     preview: true,
@@ -69,7 +76,7 @@ export async function getServerSideProps({ res }) {
       limit: 2000,
     },
   });
-  const ymlFeed = generateYmlFeed({ categories, products, fields });
+  const ymlFeed = generateYmlFeed({ categories, products, fields, categoriesKeys });
 
   res.setHeader('Content-Type', 'text/xml');
   res.write(ymlFeed);
