@@ -644,11 +644,12 @@
     input.form-control {
       padding: 0 5rem 0 1.55rem;
       border-radius: 5px;
-      border: 2px solid;
+      border: 1px solid;
       @include core.css(border-color, header, search, simple, color);
       font-family: inherit;
       background-color: #fff;
       color: #999;
+      min-height: 4.2rem !important;
     }
 
     .btn-search {
@@ -802,8 +803,8 @@
   max-height: 350px;
   overflow-y: auto;
   font-weight: 400 !important;
-  border: 2px solid variables.$border-color;
-  border-radius: 0.5rem;
+  border: 1px solid variables.$border-color;
+  border-radius: 1rem .5rem .5rem 1rem;
 }
 
 .autocomplete-suggestions {
