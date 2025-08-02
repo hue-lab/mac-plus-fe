@@ -13,12 +13,12 @@ export default function CartPopup(props) {
 
         <div className="product product-purchased  product-cart mb-0">
           <figure className="product-media pure-media">
-            <ALink href={`/${product.category.handle ? product.category.handle + '/' : ''}${product.seo?.seoUrl || '#'}`}>
+            <ALink href={`/${product.category?.handle ? product.category.handle + '/' : ''}${product.seo?.seoUrl || '#'}`}>
               <img src={getImgPath(product.media[0])} width="90" height="90" alt={product.seo?.seoImage[0]?.imageAlt || product.name || ''} title={product.seo?.seoTitle || product.name || ''} />
             </ALink>
           </figure>
           <div className="product-detail">
-            <ALink href={`/${product.category.handle ? product.category.handle + '/' : ''}${product.seo?.seoUrl || '#'}`} className="product-name">
+            <ALink href={`/${product.category?.handle ? product.category.handle + '/' : ''}${product.seo?.seoUrl || '#'}`} className="product-name">
               {product.name}
             </ALink>
             <span className="price-box">

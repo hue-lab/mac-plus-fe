@@ -713,19 +713,7 @@
         &::after {
             border-bottom-color: #fff;
         }
-        &::before, &::after {
-            content: '';
-            position: absolute;
-            z-index: 1000;
-            top: -9999px;
-            transform: translateX(-50%);
-            border: 11px solid transparent;
-            border-bottom: 11px solid #e1e1e1;
-            transition: opacity .4s ease;
-            visibility: hidden;
-            opacity: 0;
-            cursor: pointer;
-        }
+
         .dropdown-box {
             background-color: #fff;
             border: 1px solid #e1e1e1;

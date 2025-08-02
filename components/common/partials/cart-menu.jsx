@@ -54,7 +54,7 @@ function CartMenu(props) {
               {cartList.map((item, index) => (
                 <div className="product product-cart" key={'cart-menu-product-' + index}>
                   <figure className="product-media pure-media">
-                    <ALink href={`/${item.category.handle ? item.category.handle + '/' : ''}${item.seo?.seoUrl || '#'}`} onClick={hideCartMenu}>
+                    <ALink href={`/${item.category?.handle ? item.category.handle + '/' : ''}${item.seo?.seoUrl || '#'}`} onClick={hideCartMenu}>
                       <Image src={getImgPath(item.media[0])} alt={item.seo?.seoImage[0]?.imageAlt || item.name || ''} title={item.seo?.seoTitle || item.name || ''} width={70} height={70} />
                     </ALink>
                     <button
@@ -67,7 +67,7 @@ function CartMenu(props) {
                     </button>
                   </figure>
                   <div className="product-detail">
-                    <ALink href={`/${item.category.handle ? item.category.handle + '/' : ''}${item.seo?.seoUrl || '#'}`} className="product-name" onClick={hideCartMenu}>
+                    <ALink href={`/${item.category?.handle ? item.category.handle + '/' : ''}${item.seo?.seoUrl || '#'}`} className="product-name" onClick={hideCartMenu}>
                       {item.name}
                     </ALink>
                     <div className="price-box">

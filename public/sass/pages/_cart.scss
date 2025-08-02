@@ -76,6 +76,7 @@
     padding-bottom: 1.06em;
     border-color: #333;
     background-color: #333;
+    border-radius: 1.2rem !important;
   }
 
   .product-thumbnail {
@@ -198,7 +199,7 @@
 .summary {
   padding: 2.4rem 3rem 3rem;
   border: 1px solid #e1e1e1;
-  border-radius: 2px;
+  border-radius: 1.4rem;
 
   td:last-child,
   th:last-child {
@@ -229,6 +230,11 @@
 //?
 .summary-subtotal {
   border-bottom: 1px solid #e1e1e1;
+}
+.total {
+  .summary-subtotal:last-of-type {
+    border-bottom: none;
+  }
 }
 
 //?

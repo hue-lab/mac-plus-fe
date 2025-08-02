@@ -7,6 +7,7 @@ import InlineSVG from "react-inlinesvg";
 import {telegramIcon} from "~/icons/telegram";
 import {viberIcon} from "~/icons/viber";
 import {instagramIcon} from "~/icons/instagram";
+import {whatsappIcon} from "~/icons/whatsapp";
 
 export default function Footer({ fields, categoryTree, footerNav }) {
   const YEAR = new Date().getFullYear();
@@ -102,8 +103,8 @@ export default function Footer({ fields, categoryTree, footerNav }) {
               {fields.viber && <ALink rel="nofollow" href={`viber://chat?number=${fields.viber}`} className="social-link social-link-footer social-viber">
                 <InlineSVG className="social-link-icon" src={viberIcon} />
               </ALink>}
-              {fields.instagram && <ALink rel="nofollow" href={fields.instagram} className="social-link social-link-footer social-instagram">
-                <InlineSVG className="social-link-icon" src={instagramIcon} />
+              {fields.whatsapp && <ALink rel="nofollow" href={fields.whatsapp} className="social-link social-link-header social-whatsapp">
+                <InlineSVG className="social-link-icon" src={whatsappIcon} />
               </ALink>}
             </div>
           </div>

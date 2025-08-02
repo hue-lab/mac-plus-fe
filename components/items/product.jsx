@@ -40,6 +40,7 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
   const [checkboxValue, setCheckboxValue] = useState(false);
   const [btn, setBtn] = useState('Отправить');
   const [fastFormDone, setFastFormDone] = useState(false);
+  const [selectedAdditionals, setSelectedAdditionals] = useState([]);
 
   const interpolatedTitle = mainSeo?.title || seoFields['product-seo-title'].replaceAll('{TITLE}', titleString);
   const interpolatedDescription = mainSeo?.description || seoFields['product-seo-description'].replaceAll('{TITLE}', descriptionString).replaceAll('{CATEGORY}', categoryString);
@@ -73,13 +74,14 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
     sendMessage({
       name: formData?.name || 'Неизвестно',
       phone: formData?.phone || 'Неизвестно',
-      message: formData?.product ? `[Быстрый заказ]: ${product.name}` : 'Неизвестно',
+      message: formData?.product ? `[Быстрый заказ]:\n${product.name} ${!!selectedAdditionals?.length ? '\n' + selectedAdditionals.map(item => item.name).join('\n') : ''}` : 'Неизвестно',
     })
       .then((res) => {
         if (res.error) {
           setBtn('Неудачно');
         } else {
           setFastFormDone(true);
+          setSelectedAdditionals([]);
         }
         document.getElementById('fast-form')?.reset();
       })
@@ -162,8 +164,14 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
                   </div>
 
                   <div className="col-md-6">
-                    <DetailThree openModal={setModalState} productName={interpolatedHeader} product={product}
-                                 isNav={false}/>
+                    <DetailThree
+                      openModal={setModalState}
+                      productName={interpolatedHeader}
+                      product={product}
+                      isNav={false}
+                      selectedAdditionals={selectedAdditionals}
+                      setSelectedAdditionals={setSelectedAdditionals}
+                    />
                   </div>
                 </div>
 
@@ -181,7 +189,9 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
           <div className="newsletter-content">
             <span className="newsletter-content_title">Заказ в 1 клик</span>
             <p className="text-grey">{product.name}</p>
-
+            {(selectedAdditionals || []).map((additional, index) => (
+              <p key={index} className="text-grey">{additional.name}</p>
+            ))}
             {fastFormDone ? (
               <div className="mr-auto ml-auto">
                 <div>

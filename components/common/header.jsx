@@ -58,7 +58,7 @@ export default function Header({ categoryTree, fields }) {
             {fields.viber && <ALink rel="nofollow" href={`viber://chat?number=${fields.viber}`} className="social-link social-link-header social-viber">
               <InlineSVG className="social-link-icon" src={viberIcon} />
             </ALink>}
-            {fields.instagram && <ALink rel="nofollow" href={fields.whatsapp} className="social-link social-link-header social-whatsapp">
+            {fields.whatsapp && <ALink rel="nofollow" href={fields.whatsapp} className="social-link social-link-header social-whatsapp">
               <InlineSVG className="social-link-icon" src={whatsappIcon} />
             </ALink>}
 
