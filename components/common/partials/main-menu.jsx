@@ -61,7 +61,7 @@ function MainMenu({ router, categoryTree, layoutFields }) {
                       <div className="banner-content y-50">
                         <ALink
                           href={layoutFields["nav-sale-link"] || "#"}
-                          className="btn btn-link btn-underline"
+                          className="btn btn-link btn-underline btn-link-banner"
                           style={{ fontWeight: "600", fontSize: "1.7rem" }}
                         >
                           <span>{layoutFields["nav-sale-title"] || "Купить"}</span>
