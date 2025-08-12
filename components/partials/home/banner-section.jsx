@@ -17,9 +17,9 @@ function BannerSection({ tradeInTitle, tradeInSubtitle, tradeInDescription }) {
               <div>
                 <Image src={gearImage} alt="guarantee" title="guarantee" width={60} height={60} loading="lazy" className="banner-icon mb-4" />
               </div>
-              <span className="banner-title text-white ls-normal lh-1">{'На всю технику' || tradeInTitle}</span>
-              <span className="banner-title text-white ls-normal lh-1">{'предоставляем ГАРАНТИЮ 1 год' || tradeInSubtitle}</span>
-              <span className="banner-title text-white ls-normal lh-1">{'и 36 месцев сервисного обслуживания' || tradeInDescription}</span>
+              <span className="banner-title text-white ls-normal lh-1">{tradeInTitle}</span>
+              <span className="banner-title text-white ls-normal lh-1">{tradeInSubtitle}</span>
+              <span className="banner-title text-white ls-normal lh-1">{tradeInDescription}</span>
             </div>
           </div>
         </Reveal>
