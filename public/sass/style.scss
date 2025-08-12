@@ -574,3 +574,43 @@
 .btn-link-banner:hover {
   color: white !important;
 }
+
+.banner-section-wrapper {
+  background: linear-gradient(to right, #045933, #0c7044, #11784c, #0c7044, #024F23) !important;
+  padding-top: 4rem !important;
+  padding-bottom: 4rem !important;
+  @include breakpoints.mq(lg, max) {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  .banner-content {
+    max-width: 600px !important;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 4rem !important;
+    padding-right: 4rem !important;
+    @include breakpoints.mq(lg, max) {
+      padding-left: 1rem !important;
+      padding-right: 1rem !important;
+    }
+  }
+  .banner-guy {
+    position: absolute;
+    right: 5%;
+    bottom: 0;
+    width: 23%;
+    height: auto;
+    @include breakpoints.mq(lg, max) {
+      display: none;
+    }
+  }
+  .banner-title, .banner-subtitle {
+    text-align: center !important;
+    font-weight: 500 !important;
+    font-size: 2.1rem !important;
+    line-height: 2.7rem !important;
+    @include breakpoints.mq(lg, max) {
+      font-size: 1.7rem !important;
+    }
+  }
+}

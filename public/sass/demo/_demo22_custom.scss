@@ -294,6 +294,8 @@ Demo 22
 }
 // Banner group
 .homepage .banner-group {
+  user-select: none;
+  cursor: pointer;
   img {
     min-height: 20rem;
     object-fit: cover;
@@ -306,12 +308,13 @@ Demo 22
     padding: 5rem 1rem;
     width: 100%;
     .banner-icon {
-      height: 60px !important;
-      width: 60px !important;
+      height: 64px !important;
+      width: 64px !important;
       object-fit: contain !important;
       min-height: auto !important;
       @include breakpoints.mq(lg, max) {
-        display: none;
+        height: 50px !important;
+        width: 50px !important;
       }
     }
   }
@@ -320,7 +323,6 @@ Demo 22
     justify-content: center;
   }
   .banner-title {
-    margin-bottom: 0.8rem;
     text-align: center;
     font-size: 3rem;
     font-weight: 600;
