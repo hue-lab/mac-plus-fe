@@ -11,6 +11,9 @@ function removeContent(node) {
   if (node.content) {
     delete node.content;
   }
+  if (node.children) {
+    node.children = (node.children || []).filter(item => !item.isHidden)
+  }
   if (node?.children?.length) {
     node.children.forEach((child) => removeContent(child));
   }
