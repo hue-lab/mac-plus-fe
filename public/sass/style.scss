@@ -113,6 +113,14 @@
 @use 'react-swiper-navigation';
 @use 'react-swiper-pagination';
 
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%
+}
+
 .rendered-content {
   li {
     list-style-position: inside;
