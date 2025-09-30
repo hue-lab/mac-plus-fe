@@ -62,6 +62,7 @@ export async function getServerSideProps({ res }) {
       limit: 2000,
     },
   });
+  products.data = (products.data || []).filter(product => product.isStock)
   const ymlFeed = generateMerchantFeed({ products, fields, deliveryMethods });
 
   res.setHeader('Content-Type', 'text/xml');

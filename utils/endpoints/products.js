@@ -59,10 +59,14 @@ export async function getProductsAdvanced(category, id, limit = 6) {
 }
 
 export async function getProducts(body) {
+  const payload = {
+    ...(body || {}),
+    hideDisabledCategories: true,
+  }
   const res = await fetch(process.env.API_HOST + '/store/products', {
     method: "POST",
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
+    body: JSON.stringify(payload),
   });
   return await res.json();
 }
