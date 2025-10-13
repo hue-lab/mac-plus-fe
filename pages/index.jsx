@@ -11,6 +11,7 @@ import {getFieldsObject} from '~/utils/endpoints/fields';
 import IntroCategories from "~/components/partials/home/intro-categories";
 import {getSeoByUrl} from "~/utils/endpoints/seo";
 import Head from "next/head";
+import YandexReviews from "~/components/common/partials/yandex-reviews";
 
 export const getStaticProps = (async () => {
   const [
@@ -70,6 +71,8 @@ export default function HomePage({ articles, recProducts, slides, fields, featur
         />
 
         <ServiceBox fields={features}/>
+
+        <YandexReviews />
 
         <BlogSection posts={articles}/>
 

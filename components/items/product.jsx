@@ -15,6 +15,7 @@ import Head from 'next/head';
 import InlineSVG from "react-inlinesvg";
 import {chevronForwardOutlineIcon} from "~/icons/chevron-forward-outline";
 import {homeOutlineIcon} from "~/icons/home-outline";
+import YandexReviews from "~/components/common/partials/yandex-reviews";
 
 export default function ProductItem({product, featured, deliveryMethods, seoFields, mainSeo}) {
   if (!product) return '';
@@ -176,6 +177,8 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
                 </div>
 
                 <DescOne mainSeo={mainSeo} product={product} isDivider={false} className="mt-2 m-4" isGuide={false}/>
+
+                <YandexReviews />
               </div>
             </div>
           </div>
