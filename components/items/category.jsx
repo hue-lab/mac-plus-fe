@@ -16,7 +16,7 @@ export default function Category({ banner, products, filters, category, page, fi
     }
   }, [page, filters]);
   const filtersString = Object.entries(filterObject)
-    .map((filter) => `${filtersPairs[filter[0]].name} - ${filter[1].map((option) => `${filtersPairs[filter[0]].valuesPairs[option]}`).join(', ')}`)
+    .map((filter) => `${filtersPairs[filter[0]]?.name} - ${filter[1].map((option) => `${filtersPairs[filter[0]]?.valuesPairs[option]}`).join(', ')}`)
     .join('; ');
 
   const collapseContent = () => {
