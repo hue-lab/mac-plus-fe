@@ -174,6 +174,37 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
     }
   }
   const products = await getProducts(requestFilters);
+
+  const filterObjectEntries = Object.entries(filterObject);
+  if (!!filterObjectEntries.length) {
+    let isNotFound = false;
+    filterObjectEntries
+      .forEach((filter) => {
+        if (!filtersPairs[filter[0]]) {
+          isNotFound = true;
+        } else {
+          filter[1].forEach((option) => {
+            if (!filtersPairs[filter[0]]?.valuesPairs[option]) {
+              isNotFound = true
+            }
+          })
+        }
+      })
+
+    if (isNotFound) {
+      if (res) {
+        res.writeHead(301, {
+          Location: "/404",
+          "Content-Type": "text/html; charset=utf-8",
+        });
+        res.end();
+        return;
+      }
+
+      window.location = `${window.location.origin}/404`;
+    }
+  }
+
   return {
     page: page,
     banner: banner?.data[0],
