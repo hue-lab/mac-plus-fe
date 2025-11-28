@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import ALink from '~/components/features/custom-link';
 import MediaFive from '~/components/partials/product/media/media-five';
 import DetailThree from '~/components/partials/product/detail/detail-three';
 import DescOne from '~/components/partials/product/desc/desc-one';
 import ProductSidebar from '~/components/partials/product/product-sidebar';
-import {getImgPath} from '~/utils';
+import {getImgPath, pushToDataLayer, toDecimal} from '~/utils';
 import Modal from 'react-modal';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
@@ -90,6 +90,26 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
         setBtn('Неудачно');
       });
   };
+
+  useEffect(() => {
+    if (!!product) {
+      const items = [{
+        item_name: product.name || '',
+        item_id: product._id,
+        price: toDecimal(product.price),
+        item_brand: product.brand?.name || '',
+        item_category: product.category?.name || '',
+        quantity: 1
+      }]
+
+      pushToDataLayer({
+        event: 'view_item',
+        ecommerce: {
+          items
+        },
+      });
+    }
+  }, []);
 
   const jsonLd = {
     '@context': 'https://schema.org/',

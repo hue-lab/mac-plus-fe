@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import ALink from '~/components/features/custom-link';
 import Quantity from '~/components/features/quantity';
 import { cartActions } from '~/store/cart';
-import { toDecimal, getImgPath, useDebounce } from '~/utils';
+import {toDecimal, getImgPath, useDebounce, pushToDataLayer} from '~/utils';
 import { getCalculation } from '~/utils/endpoints/calculate';
 import Head from 'next/head';
 import Image from "next/image";
@@ -31,6 +31,26 @@ function Cart(props) {
       });
     }
   }, [debouncedCartItems]);
+
+  useEffect(() => {
+    if (!!cartList?.length) {
+      const items = (cartList || []).map((item) => ({
+        item_name: item.name || '',
+        item_id: item._id,
+        price: toDecimal(item.price),
+        item_brand: item.brand?.name || '',
+        item_category: item.category?.name || '',
+        quantity: 1
+      }));
+
+      pushToDataLayer({
+        event: 'view_cart',
+        ecommerce: {
+          items
+        },
+      });
+    }
+  }, []);
 
   const onChangeQty = (name, qty) => {
     const newCartItems = cartItems.map((item) => {

@@ -1,9 +1,11 @@
+'use client'
+
 import {useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
 import {connect} from 'react-redux';
 import {Collapse} from 'react-bootstrap';
 import ALink from '~/components/features/custom-link';
-import {toDecimal} from '~/utils';
+import {pushToDataLayer, toDecimal} from '~/utils';
 import {addOrder, getDeliveryMethods} from '~/utils/endpoints/orders';
 import {getCalculation} from "~/utils/endpoints/calculate";
 import {cartActions} from "~/store/cart";
@@ -44,6 +46,26 @@ function Checkout(props) {
   const [phoneValue, setPhoneValue] = useState('+375');
 
   const router = useRouter();
+
+  useEffect(() => {
+    if (!!cartList?.length) {
+      const items = (cartList || []).map((item) => ({
+        item_name: item.name || '',
+        item_id: item._id,
+        price: toDecimal(item.price),
+        item_brand: item.brand?.name || '',
+        item_category: item.category?.name || '',
+        quantity: 1
+      }));
+
+      pushToDataLayer({
+        event: 'begin_checkout',
+        ecommerce: {
+          items
+        },
+      });
+    }
+  }, []);
 
   const orderObj = {
     customer: {

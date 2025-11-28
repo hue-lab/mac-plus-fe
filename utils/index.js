@@ -375,3 +375,39 @@ export function getPostDate(date) {
 export function normalizeString(string) {
   return string.replace('"', '&quot;').replace('&', '&amp;').replace('>', '&gt;').replace('<', '&lt;').replace("'", '&apos;').trim();
 }
+
+export function pushToDataLayer(event) {
+  try {
+    if (typeof window === 'undefined') return;
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(event);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export function pushToDataLayerForProduct(event, product) {
+  if (!!product) {
+    try {
+      const items = [{
+        item_name: product.name || '',
+        item_id: product._id,
+        price: toDecimal(product.price),
+        item_brand: product.brand?.name || '',
+        item_category: product.category?.name || '',
+        quantity: 1
+      }]
+
+      console.log(items);
+
+      pushToDataLayer({
+        event,
+        ecommerce: {
+          items
+        },
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}

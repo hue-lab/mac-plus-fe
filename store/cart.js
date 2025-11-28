@@ -3,6 +3,7 @@ import storage from 'redux-persist/lib/storage';
 import { toast } from 'react-toastify';
 
 import CartPopup from '~/components/features/product/common/cart-popup';
+import {pushToDataLayerForProduct} from "~/utils";
 
 const actionTypes = {
     ADD_TO_CART: 'ADD_TO_CART',
@@ -63,9 +64,13 @@ function cartReducer( state = initialState, action ) {
 export const cartActions = {
     addToCart: product => {
         toast( <CartPopup product={ product } /> );
+        pushToDataLayerForProduct('add_to_cart', product);
         return { type: actionTypes.ADD_TO_CART, payload: { product } }
     },
-    removeFromCart: product => ( { type: actionTypes.REMOVE_FROM_CART, payload: { product } } ),
+    removeFromCart: product => {
+        pushToDataLayerForProduct('remove_from_cart', product);
+        return { type: actionTypes.REMOVE_FROM_CART, payload: { product } }
+    },
     updateCart: products => ( { type: actionTypes.UPDATE_CART, payload: { products } } )
 };
 
