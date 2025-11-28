@@ -51,6 +51,20 @@ function generateYmlFeed({ categories, products, fields, categoriesKeys }) {
             })
             .join('')}            
         </offers>
+        <collections>
+          ${(categories || [])
+            .reduce((acc, item) => {
+              acc.push(`
+              <collection id="${categoriesKeys[item._id]}">
+                <url>${host}/${item.handle}</url>
+                <name>${item.name}</name>
+                ${item.description ? `<description>${item.description}</description>` : ''}
+              </collection>
+              `);
+              return acc;
+            }, [])
+            .join('')}
+        </collections>
       </shop>
     </yml_catalog>
   `;
