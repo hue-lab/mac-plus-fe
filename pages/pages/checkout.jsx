@@ -18,8 +18,8 @@ Checkout.getInitialProps = async (context) => {
   return { delivery };
 }
 
-function CheckoutButton({ pending, error, terms, removeError }) {
-  if (!terms && !error) {
+function CheckoutButton({ pending, error, terms, removeError, phone }) {
+  if ((!terms && !error) || phone?.trim().length < 9) {
     return <button type="submit" className="btn btn-dark btn-rounded btn-order checkout-button" disabled>Оформить заказ</button>
   } else if (!terms && error) {
     return <button type="submit" className="btn btn-dark btn-rounded btn-order checkout-button" disabled>Попробовать снова</button>
@@ -131,6 +131,38 @@ function Checkout(props) {
       if (res.error) {
         throw new Error(res.error)
       }
+
+      try {
+        const order = res
+        if (!!order.cartItems?.length) {
+          const items = (order.cartItems || []).map((cartItem) => {
+            const item = cartItem.product;
+            return {
+              item_name: item.name || '',
+              item_id: item._id,
+              price: toDecimal(item.price),
+              item_brand: item.brand?.name || '',
+              quantity: 1
+            }
+          });
+
+          pushToDataLayer({
+            event: 'purchase',
+            ecommerce: {
+              items,
+              transaction_id: order.orderCode,
+              value: toDecimal(order.totalPrice || 0),
+              currency: 'BYN',
+              affiliation: 'cart',
+              tax: 0,
+              shipping: order.delivery?.deliveryMethod?.deliveryPrice ? toDecimal(order.delivery.deliveryMethod.deliveryPrice) : 0,
+            },
+          });
+        }
+      } catch (e) {
+        console.log(e)
+      }
+
       router.push(`/pages/order/${res.orderCode}`);
     } catch (e) {
       setOrderError(true);
@@ -309,7 +341,7 @@ function Checkout(props) {
                               Произошла ошибка при отправке данных на сервер. Пожалуйста, перепроверьте введённые данные и попробуйте ещё раз.
                             </p>
                           ) : ''}
-                          <CheckoutButton pending={isPending} error={orderError} terms={isTerms} removeError={setOrderError} />
+                          <CheckoutButton phone={phoneValue} pending={isPending} error={orderError} terms={isTerms} removeError={setOrderError} />
                         </div>
                       </div>
                     </aside>

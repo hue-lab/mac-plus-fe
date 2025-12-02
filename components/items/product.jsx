@@ -272,7 +272,7 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
                     и соглашаюсь на обработку персональных данных *
                   </label>
                 </div>
-                <button type="submit" className="btn btn-dark btn-rounded" disabled={!checkboxValue || !phoneValue}>
+                <button type="submit" className="btn btn-dark btn-rounded" disabled={!checkboxValue || !phoneValue || phoneValue?.trim().length < 9}>
                   {btn}
                 </button>
               </form>
