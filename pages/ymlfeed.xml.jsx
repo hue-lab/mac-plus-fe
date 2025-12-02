@@ -58,6 +58,7 @@ function generateYmlFeed({ categories, products, fields, categoriesKeys }) {
               <collection id="${categoriesKeys[item._id]}">
                 <url>${host}/${item.handle}</url>
                 <name>${item.name}</name>
+                ${item.media[0] ? `<picture>${getImgPath(item.media[0])}</picture>` : ''}
                 ${item.description ? `<description>${item.description}</description>` : ''}
               </collection>
               `);

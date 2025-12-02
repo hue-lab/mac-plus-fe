@@ -71,6 +71,31 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
       product: product.name,
     };
     setBtn('Отправка...');
+    try {
+      if (product) {
+        const items = [{
+          item_name: product.name || '',
+          item_id: product._id,
+          price: toDecimal(product.price),
+          item_brand: product.brand?.name || '',
+          item_category: categoryString,
+          quantity: 1
+        }]
+
+        pushToDataLayer({
+          event: 'purchase',
+          ecommerce: {
+            items,
+            value: toDecimal(product?.totalPrice || product?.price || 0),
+            currency: 'BYN',
+            affiliation: 'cart',
+            tax: 0,
+          },
+        });
+      }
+    } catch (e) {
+      console.log(e)
+    }
     sendMessage({
       name: formData?.name || 'Неизвестно',
       phone: formData?.phone || 'Неизвестно',
