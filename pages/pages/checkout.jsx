@@ -52,7 +52,7 @@ function Checkout(props) {
       const items = (cartList || []).map((item) => ({
         item_name: item.name || '',
         item_id: item._id,
-        price: toDecimal(item.price),
+        price: item.price || 0,
         item_brand: item.brand?.name || '',
         item_category: item.category?.name || '',
         quantity: 1
@@ -140,7 +140,7 @@ function Checkout(props) {
             return {
               item_name: item.name || '',
               item_id: item._id,
-              price: toDecimal(item.price),
+              price: item.price || 0,
               item_brand: item.brand?.name || '',
               quantity: 1
             }
@@ -151,11 +151,11 @@ function Checkout(props) {
             ecommerce: {
               items,
               transaction_id: order.orderCode,
-              value: toDecimal(order.totalPrice || 0),
+              value: order.totalPrice || 0,
               currency: 'BYN',
               affiliation: 'cart',
               tax: 0,
-              shipping: order.delivery?.deliveryMethod?.deliveryPrice ? toDecimal(order.delivery.deliveryMethod.deliveryPrice) : 0,
+              shipping: order.delivery.deliveryMethod.deliveryPrice || 0,
             },
           });
         }

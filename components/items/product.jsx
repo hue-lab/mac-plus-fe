@@ -76,7 +76,7 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
         const items = [{
           item_name: product.name || '',
           item_id: product._id,
-          price: toDecimal(product.price),
+          price: product.price || 0,
           item_brand: product.brand?.name || '',
           item_category: categoryString,
           quantity: 1
@@ -86,7 +86,7 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
           event: 'purchase',
           ecommerce: {
             items,
-            value: toDecimal(product?.totalPrice || product?.price || 0),
+            value: product?.totalPrice || product?.price || 0,
             currency: 'BYN',
             affiliation: 'cart',
             tax: 0,
@@ -121,7 +121,7 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
       const items = [{
         item_name: product.name || '',
         item_id: product._id,
-        price: toDecimal(product.price),
+        price: product.price || 0,
         item_brand: product.brand?.name || '',
         item_category: product.category?.name || '',
         quantity: 1

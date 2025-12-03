@@ -37,7 +37,7 @@ function Cart(props) {
       const items = (cartList || []).map((item) => ({
         item_name: item.name || '',
         item_id: item._id,
-        price: toDecimal(item.price),
+        price: item.price || 0,
         item_brand: item.brand?.name || '',
         item_category: item.category?.name || '',
         quantity: 1

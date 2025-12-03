@@ -393,13 +393,11 @@ export function pushToDataLayerForProduct(event, product) {
       const items = [{
         item_name: product.name || '',
         item_id: product._id,
-        price: toDecimal(product.price),
+        price: product.price || 0,
         item_brand: product.brand?.name || '',
         item_category: product.category?.name || '',
         quantity: 1
       }]
-
-      console.log(items);
 
       pushToDataLayer({
         event,
