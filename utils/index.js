@@ -398,14 +398,14 @@ export function pushToDataLayerForProduct(event, product) {
         item_category: product.category?.name || '',
         quantity: 1
       }]
-      const ymItems = (cartList || []).map((item) => ({
-        id: item._id,
-        name: item.name || '',
-        price: item.price || 0,
-        brand: item.brand?.name || '',
-        category: item.category?.name || '',
+      const ymItems = [{
+        id: product._id,
+        name: product.name || '',
+        price: product.price || 0,
+        brand: product.brand?.name || '',
+        category: product.category?.name || '',
         quantity: 1
-      }));
+      }]
 
       pushToDataLayer({
         event,
