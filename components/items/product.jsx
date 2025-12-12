@@ -81,6 +81,14 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
           item_category: categoryString,
           quantity: 1
         }]
+        const ymItems = [{
+          id: product._id,
+          name: product.name || '',
+          price: product.price || 0,
+          brand: product.brand?.name || '',
+          category: categoryString,
+          quantity: 1
+        }]
 
         pushToDataLayer({
           event: 'purchase',
@@ -90,6 +98,15 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
             currency: 'BYN',
             affiliation: 'cart',
             tax: 0,
+            currencyCode: "BYN",
+            purchase: {
+              actionField: {
+                revenue: product?.totalPrice || product?.price || 0,
+                shipping: 0,
+                tax: 0,
+              },
+              products: ymItems,
+            }
           },
         });
       }

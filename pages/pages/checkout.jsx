@@ -57,11 +57,23 @@ function Checkout(props) {
         item_category: item.category?.name || '',
         quantity: 1
       }));
+      const ymItems = (cartList || []).map((item) => ({
+        id: item._id,
+        name: item.name || '',
+        price: item.price || 0,
+        brand: item.brand?.name || '',
+        category: item.category?.name || '',
+        quantity: 1
+      }));
 
       pushToDataLayer({
         event: 'begin_checkout',
         ecommerce: {
-          items
+          items,
+          currencyCode: "BYN",
+          detail: {
+            products: ymItems
+          }
         },
       });
     }
@@ -145,6 +157,16 @@ function Checkout(props) {
               quantity: 1
             }
           });
+          const ymItems = (order.cartItems || []).map((cartItem) => {
+            const item = cartItem.product;
+            return {
+              id: item._id,
+              name: item.name || '',
+              price: item.price || 0,
+              brand: item.brand?.name || '',
+              quantity: 1
+            }
+          });
 
           pushToDataLayer({
             event: 'purchase',
@@ -156,6 +178,16 @@ function Checkout(props) {
               affiliation: 'cart',
               tax: 0,
               shipping: order.delivery.deliveryMethod.deliveryPrice || 0,
+              currencyCode: "BYN",
+              purchase: {
+                actionField: {
+                  id: order.orderCode,
+                  revenue: order.totalPrice || 0,
+                  tax: 0,
+                  shipping: order.delivery.deliveryMethod.deliveryPrice || 0,
+                },
+                products: ymItems
+              }
             },
           });
         }
