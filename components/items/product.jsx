@@ -143,11 +143,23 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
         item_category: product.category?.name || '',
         quantity: 1
       }]
+      const ymItems = [{
+        id: product._id,
+        name: product.name || '',
+        price: product.price || 0,
+        brand: product.brand?.name || '',
+        category: product.category?.name || '',
+        quantity: 1
+      }]
 
       pushToDataLayer({
         event: 'view_item',
         ecommerce: {
-          items
+          items,
+          currencyCode: "BYN",
+          detail: {
+            products: ymItems
+          }
         },
       });
     }
