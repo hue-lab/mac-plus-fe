@@ -29,10 +29,10 @@ export default function Document() {
                  (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
               
                  ym(96220740, "init", {
+                      webvisor:true,
                       clickmap:true,
-                      trackLinks:true,
                       accurateTrackBounce:true,
-                      webvisor:true
+                      trackLinks:true,
                  });
                 }
             `
