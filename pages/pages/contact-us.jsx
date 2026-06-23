@@ -33,6 +33,7 @@ export default function ContactUs({ fields }) {
       name: formData?.name || 'Неизвестно',
       phone: formData?.phone || 'Неизвестно',
       message: formData?.message || 'Неизвестно',
+      website: formData?.website || '',
     })
       .then((res) => {
         if (res.error) {
@@ -109,6 +110,7 @@ export default function ContactUs({ fields }) {
                 <div className="col-lg-9 col-md-8 col-sm-6 d-flex align-items-center mb-4">
                   <div className="w-100">
                     <form id="contact-form" className="pl-lg-2" onSubmit={submitHandler}>
+                      <input type="text" name="website" tabIndex="-1" autoComplete="off" style={{ display: 'none' }} />
                       <h4 className="ls-m font-weight-bold">Напишите нам</h4>
                       <p>Ваш электронный адрес не будет передан третьим лицам. Обязательные поля помечены *</p>
                       <div className="row mb-2">

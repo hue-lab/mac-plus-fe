@@ -117,6 +117,7 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
       name: formData?.name || 'Неизвестно',
       phone: formData?.phone || 'Неизвестно',
       message: formData?.product ? `[Быстрый заказ]:\n${product.name} ${!!selectedAdditionals?.length ? '\n' + selectedAdditionals.map(item => item.name).join('\n') : ''}` : 'Неизвестно',
+      website: formData?.website || '',
     })
       .then((res) => {
         if (res.error) {
@@ -308,6 +309,7 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
               </div>
             ) : (
               <form id="fast-form" onSubmit={submitHandler}>
+                <input type="text" name="website" tabIndex="-1" autoComplete="off" style={{ display: 'none' }} />
                 <div className="input-wrapper input-wrapper-inline input-wrapper-round">
                   <input type="text" className="form-control name" name="name" placeholder="Ваше имя"/>
                 </div>
