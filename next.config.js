@@ -16,6 +16,7 @@ module.exports = {
     trailingSlash: true,
     env: {
         API_HOST: 'https://api.macplus.by',
+        TURNSTILE_SITE_KEY: '0x4AAAAAADygPJz9Vg2Cf5kV',
     },
     redirects: async () => {
         return [
