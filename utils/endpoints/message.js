@@ -1,13 +1,4 @@
-async function getPublicFormToken(action) {
-  const res = await fetch(process.env.API_HOST + `/security/public-form-token/${action}`);
-
-  if (!res.ok) {
-    throw new Error('Cannot get form token');
-  }
-
-  const data = await res.json();
-  return data.token;
-}
+import { getPublicFormToken, throwPublicFormError } from './public-form';
 
 export async function sendMessage({name, phone, message, website = '', turnstileToken}) {
   const formToken = await getPublicFormToken('quick-message');
@@ -18,7 +9,7 @@ export async function sendMessage({name, phone, message, website = '', turnstile
   });
 
   if (!res.ok) {
-    throw new Error('Cannot send message');
+    await throwPublicFormError(res, 'Cannot send message');
   }
 
   return res;

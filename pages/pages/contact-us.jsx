@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Reveal from 'react-awesome-reveal';
 
 import ALink from '~/components/features/custom-link';
@@ -10,6 +10,10 @@ import Head from 'next/head';
 import InlineSVG from "react-inlinesvg";
 import {homeOutlineIcon} from "~/icons/home-outline";
 import {chevronForwardOutlineIcon} from "~/icons/chevron-forward-outline";
+import PhoneInput, {isValidPhoneNumber} from 'react-phone-number-input';
+import ru from '~/public/labels/ru';
+import TurnstileWidget from '~/components/features/turnstile';
+import {getPublicFormErrorMessage} from '~/utils/endpoints/public-form';
 
 ContactUs.getInitialProps = async () => {
   const fields = await getFieldsObject('phone', 'email', 'address');
@@ -20,20 +24,40 @@ ContactUs.getInitialProps = async () => {
 
 export default function ContactUs({ fields }) {
   const [btn, setBtn] = useState('Отправить');
+  const [phoneValue, setPhoneValue] = useState('+375');
+  const [phoneTouched, setPhoneTouched] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const [formError, setFormError] = useState('');
+  const turnstileRef = useRef(null);
+  const turnstileEnabled = Boolean(process.env.TURNSTILE_SITE_KEY);
+  const phoneValid = Boolean(phoneValue && isValidPhoneNumber(phoneValue));
+  const captchaReady = !turnstileEnabled || Boolean(turnstileToken);
 
   const submitHandler = (e) => {
     e.preventDefault();
+    setPhoneTouched(true);
+    if (!phoneValid || !captchaReady) {
+      setFormError(
+        !phoneValid
+          ? 'Введите корректный номер телефона.'
+          : getPublicFormErrorMessage({reason: 'captcha'}),
+      );
+      return;
+    }
+
     const form = e.target;
     const formData = Object.values(form).reduce((obj, field) => {
       obj[field.name] = field.value;
       return obj;
     }, {});
     setBtn('Отправка...');
+    setFormError('');
     sendMessage({
       name: formData?.name || 'Неизвестно',
-      phone: formData?.phone || 'Неизвестно',
+      phone: phoneValue,
       message: formData?.message || 'Неизвестно',
       website: formData?.website || '',
+      turnstileToken,
     })
       .then((res) => {
         if (res.error) {
@@ -42,10 +66,15 @@ export default function ContactUs({ fields }) {
           setBtn('Готово');
         }
         document.getElementById('contact-form').reset();
+        setPhoneValue('+375');
+        turnstileRef.current?.reset();
+        setTurnstileToken('');
       })
       .catch((e) => {
-        document.getElementById('contact-form').reset();
         setBtn('Неудачно');
+        setFormError(getPublicFormErrorMessage(e));
+        turnstileRef.current?.reset();
+        setTurnstileToken('');
       });
   };
 
@@ -121,10 +150,38 @@ export default function ContactUs({ fields }) {
                           <input className="form-control" name="name" type="text" placeholder="Имя *" required />
                         </div>
                         <div className="col-md-6 mb-4">
-                          <input className="form-control" name="phone" type="phone" placeholder="Телефон *" required />
+                          <PhoneInput
+                            defaultCountry="BY"
+                            labels={ru}
+                            className="form-control"
+                            placeholder="Телефон *"
+                            value={phoneValue}
+                            onBlur={() => setPhoneTouched(true)}
+                            onChange={setPhoneValue}
+                          />
+                          {phoneTouched && !phoneValid ? (
+                            <p className="checkout-error-message">Введите корректный номер телефона.</p>
+                          ) : ''}
                         </div>
                       </div>
-                      <button className="btn btn-dark btn-rounded">
+                      <TurnstileWidget
+                        ref={turnstileRef}
+                        className="mb-4"
+                        onToken={setTurnstileToken}
+                        onExpire={() =>
+                          setFormError(getPublicFormErrorMessage({reason: 'captcha'}))
+                        }
+                        onError={() =>
+                          setFormError(getPublicFormErrorMessage({reason: 'captcha'}))
+                        }
+                      />
+                      {formError ? (
+                        <p className="checkout-error-message">{formError}</p>
+                      ) : ''}
+                      <button
+                        className="btn btn-dark btn-rounded"
+                        disabled={!phoneValid || !captchaReady || btn === 'Отправка...'}
+                      >
                         {btn}
                         {btn === 'Отправить' && <i className="d-icon-arrow-right"></i>}
                       </button>

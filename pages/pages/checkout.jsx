@@ -1,6 +1,6 @@
 'use client'
 
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {useRouter} from 'next/router';
 import {connect} from 'react-redux';
 import {Collapse} from 'react-bootstrap';
@@ -9,27 +9,28 @@ import {pushToDataLayer, toDecimal} from '~/utils';
 import {addOrder, getDeliveryMethods} from '~/utils/endpoints/orders';
 import {getCalculation} from "~/utils/endpoints/calculate";
 import {cartActions} from "~/store/cart";
-import PhoneInput from 'react-phone-number-input';
+import PhoneInput, {isValidPhoneNumber} from 'react-phone-number-input';
 import ru from '~/public/labels/ru';
 import Head from "next/head";
+import TurnstileWidget from '~/components/features/turnstile';
+import {getPublicFormErrorMessage} from '~/utils/endpoints/public-form';
 
 Checkout.getInitialProps = async (context) => {
   const delivery = await getDeliveryMethods();
   return { delivery };
 }
 
-function CheckoutButton({ pending, error, terms, removeError, phone }) {
-  if ((!terms && !error) || phone?.trim().length < 9) {
-    return <button type="submit" className="btn btn-dark btn-rounded btn-order checkout-button" disabled>Оформить заказ</button>
-  } else if (!terms && error) {
-    return <button type="submit" className="btn btn-dark btn-rounded btn-order checkout-button" disabled>Попробовать снова</button>
-  } else if (terms && !error && !pending) {
-    return <button type="submit" className="btn btn-dark btn-rounded btn-order checkout-button">Оформить заказ</button>
-  } else if (pending) {
-    return <button type="submit" className="btn btn-dark btn-rounded btn-order checkout-button" disabled>Ожидайте</button>
-  } else if (error && terms && !pending) {
-    return <button type="submit" className="btn btn-dark btn-rounded btn-order checkout-button" onClick={() => removeError(false)}>Попробовать снова</button>
-  }
+function CheckoutButton({ pending, terms, phoneValid, captchaReady }) {
+  const disabled = pending || !terms || !phoneValid || !captchaReady;
+  return (
+    <button
+      type="submit"
+      className="btn btn-dark btn-rounded btn-order checkout-button"
+      disabled={disabled}
+    >
+      {pending ? 'Ожидайте' : 'Оформить заказ'}
+    </button>
+  );
 }
 
 function Checkout(props) {
@@ -44,6 +45,12 @@ function Checkout(props) {
   const [isPending, setIsPending] = useState(false);
   const [orderError, setOrderError] = useState('');
   const [phoneValue, setPhoneValue] = useState('+375');
+  const [phoneTouched, setPhoneTouched] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const turnstileRef = useRef(null);
+  const turnstileEnabled = Boolean(process.env.TURNSTILE_SITE_KEY);
+  const phoneValid = Boolean(phoneValue && isValidPhoneNumber(phoneValue));
+  const captchaReady = !turnstileEnabled || Boolean(turnstileToken);
 
   const router = useRouter();
 
@@ -71,15 +78,9 @@ function Checkout(props) {
     customer: {
 
     },
-    state: {
-      label: 'Ожидание',
-      color: 'neutral',
-      description: 'Ожидайте звонка оператора',
-    },
     delivery: {
       deliveryData: [],
     },
-    historyList: []
   }
 
   useEffect(() => {
@@ -101,6 +102,16 @@ function Checkout(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    setPhoneTouched(true);
+    if (!phoneValid || !captchaReady) {
+      setOrderError(
+        !phoneValid
+          ? 'Введите корректный номер телефона.'
+          : getPublicFormErrorMessage({reason: 'captcha'}),
+      );
+      return;
+    }
+
     const form = e.target;
     const formData = Object.values(form).reduce((obj, field) => { obj[field.name] = field.value; return obj }, {});
     fillOrderObj(formData);
@@ -116,6 +127,7 @@ function Checkout(props) {
     orderObj.delivery.deliveryData = [...delivery[currentRadio].fields.map(field => ({ name: field, value: obj[field] }))]
     orderObj.paymentMethod = delivery[currentRadio].paymentMethods[payment];
     orderObj.cartItems = cartList.map(el => ({ productId: el._id, count: el.qty }));
+    orderObj.turnstileToken = turnstileToken;
     if (obj.comment) {
       orderObj.delivery.comment = obj.comment.trim();
     }
@@ -126,6 +138,7 @@ function Checkout(props) {
 
   const sendOrderObj = async () => {
     setIsPending(true);
+    setOrderError('');
     try {
       const res = await addOrder(orderObj);
       if (res.error) {
@@ -184,11 +197,13 @@ function Checkout(props) {
       }
 
       router.push(`/pages/order/${res.orderCode}`);
+      updateCart([]);
     } catch (e) {
-      setOrderError(true);
+      setOrderError(getPublicFormErrorMessage(e));
+      turnstileRef.current?.reset();
+      setTurnstileToken('');
     } finally {
       setIsPending(false)
-      updateCart([]);
     }
   }
 
@@ -237,11 +252,14 @@ function Checkout(props) {
                           {/*<input type="text" className="form-control" name="phone" required />*/}
                           <PhoneInput
                             defaultCountry="BY"
-                            country="RU"
                             labels={ru}
                             className="form-control"
                             value={phoneValue}
+                            onBlur={() => setPhoneTouched(true)}
                             onChange={setPhoneValue}/>
+                          {phoneTouched && !phoneValid ? (
+                            <p className="checkout-error-message">Введите корректный номер телефона.</p>
+                          ) : ''}
                         </div>
                         <div className="col-xs-6">
                           <label>Email</label>
@@ -356,12 +374,28 @@ function Checkout(props) {
                               Я прочитал(а) <ALink href="/pages/privacy/"><u>правила обработки персональных данных</u></ALink> и соглашаюсь на обработку персональных данных *
                             </label>
                           </div>
+                          <TurnstileWidget
+                            ref={turnstileRef}
+                            className="mb-4"
+                            onToken={setTurnstileToken}
+                            onExpire={() =>
+                              setOrderError(getPublicFormErrorMessage({reason: 'captcha'}))
+                            }
+                            onError={() =>
+                              setOrderError(getPublicFormErrorMessage({reason: 'captcha'}))
+                            }
+                          />
                           {orderError && !isPending ? (
                             <p className='checkout-error-message'>
-                              Произошла ошибка при отправке данных на сервер. Пожалуйста, перепроверьте введённые данные и попробуйте ещё раз.
+                              {orderError}
                             </p>
                           ) : ''}
-                          <CheckoutButton phone={phoneValue} pending={isPending} error={orderError} terms={isTerms} removeError={setOrderError} />
+                          <CheckoutButton
+                            pending={isPending}
+                            terms={isTerms}
+                            phoneValid={phoneValid}
+                            captchaReady={captchaReady}
+                          />
                         </div>
                       </div>
                     </aside>

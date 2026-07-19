@@ -1,3 +1,5 @@
+import { getPublicFormToken, throwPublicFormError } from './public-form';
+
 export async function getDeliveryMethods() {
   const res = await fetch(process.env.API_HOST + '/store/delivery-method');
   return res.json() || [];
@@ -6,17 +8,6 @@ export async function getDeliveryMethods() {
 export async function getPaymentMethods() {
   const res = await fetch(process.env.API_HOST + '/store/payment-method');
   return res.json() || [];
-}
-
-async function getPublicFormToken(action) {
-  const res = await fetch(process.env.API_HOST + `/security/public-form-token/${action}`);
-
-  if (!res.ok) {
-    throw new Error('Cannot get form token');
-  }
-
-  const data = await res.json();
-  return data.token;
 }
 
 export async function addOrder(obj) {
@@ -28,6 +19,11 @@ export async function addOrder(obj) {
       {...obj, formToken}
     )
   })
+
+  if (!res.ok) {
+    await throwPublicFormError(res, 'Cannot add order');
+  }
+
   return await res.json();
 }
 

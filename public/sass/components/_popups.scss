@@ -540,6 +540,23 @@ button.mfp-close {
             border-radius: 0 .3rem .3rem 0;
         }
     }
+    .fast-phone-error {
+        display: block;
+        min-height: 1.4rem;
+        margin: -1.8rem .2rem .4rem;
+        padding-left: .4rem;
+        color: #d93025;
+        font-size: 1.1rem;
+        line-height: 1.2;
+        text-align: left;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .18s ease;
+
+        &.visible {
+            opacity: 1;
+        }
+    }
     .custom-checkbox + label {
         padding-left: 3rem;
     }

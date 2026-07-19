@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import ALink from '~/components/features/custom-link';
 import MediaFive from '~/components/partials/product/media/media-five';
@@ -8,13 +8,15 @@ import ProductSidebar from '~/components/partials/product/product-sidebar';
 import {getImgPath, pushToDataLayer, toDecimal} from '~/utils';
 import Modal from 'react-modal';
 import 'react-phone-number-input/style.css';
-import PhoneInput from 'react-phone-number-input';
+import PhoneInput, {isValidPhoneNumber} from 'react-phone-number-input';
 import ru from '~/public/labels/ru';
 import {sendMessage} from '~/utils/endpoints/message';
 import Head from 'next/head';
 import InlineSVG from "react-inlinesvg";
 import {chevronForwardOutlineIcon} from "~/icons/chevron-forward-outline";
 import {homeOutlineIcon} from "~/icons/home-outline";
+import TurnstileWidget from '~/components/features/turnstile';
+import {getPublicFormErrorMessage} from '~/utils/endpoints/public-form';
 
 export default function ProductItem({product, featured, deliveryMethods, seoFields, mainSeo}) {
   if (!product) return '';
@@ -41,6 +43,13 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
   const [btn, setBtn] = useState('Отправить');
   const [fastFormDone, setFastFormDone] = useState(false);
   const [selectedAdditionals, setSelectedAdditionals] = useState([]);
+  const [phoneTouched, setPhoneTouched] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const [formError, setFormError] = useState('');
+  const turnstileRef = useRef(null);
+  const turnstileEnabled = Boolean(process.env.TURNSTILE_SITE_KEY);
+  const phoneValid = Boolean(phoneValue && isValidPhoneNumber(phoneValue));
+  const captchaReady = !turnstileEnabled || Boolean(turnstileToken);
 
   const interpolatedTitle = mainSeo?.title || seoFields['product-seo-title'].replaceAll('{TITLE}', titleString);
   const interpolatedDescription = mainSeo?.description || seoFields['product-seo-description'].replaceAll('{TITLE}', descriptionString).replaceAll('{CATEGORY}', categoryString);
@@ -53,7 +62,11 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
     setBtn('Отправить');
     setModalState(false);
     setCheckboxValue(false);
-    setPhoneValue(null);
+    setPhoneValue('+375');
+    setPhoneTouched(false);
+    setFormError('');
+    setTurnstileToken('');
+    turnstileRef.current?.reset();
   }
 
   function handleCheckboxChange(event) {
@@ -62,6 +75,16 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
 
   const submitHandler = (e) => {
     e.preventDefault();
+    setPhoneTouched(true);
+    if (!phoneValid || !captchaReady) {
+      setFormError(
+        !phoneValid
+          ? 'Введите корректный номер телефона.'
+          : getPublicFormErrorMessage({reason: 'captcha'}),
+      );
+      return;
+    }
+
     const form = e.target;
     const formData = {
       ...Object.values(form).reduce((obj, field) => {
@@ -71,6 +94,7 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
       product: product.name,
     };
     setBtn('Отправка...');
+    setFormError('');
     try {
       if (product) {
         const items = [{
@@ -115,9 +139,10 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
     }
     sendMessage({
       name: formData?.name || 'Неизвестно',
-      phone: formData?.phone || 'Неизвестно',
+      phone: phoneValue,
       message: formData?.product ? `[Быстрый заказ]:\n${product.name} ${!!selectedAdditionals?.length ? '\n' + selectedAdditionals.map(item => item.name).join('\n') : ''}` : 'Неизвестно',
       website: formData?.website || '',
+      turnstileToken,
     })
       .then((res) => {
         if (res.error) {
@@ -127,10 +152,15 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
           setSelectedAdditionals([]);
         }
         document.getElementById('fast-form')?.reset();
+        setPhoneValue('+375');
+        turnstileRef.current?.reset();
+        setTurnstileToken('');
       })
       .catch((e) => {
-        document.getElementById('fast-form')?.reset();
         setBtn('Неудачно');
+        setFormError(getPublicFormErrorMessage(e));
+        turnstileRef.current?.reset();
+        setTurnstileToken('');
       });
   };
 
@@ -313,10 +343,23 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
                 <div className="input-wrapper input-wrapper-inline input-wrapper-round">
                   <input type="text" className="form-control name" name="name" placeholder="Ваше имя"/>
                 </div>
-                <div className="input-wrapper input-wrapper-inline input-wrapper-round">
-                  <PhoneInput country="RU" labels={ru} placeholder="Номер телефона" name="phone" defaultCountry="BY"
-                              className="form-control phone" value={phoneValue} onChange={setPhoneValue}/>
+                <div className="input-wrapper input-wrapper-inline input-wrapper-round" style={{marginBottom:'2px'}}>
+                  <PhoneInput
+                    labels={ru}
+                    placeholder="Номер телефона"
+                    defaultCountry="BY"
+                    className="form-control phone"
+                    value={phoneValue}
+                    onBlur={() => setPhoneTouched(true)}
+                    onChange={setPhoneValue}
+                  />
                 </div>
+                <p
+                  className={`fast-phone-error ${phoneTouched && !phoneValid ? 'visible' : ''}`}
+                  aria-live="polite"
+                >
+                  Введите корректный номер телефона.
+                </p>
                 <div className="form-checkbox justify-content-center">
                   <input type="checkbox" value={checkboxValue} onChange={handleCheckboxChange}
                          className="custom-checkbox" id="hide-newsletter-popup" name="agreement" required/>
@@ -328,7 +371,25 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
                     и соглашаюсь на обработку персональных данных *
                   </label>
                 </div>
-                <button type="submit" className="btn btn-dark btn-rounded" disabled={!checkboxValue || !phoneValue || phoneValue?.trim().length < 9}>
+                <TurnstileWidget
+                  ref={turnstileRef}
+                  className="mb-4"
+                  onToken={setTurnstileToken}
+                  onExpire={() =>
+                    setFormError(getPublicFormErrorMessage({reason: 'captcha'}))
+                  }
+                  onError={() =>
+                    setFormError(getPublicFormErrorMessage({reason: 'captcha'}))
+                  }
+                />
+                {formError ? (
+                  <p className="checkout-error-message">{formError}</p>
+                ) : ''}
+                <button
+                  type="submit"
+                  className="btn btn-dark btn-rounded"
+                  disabled={!checkboxValue || !phoneValid || !captchaReady || btn === 'Отправка...'}
+                >
                   {btn}
                 </button>
               </form>
