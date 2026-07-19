@@ -18,6 +18,109 @@
     )
 );
 .form .form-control { margin-bottom: 2rem; }
+
+.form-status {
+    margin: 1rem 0;
+    padding: 1rem 1.2rem;
+    border-radius: .4rem;
+    font-size: 1.3rem;
+    line-height: 1.45;
+    text-align: left;
+
+    &--info,
+    &--loading {
+        color: #4a5568;
+        background: #f3f4f6;
+    }
+
+    &--loading {
+        display: flex;
+        align-items: center;
+        gap: .8rem;
+
+        &::before {
+            content: '';
+            flex: 0 0 auto;
+            width: 1.4rem;
+            height: 1.4rem;
+            border: 2px solid #cbd5e1;
+            border-top-color: #2d3748;
+            border-radius: 50%;
+            animation: form-status-spin .8s linear infinite;
+        }
+    }
+
+    &--success {
+        color: #176b3a;
+        background: #eaf7ef;
+    }
+
+    &--error {
+        color: #a61b1b;
+        background: #fff0f0;
+    }
+}
+
+.form-status-slot {
+    min-height: 4.8rem;
+
+    .form-status {
+        width: 100%;
+    }
+}
+
+.turnstile-wrapper {
+    min-height: 13.5rem;
+
+    .form-status {
+        width: 100%;
+        margin: 0;
+    }
+}
+
+.turnstile-widget-slot {
+    position: relative;
+    min-height: 6.5rem;
+
+    > .form-status {
+        display: flex;
+        position: absolute;
+        inset: 0;
+        align-items: center;
+        min-height: 6.5rem;
+    }
+}
+
+.turnstile-status-slot {
+    min-height: 7rem;
+    padding-top: .5rem;
+}
+
+.turnstile-retry {
+    height: auto;
+    min-height: 0;
+    margin-top: .5rem;
+    padding: 0;
+    color: #a61b1b;
+    font-size: 1.3rem;
+    text-decoration: underline;
+}
+
+@keyframes form-status-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 575px) {
+    .turnstile-wrapper {
+        min-height: 15.5rem;
+    }
+
+    .turnstile-status-slot {
+        min-height: 9rem;
+    }
+}
 .form-control {
     display: block;
     width: 100%;

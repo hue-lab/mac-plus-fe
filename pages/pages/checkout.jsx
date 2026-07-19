@@ -14,6 +14,7 @@ import ru from '~/public/labels/ru';
 import Head from "next/head";
 import TurnstileWidget from '~/components/features/turnstile';
 import {getPublicFormErrorMessage} from '~/utils/endpoints/public-form';
+import FormStatus from '~/components/features/form-status';
 
 Checkout.getInitialProps = async (context) => {
   const delivery = await getDeliveryMethods();
@@ -28,7 +29,7 @@ function CheckoutButton({ pending, terms, phoneValid, captchaReady }) {
       className="btn btn-dark btn-rounded btn-order checkout-button"
       disabled={disabled}
     >
-      {pending ? 'Ожидайте' : 'Оформить заказ'}
+      Оформить заказ
     </button>
   );
 }
@@ -107,7 +108,7 @@ function Checkout(props) {
       setOrderError(
         !phoneValid
           ? 'Введите корректный номер телефона.'
-          : getPublicFormErrorMessage({reason: 'captcha'}),
+          : 'Дождитесь загрузки и завершите проверку безопасности.',
       );
       return;
     }
@@ -378,18 +379,11 @@ function Checkout(props) {
                             ref={turnstileRef}
                             className="mb-4"
                             onToken={setTurnstileToken}
-                            onExpire={() =>
-                              setOrderError(getPublicFormErrorMessage({reason: 'captcha'}))
-                            }
-                            onError={() =>
-                              setOrderError(getPublicFormErrorMessage({reason: 'captcha'}))
-                            }
                           />
-                          {orderError && !isPending ? (
-                            <p className='checkout-error-message'>
-                              {orderError}
-                            </p>
-                          ) : ''}
+                          <FormStatus
+                            type={isPending ? 'loading' : 'error'}
+                            message={isPending ? 'Оформляем заказ…' : orderError}
+                          />
                           <CheckoutButton
                             pending={isPending}
                             terms={isTerms}

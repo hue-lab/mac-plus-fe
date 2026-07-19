@@ -16,6 +16,7 @@ import InlineSVG from "react-inlinesvg";
 import {chevronForwardOutlineIcon} from "~/icons/chevron-forward-outline";
 import {homeOutlineIcon} from "~/icons/home-outline";
 import TurnstileWidget from '~/components/features/turnstile';
+import FormStatus from '~/components/features/form-status';
 import {getPublicFormErrorMessage} from '~/utils/endpoints/public-form';
 
 export default function ProductItem({product, featured, deliveryMethods, seoFields, mainSeo}) {
@@ -40,12 +41,12 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
   const [modalState, setModalState] = useState(false);
   const [phoneValue, setPhoneValue] = useState('+375');
   const [checkboxValue, setCheckboxValue] = useState(false);
-  const [btn, setBtn] = useState('Отправить');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [fastFormDone, setFastFormDone] = useState(false);
   const [selectedAdditionals, setSelectedAdditionals] = useState([]);
   const [phoneTouched, setPhoneTouched] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState('');
-  const [formError, setFormError] = useState('');
+  const [formStatus, setFormStatus] = useState(null);
   const turnstileRef = useRef(null);
   const turnstileEnabled = Boolean(process.env.TURNSTILE_SITE_KEY);
   const phoneValid = Boolean(phoneValue && isValidPhoneNumber(phoneValue));
@@ -59,12 +60,12 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
     document.querySelector('.ReactModal__Overlay.newsletter-modal-overlay').classList.add('removed');
     document.querySelector('.newsletter-popup.ReactModal__Content').classList.remove('ReactModal__Content--after-open');
     setFastFormDone(false);
-    setBtn('Отправить');
+    setIsSubmitting(false);
     setModalState(false);
     setCheckboxValue(false);
     setPhoneValue('+375');
     setPhoneTouched(false);
-    setFormError('');
+    setFormStatus(null);
     setTurnstileToken('');
     turnstileRef.current?.reset();
   }
@@ -77,11 +78,12 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
     e.preventDefault();
     setPhoneTouched(true);
     if (!phoneValid || !captchaReady) {
-      setFormError(
-        !phoneValid
+      setFormStatus({
+        type: 'error',
+        message: !phoneValid
           ? 'Введите корректный номер телефона.'
-          : getPublicFormErrorMessage({reason: 'captcha'}),
-      );
+          : 'Дождитесь загрузки и завершите проверку безопасности.',
+      });
       return;
     }
 
@@ -93,8 +95,8 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
       }, {}),
       product: product.name,
     };
-    setBtn('Отправка...');
-    setFormError('');
+    setIsSubmitting(true);
+    setFormStatus({type: 'loading', message: 'Отправляем заявку…'});
     try {
       if (product) {
         const items = [{
@@ -144,23 +146,21 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
       website: formData?.website || '',
       turnstileToken,
     })
-      .then((res) => {
-        if (res.error) {
-          setBtn('Неудачно');
-        } else {
-          setFastFormDone(true);
-          setSelectedAdditionals([]);
-        }
+      .then(() => {
+        setFastFormDone(true);
+        setSelectedAdditionals([]);
         document.getElementById('fast-form')?.reset();
         setPhoneValue('+375');
         turnstileRef.current?.reset();
         setTurnstileToken('');
       })
       .catch((e) => {
-        setBtn('Неудачно');
-        setFormError(getPublicFormErrorMessage(e));
+        setFormStatus({type: 'error', message: getPublicFormErrorMessage(e)});
         turnstileRef.current?.reset();
         setTurnstileToken('');
+      })
+      .finally(() => {
+        setIsSubmitting(false);
       });
   };
 
@@ -375,22 +375,14 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
                   ref={turnstileRef}
                   className="mb-4"
                   onToken={setTurnstileToken}
-                  onExpire={() =>
-                    setFormError(getPublicFormErrorMessage({reason: 'captcha'}))
-                  }
-                  onError={() =>
-                    setFormError(getPublicFormErrorMessage({reason: 'captcha'}))
-                  }
                 />
-                {formError ? (
-                  <p className="checkout-error-message">{formError}</p>
-                ) : ''}
+                <FormStatus type={formStatus?.type} message={formStatus?.message} />
                 <button
                   type="submit"
                   className="btn btn-dark btn-rounded"
-                  disabled={!checkboxValue || !phoneValid || !captchaReady || btn === 'Отправка...'}
+                  disabled={!checkboxValue || !phoneValid || !captchaReady || isSubmitting}
                 >
-                  {btn}
+                  Отправить
                 </button>
               </form>
             )}

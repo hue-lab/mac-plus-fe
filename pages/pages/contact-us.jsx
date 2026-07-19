@@ -14,6 +14,7 @@ import PhoneInput, {isValidPhoneNumber} from 'react-phone-number-input';
 import ru from '~/public/labels/ru';
 import TurnstileWidget from '~/components/features/turnstile';
 import {getPublicFormErrorMessage} from '~/utils/endpoints/public-form';
+import FormStatus from '~/components/features/form-status';
 
 ContactUs.getInitialProps = async () => {
   const fields = await getFieldsObject('phone', 'email', 'address');
@@ -23,11 +24,11 @@ ContactUs.getInitialProps = async () => {
 };
 
 export default function ContactUs({ fields }) {
-  const [btn, setBtn] = useState('Отправить');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [phoneValue, setPhoneValue] = useState('+375');
   const [phoneTouched, setPhoneTouched] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState('');
-  const [formError, setFormError] = useState('');
+  const [formStatus, setFormStatus] = useState(null);
   const turnstileRef = useRef(null);
   const turnstileEnabled = Boolean(process.env.TURNSTILE_SITE_KEY);
   const phoneValid = Boolean(phoneValue && isValidPhoneNumber(phoneValue));
@@ -37,11 +38,12 @@ export default function ContactUs({ fields }) {
     e.preventDefault();
     setPhoneTouched(true);
     if (!phoneValid || !captchaReady) {
-      setFormError(
-        !phoneValid
+      setFormStatus({
+        type: 'error',
+        message: !phoneValid
           ? 'Введите корректный номер телефона.'
-          : getPublicFormErrorMessage({reason: 'captcha'}),
-      );
+          : 'Дождитесь загрузки и завершите проверку безопасности.',
+      });
       return;
     }
 
@@ -50,8 +52,8 @@ export default function ContactUs({ fields }) {
       obj[field.name] = field.value;
       return obj;
     }, {});
-    setBtn('Отправка...');
-    setFormError('');
+    setIsSubmitting(true);
+    setFormStatus({type: 'loading', message: 'Отправляем сообщение…'});
     sendMessage({
       name: formData?.name || 'Неизвестно',
       phone: phoneValue,
@@ -59,22 +61,20 @@ export default function ContactUs({ fields }) {
       website: formData?.website || '',
       turnstileToken,
     })
-      .then((res) => {
-        if (res.error) {
-          setBtn('Неудачно');
-        } else {
-          setBtn('Готово');
-        }
+      .then(() => {
+        setFormStatus({type: 'success', message: 'Сообщение успешно отправлено.'});
         document.getElementById('contact-form').reset();
         setPhoneValue('+375');
         turnstileRef.current?.reset();
         setTurnstileToken('');
       })
       .catch((e) => {
-        setBtn('Неудачно');
-        setFormError(getPublicFormErrorMessage(e));
+        setFormStatus({type: 'error', message: getPublicFormErrorMessage(e)});
         turnstileRef.current?.reset();
         setTurnstileToken('');
+      })
+      .finally(() => {
+        setIsSubmitting(false);
       });
   };
 
@@ -168,22 +168,14 @@ export default function ContactUs({ fields }) {
                         ref={turnstileRef}
                         className="mb-4"
                         onToken={setTurnstileToken}
-                        onExpire={() =>
-                          setFormError(getPublicFormErrorMessage({reason: 'captcha'}))
-                        }
-                        onError={() =>
-                          setFormError(getPublicFormErrorMessage({reason: 'captcha'}))
-                        }
                       />
-                      {formError ? (
-                        <p className="checkout-error-message">{formError}</p>
-                      ) : ''}
+                      <FormStatus type={formStatus?.type} message={formStatus?.message} />
                       <button
                         className="btn btn-dark btn-rounded"
-                        disabled={!phoneValid || !captchaReady || btn === 'Отправка...'}
+                        disabled={!phoneValid || !captchaReady || isSubmitting}
                       >
-                        {btn}
-                        {btn === 'Отправить' && <i className="d-icon-arrow-right"></i>}
+                        Отправить
+                        <i className="d-icon-arrow-right"></i>
                       </button>
                     </form>
                   </div>
