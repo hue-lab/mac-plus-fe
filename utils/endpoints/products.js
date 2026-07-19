@@ -1,5 +1,7 @@
+import { fetchJson } from './fetch-json';
+
 export async function getRecProducts(limit = 6) {
-  const res = await fetch(process.env.API_HOST + '/store/products', {
+  let data = await fetchJson(process.env.API_HOST + '/store/products', {
     method: "POST",
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -15,7 +17,6 @@ export async function getRecProducts(limit = 6) {
       },
     })
   });
-  let data = await res.json();
   if (data?.data?.length) {
     data.data.forEach((product) => {
       delete product.description
@@ -28,7 +29,7 @@ export async function getRecProducts(limit = 6) {
 }
 
 export async function getProductsAdvanced(category, id, limit = 6) {
-  const res = await fetch(process.env.API_HOST + '/store/products', {
+  let data = await fetchJson(process.env.API_HOST + '/store/products', {
     method: "POST",
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -47,7 +48,6 @@ export async function getProductsAdvanced(category, id, limit = 6) {
       }
     })
   });
-  let data = await res.json();
   if (data?.data?.length) {
     data.data.forEach((product) => {
       delete product.description
@@ -63,15 +63,13 @@ export async function getProducts(body) {
     ...(body || {}),
     hideDisabledCategories: true,
   }
-  const res = await fetch(process.env.API_HOST + '/store/products', {
+  return fetchJson(process.env.API_HOST + '/store/products', {
     method: "POST",
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
   });
-  return await res.json();
 }
 
 export async function getProductById(id) {
-  const res = await fetch(process.env.API_HOST + `/store/product/${id}`);
-  return await res.json();
+  return fetchJson(process.env.API_HOST + `/store/product/${id}`);
 }

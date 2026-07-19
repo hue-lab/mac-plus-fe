@@ -1,5 +1,7 @@
+import { fetchJson } from './fetch-json';
+
 export async function getCalculation(products = [], deliveryMethod = undefined) {
-  const res = await fetch(process.env.API_HOST + `/calculation/discount`, {
+  return fetchJson(process.env.API_HOST + `/calculation/discount`, {
     method: "POST",
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -7,5 +9,4 @@ export async function getCalculation(products = [], deliveryMethod = undefined) 
       deliveryMethod,
     })
   });
-  return await res.json();
 }

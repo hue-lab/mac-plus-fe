@@ -1,26 +1,10 @@
+import { fetchJson } from './fetch-json';
+
 export async function getPublicFormToken(action) {
-  const res = await fetch(
+  const data = await fetchJson(
     process.env.API_HOST + `/security/public-form-token/${action}`,
   );
-
-  if (!res.ok) {
-    await throwPublicFormError(res, 'Cannot get form token');
-  }
-
-  const data = await res.json();
   return data.token;
-}
-
-export async function throwPublicFormError(res, fallbackMessage) {
-  const data = await res.json().catch(() => ({}));
-  const reason = data?.reason || data?.error;
-  const error = new Error(data?.message || fallbackMessage);
-
-  error.status = res.status;
-  error.reason = reason;
-  error.payload = data;
-
-  throw error;
 }
 
 export function getPublicFormErrorMessage(error) {

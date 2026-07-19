@@ -1,16 +1,11 @@
-import { getPublicFormToken, throwPublicFormError } from './public-form';
+import { getPublicFormToken } from './public-form';
+import { fetchJson } from './fetch-json';
 
 export async function sendMessage({name, phone, message, website = '', turnstileToken}) {
   const formToken = await getPublicFormToken('quick-message');
-  const res = await fetch(process.env.API_HOST + '/notify/message', {
+  return fetchJson(process.env.API_HOST + '/notify/message', {
     method: "POST",
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({name, phone, message, website, turnstileToken, formToken}),
   });
-
-  if (!res.ok) {
-    await throwPublicFormError(res, 'Cannot send message');
-  }
-
-  return res;
 }

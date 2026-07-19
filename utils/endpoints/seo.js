@@ -1,7 +1,8 @@
+import { fetchJson } from './fetch-json';
+
 export async function getSeoByUrl(url) {
   try {
-    const res = await fetch(process.env.API_HOST + `/seo/item?url=${url}`);
-    return (await res.json()) || null;
+    return (await fetchJson(process.env.API_HOST + `/seo/item?url=${url}`)) || null;
   } catch (e) {
     return null;
   }
@@ -9,8 +10,7 @@ export async function getSeoByUrl(url) {
 
 export async function getAllSeo() {
   try {
-    const res = await fetch(process.env.API_HOST + `/seo`);
-    return (await res.json()) || null;
+    return (await fetchJson(process.env.API_HOST + `/seo`)) || null;
   } catch (e) {
     return null;
   }

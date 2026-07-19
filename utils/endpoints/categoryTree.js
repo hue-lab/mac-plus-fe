@@ -1,6 +1,9 @@
+import { fetchJson } from './fetch-json';
+
 export async function getCategoryTree() {
-  const res = await fetch(process.env.API_HOST + '/store/category/tree');
-  let data = await res.json() || [];
+  let data = (await fetchJson(process.env.API_HOST + '/store/category/tree')) || {
+    children: [],
+  };
   if (data) {
     removeContent(data);
   }
@@ -20,6 +23,5 @@ function removeContent(node) {
 }
 
 export async function getCategories() {
-  const res = await fetch(process.env.API_HOST + '/store/category');
-  return await res.json() || [];
+  return (await fetchJson(process.env.API_HOST + '/store/category')) || [];
 }

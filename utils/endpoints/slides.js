@@ -1,12 +1,13 @@
+import { fetchJson } from './fetch-json';
+
 export async function getSlides() {
-  const res = await fetch(
+  let data = (await fetchJson(
     process.env.API_HOST +
       "/article?" +
       new URLSearchParams({
         isSlide: true,
       })
-  );
-  let data = (await res.json()) || [];
+  )) || [];
   if (data?.data?.length) {
     data.data.forEach((slide) => {
       delete slide.content
@@ -16,12 +17,11 @@ export async function getSlides() {
 }
 
 export async function getBannerSlide() {
-  const res = await fetch(
+  return (await fetchJson(
     process.env.API_HOST +
       "/article?" +
       new URLSearchParams({
         tags: ["banner"],
       })
-  );
-  return (await res.json()) || [];
+  )) || [];
 }

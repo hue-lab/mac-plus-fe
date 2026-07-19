@@ -1,16 +1,18 @@
+import { fetchJson } from './fetch-json';
+
 export async function getArticles(page = 1, limit = 8) {
   const queryParams = new URLSearchParams({
     page,
     limit,
     hidden: false,
   }).toString();
-  const res = await fetch(process.env.API_HOST + `/article?${queryParams}`);
-  return (await res.json()) || [];
+  return (await fetchJson(process.env.API_HOST + `/article?${queryParams}`)) || [];
 }
 
 export async function getLatestArticles(limit = 4) {
-  const res = await fetch(process.env.API_HOST + `/article?limit=${limit}&hidden=false`);
-  let data = (await res.json()) || [];
+  let data =
+    (await fetchJson(process.env.API_HOST + `/article?limit=${limit}&hidden=false`)) ||
+    [];
   if (data?.data?.length) {
     data.data.forEach((article) => {
       delete article.content
@@ -21,11 +23,9 @@ export async function getLatestArticles(limit = 4) {
 }
 
 export async function getArticleById(id) {
-  const res = await fetch(process.env.API_HOST + "/article/" + id);
-  return (await res.json()) || [];
+  return (await fetchJson(process.env.API_HOST + "/article/" + id)) || [];
 }
 
 export async function getArticleBySlug(slug) {
-  const res = await fetch(process.env.API_HOST + `/article/item?slug=${slug}`);
-  return (await res.json()) || [];
+  return (await fetchJson(process.env.API_HOST + `/article/item?slug=${slug}`)) || [];
 }

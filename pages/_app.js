@@ -8,10 +8,15 @@ import {getMenuByCode} from "~/utils/endpoints/menu";
 import NextNProgress from 'nextjs-progressbar';
 import React from "react";
 import Head from 'next/head'
+import ServiceUnavailable from '~/components/features/service-unavailable';
+import {resolveLayoutData} from '~/utils/layout-data-cache';
+import {isTemporaryApiError} from '~/utils/endpoints/fetch-json';
 
 const App = ({Component, pageProps}) => {
   const store = useStore();
-  const layoutFields = pageProps?.layoutFields;
+  const layoutFields = pageProps?.layoutFields || {};
+  const categoryTree = pageProps?.categoryTree || [];
+  const footerNav = pageProps?.footerNav || {children: []};
 
   const jsonLd = [
     {
@@ -87,23 +92,23 @@ const App = ({Component, pageProps}) => {
         <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
-        <title>{pageProps.layoutFields["main-seo-title"] || "Mac Plus"}</title>
+        <title>{layoutFields["main-seo-title"] || "Mac Plus"}</title>
         <meta
           property="og:title"
-          content={pageProps.layoutFields["main-seo-title"] || "Mac Plus"}
+          content={layoutFields["main-seo-title"] || "Mac Plus"}
         />
         <meta name="keywords" content="React Template"/>
         <meta
           name="description"
           content={
-            pageProps.layoutFields["main-seo-description"] ||
+            layoutFields["main-seo-description"] ||
             "Интернет-магазин электроники в Беларуси"
           }
         />
         <meta
           property="og:description"
           content={
-            pageProps.layoutFields["main-seo-description"] ||
+            layoutFields["main-seo-description"] ||
             "Интернет-магазин электроники в Беларуси"
           }
         />
@@ -111,11 +116,15 @@ const App = ({Component, pageProps}) => {
         <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(jsonLd)}}/>
       </Head>
       <Layout
-        categoryTree={pageProps.categoryTree}
-        layoutFields={pageProps.layoutFields}
-        footerNav={pageProps.footerNav}
+        categoryTree={categoryTree}
+        layoutFields={layoutFields}
+        footerNav={footerNav}
       >
-        <Component {...pageProps} />
+        {pageProps?.serviceUnavailable ? (
+          <ServiceUnavailable retryUrl={pageProps.retryUrl} />
+        ) : (
+          <Component {...pageProps} />
+        )}
       </Layout>
     </Provider>
   )
@@ -123,10 +132,10 @@ const App = ({Component, pageProps}) => {
 
 App.getInitialProps = async ({Component, ctx}) => {
   const [
-    categoryTree,
-    footerNav,
-    layoutFields,
-  ] = await Promise.all([
+    categoryTreeResult,
+    footerNavResult,
+    layoutFieldsResult,
+  ] = await Promise.allSettled([
     getCategoryTree(),
     getMenuByCode("footer_nav"),
     getFieldsObject(
@@ -148,16 +157,46 @@ App.getInitialProps = async ({Component, ctx}) => {
       "nav-limit"
     )
   ]);
+  const categoryTree = resolveLayoutData(
+    'categoryTree',
+    categoryTreeResult,
+    {children: []},
+  );
+  const footerNav = resolveLayoutData(
+    'footerNav',
+    footerNavResult,
+    {children: []},
+  );
+  const layoutFields = resolveLayoutData(
+    'layoutFields',
+    layoutFieldsResult,
+    {},
+  );
   let pageProps = {};
   if (Component.getInitialProps) {
-    const pagePropsRes = await Component.getInitialProps(ctx);
-    if (pagePropsRes) {
-      pageProps = pagePropsRes;
+    try {
+      const pagePropsRes = await Component.getInitialProps(ctx);
+      if (pagePropsRes) {
+        pageProps = pagePropsRes;
+      }
+    } catch (error) {
+      console.error(`[Page data unavailable: ${ctx.asPath || ctx.pathname}]`, error);
+      if (!isTemporaryApiError(error)) {
+        throw error;
+      }
+
+      if (ctx.res) {
+        ctx.res.statusCode = 503;
+      }
+      pageProps = {
+        serviceUnavailable: true,
+        retryUrl: ctx.asPath || ctx.pathname || '/',
+      };
     }
   }
   return {
     pageProps: Object.assign(pageProps, {
-      categoryTree: categoryTree.children,
+      categoryTree: categoryTree?.children || [],
       footerNav,
       layoutFields,
     }),
