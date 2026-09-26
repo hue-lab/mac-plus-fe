@@ -1,9 +1,7 @@
 import { getCategoryTree } from '~/utils/endpoints/categoryTree';
 import { getProducts } from '~/utils/endpoints/products';
 import { getFieldsObject } from '~/utils/endpoints/fields';
-import { getImgPath, normalizeString } from '~/utils';
-
-const host = process.env.NEXT_PUBLIC_HOST || 'https://macplus.by';
+import { getImgPath, normalizeString, pageUrl, SITE_HOST } from '~/utils';
 
 function generateYmlFeed({ categories, products, fields, categoriesKeys }) {
   const date = new Date();
@@ -12,7 +10,7 @@ function generateYmlFeed({ categories, products, fields, categoriesKeys }) {
       <shop>
         <name>${fields['yml-feed-name']}</name>
         <company>${fields['yml-feed-company']}</company>
-        <url>${host}</url>
+        <url>${SITE_HOST}</url>
         <categories>
           ${(categories || [])
             .reduce((acc, item) => {
@@ -38,7 +36,7 @@ function generateYmlFeed({ categories, products, fields, categoriesKeys }) {
                 <delivery>${fields['yml-feed-delivery']}</delivery>
                 <name>${normalizeString(item.name || '')}</name>
                 <vendor>${normalizeString(item.brand?.name || '')}</vendor>
-                <url>${`${host}/${item.categoryHandle}/${item.seo?.seoUrl}`}</url>
+                <url>${pageUrl(item.categoryHandle, item.seo?.seoUrl)}</url>
                 <price>${item.totalPrice || 0}</price>
                 <oldprice>${item.price || 0}</oldprice>
                 <enable_auto_discounts>true</enable_auto_discounts>
@@ -56,7 +54,7 @@ function generateYmlFeed({ categories, products, fields, categoriesKeys }) {
             .reduce((acc, item) => {
               acc.push(`
               <collection id="${categoriesKeys[item._id]}">
-                <url>${host}/${item.handle}</url>
+                <url>${pageUrl(item.handle)}</url>
                 <name>${item.name}</name>
                 ${item.media[0] ? `<picture>${getImgPath(item.media[0])}</picture>` : ''}
                 ${item.description ? `<description>${item.description}</description>` : ''}

@@ -21,6 +21,24 @@ export const pagedPathname = (path, page) => {
   return `${path.split('/page-is-')[0]}/${pageSegment}`.replace('//', '/');
 };
 
+export const SITE_HOST = (process.env.NEXT_PUBLIC_HOST || 'https://macplus.by').replace(/\/+$/, '');
+
+const trimSlashes = (value) => String(value ?? '').trim().replace(/^\/+|\/+$/g, '');
+
+/**
+ * Canonical page path. next.config.js has trailingSlash: true, so every page
+ * is served at ".../" and the slash-less form answers with a 308 redirect.
+ * Feeds, sitemap, structured data and canonical tags must all use this form.
+ * @param {...string} segments e.g. category handle and seoUrl
+ * @return {string}
+ */
+export const pagePath = (...segments) => {
+  const path = segments.map(trimSlashes).filter(Boolean).join('/');
+  return path ? `/${path}/` : '/';
+};
+
+export const pageUrl = (...segments) => `${SITE_HOST}${pagePath(...segments)}`;
+
 export const parseFilterString = (str) => {
   if (!str) {
     return {};

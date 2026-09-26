@@ -2,49 +2,48 @@ import {getArticles} from "~/utils/endpoints/articles";
 import {getCategories} from "~/utils/endpoints/categoryTree";
 import {getProducts} from "~/utils/endpoints/products";
 import {getAllSeo} from "~/utils/endpoints/seo";
-
-const host = process.env.NEXT_PUBLIC_HOST || 'https://macplus.by';
+import {pageUrl} from "~/utils";
 
 function generateSiteMap({posts, categories, products, filters}) {
   return `<?xml version="1.0" encoding="UTF-8"?>
    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
      <url>
-       <loc>${host}/</loc>
+       <loc>${pageUrl()}</loc>
      </url>
      <url>
-       <loc>${host}/pages/contact-us</loc>
+       <loc>${pageUrl('pages/contact-us')}</loc>
      </url>
      <url>
-       <loc>${host}/pages/trade-in</loc>
+       <loc>${pageUrl('pages/trade-in')}</loc>
      </url>
      ${(categories || []).map(item => {
       return `
          <url>
-             <loc>${`${host}/${item.handle === 'root' ? 'shop' : item.handle}`}</loc>
+             <loc>${pageUrl(item.handle === 'root' ? 'shop' : item.handle)}</loc>
          </url>
         `;
      }).join('')}
      ${(filters || []).map(item => {
       return `
          <url>
-             <loc>${`${host}${item.url}`}</loc>
+             <loc>${pageUrl(item.url)}</loc>
          </url>
           `;
       }).join('')}
      ${(products?.data || []).map(item => {
       return `
          <url>
-             <loc>${`${host}/${item.categoryHandle}/${item.seo?.seoUrl}`}</loc>
+             <loc>${pageUrl(item.categoryHandle, item.seo?.seoUrl)}</loc>
          </url>
         `;
      }).join('')}
      <url>
-       <loc>${host}/blog</loc>
+       <loc>${pageUrl('blog')}</loc>
      </url>
      ${(posts?.data || []).map(item => {
       return `
        <url>
-           <loc>${`${host}/blog/${item.seo?.seoUrl}`}</loc>
+           <loc>${pageUrl('blog', item.seo?.seoUrl)}</loc>
        </url>
       `;
      }).join('')}

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import ALink from '~/components/features/custom-link';
 import SidebarFilterOne from '~/components/partials/shop/sidebar/sidebar-filter-one';
 import ProductListOne from '~/components/partials/shop/product-list/product-list-one';
-import {getImgPath} from '~/utils';
+import {getImgPath, pageUrl} from '~/utils';
 import Head from 'next/head';
 import InlineSVG from "react-inlinesvg";
 import {chevronForwardOutlineIcon} from "~/icons/chevron-forward-outline";
@@ -41,7 +41,7 @@ export default function Category({ banner, products, filters, category, page, fi
     itemListElement: (products?.data || []).map((item, index) => ({
       '@type': 'ListItem',
       position: index + 1,
-      url: `${process.env.NEXT_PUBLIC_HOST || 'https://macplus.by'}/${item.categoryHandle ? item.categoryHandle + '/' : ''}${item.seo?.seoUrl || '#'}`,
+      url: pageUrl(item.categoryHandle, item.seo?.seoUrl),
     })),
   };
 
