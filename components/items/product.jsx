@@ -5,7 +5,7 @@ import MediaFive from '~/components/partials/product/media/media-five';
 import DetailThree from '~/components/partials/product/detail/detail-three';
 import DescOne from '~/components/partials/product/desc/desc-one';
 import ProductSidebar from '~/components/partials/product/product-sidebar';
-import {getImgPath, pushToDataLayer, toDecimal} from '~/utils';
+import {getImgPath, pageUrl, pushToDataLayer, toDecimal} from '~/utils';
 import Modal from 'react-modal';
 import 'react-phone-number-input/style.css';
 import PhoneInput, {isValidPhoneNumber} from 'react-phone-number-input';
@@ -204,7 +204,7 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
     'description': interpolatedDescription,
     'offers': {
       '@type': 'Offer',
-      'url': product && `https://macplus.by/${product.category?.handle ? product.category?.handle + '/' : ''}${product.seo?.seoUrl || '#'}`,
+      'url': product && pageUrl(product.category?.handle, product.seo?.seoUrl),
       'price': product?.totalPrice || product?.price,
       'priceCurrency': 'BYN',
       'availability': 'https://schema.org/InStock',

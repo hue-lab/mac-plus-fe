@@ -1,9 +1,10 @@
 import { getProducts } from '~/utils/endpoints/products';
 import { getFieldsObject } from '~/utils/endpoints/fields';
 import { getDeliveryMethods } from '~/utils/endpoints/orders';
-import { getImgPath, normalizeString } from '~/utils';
+import { getImgPath, normalizeString, pagePath, SITE_HOST } from '~/utils';
 
 function generateMerchantFeed({ products, fields, deliveryMethods }) {
+  const feedHost = (fields['yml-feed-link'] || SITE_HOST).replace(/\/+$/, '');
   const avDate = new Date();
   const newDate = new Date(avDate.getTime() + 14 * 24 * 60 * 60 * 1000);
   const isoDate = newDate.toISOString();
@@ -20,9 +21,7 @@ function generateMerchantFeed({ products, fields, deliveryMethods }) {
             <g:id>${product._id}</g:id>
             <g:title>${normalizeString(product.name)}</g:title>
             <g:description>${normalizeString(product.description)}</g:description>
-            <g:link>${fields['yml-feed-link']}/${product.categoryHandle}/${
-              product.seo?.seoUrl
-            }</g:link>
+            <g:link>${feedHost}${pagePath(product.categoryHandle, product.seo?.seoUrl)}</g:link>
             <g:image_link>${
               product.media?.length ? getImgPath(product.media[0]) : undefined
             }</g:image_link>

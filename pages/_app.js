@@ -8,15 +8,20 @@ import {getMenuByCode} from "~/utils/endpoints/menu";
 import NextNProgress from 'nextjs-progressbar';
 import React from "react";
 import Head from 'next/head'
+import {useRouter} from 'next/router';
 import ServiceUnavailable from '~/components/features/service-unavailable';
 import {resolveLayoutData} from '~/utils/layout-data-cache';
 import {isTemporaryApiError} from '~/utils/endpoints/fetch-json';
+import {pageUrl} from '~/utils';
 
 const App = ({Component, pageProps}) => {
   const store = useStore();
   const layoutFields = pageProps?.layoutFields || {};
   const categoryTree = pageProps?.categoryTree || [];
   const footerNav = pageProps?.footerNav || {children: []};
+  const router = useRouter();
+  const isErrorPage = ['/404', '/_error'].includes(router.pathname);
+  const canonicalUrl = pageUrl(router.asPath.split(/[?#]/)[0]);
 
   const jsonLd = [
     {
@@ -113,6 +118,8 @@ const App = ({Component, pageProps}) => {
           }
         />
         <meta name="author" content="Macplus"/>
+        {!isErrorPage && <link rel="canonical" href={canonicalUrl} key="canonical"/>}
+        {!isErrorPage && <meta property="og:url" content={canonicalUrl} key="og:url"/>}
         <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(jsonLd)}}/>
       </Head>
       <Layout
