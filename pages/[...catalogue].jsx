@@ -6,33 +6,52 @@ import { getFilters } from "~/utils/endpoints/filters";
 import { getBannerSlide } from "~/utils/endpoints/slides";
 import { getFieldsObject } from "~/utils/endpoints/fields";
 import Category from "~/components/items/category";
-import { parseFilterString } from "~/utils";
+import { pagePath, parseFilterString } from "~/utils";
 import CyrillicToTranslit from "cyrillic-to-translit-js";
 import {getSeoByUrl} from "~/utils/endpoints/seo";
+import {isTemporaryApiError} from "~/utils/endpoints/fetch-json";
+import {prepareSeoContent} from "~/utils/seo-content";
 
-GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
+export async function getServerSideProps(context) {
+  try {
+    return await loadCatalogue(context);
+  } catch (error) {
+    if (!isTemporaryApiError(error)) throw error;
+    context.res.statusCode = 503;
+    return { props: { serviceUnavailable: true, retryUrl: context.resolvedUrl } };
+  }
+}
+
+async function loadCatalogue({ query, params, resolvedUrl, req }) {
   const cyrillicToTranslit = new CyrillicToTranslit();
   const {
-    catalogue,
     per_page,
-    price,
-    sortby,
     type,
+    sortby,
     min_price,
     max_price,
     search,
-    ...customProperties
   } = query;
-  const fullPath = catalogue.join("/");
+  const fullPath = params.catalogue.join("/");
   const pathSegments = fullPath.split("/filter/");
   const page = parseInt(fullPath.split("/page-is-")[1] || 1);
   const filterString = pathSegments[1]?.split("/page-is-")[0] || null;
   const filterObject = parseFilterString(filterString);
   const path = pathSegments[0].split("/page-is-")[0];
-  const [
-    seoFields,
-    seoMainMeta,
-  ] = await Promise.all([
+  const searchValue = path === "shop" && typeof search === "string" ? search : null;
+  const item = path === "shop"
+    ? { name: "Все товары", title: "Каталог техники Apple в Минске" }
+    : await getItemBySlug(path);
+  if (!item || item.statusCode === 404) return { notFound: true };
+
+  const route = item.catalogueRoute;
+  const normalizedPath = pagePath((route?.publicPath || path) + fullPath.slice(path.length));
+  const requestedUrl = new URL(req.headers['x-nextjs-data'] ? resolvedUrl : req.url, "http://localhost");
+  const redirect = () => {
+    if (decodeURI(requestedUrl.pathname) === normalizedPath) return null;
+    return { redirect: { destination: encodeURI(normalizedPath) + requestedUrl.search, statusCode: 301 } };
+  };
+  const loadSeo = () => Promise.all([
     getFieldsObject(
       "category-seo-header",
       "category-seo-title",
@@ -41,57 +60,45 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
       "product-seo-title",
       "product-seo-description",
     ),
-    getSeoByUrl(`/${fullPath}`)
+    getSeoByUrl(`/${fullPath}`).then((seo) => {
+      if (seo || !route || route.sourcePath === path) return seo;
+      return getSeoByUrl(`/${route.sourcePath}${fullPath.slice(path.length)}`);
+    }),
   ]);
 
-  const searchValue = (path === "shop" && search) ? search : null
-
-  const item =
-    path === "shop"
-      ? {
-          name: "Все товары",
-          description: "Все товары каталога",
-        }
-      : await getItemBySlug(path);
-
-  if (item?.statusCode === 404 && path !== "shop") {
-    if (res) {
-      res.writeHead(301, {
-        Location: "/404",
-        "Content-Type": "text/html; charset=utf-8",
-      });
-      res.end();
-      return;
-    }
-
-    window.location = `${window.location.origin}/404`;
-  }
-
-  if (item?.price) {
+  if (item.category) {
+    if (path !== fullPath) return { notFound: true };
+    const redirectResult = redirect();
+    if (redirectResult) return redirectResult;
     const [
       featuredRes,
       deliveryRes,
+      [seoFields, seoMainMeta],
     ] = await Promise.all([
       getProductsAdvanced(item.category._id, item._id),
       getDeliveryMethods(),
+      loadSeo(),
     ]);
-    return {
+    const { html } = prepareSeoContent(seoMainMeta?.content || item.content || "");
+    return { props: {
       featured: featuredRes || [],
       deliveryMethods: deliveryRes || [],
       data: item,
       type: "product",
-      mainSeo: seoMainMeta,
+      mainSeo: { ...seoMainMeta, content: html },
       seoFields,
-    };
+      canonicalPath: route?.canonicalPath || null,
+      noindex: Boolean(item.category.isHidden),
+    } };
   }
 
-  const filters = item ? await getFilters(item._id) : [];
+  const filters = await getFilters(item._id) || [];
   const filtersPairs = filters.reduce((filterAcc, filterCurr) => {
     const optionsArr = [];
-    const filterKey = [filterCurr.code || filterCurr._id];
+    const filterKey = filterCurr.code || filterCurr._id;
     const valuesPairs = (filterAcc[filterKey] = filterCurr.options.reduce(
       (optionAcc, optionCurr) => {
-        const translitOption = cyrillicToTranslit.transform(optionCurr, "_").toLowerCase();
+        const translitOption = cyrillicToTranslit.transform(String(optionCurr), "_").toLowerCase();
         optionsArr.push({
           key: translitOption,
           value: optionCurr,
@@ -99,7 +106,7 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
         optionAcc[translitOption] = optionCurr;
         return optionAcc;
       },
-      {}
+      Object.create(null)
     ));
     filterAcc[filterKey] = {
       valuesPairs,
@@ -107,18 +114,29 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
     };
     filterCurr.options = optionsArr;
     return filterAcc;
-  }, {});
+  }, Object.create(null));
+  const suffix = fullPath.slice(path.length);
+  if (suffix && !/^(?:\/filter\/[^/]+(?:\/[^/]+)*?)?(?:\/page-is-[1-9]\d*)?$/.test(suffix)) {
+    return { notFound: true };
+  }
+  if (filterString && (Object.keys(filterObject).length !== filterString.split("/").length ||
+    Object.entries(filterObject).some(([key, values]) =>
+      !Object.hasOwn(filtersPairs, key) || values.some((value) => !Object.hasOwn(filtersPairs[key].valuesPairs, value))
+    ))) return { notFound: true };
+  const redirectResult = redirect();
+  if (redirectResult) return redirectResult;
   const filtersCodes = (filters || []).map((filterItem) => {
     return filterItem.code || filterItem._id;
   });
-  const banner = await getBannerSlide();
   const requestFilters = {
     baseProperties: {},
     customProperties: {},
     preview: true,
+    storefrontListing: true,
+    listingDescriptions: type === 'list',
     pagination: {
       page: Number(page) || 1,
-      limit: Number(per_page) || 12,
+      limit: [12, 24, 36].includes(Number(per_page)) ? Number(per_page) : 12,
     },
   };
 
@@ -173,56 +191,58 @@ GenericCatalogueItem.getInitialProps = async ({ query, res }) => {
         break;
     }
   }
-  const products = await getProducts(requestFilters);
+  const [products, bannerResult, [seoFields, seoMainMeta]] = await Promise.all([
+    getProducts(requestFilters),
+    getBannerSlide(),
+    loadSeo(),
+  ]);
+  const banner = bannerResult?.data?.[0];
+  const { html, faq } = prepareSeoContent(seoMainMeta?.content || item.content || "");
+  const filterLabel = Object.entries(filterObject).map(([key, values]) =>
+    `${filtersPairs[key].name} - ${values.map((value) => filtersPairs[key].valuesPairs[value]).join(', ')}`
+  ).join('; ');
 
-  const filterObjectEntries = Object.entries(filterObject);
-  if (!!filterObjectEntries.length) {
-    let isNotFound = false;
-    filterObjectEntries
-      .forEach((filter) => {
-        if (!filtersPairs[filter[0]]) {
-          isNotFound = true;
-        } else {
-          filter[1].forEach((option) => {
-            if (!filtersPairs[filter[0]]?.valuesPairs[option]) {
-              isNotFound = true
-            }
-          })
-        }
-      })
-
-    if (isNotFound) {
-      if (res) {
-        res.writeHead(301, {
-          Location: "/404",
-          "Content-Type": "text/html; charset=utf-8",
-        });
-        res.end();
-        return;
-      }
-
-      window.location = `${window.location.origin}/404`;
-    }
-  }
-
-  return {
-    page: page,
-    banner: banner?.data[0],
-    data: item,
-    products: products,
-    filters: filters.map((el) => {
-      el.code = el.code || el._id;
-      return el;
-    }),
+  return { props: {
+    page,
+    banner: banner ? {
+      media: banner.media || null,
+      title: banner.title || '',
+      description: banner.description || '',
+      seo: { seoUrl: banner.seo?.seoUrl || null, seoImageAlt: banner.seo?.seoImageAlt || '' },
+    } : null,
+    data: {
+      name: item.name || '',
+      title: item.title || '',
+      handle: item.handle || null,
+      keywords: item.keywords || [],
+    },
+    products: {
+      metadata: products.metadata,
+      data: products.data.map(({_id, name, media, price, totalPrice, discount, brand, description,
+        isNew, isRec, isStock, categoryHandle, categoryName, seo, publicPath}) => ({
+        _id, name, media: media || [], price: price ?? null, totalPrice: totalPrice ?? null,
+        discount: discount || 0, brand: brand?.name ? {name: brand.name} : null,
+        ...(type === 'list' && {description: description || ''}),
+        isNew: Boolean(isNew), isRec: Boolean(isRec), isStock: Boolean(isStock),
+        categoryHandle: categoryHandle || null, categoryName: categoryName || null, publicPath: publicPath || null,
+        seo: {seoUrl: seo?.seoUrl || null, seoTitle: seo?.seoTitle || null, seoImage: seo?.seoImage?.slice(0, 1) || []},
+      })),
+    },
+    filters: filters.map(({_id, code, name, type, options, units}) => ({
+      _id, code: code || _id, name, type: type || null, options, units: units || null,
+    })),
     type: "category",
     filterObject: filterObject,
-    filtersPairs,
+    filterLabel,
     fullPath: fullPath,
-    mainSeo: seoMainMeta,
+    mainSeo: { ...seoMainMeta, content: html },
     seoFields,
     searchValue,
-  };
-};
+    faq,
+    isShop: path === "shop" && !suffix && !searchValue,
+    noindex: Boolean(item.isHidden || searchValue || sortby || min_price || max_price),
+  } };
+}
 
 export default function GenericCatalogueItem({
   data,
@@ -234,11 +254,14 @@ export default function GenericCatalogueItem({
   products,
   page,
   filterObject,
-  filtersPairs,
+  filterLabel,
   fullPath,
   mainSeo,
   seoFields,
   searchValue,
+  faq,
+  isShop,
+  noindex,
 }) {
   return type === "product" ? (
     <ProductItem
@@ -247,6 +270,7 @@ export default function GenericCatalogueItem({
       deliveryMethods={deliveryMethods}
       seoFields={seoFields}
       mainSeo={mainSeo}
+      noindex={noindex}
     />
   ) : (
     <Category
@@ -258,9 +282,12 @@ export default function GenericCatalogueItem({
       category={data}
       filterObject={filterObject}
       fullPath={fullPath}
-      filtersPairs={filtersPairs}
+      filterLabel={filterLabel}
       seoFields={seoFields}
       mainSeo={mainSeo}
+      faq={faq}
+      isShop={isShop}
+      noindex={noindex}
     />
   );
 }

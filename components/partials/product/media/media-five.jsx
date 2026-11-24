@@ -11,7 +11,8 @@ export default function MediaFive(props) {
   const [index, setIndex] = useState(0);
   const [mediaRef, setMediaRef] = useState(null);
 
-  let lgImages = product.seo?.seoImage || [];
+  const seoImages = product.seo?.seoImage?.filter((image) => image.imageName);
+  const lgImages = seoImages?.length ? seoImages : (product.media || []).map((imageName) => ({imageName}));
 
   useEffect(() => {
     if (mediaRef !== null && mediaRef.current !== null && index >= 0) {
@@ -48,9 +49,12 @@ export default function MediaFive(props) {
               width={800}
               height={800}
               src={getImgPath(image.imageName)}
-              alt={`${image.imageAlt || product.name || ''}-${index}`}
+              alt={image.imageAlt || product.name || ''}
               title={`${image.imageAlt || product.name || ''}-${index}`}
               className="product-image large-image"
+              sizes="(max-width: 767px) 100vw, (max-width: 991px) 50vw, 38vw"
+              priority={index === 0}
+              fetchPriority={index === 0 ? 'high' : undefined}
             />
           </SwiperSlide>
         ))}
@@ -58,7 +62,11 @@ export default function MediaFive(props) {
 
 
       <ThumbTwo
-        product={product}
+        product={{
+          ...product,
+          media: lgImages.map(({imageName}) => imageName),
+          seo: { ...product.seo, seoImage: lgImages },
+        }}
         onChangeIndex={setIndexHandler}
         currIndex={index}
         length={lgImages?.length || 0}

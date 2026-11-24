@@ -5,6 +5,7 @@ export default function Document() {
   return (
     <Html lang="ru">
       <Head>
+        <link rel="preconnect" href={process.env.API_HOST} crossOrigin="anonymous" />
         <Script strategy="afterInteractive" id="google-tag-manager"
                 dangerouslySetInnerHTML={{
                   __html: `

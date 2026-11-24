@@ -5,13 +5,14 @@ import MediaFive from '~/components/partials/product/media/media-five';
 import DetailThree from '~/components/partials/product/detail/detail-three';
 import DescOne from '~/components/partials/product/desc/desc-one';
 import ProductSidebar from '~/components/partials/product/product-sidebar';
-import {getImgPath, pageUrl, pushToDataLayer, toDecimal} from '~/utils';
+import {getImgPath, pagePath, pageUrl, pushToDataLayer, toDecimal} from '~/utils';
 import Modal from 'react-modal';
 import 'react-phone-number-input/style.css';
 import PhoneInput, {isValidPhoneNumber} from 'react-phone-number-input';
 import ru from '~/public/labels/ru';
 import {sendMessage} from '~/utils/endpoints/message';
 import Head from 'next/head';
+import {breadcrumbList, structuredData} from '~/utils/structured-data';
 import InlineSVG from "react-inlinesvg";
 import {chevronForwardOutlineIcon} from "~/icons/chevron-forward-outline";
 import {homeOutlineIcon} from "~/icons/home-outline";
@@ -19,7 +20,7 @@ import TurnstileWidget from '~/components/features/turnstile';
 import FormStatus from '~/components/features/form-status';
 import {getPublicFormErrorMessage} from '~/utils/endpoints/public-form';
 
-export default function ProductItem({product, featured, deliveryMethods, seoFields, mainSeo}) {
+export default function ProductItem({product, featured, deliveryMethods, seoFields, mainSeo, noindex}) {
   if (!product) return '';
   const modalStyles = {
     content: {
@@ -33,7 +34,7 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
     },
   };
 
-  const ogImage = product.seo?.seoImage[0];
+  const ogImage = product.seo?.seoImage?.[0];
   const titleString = `${product.seo?.seoTitle || product.name || 'Mac Plus'}`;
   const descriptionString = `${product.seo?.seoTitle || product.name || ''}`;
   const categoryString = `${product.category.name}`;
@@ -196,24 +197,35 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
     }
   }, []);
 
+  const productPath = product.catalogueRoute?.publicPath || [product.category?.handle, product.seo?.seoUrl].filter(Boolean).join('/');
+  const imageNames = product.seo?.seoImage?.map(({imageName}) => imageName).filter(Boolean);
+  const images = (imageNames?.length ? imageNames : product.media || []).filter(Boolean).map(getImgPath);
+  const price = product.discount > 0 ? product.totalPrice : product.price;
   const jsonLd = {
-    '@context': 'https://schema.org/',
     '@type': 'Product',
     'name': product?.name,
-    'image': ogImage && getImgPath(ogImage.imageName),
+    'image': images.length ? images : undefined,
     'description': interpolatedDescription,
-    'offers': {
+    'sku': String(product._id),
+    'brand': product.brand?.name ? { '@type': 'Brand', name: product.brand.name } : undefined,
+    'offers': Number.isFinite(price) && price > 0 ? {
       '@type': 'Offer',
-      'url': product && pageUrl(product.category?.handle, product.seo?.seoUrl),
-      'price': product?.totalPrice || product?.price,
+      'url': pageUrl(productPath),
+      'price': price,
       'priceCurrency': 'BYN',
-      'availability': 'https://schema.org/InStock',
+      'availability': product.isStock ? 'https://schema.org/InStock' : 'https://schema.org/BackOrder',
       "seller": {
         "@type": "Organization",
         "name": "Интернет - магазин техники Apple"
       },
-    }
+    } : undefined,
   };
+  const categoryPath = product.categoryPublicPath || product.category.handle;
+  const breadcrumbs = breadcrumbList([
+    ['Главная', '/'], ['Каталог', '/shop'],
+    [product.category.name, categoryPath],
+    [product.name, productPath],
+  ]);
 
   return (
     <main className="main single-product">
@@ -224,7 +236,8 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
         <meta property="og:description" content={interpolatedDescription}/>
         <meta name="keywords" content={mainSeo?.keywords || product.seo?.seoKeywords?.join(', ')}/>
         {ogImage && <meta property="og:image" content={getImgPath(ogImage.imageName)}/>}
-        <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(jsonLd)}}/>
+        {noindex && <meta name="robots" content="noindex" />}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{__html: structuredData(jsonLd, breadcrumbs)}}/>
       </Head>
 
       {!!product ? (
@@ -248,7 +261,7 @@ export default function ProductItem({product, featured, deliveryMethods, seoFiel
                   <InlineSVG className="breadcrumb-arrow" src={chevronForwardOutlineIcon}/>
                 </li>
                 <li>
-                  <ALink href={`/${product.category.handle}/`} className="active">
+                  <ALink href={pagePath(categoryPath)} className="active">
                     {product.category.name}
                   </ALink>
                   <InlineSVG className="breadcrumb-arrow" src={chevronForwardOutlineIcon}/>

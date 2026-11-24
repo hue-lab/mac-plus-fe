@@ -43,6 +43,7 @@ function IntroSection({ slides }) {
                       width={1400}
                       height={546}
                       priority={index === 0}
+                      fetchPriority={index === 0 ? 'high' : undefined}
                       loading={index === 0 ? 'eager' : 'lazy'}
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1400px"
                     />

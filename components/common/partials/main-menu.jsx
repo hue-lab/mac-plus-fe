@@ -53,7 +53,8 @@ function MainMenu({ router, categoryTree, layoutFields }) {
                       <Image
                         style={{ objectFit: "cover", objectPosition: "left top", borderRadius: ".6rem" }}
                         src={getImgPath(layoutFields["nav-sale-image"])}
-                        alt="Menu banner"
+                        alt={layoutFields["nav-sale-title"] || "Предложение Macplus"}
+                        sizes="350px"
                         loading="lazy"
                         width={884}
                         height={1320}
