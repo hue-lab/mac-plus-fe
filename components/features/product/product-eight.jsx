@@ -7,22 +7,25 @@ import { cartActions } from '~/store/cart';
 import { modalActions } from '~/store/modal';
 import { wishlistActions } from '~/store/wishlist';
 
-import { getImgPath, toDecimal } from '~/utils';
+import { getImgPath, pagePath, toDecimal } from '~/utils';
 import Image from "next/image";
 
 function ProductEight(props) {
   const { product, adClass, addToCart } = props;
+  const productPath = product.publicPath ? pagePath(product.publicPath)
+    : product.seo?.seoUrl ? pagePath(product.categoryHandle, product.seo.seoUrl) : '#';
 
   return (
     <div itemProp="itemListElement" itemScope itemType="https://schema.org/Offer" className={`product product-list ${adClass}`}>
       <figure className="product-media">
-        <ALink href={`/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`}>
+        <ALink href={productPath}>
           <div style={{padding: '1rem', aspectRatio: 'square'}}>
             <Image
               itemProp="image"
-              alt={product.seo?.seoImage[0]?.imageAlt || product.name || ''}
+              alt={product.seo?.seoImage?.[0]?.imageAlt || product.name || ''}
               title={product.seo?.seoTitle || product.name || ''}
-              src={getImgPath(product.seo?.seoImage[0]?.imageName)}
+              src={getImgPath(product.seo?.seoImage?.[0]?.imageName || product.media?.[0])}
+              sizes="(max-width: 575px) 40vw, 300px"
               width="300"
               height="338"
               style={{ objectFit: 'contain', height: '100%', objectPosition: 'center' }}
@@ -39,7 +42,7 @@ function ProductEight(props) {
 
       <div className="product-details">
         <span itemProp="name" className="product-name">
-          <ALink itemProp="url" href={`/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`}>
+          <ALink itemProp="url" href={productPath}>
             {product.name}
           </ALink>
         </span>
@@ -61,7 +64,7 @@ function ProductEight(props) {
         </div>
 
         <p className="product-short-desc" style={{ marginBottom: '.5rem' }}>
-          Бренд: {product.brand.name}
+          Бренд: {product.brand?.name}
         </p>
 
         <p itemProp="description" className="product-short-desc">
@@ -69,7 +72,7 @@ function ProductEight(props) {
         </p>
 
         <div className="product-action">
-          <ALink href={`/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`} className="btn-product btn-cart" title="Go to product">
+          <ALink href={productPath} className="btn-product btn-cart" title="Go to product">
             <span>Подробнее</span>
           </ALink>
         </div>

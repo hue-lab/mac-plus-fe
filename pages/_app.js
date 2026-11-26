@@ -14,14 +14,20 @@ import {resolveLayoutData} from '~/utils/layout-data-cache';
 import {isTemporaryApiError} from '~/utils/endpoints/fetch-json';
 import {pageUrl} from '~/utils';
 
+function navigationCategories(categories) {
+  return (categories || []).map(({_id, name, handle, icon, order, hot, children}) => ({
+    _id, name, handle, icon, order, hot, children: navigationCategories(children),
+  }));
+}
+
 const App = ({Component, pageProps}) => {
   const store = useStore();
   const layoutFields = pageProps?.layoutFields || {};
   const categoryTree = pageProps?.categoryTree || [];
   const footerNav = pageProps?.footerNav || {children: []};
   const router = useRouter();
-  const isErrorPage = ['/404', '/_error'].includes(router.pathname);
-  const canonicalUrl = pageUrl(router.asPath.split(/[?#]/)[0]);
+  const isErrorPage = pageProps?.serviceUnavailable || ['/404', '/_error'].includes(router.pathname);
+  const canonicalUrl = pageUrl(pageProps?.canonicalPath || router.asPath.split(/[?#]/)[0]);
 
   const jsonLd = [
     {
@@ -203,7 +209,7 @@ App.getInitialProps = async ({Component, ctx}) => {
   }
   return {
     pageProps: Object.assign(pageProps, {
-      categoryTree: categoryTree?.children || [],
+      categoryTree: navigationCategories(categoryTree?.children),
       footerNav,
       layoutFields,
     }),

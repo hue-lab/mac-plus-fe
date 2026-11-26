@@ -1,7 +1,7 @@
 import { fetchJson } from './fetch-json';
 
 export async function getCategoryTree() {
-  let data = (await fetchJson(process.env.API_HOST + '/store/category/tree')) || {
+  let data = (await fetchJson(process.env.API_HOST + '/store/category/tree?storefront=1')) || {
     children: [],
   };
   if (data) {
@@ -20,8 +20,4 @@ function removeContent(node) {
   if (node?.children?.length) {
     node.children.forEach((child) => removeContent(child));
   }
-}
-
-export async function getCategories() {
-  return (await fetchJson(process.env.API_HOST + '/store/category')) || [];
 }

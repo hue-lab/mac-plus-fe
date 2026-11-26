@@ -7,11 +7,13 @@ import { cartActions } from '~/store/cart';
 import { modalActions } from '~/store/modal';
 import { wishlistActions } from '~/store/wishlist';
 
-import { getImgPath, toDecimal } from '~/utils';
+import { getImgPath, pagePath, toDecimal } from '~/utils';
 import Image from "next/image";
 
 function ProductTwo(props) {
   const { product, adClass = 'text-center', addToCart, isCat = true } = props;
+  const productPath = product.publicPath ? pagePath(product.publicPath)
+    : product.seo?.seoUrl ? pagePath(product.categoryHandle, product.seo.seoUrl) : '#';
 
   const addToCartHandler = (e) => {
     e.preventDefault();
@@ -21,12 +23,13 @@ function ProductTwo(props) {
   return (
     <div className={`product ${adClass}`}>
       <figure className="product-media">
-        <ALink href={`/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`}>
+        <ALink href={productPath}>
           <div style={{padding: '1rem', aspectRatio: 'square'}}>
             <Image
-              alt={product.seo?.seoImage[0]?.imageAlt || product.name || ''}
+              alt={product.seo?.seoImage?.[0]?.imageAlt || product.name || ''}
               title={product.seo?.seoTitle || product.name || ''}
-              src={getImgPath(product.seo?.seoImage[0]?.imageName)}
+              src={getImgPath(product.seo?.seoImage?.[0]?.imageName || product.media?.[0])}
+              sizes="(max-width: 575px) 50vw, (max-width: 991px) 33vw, 25vw"
               width={300}
               height={338}
               style={{objectFit: 'contain', height: '100%', objectPosition: 'center'}}
@@ -41,7 +44,7 @@ function ProductTwo(props) {
         </div>
 
         <div className="product-action">
-          <ALink href={`https://macplus.by/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`} className="btn-product btn-quickview" title="Quick View">
+          <ALink href={productPath} className="btn-product btn-quickview" title="Quick View">
             Подробнее
           </ALink>
         </div>
@@ -49,7 +52,7 @@ function ProductTwo(props) {
 
       <div className="product-details" style={{ paddingBottom: '1rem' }}>
         <span className="product-name">
-          <ALink href={`/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`}>
+          <ALink href={productPath}>
             {product.name}
           </ALink>
         </span>

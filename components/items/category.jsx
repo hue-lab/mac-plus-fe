@@ -4,20 +4,22 @@ import SidebarFilterOne from '~/components/partials/shop/sidebar/sidebar-filter-
 import ProductListOne from '~/components/partials/shop/product-list/product-list-one';
 import {getImgPath, pageUrl} from '~/utils';
 import Head from 'next/head';
+import Image from 'next/image';
+import {useRouter} from 'next/router';
+import {breadcrumbList, structuredData} from '~/utils/structured-data';
 import InlineSVG from "react-inlinesvg";
 import {chevronForwardOutlineIcon} from "~/icons/chevron-forward-outline";
 import {homeOutlineIcon} from "~/icons/home-outline";
 
-export default function Category({ banner, products, filters, category, page, filterObject, filtersPairs, fullPath, mainSeo, seoFields, searchValue }) {
+export default function Category({ banner, products, filters, category, page, filterObject, filterLabel, fullPath, mainSeo, seoFields, searchValue, faq, isShop, noindex }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const { asPath } = useRouter();
   useEffect(() => {
     if (typeof window !== 'undefined') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }, [page, filters]);
-  const filtersString = Object.entries(filterObject)
-    .map((filter) => `${filtersPairs[filter[0]]?.name} - ${filter[1].map((option) => `${filtersPairs[filter[0]]?.valuesPairs[option]}`).join(', ')}`)
-    .join('; ');
+  const filtersString = filterLabel;
 
   const collapseContent = () => {
     setIsCollapsed(!isCollapsed);
@@ -29,21 +31,30 @@ export default function Category({ banner, products, filters, category, page, fi
 
   const descriptionString = `${categoryString}${filtersString.length ? `: ${filtersString}` : ``}`;
 
-  const headerString = `${category.title}${filtersString.length ? `: ${filtersString}` : ''}${page > 1 ? `; Страница №${page}` : ''}`;
+  const headerString = `${category.title?.trim() || category.name || 'Каталог техники Apple'}${filtersString.length ? `: ${filtersString}` : ''}${page > 1 ? `; Страница №${page}` : ''}`;
 
-  const interpolatedTitle = mainSeo?.title || seoFields['category-seo-title'].replaceAll('{TITLE}', titleString);
-  const interpolatedDescription = mainSeo?.description || seoFields['category-seo-description'].replaceAll('{TITLE}', descriptionString);
-  const interpolatedHeader = mainSeo?.tag || seoFields['category-seo-header'].replaceAll('{TITLE}', headerString);
+  const interpolatedTitle = isShop
+    ? 'Каталог техники Apple в Минске | Macplus'
+    : mainSeo?.title || seoFields['category-seo-title']?.replaceAll('{TITLE}', titleString) || titleString;
+  const interpolatedDescription = isShop
+    ? 'Каталог Macplus в Минске. Сравните цены на iPhone, MacBook, iPad, Apple Watch, AirPods и аксессуары. Уточняйте наличие и условия доставки на странице товара.'
+    : mainSeo?.description || seoFields['category-seo-description']?.replaceAll('{TITLE}', descriptionString) || descriptionString;
+  const interpolatedHeader = isShop ? category.title
+    : mainSeo?.tag || seoFields['category-seo-header']?.replaceAll('{TITLE}', headerString) || headerString;
 
   const jsonLd = {
-    '@context': 'https://schema.org/',
     '@type': 'ItemList',
     itemListElement: (products?.data || []).map((item, index) => ({
       '@type': 'ListItem',
       position: index + 1,
-      url: pageUrl(item.categoryHandle, item.seo?.seoUrl),
+      url: item.publicPath ? pageUrl(item.publicPath) : pageUrl(item.categoryHandle, item.seo?.seoUrl),
     })),
   };
+  const breadcrumbs = breadcrumbList([
+    ['Главная', '/'],
+    ...(category.handle ? [['Каталог', '/shop']] : []),
+    [category.name || 'Каталог', asPath.split(/[?#]/)[0]],
+  ]);
 
   const isNotFirstPage = page <= 1;
 
@@ -51,9 +62,7 @@ export default function Category({ banner, products, filters, category, page, fi
     return Object.values(filterObject).some((value) => Array.isArray(value) && value.length > 0);
   };
 
-  useEffect(() => {
-    isFilterApplied();
-  }, [filterObject]);
+  const showContent = !isFilterApplied() && isNotFirstPage && !searchValue && Boolean(mainSeo?.content);
 
   return (
     <main className="main bt-lg-none shop">
@@ -63,7 +72,8 @@ export default function Category({ banner, products, filters, category, page, fi
         <meta name="description" content={interpolatedDescription} />
         <meta property="og:description" content={interpolatedDescription} />
         <meta name="keywords" content={(mainSeo?.keywords || category.keywords || []).join(', ')} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        {noindex && <meta name="robots" content="noindex" />}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: structuredData(jsonLd, breadcrumbs, showContent && faq) }} />
       </Head>
 
       <h1 className="d-none">{interpolatedHeader}</h1>
@@ -95,20 +105,21 @@ export default function Category({ banner, products, filters, category, page, fi
             <SidebarFilterOne filters={filters} type="banner" filterObject={filterObject} />
 
             <div className="col-lg-9 main-content">
-              {banner && (
+              {banner?.media && (
                 <div
                   className="shop-banner banner"
                   title={banner.seo?.seoImageAlt || ''}
                   style={{
-                    backgroundImage: `url('${getImgPath(banner.media)}')`,
                     backgroundColor: '#f2f2f3',
                   }}
                 >
+                  <Image src={getImgPath(banner.media)} alt={banner.seo?.seoImageAlt || banner.title}
+                    fill sizes="(max-width: 991px) 100vw, 75vw" style={{ objectFit: 'cover' }} />
                   <div className="banner-content">
                     <h4 className="banner-subtitle d-inline-block mb-2 text-uppercase ls-normal bg-dark" style={{ color: 'white', padding: '.5rem 1rem' }}>
                       {banner.description}
                     </h4>
-                    <h1 className="banner-title font-weight-bold ls-normal text-uppercase">{banner.title}</h1>
+                    <p className="banner-title font-weight-bold ls-normal text-uppercase">{banner.title}</p>
                     <ALink href={`/blog/${banner.seo?.seoUrl || '#'}`} className="btn btn-outline btn-dark btn-rounded">
                       Подробнее
                     </ALink>
@@ -123,9 +134,9 @@ export default function Category({ banner, products, filters, category, page, fi
               )}
 
               <ProductListOne products={products} type="banner" fullPath={fullPath}/>
-              {!isFilterApplied() && isNotFirstPage && !!(mainSeo?.content || category.content) && (
+              {showContent && (
                 <>
-                  <div className={`rendered-content ${!isCollapsed ? 'collapsed-content' : ''}`} dangerouslySetInnerHTML={{ __html: mainSeo?.content || category.content || '' }}></div>
+                  <div className={`rendered-content ${!isCollapsed ? 'collapsed-content' : ''}`} dangerouslySetInnerHTML={{ __html: mainSeo.content }}></div>
                   <div onClick={collapseContent} className="collapsed-btn">
                     <div>{isCollapsed ? 'Скрыть' : 'Читать дальше'}</div>
                     <svg style={{ transform: isCollapsed ? 'rotateX(180deg)' : 'none' }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor">

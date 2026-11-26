@@ -12,10 +12,10 @@ function BannerSection({ tradeInTitle, tradeInSubtitle, tradeInDescription }) {
       <section className="banner-group container mt-10 pb-4 pt-2 mb-10">
         <Reveal keyframes={fadeIn} delay={200} duration={1200} triggerOnce>
           <div className="banner1 banner banner-section-wrapper" style={{ overflow: 'hidden', borderRadius: '2rem' }}>
-            <Image src={guyImage} alt="guarantee" title="guarantee" width={360} height={426} loading="lazy" className="banner-guy" />
+            <Image src={guyImage} alt="" width={360} height={426} loading="lazy" className="banner-guy" />
             <div className="banner-content">
               <div>
-                <Image src={gearImage} alt="guarantee" title="guarantee" width={60} height={60} loading="lazy" className="banner-icon mb-4" />
+                <Image src={gearImage} alt="" width={60} height={60} loading="lazy" className="banner-icon mb-4" />
               </div>
               <span className="banner-title text-white ls-normal lh-1">{tradeInTitle}</span>
               <span className="banner-title text-white ls-normal lh-1">{tradeInSubtitle}</span>

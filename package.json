@@ -23,6 +23,7 @@
     "next-redux-wrapper": "^8.1.0",
     "nextjs-progressbar": "^0.0.16",
     "node-fetch": "^3.0.0",
+    "parse5": "^7.3.0",
     "postcss-flexbugs-fixes": "^5.0.2",
     "react": "^18.3.1",
     "react-awesome-reveal": "^3.8.1",

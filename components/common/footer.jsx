@@ -89,7 +89,7 @@ export default function Footer({ fields, categoryTree, footerNav }) {
         <div className="footer-bottom">
           <div className="footer-left">
             <figure className="payment">
-              <Image src={paymentsImage} alt="payment" title="payment" width={336} height={29} />
+              <Image src={paymentsImage} alt="Способы оплаты в Macplus" width={336} height={29} />
             </figure>
           </div>
           <div className="footer-center">

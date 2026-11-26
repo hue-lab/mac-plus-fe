@@ -1,4 +1,5 @@
-import { getImgPath, getPostDate } from '~/utils';
+import { getImgPath, getPostDate, pageUrl } from '~/utils';
+import { breadcrumbList, structuredData } from '~/utils/structured-data';
 import ALink from '~/components/features/custom-link';
 import React from 'react';
 import Head from 'next/head';
@@ -7,25 +8,36 @@ import InlineSVG from "react-inlinesvg";
 import {homeOutlineIcon} from "~/icons/home-outline";
 import {chevronForwardOutlineIcon} from "~/icons/chevron-forward-outline";
 
-export default function PostSingle({ post, seoFields }) {
+export default function PostSingle({ post, description, faq, fullPath }) {
   const loading = false;
   const ogImage = post.media;
-  const titleString = `${post.seo?.seoTitle || post.title || 'Mac Plus'}`;
-  const descriptionString = `${post.seo?.seoTitle || post.title || ''}`;
-
-  const interpolatedTitle = seoFields['blog-seo-title'].replaceAll('{TITLE}', titleString);
-  const interpolatedDescription = seoFields['blog-seo-description'].replaceAll('{TITLE}', descriptionString);
+  const title = post.seo?.seoTitle?.trim() || post.title || 'Mac Plus';
+  const author = post.seo?.seoAuthor?.trim();
+  const publisher = { '@type': 'Organization', name: 'Mac Plus', url: pageUrl() };
+  const article = {
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description,
+    ...(ogImage && { image: getImgPath(ogImage) }),
+    ...(post.createdAt && { datePublished: post.createdAt }),
+    ...(post.updatedAt && { dateModified: post.updatedAt }),
+    author: author ? { '@type': 'Person', name: author } : publisher,
+    publisher,
+    mainEntityOfPage: pageUrl(fullPath),
+  };
+  const breadcrumbs = breadcrumbList([['Главная', '/'], ['Блог', '/blog'], [post.title, fullPath]]);
 
   return (
     <main className="main skeleton-body">
       <Head>
-        <title>{interpolatedTitle}</title>
-        <meta property="og:title" content={interpolatedTitle} />
-        <meta name="description" content={interpolatedDescription} />
-        <meta property="og:description" content={interpolatedDescription} />
+        <title>{title}</title>
+        <meta property="og:title" content={title} />
+        <meta name="description" content={description} />
+        <meta property="og:description" content={description} />
         <meta name="keywords" content={post.seo?.seoKeywords?.join(', ')} />
         <meta name="author" content={post.seo?.seoAuthor || 'Mac Plus'} />
         {ogImage && <meta property="og:image" content={getImgPath(ogImage)} />}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: structuredData(article, breadcrumbs, faq) }} />
       </Head>
 
       <nav className="breadcrumb-nav">
@@ -58,7 +70,7 @@ export default function PostSingle({ post, seoFields }) {
                 <div className="skel-post"></div>
               ) : (
                 <div className={`post post-single`}>
-                  <figure className="post-media">
+                  {ogImage && <figure className="post-media">
                     <Image
                       className="post-cover"
                       priority
@@ -67,8 +79,9 @@ export default function PostSingle({ post, seoFields }) {
                       title={post.seo?.seoTitle || post.title || ''}
                       width={1800}
                       height={1000}
+                      sizes="(max-width: 991px) 100vw, 75vw"
                     />
-                  </figure>
+                  </figure>}
                   <div className="post-details">
                     <div className="post-meta">
                     <ALink href="#" className="post-date">
