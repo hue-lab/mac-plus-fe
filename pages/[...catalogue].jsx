@@ -96,7 +96,7 @@ async function loadCatalogue({ query, params, resolvedUrl, req }) {
   const filtersPairs = filters.reduce((filterAcc, filterCurr) => {
     const optionsArr = [];
     const filterKey = filterCurr.code || filterCurr._id;
-    const valuesPairs = (filterAcc[filterKey] = filterCurr.options.reduce(
+    const valuesPairs = (filterCurr.options || []).reduce(
       (optionAcc, optionCurr) => {
         const translitOption = cyrillicToTranslit.transform(String(optionCurr), "_").toLowerCase();
         optionsArr.push({
@@ -107,7 +107,8 @@ async function loadCatalogue({ query, params, resolvedUrl, req }) {
         return optionAcc;
       },
       Object.create(null)
-    ));
+    );
+    if (filterCurr.type === "CHECKBOX") valuesPairs.true = true;
     filterAcc[filterKey] = {
       valuesPairs,
       ...filterCurr,
@@ -220,7 +221,7 @@ async function loadCatalogue({ query, params, resolvedUrl, req }) {
       metadata: products.metadata,
       data: products.data.map(({_id, name, media, price, totalPrice, discount, brand, description,
         isNew, isRec, isStock, categoryHandle, categoryName, seo, publicPath}) => ({
-        _id, name, media: media || [], price: price ?? null, totalPrice: totalPrice ?? null,
+        _id, name: name || '', media: media || [], price: price ?? null, totalPrice: totalPrice ?? null,
         discount: discount || 0, brand: brand?.name ? {name: brand.name} : null,
         ...(type === 'list' && {description: description || ''}),
         isNew: Boolean(isNew), isRec: Boolean(isRec), isStock: Boolean(isStock),
@@ -229,7 +230,7 @@ async function loadCatalogue({ query, params, resolvedUrl, req }) {
       })),
     },
     filters: filters.map(({_id, code, name, type, options, units}) => ({
-      _id, code: code || _id, name, type: type || null, options, units: units || null,
+      _id, code: code || _id, name: name || '', type: type || null, options, units: units || null,
     })),
     type: "category",
     filterObject: filterObject,
