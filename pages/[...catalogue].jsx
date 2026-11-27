@@ -12,6 +12,11 @@ import {getSeoByUrl} from "~/utils/endpoints/seo";
 import {isTemporaryApiError} from "~/utils/endpoints/fetch-json";
 import {prepareSeoContent} from "~/utils/seo-content";
 
+const legacyModelPaths = new Map([
+  ['iphone-duo', 'iphone/iphone-duo'],
+  ['apple-iphone-17e', 'iphone/apple-iphone-17e'],
+]);
+
 export async function getServerSideProps(context) {
   try {
     return await loadCatalogue(context);
@@ -38,14 +43,17 @@ async function loadCatalogue({ query, params, resolvedUrl, req }) {
   const filterString = pathSegments[1]?.split("/page-is-")[0] || null;
   const filterObject = parseFilterString(filterString);
   const path = pathSegments[0].split("/page-is-")[0];
+  const modelSlug = path.split('/', 1)[0];
+  const movedModel = legacyModelPaths.get(modelSlug.toLowerCase());
+  const lookupPath = movedModel ? movedModel + path.slice(modelSlug.length) : path;
   const searchValue = path === "shop" && typeof search === "string" ? search : null;
   const item = path === "shop"
     ? { name: "Все товары", title: "Каталог техники Apple в Минске" }
-    : await getItemBySlug(path);
+    : await getItemBySlug(lookupPath);
   if (!item || item.statusCode === 404) return { notFound: true };
 
   const route = item.catalogueRoute;
-  const normalizedPath = pagePath((route?.publicPath || path) + fullPath.slice(path.length));
+  const normalizedPath = pagePath((route?.publicPath || lookupPath) + fullPath.slice(path.length));
   const requestedUrl = new URL(req.headers['x-nextjs-data'] ? resolvedUrl : req.url, "http://localhost");
   const redirect = () => {
     if (decodeURI(requestedUrl.pathname) === normalizedPath) return null;
