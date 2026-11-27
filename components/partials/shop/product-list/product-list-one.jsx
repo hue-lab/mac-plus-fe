@@ -47,12 +47,16 @@ export default function ProductListOne({ itemsPerRow = 3, type = 'left', isToolb
           {products &&
             productsData.map((item, index) => (
               <div className="product-wrap" key={index}>
-                <ProductTwo product={item} isCat={false} />
+                <ProductTwo product={item} isCat={false} prioritizeImage={index === 0} />
               </div>
             ))}
         </div>
       ) : (
-        <div className="product-lists product-wrapper">{products && productsData.map((item, index) => <ProductEight product={item} key={index} />)}</div>
+        <div className="product-lists product-wrapper">
+          {productsData.map((item, index) => (
+            <ProductEight product={item} key={index} prioritizeImage={index === 0} />
+          ))}
+        </div>
       )}
 
       {productsData && products?.metadata?.total === 0 ? <p className="ml-1">По вашему запросу результатов не найдено.</p> : ''}

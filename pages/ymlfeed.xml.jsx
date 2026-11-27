@@ -36,7 +36,7 @@ function generateYmlFeed({ categories, products, fields, categoriesKeys }) {
                 <delivery>${fields['yml-feed-delivery']}</delivery>
                 <name>${normalizeString(item.name || '')}</name>
                 <vendor>${normalizeString(item.brand?.name || '')}</vendor>
-                <url>${pageUrl(item.categoryHandle, item.seo?.seoUrl)}</url>
+                <url>${item.publicPath ? pageUrl(item.publicPath) : pageUrl(item.categoryHandle, item.seo?.seoUrl)}</url>
                 <price>${item.totalPrice || 0}</price>
                 <oldprice>${item.price || 0}</oldprice>
                 <enable_auto_discounts>true</enable_auto_discounts>

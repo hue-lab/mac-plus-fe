@@ -4,7 +4,7 @@ import Reveal from 'react-awesome-reveal';
 import ALink from '~/components/features/custom-link';
 
 import { fadeIn } from '~/utils/data/keyframes';
-import { getImgPath } from '~/utils';
+import { getImgPath, pagePath } from '~/utils';
 import Image from 'next/image';
 
 export default function CategorySection({ recProducts }) {
@@ -16,7 +16,8 @@ export default function CategorySection({ recProducts }) {
 
           <div className="row">
             {recProducts.map((item, index) => (
-              <ALink key={index} className="col-xl-4 col-md-6 mb-4" href={`/${item.categoryHandle ? item.categoryHandle + '/' : ''}${item.seo?.seoUrl || '#'}`}>
+              <ALink key={index} className="col-xl-4 col-md-6 mb-4" href={item.publicPath ? pagePath(item.publicPath)
+                : item.seo?.seoUrl ? pagePath(item.categoryHandle, item.seo.seoUrl) : '#'}>
                 <div style={{ height: '100%' }}>
                   <div style={{ cursor: 'pointer', height: '100%' }} className="category category-group-image">
                     <figure className="category-media">

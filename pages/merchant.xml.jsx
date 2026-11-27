@@ -21,7 +21,7 @@ function generateMerchantFeed({ products, fields, deliveryMethods }) {
             <g:id>${product._id}</g:id>
             <g:title>${normalizeString(product.name)}</g:title>
             <g:description>${normalizeString(product.description)}</g:description>
-            <g:link>${feedHost}${pagePath(product.categoryHandle, product.seo?.seoUrl)}</g:link>
+            <g:link>${feedHost}${product.publicPath ? pagePath(product.publicPath) : pagePath(product.categoryHandle, product.seo?.seoUrl)}</g:link>
             <g:image_link>${
               product.media?.length ? getImgPath(product.media[0]) : undefined
             }</g:image_link>

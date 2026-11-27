@@ -2,23 +2,25 @@ import React from 'react';
 
 import ALink from '~/components/features/custom-link';
 
-import { toDecimal, getImgPath } from '~/utils';
+import { toDecimal, getImgPath, pagePath } from '~/utils';
 import Image from "next/image";
 
 function SmallProduct(props) {
   const { product, adClass, isReviewCount = true } = props;
+  const productPath = product.publicPath ? pagePath(product.publicPath)
+    : product.seo?.seoUrl ? pagePath(product.categoryHandle, product.seo.seoUrl) : '#';
 
   return (
     <div className={`product product-list-sm ${adClass}`}>
       <figure className="product-media">
-        <ALink href={`/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`}>
+        <ALink href={productPath}>
           <Image alt={product.seo?.seoImage[0]?.imageAlt || product.name || ''} title={product.seo?.seoTitle || product.name || ''} src={getImgPath(product.media[0])} width="100" height="100" style={{ objectFit: 'contain', padding: '0.2rem' }} />
         </ALink>
       </figure>
 
       <div className="product-details">
         <span className="product-name related-name">
-          <ALink href={`/${product.categoryHandle ? product.categoryHandle + '/' : ''}${product.seo?.seoUrl || '#'}`}>{product.name}</ALink>
+          <ALink href={productPath}>{product.name}</ALink>
         </span>
 
         <div className="product-price related-price">

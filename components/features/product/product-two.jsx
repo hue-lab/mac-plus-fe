@@ -11,7 +11,7 @@ import { getImgPath, pagePath, toDecimal } from '~/utils';
 import Image from "next/image";
 
 function ProductTwo(props) {
-  const { product, adClass = 'text-center', addToCart, isCat = true } = props;
+  const { product, adClass = 'text-center', addToCart, isCat = true, prioritizeImage = false } = props;
   const productPath = product.publicPath ? pagePath(product.publicPath)
     : product.seo?.seoUrl ? pagePath(product.categoryHandle, product.seo.seoUrl) : '#';
 
@@ -30,6 +30,8 @@ function ProductTwo(props) {
               title={product.seo?.seoTitle || product.name || ''}
               src={getImgPath(product.seo?.seoImage?.[0]?.imageName || product.media?.[0])}
               sizes="(max-width: 575px) 50vw, (max-width: 991px) 33vw, 25vw"
+              priority={prioritizeImage}
+              fetchPriority={prioritizeImage ? 'high' : undefined}
               width={300}
               height={338}
               style={{objectFit: 'contain', height: '100%', objectPosition: 'center'}}
